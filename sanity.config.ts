@@ -5,7 +5,7 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import { schemaTypes } from './sanity/schemas'
 import { structure } from './sanity/studio-structure'
 
-const SINGLETONS = ['parametresGlobaux', 'accueil']
+const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence']
 
 export default defineConfig({
   name: 'maria',

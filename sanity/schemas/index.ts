@@ -1,5 +1,6 @@
 import type { SchemaTypeDefinition } from 'sanity'
 import { accueil } from './accueil'
+import { agence } from './agence'
 import { lien } from './lien'
 import { parametresGlobaux } from './parametresGlobaux'
 
@@ -9,4 +10,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // singletons
   parametresGlobaux,
   accueil,
+  agence,
 ]

@@ -32,30 +32,54 @@
 
 @keyframes halo-drift-1 {
   0%   { transform: translate3d(0, 0, 0) scale(1); }
-  18%  { transform: translate3d(15%, -12%, 0) scale(1.18); }
-  35%  { transform: translate3d(18%, -5%, 0) scale(1.12); }
-  55%  { transform: translate3d(-8%, 12%, 0) scale(1.20); }
-  72%  { transform: translate3d(-15%, 15%, 0) scale(1.22); }
-  88%  { transform: translate3d(-10%, 5%, 0) scale(1.10); }
+  14%  { transform: translate3d(24%, -20%, 0) scale(1.24); }
+  28%  { transform: translate3d(28%, -10%, 0) scale(1.18); }
+  44%  { transform: translate3d(15%, 12%, 0) scale(1.28); }
+  60%  { transform: translate3d(-12%, 20%, 0) scale(1.22); }
+  76%  { transform: translate3d(-26%, 24%, 0) scale(1.30); }
+  90%  { transform: translate3d(-15%, 8%, 0) scale(1.15); }
   100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes halo-drift-2 {
   0%   { transform: translate3d(0, 0, 0) scale(1); }
-  20%  { transform: translate3d(-14%, 13%, 0) scale(1.16); }
-  42%  { transform: translate3d(12%, 8%, 0) scale(1.22); }
-  60%  { transform: translate3d(15%, -10%, 0) scale(1.14); }
-  80%  { transform: translate3d(-8%, -13%, 0) scale(1.18); }
+  18%  { transform: translate3d(-22%, 21%, 0) scale(1.22); }
+  35%  { transform: translate3d(-8%, 26%, 0) scale(1.18); }
+  50%  { transform: translate3d(20%, 15%, 0) scale(1.28); }
+  66%  { transform: translate3d(26%, -18%, 0) scale(1.20); }
+  82%  { transform: translate3d(-14%, -22%, 0) scale(1.26); }
   100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes halo-drift-3 {
   0%   { transform: translate3d(0, 0, 0) scale(1); }
-  16%  { transform: translate3d(13%, 9%, 0) scale(1.13); }
-  33%  { transform: translate3d(-15%, 7%, 0) scale(1.22); }
-  50%  { transform: translate3d(-11%, 16%, 0) scale(1.18); }
-  68%  { transform: translate3d(9%, -11%, 0) scale(1.20); }
-  85%  { transform: translate3d(-5%, 13%, 0) scale(1.10); }
+  12%  { transform: translate3d(20%, 14%, 0) scale(1.18); }
+  26%  { transform: translate3d(-12%, 22%, 0) scale(1.30); }
+  42%  { transform: translate3d(-26%, 12%, 0) scale(1.28); }
+  58%  { transform: translate3d(-18%, -16%, 0) scale(1.22); }
+  74%  { transform: translate3d(15%, -22%, 0) scale(1.26); }
+  90%  { transform: translate3d(8%, 18%, 0) scale(1.16); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes halo-drift-4 {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  20%  { transform: translate3d(-16%, -22%, 0) scale(1.24); }
+  38%  { transform: translate3d(12%, -26%, 0) scale(1.20); }
+  55%  { transform: translate3d(28%, -8%, 0) scale(1.30); }
+  70%  { transform: translate3d(22%, 16%, 0) scale(1.26); }
+  86%  { transform: translate3d(-10%, 22%, 0) scale(1.16); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes halo-drift-5 {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  16%  { transform: translate3d(-18%, 18%, 0) scale(1.20); }
+  32%  { transform: translate3d(22%, 22%, 0) scale(1.24); }
+  48%  { transform: translate3d(28%, -14%, 0) scale(1.30); }
+  62%  { transform: translate3d(8%, -26%, 0) scale(1.18); }
+  78%  { transform: translate3d(-22%, -10%, 0) scale(1.26); }
+  92%  { transform: translate3d(-14%, 12%, 0) scale(1.14); }
   100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
@@ -92,4 +116,44 @@ body {
 .cta-link:focus-visible .cta-underline {
   transform-origin: left;
   transform: scaleX(0);
+}
+
+/*
+  FAQ accordion +/- icon. Default fermé : la barre verticale est visible
+  (composant un + avec la barre horizontale). À l'ouverture, la verticale
+  se rétracte (scaleY 0) → reste juste la barre horizontale = -.
+*/
+.faq-toggle {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.faq-toggle::before,
+.faq-toggle::after {
+  content: '';
+  position: absolute;
+  background-color: currentColor;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-toggle::before {
+  /* Barre horizontale (toujours visible) */
+  inset: 50% 0 auto 0;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.faq-toggle::after {
+  /* Barre verticale (se rétracte à l'ouverture) */
+  inset: 0 50% 0 50%;
+  width: 1px;
+  transform: translateX(-50%) scaleY(1);
+  transform-origin: center;
+}
+
+.faq-toggle[data-open="true"]::after {
+  transform: translateX(-50%) scaleY(0);
 }

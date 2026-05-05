@@ -8,7 +8,7 @@ export type Halo = {
   duration?: number
 }
 
-const PATTERN_COUNT = 3
+const PATTERN_COUNT = 5
 
 export default function HaloField({ halos }: { halos: Halo[] }) {
   return (

@@ -1,7 +1,7 @@
 import type { StructureResolver } from 'sanity/structure'
-import { CogIcon, HomeIcon } from '@sanity/icons'
+import { CogIcon, HomeIcon, UsersIcon } from '@sanity/icons'
 
-const SINGLETONS = ['parametresGlobaux', 'accueil'] as const
+const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence'] as const
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -15,6 +15,15 @@ export const structure: StructureResolver = (S) =>
             .id('accueil')
             .schemaType('accueil')
             .documentId('accueil'),
+        ),
+      S.listItem()
+        .title('Page agence')
+        .icon(UsersIcon)
+        .child(
+          S.editor()
+            .id('agence')
+            .schemaType('agence')
+            .documentId('agence'),
         ),
       S.divider(),
       S.listItem()

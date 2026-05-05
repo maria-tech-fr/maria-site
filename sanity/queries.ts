@@ -82,3 +82,47 @@ export const accueilQuery = defineQuery(`
     }
   }
 `)
+
+export const agenceQuery = defineQuery(`
+  *[_id == "agence"][0]{
+    hero{ surTitre, titre, description },
+    manifeste{
+      surTitre,
+      titre,
+      paragraphes[]{ texte, emphase }
+    },
+    valeurs{
+      surTitre,
+      titre,
+      principes[]{ icone, nom, description }
+    },
+    nonNegociables{
+      surTitre,
+      titre,
+      sousTitre,
+      points[]{ titre, description }
+    },
+    processus{
+      surTitre,
+      titre,
+      sousTitre,
+      etapes[]{ numero, titre, description }
+    },
+    technos{
+      surTitre,
+      titre,
+      sousTitre,
+      categories[]{ surTitre, titre, technos }
+    },
+    engagements{
+      surTitre,
+      titre,
+      points
+    },
+    faq{
+      surTitre,
+      titre,
+      questions[]{ question, reponse }
+    }
+  }
+`)

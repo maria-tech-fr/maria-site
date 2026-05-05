@@ -7,10 +7,10 @@ export default function Methode({ data }: { data: MethodeData }) {
     <section className="relative overflow-hidden bg-ink px-6 py-16 lg:px-30.5 lg:py-22.5">
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
-          className="absolute h-150 w-150"
+          className="absolute h-125 w-125"
           style={{
-            left: '25%',
-            top: '70%',
+            left: '15%',
+            top: '78%',
             transform: 'translate(-50%, -50%)',
             background:
               'radial-gradient(circle, rgba(254, 194, 60, 0.20) 0%, rgba(254, 194, 60, 0) 70%)',
