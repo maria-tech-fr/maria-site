@@ -15,7 +15,7 @@ function ParagrapheRender({ paragraphe }: { paragraphe: ParagrapheManifeste }) {
   if (paragraphe.emphase === 'premiere-phrase') {
     // Découpe sur le premier ". " (ou ".\n" / ". —"). On garde le point dans la
     // partie emphasée, et on rajoute juste un espace avant la suite.
-    const match = paragraphe.texte.match(/^([^.!?]*[.!?])\s+(.*)$/s)
+    const match = paragraphe.texte.match(/^([^.!?]*[.!?])\s+([\s\S]*)$/)
     if (!match) {
       return <p className={EMPHASE_CLASS}>{paragraphe.texte}</p>
     }

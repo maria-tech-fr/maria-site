@@ -53,7 +53,7 @@ export default function Processus({ data }: { data: ProcessusData }) {
 function EtapeItem({ etape, isLast }: { etape: EtapeProcessus; isLast: boolean }) {
   return (
     <div
-      className={`grid grid-cols-[60px_1fr] gap-x-6 border-t border-ink/10 py-8 sm:grid-cols-[120px_1fr] lg:grid-cols-[168px_1fr] ${
+      className={`grid grid-cols-[44px_1fr] gap-x-4 border-t border-ink/10 py-8 sm:grid-cols-[72px_1fr] lg:grid-cols-[100px_1fr] ${
         isLast ? 'border-b' : ''
       }`}
     >
