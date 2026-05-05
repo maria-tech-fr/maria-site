@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import CtaSecondaire from './CtaSecondaire'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
 import { type Hero as HeroData, type Lien, lienExterne, lienHref } from '../lib/accueil'
@@ -84,33 +85,3 @@ function CtaPrincipal({ lien }: { lien: Lien }) {
   )
 }
 
-function CtaSecondaire({ lien }: { lien: Lien }) {
-  const href = lienHref(lien)
-  const externe = lienExterne(lien)
-  const wrapperClass =
-    'group inline-flex items-center text-[15px] font-medium leading-[23.25px] text-ink'
-
-  const content = (
-    <span className="relative pb-0.5">
-      {lien.libelle}
-      <span
-        aria-hidden
-        className="absolute bottom-0 left-0 right-0 h-px origin-right scale-x-100 bg-success transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-0"
-      />
-    </span>
-  )
-
-  if (externe) {
-    return (
-      <a href={href} target="_blank" rel="noreferrer noopener" className={wrapperClass}>
-        {content}
-      </a>
-    )
-  }
-
-  return (
-    <Link href={href} className={wrapperClass}>
-      {content}
-    </Link>
-  )
-}

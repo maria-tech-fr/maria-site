@@ -1,6 +1,6 @@
-import Link from 'next/link'
+import CtaSecondaire from './CtaSecondaire'
 import Reveal from './Reveal'
-import { type EtapeMethode, type Lien, type Methode as MethodeData, lienExterne, lienHref } from '../lib/accueil'
+import { type EtapeMethode, type Methode as MethodeData } from '../lib/accueil'
 
 export default function Methode({ data }: { data: MethodeData }) {
   return (
@@ -57,7 +57,7 @@ export default function Methode({ data }: { data: MethodeData }) {
 
         {data.lien && (
           <Reveal delay={200}>
-            <LienCTA lien={data.lien} />
+            <CtaSecondaire lien={data.lien} tone="paper" withArrow />
           </Reveal>
         )}
       </div>
@@ -82,43 +82,3 @@ function EtapeItem({ etape }: { etape: EtapeMethode }) {
   )
 }
 
-function LienCTA({ lien }: { lien: Lien }) {
-  const href = lienHref(lien)
-  const externe = lienExterne(lien)
-  const wrapperClass =
-    'group inline-flex items-center gap-2 self-start text-[15px] font-medium leading-[23.25px] text-paper'
-
-  const content = (
-    <>
-      <span className="relative pb-0.5">
-        {lien.libelle}
-        <span
-          aria-hidden
-          className="absolute bottom-0 left-0 right-0 h-px origin-right scale-x-100 bg-success transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-0"
-        />
-      </span>
-      <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-        <path
-          d="M1 5h11M9 1l4 4-4 4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </>
-  )
-
-  if (externe) {
-    return (
-      <a href={href} target="_blank" rel="noreferrer noopener" className={wrapperClass}>
-        {content}
-      </a>
-    )
-  }
-  return (
-    <Link href={href} className={wrapperClass}>
-      {content}
-    </Link>
-  )
-}
