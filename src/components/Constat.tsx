@@ -7,8 +7,8 @@ export default function Constat({ data }: { data: ConstatData }) {
     <section className="relative overflow-hidden bg-ink px-6 py-16 lg:px-30.5 lg:py-30">
       <HaloField
         halos={[
-          { color: '#3FC163', alpha: 0.22, x: '0%', y: '60%', size: 600, duration: 42 },
-          { color: '#FEC23C', alpha: 0.3, x: '100%', y: '0%', size: 800, blur: 50, duration: 36 },
+          { color: '#3FC163', alpha: 0.22, x: '0%', y: '60%', size: 600, duration: 30 },
+          { color: '#FEC23C', alpha: 0.3, x: '100%', y: '0%', size: 800, blur: 50, duration: 24 },
         ]}
       />
 

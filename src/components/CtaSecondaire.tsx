@@ -1,55 +1,41 @@
-'use client'
-
 import Link from 'next/link'
-import { useState, type ReactNode } from 'react'
 import { type Lien, lienExterne, lienHref } from '../lib/accueil'
 
 type Tone = 'ink' | 'paper'
 
-const TONE_TEXT_COLOR: Record<Tone, string> = {
-  ink: '#212121',
-  paper: '#F9F9F9',
+const TONE_CLASS: Record<Tone, string> = {
+  ink: 'text-ink',
+  paper: 'text-paper',
 }
 
 export default function CtaSecondaire({
   lien,
   tone = 'ink',
-  underlineColor = '#3FC163',
   withArrow = false,
 }: {
   lien: Lien
   tone?: Tone
-  underlineColor?: string
   withArrow?: boolean
 }) {
-  const [hovered, setHovered] = useState(false)
   const href = lienHref(lien)
   const externe = lienExterne(lien)
 
-  const onEnter = () => setHovered(true)
-  const onLeave = () => setHovered(false)
-
+  // CSS-only hover. Default : trait visible (origin-right, scale-x-100). Au survol, le
+  // sélecteur group-hover bascule sur origin-left + scale-x-0 → le trait se rétracte
+  // vers la gauche. À la sortie du hover, on repasse à origin-right + scale-x-100 →
+  // le trait réapparaît depuis la droite. transform-origin change instantanément
+  // (pas dans la transition), seul transform est interpolé.
   const wrapperClass = withArrow
-    ? 'inline-flex items-center gap-2 self-start text-[15px] font-medium leading-[23.25px]'
-    : 'inline-flex items-center text-[15px] font-medium leading-[23.25px]'
+    ? `group/cta inline-flex items-center gap-2 self-start text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
+    : `group/cta inline-flex items-center text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
 
-  const content: ReactNode = (
+  const content = (
     <>
-      <span style={{ position: 'relative', paddingBottom: '2px' }}>
+      <span className="relative pb-0.5">
         {lien.libelle}
         <span
           aria-hidden
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '1px',
-            backgroundColor: underlineColor,
-            transformOrigin: hovered ? 'left' : 'right',
-            transform: hovered ? 'scaleX(0)' : 'scaleX(1)',
-            transition: 'transform 300ms ease-out',
-          }}
+          className="absolute bottom-0 left-0 right-0 h-px origin-right scale-x-100 bg-success transition-transform duration-300 ease-out group-hover/cta:origin-left group-hover/cta:scale-x-0"
         />
       </span>
       {withArrow && (
@@ -66,32 +52,16 @@ export default function CtaSecondaire({
     </>
   )
 
-  const handlers = {
-    onMouseEnter: onEnter,
-    onMouseLeave: onLeave,
-    onFocus: onEnter,
-    onBlur: onLeave,
-  }
-
-  const style = { color: TONE_TEXT_COLOR[tone] }
-
   if (externe) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer noopener"
-        className={wrapperClass}
-        style={style}
-        {...handlers}
-      >
+      <a href={href} target="_blank" rel="noreferrer noopener" className={wrapperClass}>
         {content}
       </a>
     )
   }
 
   return (
-    <Link href={href} className={wrapperClass} style={style} {...handlers}>
+    <Link href={href} className={wrapperClass}>
       {content}
     </Link>
   )

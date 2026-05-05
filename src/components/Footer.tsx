@@ -24,8 +24,8 @@ export default function Footer() {
       <section className="relative overflow-hidden bg-ink px-6 py-14 lg:px-30.5 lg:py-17.5">
         <HaloField
           halos={[
-            { color: '#FEC23C', alpha: 0.3, x: '35%', y: '50%', size: 700, duration: 38 },
-            { color: '#3FC163', alpha: 0.22, x: '65%', y: '50%', size: 700, duration: 45 },
+            { color: '#FEC23C', alpha: 0.3, x: '35%', y: '50%', size: 700, duration: 26 },
+            { color: '#3FC163', alpha: 0.22, x: '65%', y: '50%', size: 700, duration: 32 },
           ]}
         />
 

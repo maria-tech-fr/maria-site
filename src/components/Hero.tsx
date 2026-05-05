@@ -9,9 +9,9 @@ export default function Hero({ data }: { data: HeroData }) {
     <section className="relative flex min-h-[80vh] flex-col justify-between gap-y-12 overflow-hidden bg-paper px-6 pt-24 pb-12 sm:px-8 lg:min-h-[calc(100vh-67.09px)] lg:gap-y-22 lg:px-30.5 lg:pt-55 lg:pb-25">
       <HaloField
         halos={[
-          { color: '#FEC23C', alpha: 0.45, x: '77%', y: '26%', size: 738, duration: 38 },
-          { color: '#3FC163', alpha: 0.33, x: '58%', y: '83%', size: 675, blur: 50, duration: 47 },
-          { color: '#FFE482', alpha: 0.55, x: '6%', y: '83%', size: 553, duration: 41 },
+          { color: '#FEC23C', alpha: 0.45, x: '77%', y: '26%', size: 738, duration: 25 },
+          { color: '#3FC163', alpha: 0.33, x: '58%', y: '83%', size: 675, blur: 50, duration: 32 },
+          { color: '#FFE482', alpha: 0.55, x: '6%', y: '83%', size: 553, duration: 28 },
         ]}
       />
 
