@@ -20,23 +20,16 @@ export default function CtaSecondaire({
   const href = lienHref(lien)
   const externe = lienExterne(lien)
 
-  // CSS-only hover. Default : trait visible (origin-right, scale-x-100). Au survol, le
-  // sélecteur group-hover bascule sur origin-left + scale-x-0 → le trait se rétracte
-  // vers la gauche. À la sortie du hover, on repasse à origin-right + scale-x-100 →
-  // le trait réapparaît depuis la droite. transform-origin change instantanément
-  // (pas dans la transition), seul transform est interpolé.
+  // .cta-link déclenche le hover du soulignement défini en globals.css.
   const wrapperClass = withArrow
-    ? `group/cta inline-flex items-center gap-2 self-start text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
-    : `group/cta inline-flex items-center text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
+    ? `cta-link inline-flex items-center gap-2 self-start text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
+    : `cta-link inline-flex items-center text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
 
   const content = (
     <>
       <span className="relative pb-0.5">
         {lien.libelle}
-        <span
-          aria-hidden
-          className="absolute bottom-0 left-0 right-0 h-px origin-right scale-x-100 bg-success transition-transform duration-300 ease-out group-hover/cta:origin-left group-hover/cta:scale-x-0"
-        />
+        <span aria-hidden className="cta-underline" />
       </span>
       {withArrow && (
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>

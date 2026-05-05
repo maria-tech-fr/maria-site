@@ -67,3 +67,29 @@ html {
 body {
   font-family: var(--font-sans);
 }
+
+/*
+  Soulignement dégradé asymétrique pour les CTA secondaires.
+  Default : visible (origin-right, scaleX 1).
+  Hover : trait se rétracte vers la gauche (origin-left, scaleX 0).
+  Hover-out : transform-origin bascule instantanément à droite, scaleX
+  transitionne 0 → 1 → le trait réapparaît depuis la droite.
+  Écrit à la main (transform: scaleX(...)) pour éviter les utilities Tailwind v4
+  qui passent par la propriété `scale` indépendante (interaction moins prévisible
+  avec transform-origin selon les builds prod).
+*/
+.cta-underline {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background-color: var(--color-success);
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 300ms ease-out;
+}
+
+.cta-link:hover .cta-underline,
+.cta-link:focus-visible .cta-underline {
+  transform-origin: left;
+  transform: scaleX(0);
+}
