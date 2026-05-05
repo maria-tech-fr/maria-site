@@ -36,9 +36,9 @@ export const metadata: Metadata = {
 // si la chaîne CSS bundlée échoue (cache CDN, optimisation prod), ces règles
 // restent disponibles dans le HTML servi.
 const HALO_KEYFRAMES = `
-@keyframes halo-drift-1{0%{transform:translate3d(0,0,0) scale(1)}18%{transform:translate3d(7%,-5%,0) scale(1.08)}35%{transform:translate3d(8%,-2%,0) scale(1.06)}55%{transform:translate3d(-3%,5%,0) scale(1.10)}72%{transform:translate3d(-7%,7%,0) scale(1.12)}88%{transform:translate3d(-4%,2%,0) scale(1.06)}100%{transform:translate3d(0,0,0) scale(1)}}
-@keyframes halo-drift-2{0%{transform:translate3d(0,0,0) scale(1)}20%{transform:translate3d(-6%,6%,0) scale(1.09)}42%{transform:translate3d(5%,3%,0) scale(1.12)}60%{transform:translate3d(7%,-4%,0) scale(1.07)}80%{transform:translate3d(-3%,-6%,0) scale(1.10)}100%{transform:translate3d(0,0,0) scale(1)}}
-@keyframes halo-drift-3{0%{transform:translate3d(0,0,0) scale(1)}16%{transform:translate3d(6%,4%,0) scale(1.07)}33%{transform:translate3d(-7%,3%,0) scale(1.12)}50%{transform:translate3d(-5%,8%,0) scale(1.10)}68%{transform:translate3d(4%,-5%,0) scale(1.11)}85%{transform:translate3d(-2%,6%,0) scale(1.05)}100%{transform:translate3d(0,0,0) scale(1)}}
+@keyframes halo-drift-1{0%{transform:translate3d(0,0,0) scale(1)}18%{transform:translate3d(15%,-12%,0) scale(1.18)}35%{transform:translate3d(18%,-5%,0) scale(1.12)}55%{transform:translate3d(-8%,12%,0) scale(1.20)}72%{transform:translate3d(-15%,15%,0) scale(1.22)}88%{transform:translate3d(-10%,5%,0) scale(1.10)}100%{transform:translate3d(0,0,0) scale(1)}}
+@keyframes halo-drift-2{0%{transform:translate3d(0,0,0) scale(1)}20%{transform:translate3d(-14%,13%,0) scale(1.16)}42%{transform:translate3d(12%,8%,0) scale(1.22)}60%{transform:translate3d(15%,-10%,0) scale(1.14)}80%{transform:translate3d(-8%,-13%,0) scale(1.18)}100%{transform:translate3d(0,0,0) scale(1)}}
+@keyframes halo-drift-3{0%{transform:translate3d(0,0,0) scale(1)}16%{transform:translate3d(13%,9%,0) scale(1.13)}33%{transform:translate3d(-15%,7%,0) scale(1.22)}50%{transform:translate3d(-11%,16%,0) scale(1.18)}68%{transform:translate3d(9%,-11%,0) scale(1.20)}85%{transform:translate3d(-5%,13%,0) scale(1.10)}100%{transform:translate3d(0,0,0) scale(1)}}
 @keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 @keyframes border-drift{0%{background-position:0 0,0% 50%}100%{background-position:0 0,200% 50%}}
 `
