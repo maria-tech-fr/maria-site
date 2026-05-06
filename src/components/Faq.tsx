@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import BlockHeader from './BlockHeader'
 import Reveal from './Reveal'
 import type { Faq as FaqData, QuestionFaq } from '../lib/agence'
 
@@ -10,12 +11,11 @@ export default function Faq({ data }: { data: FaqData }) {
       <div className="flex flex-col gap-12">
         <Reveal>
           <div className="flex flex-col gap-4.5">
-            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-              {data.surTitre}
-            </p>
-            <h2 className="max-w-196.75 whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-ink lg:text-[60px] lg:leading-15.5">
-              {data.titre}
-            </h2>
+            <BlockHeader
+              surTitre={data.surTitre}
+              titre={data.titre}
+              titreClass="max-w-196.75 text-ink"
+            />
           </div>
         </Reveal>
 

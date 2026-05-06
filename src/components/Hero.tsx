@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CtaSecondaire from './CtaSecondaire'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
+import ArrowRight from './icons/ArrowRight'
 import { type Hero as HeroData, type Lien, lienExterne, lienHref } from '../lib/accueil'
 
 export default function Hero({ data }: { data: HeroData }) {
@@ -20,7 +21,7 @@ export default function Hero({ data }: { data: HeroData }) {
             {data.surTitre}
           </p>
 
-          <h1 className="font-display text-[40px] font-semibold leading-[44px] tracking-[-0.0507em] text-ink lg:text-[80px] lg:leading-[112.52px]">
+          <h1 className="font-display text-[40px] font-semibold leading-11 tracking-[-0.0507em] text-ink lg:text-[80px] lg:leading-[112.52px]">
             <span className="block">{data.titreLigne1}</span>
             {data.titreLigne2?.trim() && (
               <span className="block text-ink-soft lg:mt-[-13.48px] lg:leading-20">
@@ -54,20 +55,12 @@ function CtaPrincipal({ lien }: { lien: Lien }) {
   const content = (
     <>
       {lien.libelle}
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden>
-        <path
-          d="M1 6h13M9 1l5 5-5 5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <ArrowRight size="md" />
     </>
   )
 
   const className =
-    'inline-flex h-[43.69px] items-center justify-center gap-2 rounded-[5px] bg-accent px-[18px] text-[14px] font-medium leading-[21.7px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft'
+    'inline-flex h-[43.69px] items-center justify-center gap-2 rounded-[5px] bg-accent px-4.5 text-[14px] font-medium leading-[21.7px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft'
 
   if (externe) {
     return (

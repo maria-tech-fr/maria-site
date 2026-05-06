@@ -1,47 +1,30 @@
+import BlockHeader from './BlockHeader'
 import CtaSecondaire from './CtaSecondaire'
+import HaloField from './HaloField'
 import Reveal from './Reveal'
 import { type EtapeMethode, type Methode as MethodeData } from '../lib/accueil'
 
 export default function Methode({ data }: { data: MethodeData }) {
   return (
     <section className="relative overflow-hidden bg-ink px-6 py-16 lg:px-30.5 lg:py-22.5">
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className="absolute h-125 w-125"
-          style={{
-            left: '15%',
-            top: '78%',
-            transform: 'translate(-50%, -50%)',
-            background:
-              'radial-gradient(circle, rgba(254, 194, 60, 0.20) 0%, rgba(254, 194, 60, 0) 70%)',
-            filter: 'blur(30px)',
-          }}
-        />
-        <div
-          className="absolute h-150 w-150"
-          style={{
-            left: '75%',
-            top: '70%',
-            transform: 'translate(-50%, -50%)',
-            background:
-              'radial-gradient(circle, rgba(63, 193, 99, 0.18) 0%, rgba(63, 193, 99, 0) 70%)',
-            filter: 'blur(30px)',
-          }}
-        />
-      </div>
+      <HaloField
+        staticMode
+        halos={[
+          { color: '#FEC23C', alpha: 0.20, x: '15%', y: '78%', size: 500, blur: 30 },
+          { color: '#3FC163', alpha: 0.18, x: '75%', y: '70%', size: 600, blur: 30 },
+        ]}
+      />
 
       <div className="relative flex flex-col gap-16">
         <Reveal>
           <div className="flex flex-col gap-4.5">
-            <p className="font-mono text-[12px] leading-[18.6px] tracking-[0.06em] text-success">
-              {data.surTitre}
-            </p>
-            <h2 className="max-w-196.75 whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-paper-soft lg:text-[60px] lg:leading-15.5">
-              {data.titre}
-            </h2>
-            <p className="max-w-173.5 whitespace-pre-line text-[16px] leading-6 text-paper-soft lg:text-[18px] lg:leading-[27.9px]">
-              {data.description}
-            </p>
+            <BlockHeader
+              surTitre={data.surTitre}
+              titre={data.titre}
+              sousTitre={data.description}
+              titreClass="max-w-196.75 text-paper-soft"
+              sousTitreClass="max-w-173.5 text-paper-soft"
+            />
           </div>
         </Reveal>
 

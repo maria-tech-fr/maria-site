@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import HaloField from './HaloField'
 import Logo from './Logo'
+import ArrowRight from './icons/ArrowRight'
 
 type FooterLink = { label: string; href: string }
 
@@ -52,7 +53,7 @@ export default function Footer() {
                 </rect>
               </svg>
             </div>
-            <p className="max-w-[666px] text-center text-[15px] leading-6 text-[#CFCFCF] lg:text-[18px] lg:leading-[27.9px]">
+            <p className="max-w-166.5 text-center text-[15px] leading-6 text-[#CFCFCF] lg:text-[18px] lg:leading-[27.9px]">
               Discutons-en. 30 minutes pour cadrer votre besoin, sans engagement.
             </p>
           </div>
@@ -63,17 +64,9 @@ export default function Footer() {
               className="inline-flex h-13 w-full max-w-75 items-center justify-center gap-2 rounded-[5px] bg-accent text-[15px] font-medium leading-[24.8px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft lg:h-[56.8px] lg:w-[245.36px] lg:text-[16px]"
             >
               Réserver un échange
-              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden>
-                <path
-                  d="M1 6h13M9 1l5 5-5 5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ArrowRight size="md" />
             </Link>
-            <p className="font-mono text-[11px] leading-[17px] tracking-[0.08em] text-[#AAAAAA]">
+            <p className="font-mono text-[11px] leading-4.25 tracking-[0.08em] text-[#AAAAAA]">
               RÉPONSE SOUS 24 H · DEVIS GRATUIT · SANS ENGAGEMENT
             </p>
           </div>
@@ -115,11 +108,11 @@ export default function Footer() {
 
 function FooterColumn({ heading, items }: { heading: string; items: FooterLink[] }) {
   return (
-    <div className="w-full sm:w-[174px]">
-      <h3 className="font-mono text-[11px] leading-[17px] tracking-[0.08em] text-paper">
+    <div className="w-full sm:w-43.5">
+      <h3 className="font-mono text-[11px] leading-4.25 tracking-[0.08em] text-paper">
         {heading}
       </h3>
-      <ul className="mt-[18px] flex flex-col gap-[10px]">
+      <ul className="mt-4.5 flex flex-col gap-2.5">
         {items.map((item) => (
           <li key={item.href}>
             <Link

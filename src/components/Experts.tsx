@@ -1,3 +1,4 @@
+import BlockHeader from './BlockHeader'
 import CtaSecondaire from './CtaSecondaire'
 import Reveal from './Reveal'
 import { type Experts as ExpertsData, type MembreExpert } from '../lib/accueil'
@@ -55,24 +56,24 @@ function ExpertCard({ membre, index }: { membre: MembreExpert; index: number }) 
     <article className="relative overflow-hidden rounded-[5px] border border-paper-edge bg-paper-soft">
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-[20%] -top-[20%] h-[60%] w-[60%]"
+        className="pointer-events-none absolute left-[-20%] top-[-20%] h-[60%] w-[60%]"
         style={{ background: haloStyle, filter: 'blur(20px)' }}
       />
 
       <div
-        className="relative flex h-[260px] items-end p-5"
+        className="relative flex h-65 items-end p-5"
         style={{
           background: 'linear-gradient(129deg, #DEDEDE 0%, #E8E8E8 100%)',
         }}
       >
         {membre.badge && (
-          <span className="rounded-[3px] bg-white/85 px-2 py-[3px] font-mono text-[9px] leading-[13.95px] tracking-[0.08em] text-ink">
+          <span className="rounded-[3px] bg-white/85 px-2 py-0.75 font-mono text-[9px] leading-[13.95px] tracking-[0.08em] text-ink">
             {membre.badge}
           </span>
         )}
       </div>
 
-      <div className="flex flex-col gap-1 px-5 pt-[17px] pb-[18px]">
+      <div className="flex flex-col gap-1 px-5 pt-4.25 pb-4.5">
         <h3 className="font-display text-[18px] font-semibold leading-[27.9px] tracking-[-0.01em] text-ink">
           {membre.nom}
         </h3>

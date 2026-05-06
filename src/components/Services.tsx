@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import BlockHeader from './BlockHeader'
 import Reveal from './Reveal'
+import ArrowRight from './icons/ArrowRight'
 import ServiceIcon from './icons/ServiceIcon'
 import { type Lien, type Services as ServicesData, type ServiceCard, lienExterne, lienHref } from '../lib/accueil'
 
@@ -8,15 +10,13 @@ export default function Services({ data }: { data: ServicesData }) {
     <section className="bg-paper-soft px-6 py-16 lg:px-30.5 lg:py-22.5">
       <Reveal>
         <div className="flex flex-col gap-4.5">
-          <p className="font-mono text-[12px] leading-[18.6px] tracking-[0.06em] text-success">
-            {data.surTitre}
-          </p>
-          <h2 className="max-w-196.75 whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-ink lg:text-[60px] lg:leading-15.5">
-            {data.titre}
-          </h2>
-          <p className="max-w-173.5 whitespace-pre-line text-[16px] leading-6 text-ink-soft lg:text-[18px] lg:leading-[27.9px]">
-            {data.description}
-          </p>
+          <BlockHeader
+            surTitre={data.surTitre}
+            titre={data.titre}
+            sousTitre={data.description}
+            titreClass="max-w-196.75 text-ink"
+            sousTitreClass="max-w-173.5 text-ink-soft"
+          />
         </div>
       </Reveal>
 
@@ -36,17 +36,8 @@ export default function Services({ data }: { data: ServicesData }) {
 function ServiceCardItem({ card, index }: { card: ServiceCard; index: number }) {
   const href = lienHref(card.lien)
   const externe = lienExterne(card.lien)
-  const arrow = (
-    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-      <path
-        d="M1 5h11M9 1l4 4-4 4"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
+  const arrow = <ArrowRight />
+
 
   const linkClass =
     'group inline-flex items-center gap-2 pt-[15px] text-[14px] font-medium leading-[21.7px] text-ink'

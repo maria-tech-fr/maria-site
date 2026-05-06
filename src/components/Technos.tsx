@@ -1,3 +1,4 @@
+import BlockHeader from './BlockHeader'
 import Reveal from './Reveal'
 import type { CategorieTechno, Technos as TechnosData } from '../lib/agence'
 
@@ -7,17 +8,12 @@ export default function Technos({ data }: { data: TechnosData }) {
       <div className="flex flex-col gap-15">
         <Reveal>
           <div className="flex flex-col gap-4.5">
-            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-              {data.surTitre}
-            </p>
-            <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-ink lg:text-[60px] lg:leading-15.5">
-              {data.titre}
-            </h2>
-            {data.sousTitre && (
-              <p className="max-w-220 whitespace-pre-line text-[16px] leading-6 text-ink-soft lg:text-[18px] lg:leading-[27.9px]">
-                {data.sousTitre}
-              </p>
-            )}
+            <BlockHeader
+              surTitre={data.surTitre}
+              titre={data.titre}
+              sousTitre={data.sousTitre}
+              sousTitreClass="max-w-220 text-ink-soft"
+            />
           </div>
         </Reveal>
 

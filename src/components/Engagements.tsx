@@ -1,3 +1,4 @@
+import BlockHeader from './BlockHeader'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
 import type { Engagements as EngagementsData } from '../lib/agence'
@@ -14,12 +15,12 @@ export default function Engagements({ data }: { data: EngagementsData }) {
       <div className="relative grid grid-cols-1 gap-12 lg:grid-cols-[462px_1fr] lg:gap-30">
         <Reveal>
           <div className="flex flex-col gap-4.5">
-            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success-soft">
-              {data.surTitre}
-            </p>
-            <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-paper lg:text-[60px] lg:leading-15.5">
-              {data.titre}
-            </h2>
+            <BlockHeader
+              surTitre={data.surTitre}
+              titre={data.titre}
+              surTitreClass="text-success-soft"
+              titreClass="text-paper"
+            />
           </div>
         </Reveal>
 

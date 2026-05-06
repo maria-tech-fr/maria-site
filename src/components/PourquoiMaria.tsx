@@ -1,3 +1,4 @@
+import BlockHeader from './BlockHeader'
 import Reveal from './Reveal'
 import type { CarteMachineHumain, PourquoiMaria as PourquoiMariaData } from '../lib/accueil'
 
@@ -6,12 +7,7 @@ export default function PourquoiMaria({ data }: { data: PourquoiMariaData }) {
     <section className="bg-paper-soft px-6 py-16 lg:px-30.5 lg:py-22.5">
       <Reveal>
         <div className="mx-auto flex max-w-225 flex-col items-center gap-4.5 text-center">
-          <p className="font-mono text-[12px] leading-[18.6px] tracking-[0.06em] text-success">
-            {data.surTitre}
-          </p>
-          <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-ink lg:text-[60px] lg:leading-15.5">
-            {data.titre}
-          </h2>
+          <BlockHeader surTitre={data.surTitre} titre={data.titre} />
         </div>
       </Reveal>
 

@@ -8,18 +8,29 @@ export type Halo = {
   duration?: number
 }
 
+type HaloFieldProps = {
+  halos: Halo[]
+  /** Si true, halos rendus statiques (pas d'animation). Défaut false. */
+  staticMode?: boolean
+}
+
 const PATTERN_COUNT = 5
 
-export default function HaloField({ halos }: { halos: Halo[] }) {
+export default function HaloField({ halos, staticMode = false }: HaloFieldProps) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       {halos.map((h, i) => {
         const alpha = h.alpha ?? 0.4
         const blur = h.blur ?? 40
-        const duration = h.duration ?? 8
+        const duration = h.duration ?? 30
         const pattern = (i % PATTERN_COUNT) + 1
         const delay = -((i * 13) % duration)
         const rgb = hexToRgb(h.color)
+
+        // Sur mobile, on contraint la taille à 60% de la taille design.
+        // Évite que des halos de 500px débordent un viewport de 375px.
+        const sizeStyle = `clamp(${Math.round(h.size * 0.6)}px, 110vw, ${h.size}px)`
+        const blurStyle = `clamp(${Math.round(blur * 0.7)}px, 8vw, ${blur}px)`
 
         return (
           <div
@@ -33,12 +44,17 @@ export default function HaloField({ halos }: { halos: Halo[] }) {
           >
             <div
               style={{
-                width: h.size,
-                height: h.size,
-                filter: `blur(${blur}px)`,
+                width: sizeStyle,
+                height: sizeStyle,
+                aspectRatio: '1 / 1',
+                filter: `blur(${blurStyle})`,
                 background: `radial-gradient(circle at 50% 50%, rgba(${rgb}, ${alpha}) 0%, rgba(${rgb}, 0) 70%)`,
-                animation: `halo-drift-${pattern} ${duration}s ease-in-out ${delay}s infinite`,
-                willChange: 'transform',
+                ...(staticMode
+                  ? { willChange: 'auto' }
+                  : {
+                      animation: `halo-drift-${pattern} ${duration}s ease-in-out ${delay}s infinite`,
+                      willChange: 'transform',
+                    }),
               }}
             />
           </div>

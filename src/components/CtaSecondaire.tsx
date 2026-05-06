@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ArrowRight from './icons/ArrowRight'
 import { type Lien, lienExterne, lienHref } from '../lib/accueil'
 
 type Tone = 'ink' | 'paper'
@@ -31,17 +32,7 @@ export default function CtaSecondaire({
         {lien.libelle}
         <span aria-hidden className="cta-underline" />
       </span>
-      {withArrow && (
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden>
-          <path
-            d="M1 5h11M9 1l4 4-4 4"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )}
+      {withArrow && <ArrowRight />}
     </>
   )
 

@@ -1,3 +1,4 @@
+import BlockHeader from './BlockHeader'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
 import type { Constat as ConstatData } from '../lib/accueil'
@@ -14,12 +15,12 @@ export default function Constat({ data }: { data: ConstatData }) {
 
       <div className="relative flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-x-27.5">
         <Reveal className="flex flex-1 flex-col gap-2.5">
-          <p className="font-mono text-[12px] leading-[18.6px] tracking-[0.06em] text-accent">
-            {data.surTitre}
-          </p>
-          <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-paper lg:text-[60px] lg:leading-15.5">
-            {data.titre}
-          </h2>
+          <BlockHeader
+            surTitre={data.surTitre}
+            titre={data.titre}
+            surTitreClass="text-accent"
+            titreClass="text-paper"
+          />
         </Reveal>
 
         <Reveal className="w-full lg:w-132 lg:shrink-0" delay={150}>
