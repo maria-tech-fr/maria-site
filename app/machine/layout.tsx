@@ -4,7 +4,7 @@ export const metadata = {
   ...sanityMetadata,
   title: 'machine · maria',
   icons: {
-    icon: [{ url: '/favicon-machine.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/favicon-machine.png', type: 'image/png' }],
   },
 }
 
