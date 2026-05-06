@@ -10,7 +10,7 @@ const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence', 'projets']
 export default defineConfig({
   name: 'maria',
   title: 'maria',
-  basePath: '/studio',
+  basePath: '/machine',
   projectId,
   dataset,
   schema: { types: schemaTypes },

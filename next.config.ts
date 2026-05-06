@@ -46,11 +46,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: '/((?!studio|api).*)',
+        source: '/((?!machine|api).*)',
         headers: [cspHeader],
       },
       {
-        source: '/studio/:path*',
+        source: '/machine/:path*',
         headers: [noIndexHeader],
       },
       {
