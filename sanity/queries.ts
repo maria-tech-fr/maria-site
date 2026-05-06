@@ -126,3 +126,62 @@ export const agenceQuery = defineQuery(`
     }
   }
 `)
+
+export const projetsQuery = defineQuery(`
+  *[_id == "projets"][0]{
+    hero{ surTitre, titre, description },
+    etudeDeCas{
+      surTitre,
+      titrePrefixe,
+      titre,
+      identite{ client, secteur, type, outils, statut },
+      contexte{ surTitre, texte, emphase },
+      defi{ surTitre, texte, emphase },
+      approche{
+        titre,
+        etapes[]{ numeroLibelle, titre, description }
+      },
+      fonctionnalites{
+        titre,
+        items[]{ titre, description }
+      },
+      apercuOutil{
+        surTitre,
+        titre,
+        captures[]{
+          legende,
+          image{ asset->{ _id, url, metadata { dimensions } } }
+        }
+      },
+      citation{ texte, auteur, role },
+      technos
+    },
+    savoirFaire{
+      surTitre,
+      titre,
+      description,
+      cards[]{
+        titre,
+        description,
+        picto{ asset->{ _id, url, mimeType } }
+      }
+    },
+    projetsPasses{
+      surTitre,
+      titre,
+      description,
+      projets[]{ categorie, titre, description }
+    },
+    projetsAVenir{
+      surTitre,
+      titre,
+      description,
+      projets[]{
+        categorie,
+        titre,
+        mention,
+        picto{ asset->{ _id, url, mimeType } }
+      }
+    }
+  }
+`)

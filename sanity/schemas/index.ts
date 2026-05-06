@@ -3,6 +3,7 @@ import { accueil } from './accueil'
 import { agence } from './agence'
 import { lien } from './lien'
 import { parametresGlobaux } from './parametresGlobaux'
+import { projets } from './projets'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // objects
@@ -11,4 +12,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   parametresGlobaux,
   accueil,
   agence,
+  projets,
 ]

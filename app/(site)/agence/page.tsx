@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import AgenceHero from '../../../src/components/AgenceHero'
+import DarkHero from '../../../src/components/DarkHero'
 import Engagements from '../../../src/components/Engagements'
 import Faq from '../../../src/components/Faq'
 import Manifeste from '../../../src/components/Manifeste'
@@ -30,7 +30,7 @@ export default async function AgencePage() {
 
   return (
     <>
-      <AgenceHero data={agence.hero} />
+      <DarkHero data={agence.hero} />
       {agence.manifeste && <Manifeste data={agence.manifeste} />}
       {agence.valeurs && <Valeurs data={agence.valeurs} />}
       {agence.nonNegociables && <NonNegociables data={agence.nonNegociables} />}
