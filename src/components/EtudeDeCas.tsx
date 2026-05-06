@@ -359,16 +359,16 @@ function ApercuOutilBlock({ apercu }: { apercu: ApercuOutil }) {
           </h3>
         </div>
       </Reveal>
-      <div className="mt-7 grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-[610fr_685fr]">
+      <div className="mt-7 grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-[660fr_635fr]">
         <Reveal delay={120}>
-          <CaptureSlot capture={captures[0]} aspect="aspect-[610/607]" />
+          <CaptureSlot capture={captures[0]} aspect="aspect-[11/10]" />
         </Reveal>
         <div className="flex flex-col gap-6">
           <Reveal delay={180}>
-            <CaptureSlot capture={captures[1]} aspect="aspect-[685/311]" />
+            <CaptureSlot capture={captures[1]} aspect="aspect-[7/4]" />
           </Reveal>
           <Reveal delay={240}>
-            <CaptureSlot capture={captures[2]} aspect="aspect-[685/273]" />
+            <CaptureSlot capture={captures[2]} aspect="aspect-[21/10]" />
           </Reveal>
         </div>
       </div>
