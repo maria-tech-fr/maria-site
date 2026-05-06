@@ -70,7 +70,7 @@ export default function EtudeDeCas({ data }: { data: EtudeDeCasData }) {
           <div className="relative overflow-hidden rounded-[5px] bg-ink p-8 lg:p-12">
             <div
               aria-hidden
-              className="pointer-events-none absolute left-[-10%] top-[-20%] h-[400px] w-[400px]"
+              className="pointer-events-none absolute right-[-10%] top-[-20%] h-100 w-100"
               style={{
                 background:
                   'radial-gradient(circle, rgba(254, 194, 60, 0.30) 0%, rgba(254, 194, 60, 0) 70%)',
