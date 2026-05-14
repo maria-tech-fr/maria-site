@@ -11,6 +11,7 @@ import ServiceLivrableRapport from '../../../../src/components/ServiceLivrableRa
 import ServiceMethode from '../../../../src/components/ServiceMethode'
 import ServicePourQui from '../../../../src/components/ServicePourQui'
 import ServiceProjetPhare from '../../../../src/components/ServiceProjetPhare'
+import ServiceRepartition from '../../../../src/components/ServiceRepartition'
 import { getPageService, getPageServiceSlugs } from '../../../../src/lib/pageService'
 
 export async function generateStaticParams() {
@@ -44,6 +45,7 @@ export default async function ServicePage({ params }: Params) {
       {page.livrable && <ServiceLivrable data={page.livrable} />}
       {page.methode && <ServiceMethode data={page.methode} />}
       {page.garanties && <ServiceGaranties data={page.garanties} />}
+      {page.repartition && <ServiceRepartition data={page.repartition} />}
       {page.citation && <ServiceCitation data={page.citation} />}
       {page.livrableRapport && <ServiceLivrableRapport data={page.livrableRapport} />}
       {page.projetPhare && <ServiceProjetPhare data={page.projetPhare} />}

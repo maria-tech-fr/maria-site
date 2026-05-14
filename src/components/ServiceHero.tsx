@@ -26,7 +26,10 @@ export default function ServiceHero({ data }: { data: ServiceHeroData }) {
               {data.surTitre}
             </p>
             <h1 className="max-w-260 whitespace-pre-line font-display text-[44px] font-semibold leading-12 tracking-[-0.04em] text-ink lg:text-[80px] lg:leading-[90px]">
-              {renderWithEmphase(data.titre, 'text-ink-soft')}
+              {renderWithEmphase(
+                data.titre,
+                data.titreEmphaseTone === 'ink-soft' ? 'text-ink-soft' : 'text-accent',
+              )}
             </h1>
           </div>
         </Reveal>

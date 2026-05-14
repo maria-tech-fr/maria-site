@@ -15,9 +15,12 @@ export type ServiceMenuItem = {
   } | null
 }
 
+export type HeroEmphaseTone = 'accent' | 'ink-soft'
+
 export type ServiceHero = {
   surTitre: string
   titre: string
+  titreEmphaseTone: HeroEmphaseTone | null
   description: string
   ctaLibelle: string
   ctaHref: string | null
@@ -124,6 +127,19 @@ export type ServiceProjetPhare = {
   kpis: KpiProjet[] | null
 }
 
+export type RepartitionColonne = {
+  titre: string | null
+  items: string[] | null
+}
+
+export type ServiceRepartition = {
+  surTitre: string | null
+  titre: string | null
+  sousTitre: string | null
+  colonneA: RepartitionColonne | null
+  colonneB: RepartitionColonne | null
+}
+
 export type ServiceFaqQuestion = { question: string; reponse: string }
 
 export type ServiceFaq = {
@@ -158,6 +174,7 @@ export type PageService = {
   citation: ServiceCitation | null
   livrableRapport: ServiceLivrableRapport | null
   projetPhare: ServiceProjetPhare | null
+  repartition: ServiceRepartition | null
   faq: ServiceFaq | null
   autresServices: ServiceAutres | null
 } | null

@@ -217,6 +217,7 @@ export const pageServiceQuery = defineQuery(`
     hero{
       surTitre,
       titre,
+      titreEmphaseTone,
       description,
       ctaLibelle,
       ctaHref
@@ -277,6 +278,13 @@ export const pageServiceQuery = defineQuery(`
       titre,
       description,
       kpis[]{ chiffre, libelle }
+    },
+    repartition{
+      surTitre,
+      titre,
+      sousTitre,
+      colonneA{ titre, items },
+      colonneB{ titre, items }
     },
     faq{
       surTitre,
