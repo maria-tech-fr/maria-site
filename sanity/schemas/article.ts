@@ -23,6 +23,15 @@ export const article = defineType({
       validation: (r) => r.required().max(160),
     }),
     defineField({
+      name: 'sousTitre',
+      title: 'Sous-titre (chapô)',
+      description: 'Optionnel. Affiché sous le H1 sur la page article.',
+      type: 'text',
+      rows: 2,
+      group: 'meta',
+      validation: (r) => r.max(200),
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug (URL)',
       description: 'L’adresse sera /blog/<slug>.',
@@ -137,21 +146,163 @@ export const article = defineType({
         },
         {
           type: 'image',
+          name: 'imageBody',
+          title: 'Image inline',
           options: { hotspot: true },
           fields: [
-            defineField({
-              name: 'alt',
-              title: 'Texte alternatif',
-              type: 'string',
-              validation: (r) => r.required(),
-            }),
-            defineField({
-              name: 'legende',
-              title: 'Légende',
-              type: 'string',
-            }),
+            defineField({ name: 'alt', title: 'Texte alternatif', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'legende', title: 'Légende', type: 'string' }),
           ],
         },
+        {
+          type: 'object',
+          name: 'fullWidthImage',
+          title: 'Image pleine largeur',
+          fields: [
+            defineField({
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: { hotspot: true },
+              fields: [
+                defineField({ name: 'alt', title: 'Texte alternatif', type: 'string', validation: (r) => r.required() }),
+              ],
+              validation: (r) => r.required(),
+            }),
+            defineField({ name: 'legende', title: 'Légende', type: 'string', validation: (r) => r.max(200) }),
+          ],
+          preview: {
+            select: { title: 'image.alt', media: 'image' },
+            prepare: ({ title, media }) => ({ title: title || 'Image pleine largeur', media }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'callout',
+          title: 'Encart « À retenir »',
+          fields: [
+            defineField({ name: 'titre', title: 'Titre', type: 'string', validation: (r) => r.max(80) }),
+            defineField({ name: 'texte', title: 'Texte', type: 'text', rows: 3, validation: (r) => r.required().max(400) }),
+          ],
+          preview: {
+            select: { title: 'titre', subtitle: 'texte' },
+            prepare: ({ title, subtitle }) => ({
+              title: title || 'À retenir',
+              subtitle: subtitle ? subtitle.slice(0, 60) : undefined,
+            }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'warning',
+          title: 'Encart « Point de vigilance »',
+          fields: [
+            defineField({ name: 'titre', title: 'Titre', type: 'string', validation: (r) => r.max(80) }),
+            defineField({ name: 'texte', title: 'Texte', type: 'text', rows: 3, validation: (r) => r.required().max(400) }),
+          ],
+          preview: {
+            select: { title: 'titre', subtitle: 'texte' },
+            prepare: ({ title, subtitle }) => ({
+              title: title || 'Point de vigilance',
+              subtitle: subtitle ? subtitle.slice(0, 60) : undefined,
+            }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'video',
+          title: 'Vidéo (YouTube, Vimeo, Loom…)',
+          fields: [
+            defineField({
+              name: 'url',
+              title: 'URL de la vidéo',
+              description: 'Lien public — YouTube, Vimeo, Loom. L\'embed est généré automatiquement.',
+              type: 'url',
+              validation: (r) => r.required(),
+            }),
+            defineField({ name: 'legende', title: 'Légende', type: 'string', validation: (r) => r.max(200) }),
+          ],
+          preview: {
+            select: { title: 'legende', subtitle: 'url' },
+            prepare: ({ title, subtitle }) => ({
+              title: title || 'Vidéo',
+              subtitle: subtitle,
+            }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'inArticleCta',
+          title: 'CTA en cours d\'article',
+          fields: [
+            defineField({ name: 'titre', title: 'Titre', type: 'string', validation: (r) => r.required().max(120) }),
+            defineField({ name: 'description', title: 'Description', type: 'text', rows: 2, validation: (r) => r.required().max(240) }),
+            defineField({ name: 'lienLibelle', title: 'Libellé du lien', type: 'string', initialValue: 'Découvrir →', validation: (r) => r.required().max(60) }),
+            defineField({ name: 'lienHref', title: 'Destination', type: 'string', validation: (r) => r.required() }),
+            defineField({
+              name: 'variant',
+              title: 'Variante visuelle',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Vert clair', value: 'green' },
+                  { title: 'Jaune clair', value: 'yellow' },
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'yellow',
+              validation: (r) => r.required(),
+            }),
+          ],
+          preview: {
+            select: { title: 'titre', subtitle: 'lienHref' },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'tocItems',
+      title: 'Sommaire — overrides',
+      description: 'Optionnel. Si laissé vide, le sommaire est généré automatiquement à partir de tous les H2 du contenu. Pour personnaliser, ajouter des entrées : chaque entrée doit pointer vers l\'anchor d\'un H2 (slug auto-généré depuis le texte du H2). Permet d\'exclure un H2 ou de modifier son libellé dans le sommaire.',
+      type: 'array',
+      group: 'contenu',
+      of: [
+        {
+          type: 'object',
+          name: 'tocItem',
+          fields: [
+            defineField({ name: 'anchor', title: 'Anchor du H2 (slug)', description: 'Ex : si le H2 est « Le constat », l\'anchor est « le-constat ».', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'label', title: 'Libellé personnalisé (optionnel)', type: 'string', validation: (r) => r.max(80) }),
+            defineField({ name: 'exclure', title: 'Exclure du sommaire', description: 'Si coché, ce H2 ne sera pas affiché dans le sommaire malgré sa présence dans le contenu.', type: 'boolean', initialValue: false }),
+          ],
+          preview: { select: { title: 'label', subtitle: 'anchor', exclure: 'exclure' }, prepare: ({ title, subtitle, exclure }) => ({ title: title || subtitle, subtitle: exclure ? '⊘ exclu' : subtitle }) },
+        },
+      ],
+    }),
+    defineField({
+      name: 'sidebarCta',
+      title: 'CTA latéral (sous le sommaire)',
+      description: 'Optionnel. Affiché en bas du sommaire sticky sur desktop.',
+      type: 'object',
+      group: 'contenu',
+      fields: [
+        defineField({ name: 'titre', title: 'Titre', type: 'string', validation: (r) => r.max(80) }),
+        defineField({ name: 'description', title: 'Description', type: 'text', rows: 2, validation: (r) => r.max(160) }),
+        defineField({ name: 'lienLibelle', title: 'Libellé du lien', type: 'string', initialValue: 'En parler →', validation: (r) => r.max(40) }),
+        defineField({ name: 'lienHref', title: 'Destination', type: 'string' }),
+        defineField({
+          name: 'variant',
+          title: 'Variante visuelle',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Vert clair', value: 'green' },
+              { title: 'Jaune clair', value: 'yellow' },
+            ],
+            layout: 'radio',
+          },
+          initialValue: 'green',
+        }),
       ],
     }),
     defineField({

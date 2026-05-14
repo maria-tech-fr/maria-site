@@ -276,20 +276,50 @@ export const articleBySlugQuery = defineQuery(`
   *[_type == "article" && slug.current == $slug][0]{
     "slug": slug.current,
     titre,
+    sousTitre,
     intro,
     publishedAt,
+    "updatedAt": _updatedAt,
     readingTime,
     featured,
     coverImage{ asset->{ _id, url, metadata{ dimensions } }, alt },
     categorie->{ "slug": slug.current, libelle, description },
     auteur->{ nom, role, bio, avatar{ asset->{ _id, url } } },
-    body,
+    body[]{
+      ...,
+      _type == "imageBody" => { ..., asset->{ _id, url, metadata{ dimensions } } },
+      _type == "fullWidthImage" => {
+        ...,
+        image{ ..., asset->{ _id, url, metadata{ dimensions } } }
+      },
+      markDefs[]{ ... }
+    },
+    tocItems[]{ anchor, label, exclure },
+    sidebarCta{ titre, description, lienLibelle, lienHref, variant },
     seo{
       titre,
       description,
       ogImage{ asset->{ _id, url } }
     }
   }
+`)
+
+/** Articles suggérés : même catégorie, exclusion du courant, par date desc. */
+export const relatedArticlesQuery = defineQuery(`
+  *[_type == "article"
+    && defined(slug.current)
+    && slug.current != $slug
+    && categorie->slug.current == $category
+  ] | order(publishedAt desc) [0...3] ${articleCardProjection}
+`)
+
+/** Fallback : si pas assez d'articles dans la catégorie, on prend les plus récents toutes catégories. */
+export const fallbackRelatedQuery = defineQuery(`
+  *[_type == "article"
+    && defined(slug.current)
+    && slug.current != $slug
+    && !(slug.current in $excludeSlugs)
+  ] | order(publishedAt desc) [0...$limit] ${articleCardProjection}
 `)
 
 export const articleSlugsQuery = defineQuery(`

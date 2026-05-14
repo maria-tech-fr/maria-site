@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from '@portabletext/types'
 import { client } from '../../sanity/client'
 import {
   articleBySlugQuery,
@@ -7,9 +8,11 @@ import {
   articlesListingCountQuery,
   articlesListingOldestQuery,
   articlesListingRecentQuery,
+  fallbackRelatedQuery,
   featuredArticleQuery,
   latestArticleQuery,
   promosBlogQuery,
+  relatedArticlesQuery,
 } from '../../sanity/queries'
 
 export type SanityImageRef = {
@@ -48,19 +51,30 @@ export type ArticleCard = {
   auteur: AuteurRef
 }
 
-/**
- * Bloc Portable Text — typing minimal le temps qu'on installe
- * @portabletext/react avec ses types complets pour rendre la page article.
- */
-export type PortableBlock = {
-  _type: string
-  _key?: string
-  [key: string]: unknown
+/** Bloc Portable Text (incluant les custom blocks article). */
+export type ArticleBodyBlock = PortableTextBlock & { _type: string }
+
+export type TocItemOverride = {
+  anchor: string
+  label: string | null
+  exclure: boolean | null
+}
+
+export type SidebarCta = {
+  titre: string | null
+  description: string | null
+  lienLibelle: string | null
+  lienHref: string | null
+  variant: 'green' | 'yellow' | null
 }
 
 /** Article complet — utilisé sur la page /blog/[slug]. */
 export type Article = ArticleCard & {
-  body: PortableBlock[] | null
+  sousTitre: string | null
+  updatedAt: string | null
+  body: ArticleBodyBlock[] | null
+  tocItems: TocItemOverride[] | null
+  sidebarCta: SidebarCta | null
   seo: {
     titre: string | null
     description: string | null
@@ -169,6 +183,31 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     { slug },
     { next: { revalidate: DEFAULT_REVALIDATE, tags: ['article', `article:${slug}`] } },
   )
+}
+
+/**
+ * Articles suggérés : 3 articles de la même catégorie (hors article courant),
+ * complétés par les plus récents toutes catégories si moins de 3 trouvés.
+ */
+export async function getRelatedArticles(
+  slug: string,
+  category: string,
+): Promise<ArticleCard[]> {
+  const sameCategory = await client.fetch<ArticleCard[]>(
+    relatedArticlesQuery,
+    { slug, category },
+    { next: { revalidate: DEFAULT_REVALIDATE, tags: ['article'] } },
+  )
+  if (sameCategory.length >= 3) return sameCategory.slice(0, 3)
+
+  const need = 3 - sameCategory.length
+  const excludeSlugs = [slug, ...sameCategory.map((a) => a.slug)]
+  const fallback = await client.fetch<ArticleCard[]>(
+    fallbackRelatedQuery,
+    { slug, excludeSlugs, limit: need },
+    { next: { revalidate: DEFAULT_REVALIDATE, tags: ['article'] } },
+  )
+  return [...sameCategory, ...fallback].slice(0, 3)
 }
 
 export async function getArticleSlugs(): Promise<string[]> {
