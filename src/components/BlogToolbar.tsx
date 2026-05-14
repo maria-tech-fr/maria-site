@@ -83,8 +83,8 @@ export default function BlogToolbar({
           ))}
         </div>
 
-        {/* Recherche + tri */}
-        <div className="flex items-center gap-2.5">
+        {/* Recherche au-dessus du tri */}
+        <div className="flex flex-col items-stretch gap-2.5 lg:items-end">
           {/* Recherche */}
           <label htmlFor={searchInputId} className="sr-only">
             Rechercher dans les articles
@@ -97,19 +97,19 @@ export default function BlogToolbar({
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Rechercher…"
-              className="h-9.5 w-56 rounded-full border border-paper-edge bg-paper pl-9 pr-3 font-work-sans text-[13px] text-ink placeholder:text-[#999] focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+              className="h-9.5 w-full rounded-full border border-paper-edge bg-paper pl-9 pr-3 font-work-sans text-[13px] text-ink placeholder:text-[#999] focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 lg:w-56"
             />
           </div>
           {/* Tri */}
           <label className="sr-only" htmlFor={`${searchInputId}-sort`}>
             Trier les articles
           </label>
-          <div className="relative">
+          <div className="relative w-full lg:w-fit">
             <select
               id={`${searchInputId}-sort`}
               value={sort}
               onChange={(e) => onSortChange(e.target.value as ArticleSort)}
-              className="h-9.5 appearance-none rounded-full border border-paper-edge bg-paper pl-4 pr-9 font-work-sans text-[13px] font-medium leading-[15px] text-ink focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+              className="h-9.5 w-full appearance-none rounded-full border border-paper-edge bg-paper pl-4 pr-9 font-work-sans text-[13px] font-medium leading-3.75 text-ink focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
             >
               <option value="recent">Plus récents</option>
               <option value="oldest">Plus anciens</option>

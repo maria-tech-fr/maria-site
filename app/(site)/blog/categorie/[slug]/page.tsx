@@ -12,7 +12,7 @@ import {
 } from '../../../../../src/lib/article'
 import type { PromoForGrid } from '../../../../../src/lib/blog'
 
-const PAGE_SIZE = 12
+const PAGE_SIZE = 13
 
 type Params = {
   params: Promise<{ slug: string }>

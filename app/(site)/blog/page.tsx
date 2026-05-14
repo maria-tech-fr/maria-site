@@ -12,7 +12,7 @@ import {
 } from '../../../src/lib/article'
 import type { PromoForGrid } from '../../../src/lib/blog'
 
-const PAGE_SIZE = 12
+const PAGE_SIZE = 13
 
 export const metadata: Metadata = {
   title: 'Journal — Nos points de vue sur l’IA en entreprise',
