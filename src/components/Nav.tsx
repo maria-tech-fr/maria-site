@@ -379,6 +379,8 @@ function MobileExpand({
 }
 
 function Chevron({ open }: { open: boolean }) {
+  // Pas de rotation : on signale l'état ouvert par un léger glissement vers
+  // le bas + opacité pleine. Moins « cartoonish » qu'un flip 180°.
   return (
     <svg
       width="10"
@@ -386,7 +388,9 @@ function Chevron({ open }: { open: boolean }) {
       viewBox="0 0 10 6"
       fill="none"
       aria-hidden
-      className={`text-ink-soft/55 transition-transform duration-300 ease-out ${open ? 'rotate-180' : ''}`}
+      className={`transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0.18,1)] ${
+        open ? 'translate-y-0.5 text-ink opacity-100' : 'translate-y-0 text-ink-soft opacity-50'
+      }`}
     >
       <path
         d="M1 1l4 4 4-4"
@@ -433,7 +437,7 @@ function NavSubmenu({
       id={id}
       role="menu"
       aria-label={ariaLabel}
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-3 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-white/96 p-3.25 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] backdrop-blur-md transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-3 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-3.25 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
@@ -447,7 +451,7 @@ function NavSubmenu({
               href={item.href}
               role="menuitem"
               onClick={onItemClick}
-              className="group flex items-start gap-4 rounded-[10px] p-3.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
+              className="group flex items-center gap-4 rounded-[10px] p-3.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
             >
               <span
                 aria-hidden
@@ -500,7 +504,7 @@ function Arrow() {
       viewBox="0 0 16 16"
       fill="none"
       aria-hidden
-      className="mt-1 flex-none text-ink-soft/0 transition-all duration-300 ease-out group-hover:text-ink-soft group-hover:translate-x-0.5"
+      className="flex-none text-ink-soft/0 transition-all duration-300 ease-out group-hover:text-ink-soft group-hover:translate-x-0.5"
     >
       <path
         d="M3 8h9M8 4l4 4-4 4"
