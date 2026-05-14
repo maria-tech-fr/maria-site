@@ -383,8 +383,8 @@ function Chevron({ open }: { open: boolean }) {
   // sous-menu s'ouvre. Animation plus posée qu'un flip de chevron.
   return (
     <svg
-      width="12"
-      height="12"
+      width="11"
+      height="11"
       viewBox="0 0 12 12"
       fill="none"
       aria-hidden
@@ -398,7 +398,7 @@ function Chevron({ open }: { open: boolean }) {
         x2="10"
         y2="6"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.2"
         strokeLinecap="round"
       />
       <line
@@ -407,7 +407,7 @@ function Chevron({ open }: { open: boolean }) {
         x2="6"
         y2="10"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.2"
         strokeLinecap="round"
         className={`origin-center transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0.18,1)] ${
           open ? 'scale-y-0' : 'scale-y-100'
