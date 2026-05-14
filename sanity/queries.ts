@@ -190,6 +190,26 @@ export const pageServiceSlugsQuery = defineQuery(`
   *[_type == "pageService" && defined(slug.current)][]{ "slug": slug.current }
 `)
 
+export const servicesMenuQuery = defineQuery(`
+  *[_type == "pageService" && defined(slug.current) && defined(ordreMenu)] | order(ordreMenu asc){
+    titre,
+    "slug": slug.current,
+    ordreMenu,
+    introCourte,
+    pictoMenu{ asset->{ _id, url, mimeType } }
+  }
+`)
+
+export const besoinsMenuQuery = defineQuery(`
+  *[_type == "pageBesoin" && defined(slug.current) && defined(ordreMenu)] | order(ordreMenu asc){
+    titre,
+    "slug": slug.current,
+    ordreMenu,
+    introCourte,
+    pictoMenu{ asset->{ _id, url, mimeType } }
+  }
+`)
+
 export const pageServiceQuery = defineQuery(`
   *[_type == "pageService" && slug.current == $slug][0]{
     titre,

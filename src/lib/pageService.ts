@@ -1,5 +1,19 @@
 import { client } from '../../sanity/client'
-import { pageServiceQuery, pageServiceSlugsQuery } from '../../sanity/queries'
+import {
+  pageServiceQuery,
+  pageServiceSlugsQuery,
+  servicesMenuQuery,
+} from '../../sanity/queries'
+
+export type ServiceMenuItem = {
+  titre: string
+  slug: string
+  ordreMenu: number
+  introCourte: string | null
+  pictoMenu: {
+    asset: { _id: string; url: string; mimeType: string } | null
+  } | null
+}
 
 export type ServiceHero = {
   surTitre: string
@@ -153,4 +167,13 @@ export async function getPageServiceSlugs(): Promise<string[]> {
     { next: { revalidate: 60, tags: ['pageService'] } },
   )
   return rows.map((r) => r.slug)
+}
+
+export async function getServicesMenu(): Promise<ServiceMenuItem[]> {
+  const rows = await client.fetch<ServiceMenuItem[]>(
+    servicesMenuQuery,
+    {},
+    { next: { revalidate: 60, tags: ['pageService'] } },
+  )
+  return rows ?? []
 }

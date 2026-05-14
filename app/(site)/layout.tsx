@@ -3,6 +3,8 @@ import { DM_Mono, Syne, Work_Sans } from 'next/font/google'
 import '../globals.css'
 import Nav from '../../src/components/Nav'
 import Footer from '../../src/components/Footer'
+import { getBesoinsMenu } from '../../src/lib/pageBesoin'
+import { getServicesMenu } from '../../src/lib/pageService'
 
 const workSans = Work_Sans({
   variable: '--font-work-sans',
@@ -48,7 +50,11 @@ const HALO_KEYFRAMES = `
 @keyframes border-drift{0%{background-position:0 0,0% 50%}100%{background-position:0 0,200% 50%}}
 `
 
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const [services, besoins] = await Promise.all([
+    getServicesMenu(),
+    getBesoinsMenu(),
+  ])
   return (
     <html
       lang="fr"
@@ -57,7 +63,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <style dangerouslySetInnerHTML={{ __html: HALO_KEYFRAMES }} />
         <div className="fixed inset-x-0 top-0 z-50 px-4 py-3 sm:px-6 lg:px-30.5 lg:py-6">
-          <Nav />
+          <Nav services={services} besoins={besoins} />
         </div>
         <main className="flex-1">{children}</main>
         <Footer />

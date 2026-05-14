@@ -1,8 +1,8 @@
 import type { StructureResolver } from 'sanity/structure'
-import { CogIcon, FolderIcon, HomeIcon, RocketIcon, UsersIcon } from '@sanity/icons'
+import { BulbOutlineIcon, CogIcon, FolderIcon, HomeIcon, RocketIcon, UsersIcon } from '@sanity/icons'
 
 const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence', 'projets'] as const
-const HANDLED_COLLECTIONS = ['pageService'] as const
+const HANDLED_COLLECTIONS = ['pageService', 'pageBesoin'] as const
 const HIDDEN_FROM_FALLBACK = [...SINGLETONS, ...HANDLED_COLLECTIONS] as readonly string[]
 
 export const structure: StructureResolver = (S) =>
@@ -42,6 +42,13 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.documentTypeList('pageService')
             .title('Pages services'),
+        ),
+      S.listItem()
+        .title('Pages besoins')
+        .icon(BulbOutlineIcon)
+        .child(
+          S.documentTypeList('pageBesoin')
+            .title('Pages besoins'),
         ),
       S.divider(),
       S.listItem()
