@@ -185,3 +185,50 @@ export const projetsQuery = defineQuery(`
     }
   }
 `)
+
+export const pageServiceSlugsQuery = defineQuery(`
+  *[_type == "pageService" && defined(slug.current)][]{ "slug": slug.current }
+`)
+
+export const pageServiceQuery = defineQuery(`
+  *[_type == "pageService" && slug.current == $slug][0]{
+    titre,
+    "slug": slug.current,
+    hero{
+      surTitre,
+      titre,
+      description,
+      ctaLibelle,
+      ctaHref
+    },
+    pourQui{
+      surTitre,
+      titre,
+      cards[]{ numero, titre, description }
+    },
+    constat{
+      surTitre,
+      titre,
+      paragraphes[]{ texte, emphase }
+    },
+    livrable{
+      surTitre,
+      titre,
+      sousTitre,
+      items[]{
+        numero,
+        titre,
+        description,
+        picto{ asset->{ _id, url, mimeType } }
+      }
+    },
+    methode{
+      surTitre,
+      titre,
+      sousTitre,
+      etapes[]{ numero, libelle, titre, description, duree },
+      lienLibelle,
+      lienHref
+    }
+  }
+`)

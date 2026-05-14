@@ -2,6 +2,7 @@ import type { SchemaTypeDefinition } from 'sanity'
 import { accueil } from './accueil'
 import { agence } from './agence'
 import { lien } from './lien'
+import { pageService } from './pageService'
 import { parametresGlobaux } from './parametresGlobaux'
 import { projets } from './projets'
 
@@ -13,4 +14,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   accueil,
   agence,
   projets,
+  // collections
+  pageService,
 ]
