@@ -10,6 +10,7 @@ import ServiceLivrable from '../../../../src/components/ServiceLivrable'
 import ServiceLivrableRapport from '../../../../src/components/ServiceLivrableRapport'
 import ServiceMethode from '../../../../src/components/ServiceMethode'
 import ServicePourQui from '../../../../src/components/ServicePourQui'
+import ServiceProjetPhare from '../../../../src/components/ServiceProjetPhare'
 import { getPageService, getPageServiceSlugs } from '../../../../src/lib/pageService'
 
 export async function generateStaticParams() {
@@ -45,6 +46,7 @@ export default async function ServicePage({ params }: Params) {
       {page.garanties && <ServiceGaranties data={page.garanties} />}
       {page.citation && <ServiceCitation data={page.citation} />}
       {page.livrableRapport && <ServiceLivrableRapport data={page.livrableRapport} />}
+      {page.projetPhare && <ServiceProjetPhare data={page.projetPhare} />}
       {page.faq && <Faq data={page.faq} />}
       {page.autresServices && <ServiceAutres data={page.autresServices} />}
     </>

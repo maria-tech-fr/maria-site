@@ -115,6 +115,15 @@ export type ServiceLivrableRapport = {
   annexes: string[] | null
 }
 
+export type KpiProjet = { chiffre: string; libelle: string }
+
+export type ServiceProjetPhare = {
+  surTitre: string | null
+  titre: string | null
+  description: string | null
+  kpis: KpiProjet[] | null
+}
+
 export type ServiceFaqQuestion = { question: string; reponse: string }
 
 export type ServiceFaq = {
@@ -148,6 +157,7 @@ export type PageService = {
   garanties: ServiceGaranties | null
   citation: ServiceCitation | null
   livrableRapport: ServiceLivrableRapport | null
+  projetPhare: ServiceProjetPhare | null
   faq: ServiceFaq | null
   autresServices: ServiceAutres | null
 } | null

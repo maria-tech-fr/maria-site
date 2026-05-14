@@ -272,6 +272,12 @@ export const pageServiceQuery = defineQuery(`
       annexesTitre,
       annexes
     },
+    projetPhare{
+      surTitre,
+      titre,
+      description,
+      kpis[]{ chiffre, libelle }
+    },
     faq{
       surTitre,
       titre,
