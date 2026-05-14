@@ -210,6 +210,121 @@ export const besoinsMenuQuery = defineQuery(`
   }
 `)
 
+/* ============================================================================
+ * BLOG
+ * ============================================================================ */
+
+// Projection commune utilisée par toutes les queries qui renvoient un article
+// pour la grille (listing + featured).
+const articleCardProjection = `{
+  "slug": slug.current,
+  titre,
+  excerpt,
+  publishedAt,
+  readingTime,
+  featured,
+  coverImage{ asset->{ _id, url, metadata{ dimensions } }, alt },
+  categorie->{ "slug": slug.current, libelle },
+  auteur->{ nom, role, avatar{ asset->{ _id, url } } }
+}`
+
+export const articlesListingRecentQuery = defineQuery(`
+  *[_type == "article"
+    && defined(slug.current)
+    && ($category == null || categorie->slug.current == $category)
+    && ($search == null || $search == "" || (
+      titre match $searchPattern || excerpt match $searchPattern
+    ))
+    && ($excludeSlug == null || slug.current != $excludeSlug)
+  ] | order(publishedAt desc) [$start...$end] ${articleCardProjection}
+`)
+
+export const articlesListingOldestQuery = defineQuery(`
+  *[_type == "article"
+    && defined(slug.current)
+    && ($category == null || categorie->slug.current == $category)
+    && ($search == null || $search == "" || (
+      titre match $searchPattern || excerpt match $searchPattern
+    ))
+    && ($excludeSlug == null || slug.current != $excludeSlug)
+  ] | order(publishedAt asc) [$start...$end] ${articleCardProjection}
+`)
+
+export const articlesListingCountQuery = defineQuery(`
+  count(*[_type == "article"
+    && defined(slug.current)
+    && ($category == null || categorie->slug.current == $category)
+    && ($search == null || $search == "" || (
+      titre match $searchPattern || excerpt match $searchPattern
+    ))
+    && ($excludeSlug == null || slug.current != $excludeSlug)
+  ])
+`)
+
+export const featuredArticleQuery = defineQuery(`
+  *[_type == "article" && defined(slug.current) && featured == true]
+    | order(publishedAt desc) [0] ${articleCardProjection}
+`)
+
+// Fallback : si aucun article n'est featured, on prend le plus récent.
+export const latestArticleQuery = defineQuery(`
+  *[_type == "article" && defined(slug.current)]
+    | order(publishedAt desc) [0] ${articleCardProjection}
+`)
+
+export const articleBySlugQuery = defineQuery(`
+  *[_type == "article" && slug.current == $slug][0]{
+    "slug": slug.current,
+    titre,
+    excerpt,
+    publishedAt,
+    readingTime,
+    featured,
+    coverImage{ asset->{ _id, url, metadata{ dimensions } }, alt },
+    categorie->{ "slug": slug.current, libelle, description },
+    auteur->{ nom, role, bio, avatar{ asset->{ _id, url } } },
+    body,
+    seo{
+      titre,
+      description,
+      ogImage{ asset->{ _id, url } }
+    }
+  }
+`)
+
+export const articleSlugsQuery = defineQuery(`
+  *[_type == "article" && defined(slug.current)][]{ "slug": slug.current }
+`)
+
+export const articleCategoriesQuery = defineQuery(`
+  *[_type == "articleCategorie" && defined(slug.current)] | order(libelle asc){
+    "slug": slug.current,
+    libelle,
+    description
+  }
+`)
+
+export const articleCategorieBySlugQuery = defineQuery(`
+  *[_type == "articleCategorie" && slug.current == $slug][0]{
+    "slug": slug.current,
+    libelle,
+    description
+  }
+`)
+
+export const promosBlogQuery = defineQuery(`
+  *[_type == "promoBlog" && actif == true] | order(position asc){
+    position,
+    label,
+    titre,
+    description,
+    lienLibelle,
+    lienHref,
+    variant
+  }
+`)
+
+
 export const pageServiceQuery = defineQuery(`
   *[_type == "pageService" && slug.current == $slug][0]{
     titre,

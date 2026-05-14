@@ -1,8 +1,26 @@
 import type { StructureResolver } from 'sanity/structure'
-import { BulbOutlineIcon, CogIcon, FolderIcon, HomeIcon, RocketIcon, UsersIcon } from '@sanity/icons'
+import {
+  BulbOutlineIcon,
+  CogIcon,
+  DocumentTextIcon,
+  EditIcon,
+  FolderIcon,
+  HomeIcon,
+  RocketIcon,
+  StarIcon,
+  TagIcon,
+  UsersIcon,
+} from '@sanity/icons'
 
 const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence', 'projets'] as const
-const HANDLED_COLLECTIONS = ['pageService', 'pageBesoin'] as const
+const HANDLED_COLLECTIONS = [
+  'pageService',
+  'pageBesoin',
+  'article',
+  'articleCategorie',
+  'auteur',
+  'promoBlog',
+] as const
 const HIDDEN_FROM_FALLBACK = [...SINGLETONS, ...HANDLED_COLLECTIONS] as readonly string[]
 
 export const structure: StructureResolver = (S) =>
@@ -49,6 +67,32 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.documentTypeList('pageBesoin')
             .title('Pages besoins'),
+        ),
+      S.divider(),
+      S.listItem()
+        .title('Blog')
+        .icon(EditIcon)
+        .child(
+          S.list()
+            .title('Blog')
+            .items([
+              S.listItem()
+                .title('Articles')
+                .icon(DocumentTextIcon)
+                .child(S.documentTypeList('article').title('Articles')),
+              S.listItem()
+                .title('Catégories')
+                .icon(TagIcon)
+                .child(S.documentTypeList('articleCategorie').title('Catégories d’articles')),
+              S.listItem()
+                .title('Auteurs')
+                .icon(UsersIcon)
+                .child(S.documentTypeList('auteur').title('Auteurs')),
+              S.listItem()
+                .title('Vignettes promo')
+                .icon(StarIcon)
+                .child(S.documentTypeList('promoBlog').title('Vignettes promo (blog)')),
+            ]),
         ),
       S.divider(),
       S.listItem()
