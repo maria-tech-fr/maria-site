@@ -379,25 +379,40 @@ function MobileExpand({
 }
 
 function Chevron({ open }: { open: boolean }) {
-  // Pas de rotation : on signale l'état ouvert par un léger glissement vers
-  // le bas + opacité pleine. Moins « cartoonish » qu'un flip 180°.
+  // Pictogramme +/− : la barre verticale se rétracte sur l'axe Y quand le
+  // sous-menu s'ouvre. Animation plus posée qu'un flip de chevron.
   return (
     <svg
-      width="10"
-      height="6"
-      viewBox="0 0 10 6"
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
       fill="none"
       aria-hidden
-      className={`transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0.18,1)] ${
-        open ? 'translate-y-0.5 text-ink opacity-100' : 'translate-y-0 text-ink-soft opacity-50'
+      className={`transition-colors duration-300 ease-out ${
+        open ? 'text-ink' : 'text-ink-soft'
       }`}
     >
-      <path
-        d="M1 1l4 4 4-4"
+      <line
+        x1="2"
+        y1="6"
+        x2="10"
+        y2="6"
         stroke="currentColor"
         strokeWidth="1.6"
         strokeLinecap="round"
-        strokeLinejoin="round"
+      />
+      <line
+        x1="6"
+        y1="2"
+        x2="6"
+        y2="10"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        className={`origin-center transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0.18,1)] ${
+          open ? 'scale-y-0' : 'scale-y-100'
+        }`}
+        style={{ transformBox: 'fill-box' }}
       />
     </svg>
   )
@@ -437,7 +452,7 @@ function NavSubmenu({
       id={id}
       role="menu"
       aria-label={ariaLabel}
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-3 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-3.25 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-5 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper/96 p-3.25 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] backdrop-blur-sm transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
