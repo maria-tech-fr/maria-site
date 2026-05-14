@@ -39,7 +39,7 @@ export type AuteurRef = {
 export type ArticleCard = {
   slug: string
   titre: string
-  excerpt: string
+  intro: string | null
   publishedAt: string
   readingTime: number
   featured: boolean

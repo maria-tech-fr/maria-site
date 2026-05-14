@@ -219,7 +219,7 @@ export const besoinsMenuQuery = defineQuery(`
 const articleCardProjection = `{
   "slug": slug.current,
   titre,
-  excerpt,
+  intro,
   publishedAt,
   readingTime,
   featured,
@@ -233,7 +233,7 @@ export const articlesListingRecentQuery = defineQuery(`
     && defined(slug.current)
     && ($category == null || categorie->slug.current == $category)
     && ($search == null || $search == "" || (
-      titre match $searchPattern || excerpt match $searchPattern
+      titre match $searchPattern || intro match $searchPattern
     ))
     && ($excludeSlug == null || slug.current != $excludeSlug)
   ] | order(publishedAt desc) [$start...$end] ${articleCardProjection}
@@ -244,7 +244,7 @@ export const articlesListingOldestQuery = defineQuery(`
     && defined(slug.current)
     && ($category == null || categorie->slug.current == $category)
     && ($search == null || $search == "" || (
-      titre match $searchPattern || excerpt match $searchPattern
+      titre match $searchPattern || intro match $searchPattern
     ))
     && ($excludeSlug == null || slug.current != $excludeSlug)
   ] | order(publishedAt asc) [$start...$end] ${articleCardProjection}
@@ -255,7 +255,7 @@ export const articlesListingCountQuery = defineQuery(`
     && defined(slug.current)
     && ($category == null || categorie->slug.current == $category)
     && ($search == null || $search == "" || (
-      titre match $searchPattern || excerpt match $searchPattern
+      titre match $searchPattern || intro match $searchPattern
     ))
     && ($excludeSlug == null || slug.current != $excludeSlug)
   ])
@@ -276,7 +276,7 @@ export const articleBySlugQuery = defineQuery(`
   *[_type == "article" && slug.current == $slug][0]{
     "slug": slug.current,
     titre,
-    excerpt,
+    intro,
     publishedAt,
     readingTime,
     featured,

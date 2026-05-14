@@ -32,13 +32,13 @@ export const article = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: 'excerpt',
-      title: 'Excerpt',
-      description: 'Résumé de 2-3 phrases affiché dans la vignette de la grille. Max 240 caractères.',
+      name: 'intro',
+      title: 'Intro',
+      description: 'Optionnelle. 2-3 phrases. Affichée uniquement sur le bloc « article à la une » (l\'article featured) — non affichée dans la grille du listing.',
       type: 'text',
       rows: 3,
       group: 'meta',
-      validation: (r) => r.required().max(240),
+      validation: (r) => r.max(280),
     }),
     defineField({
       name: 'categorie',
@@ -85,6 +85,7 @@ export const article = defineType({
     defineField({
       name: 'coverImage',
       title: 'Image de couverture',
+      description: 'Optionnelle. Si non renseignée, un placeholder gradient maria est affiché.',
       type: 'image',
       group: 'meta',
       options: { hotspot: true },
@@ -92,12 +93,11 @@ export const article = defineType({
         defineField({
           name: 'alt',
           title: 'Texte alternatif',
-          description: 'Description de l’image pour l’accessibilité et le SEO. Obligatoire.',
+          description: 'Description de l’image pour l’accessibilité et le SEO. Obligatoire si une image est uploadée.',
           type: 'string',
-          validation: (r) => r.required().max(160),
+          validation: (r) => r.max(160),
         }),
       ],
-      validation: (r) => r.required(),
     }),
     defineField({
       name: 'body',
