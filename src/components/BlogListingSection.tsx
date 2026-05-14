@@ -39,7 +39,8 @@ export default function BlogListingSection({
   const [isPending, startTransition] = useTransition()
   const [done, setDone] = useState(initialArticles.length >= total)
 
-  const totalShown = initialArticles.length + extraArticles.length
+  const loadedArticles = [...initialArticles, ...extraArticles]
+  const totalShown = loadedArticles.length
   const hasResults = totalShown > 0
 
   function onLoadMore() {
@@ -57,8 +58,9 @@ export default function BlogListingSection({
     })
   }
 
-  const initialItems = interleavePromos(initialArticles, promos)
-  const extraItems: GridItem[] = extraArticles.map((a) => ({ kind: 'article', data: a }))
+  // Promos interleavées sur la liste complète chargée (positions absolues).
+  // Quand on charge plus, les promos restent à leurs positions globales.
+  const gridItems = interleavePromos(loadedArticles, promos)
 
   return (
     <section
@@ -68,8 +70,7 @@ export default function BlogListingSection({
       <div className="flex flex-col gap-12">
         {hasResults ? (
           <>
-            <Grid items={initialItems} />
-            {extraItems.length > 0 && <Grid items={extraItems} />}
+            <Grid items={gridItems} />
 
             <div className="flex flex-col items-center gap-4">
               {!done ? (

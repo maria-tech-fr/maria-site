@@ -63,7 +63,7 @@ export default function BlogToolbar({
   return (
     <section
       aria-label="Filtres et recherche"
-      className="sticky top-22 z-30 border-b border-paper-edge bg-[#F9F9F9]"
+      className="border-b border-paper-edge bg-[#F9F9F9]"
     >
       <div className="flex flex-col gap-3 px-6 py-6 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:px-30.5 lg:py-6">
         {/* Chips catégories */}
