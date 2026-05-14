@@ -3,9 +3,15 @@
 import { useState } from 'react'
 import BlockHeader from './BlockHeader'
 import Reveal from './Reveal'
-import type { Faq as FaqData, QuestionFaq } from '../lib/agence'
 
-export default function Faq({ data }: { data: FaqData }) {
+export type FaqQuestion = { question: string; reponse: string }
+export type FaqContent = {
+  surTitre: string
+  titre: string
+  questions: FaqQuestion[] | null
+}
+
+export default function Faq({ data }: { data: FaqContent }) {
   return (
     <section className="bg-paper px-6 py-16 lg:px-30.5 lg:py-22.5">
       <div className="flex flex-col gap-12">
@@ -33,7 +39,7 @@ export default function Faq({ data }: { data: FaqData }) {
   )
 }
 
-function QuestionItem({ item, isLast }: { item: QuestionFaq; isLast: boolean }) {
+function QuestionItem({ item, isLast }: { item: FaqQuestion; isLast: boolean }) {
   const [open, setOpen] = useState(false)
 
   return (

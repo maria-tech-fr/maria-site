@@ -229,6 +229,38 @@ export const pageServiceQuery = defineQuery(`
       etapes[]{ numero, libelle, titre, description, duree },
       lienLibelle,
       lienHref
+    },
+    garanties{
+      surTitre,
+      titre,
+      items[]{ titre, description }
+    },
+    citation{
+      surTitre,
+      texte,
+      auteur,
+      auteurTag
+    },
+    livrableRapport{
+      surTitre,
+      titre,
+      sousTitre,
+      mockupKicker,
+      mockupTitre,
+      mockupMeta,
+      sections[]{ numero, titre, description, pages },
+      annexesTitre,
+      annexes
+    },
+    faq{
+      surTitre,
+      titre,
+      questions[]{ question, reponse }
+    },
+    autresServices{
+      surTitre,
+      titre,
+      services[]{ eyebrow, titre, description, lienLibelle, lienHref }
     }
   }
 `)

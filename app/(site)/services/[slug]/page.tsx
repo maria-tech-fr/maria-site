@@ -1,8 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Faq from '../../../../src/components/Faq'
+import ServiceAutres from '../../../../src/components/ServiceAutres'
+import ServiceCitation from '../../../../src/components/ServiceCitation'
 import ServiceConstat from '../../../../src/components/ServiceConstat'
+import ServiceGaranties from '../../../../src/components/ServiceGaranties'
 import ServiceHero from '../../../../src/components/ServiceHero'
 import ServiceLivrable from '../../../../src/components/ServiceLivrable'
+import ServiceLivrableRapport from '../../../../src/components/ServiceLivrableRapport'
 import ServiceMethode from '../../../../src/components/ServiceMethode'
 import ServicePourQui from '../../../../src/components/ServicePourQui'
 import { getPageService, getPageServiceSlugs } from '../../../../src/lib/pageService'
@@ -37,6 +42,11 @@ export default async function ServicePage({ params }: Params) {
       {page.constat && <ServiceConstat data={page.constat} />}
       {page.livrable && <ServiceLivrable data={page.livrable} />}
       {page.methode && <ServiceMethode data={page.methode} />}
+      {page.garanties && <ServiceGaranties data={page.garanties} />}
+      {page.citation && <ServiceCitation data={page.citation} />}
+      {page.livrableRapport && <ServiceLivrableRapport data={page.livrableRapport} />}
+      {page.faq && <Faq data={page.faq} />}
+      {page.autresServices && <ServiceAutres data={page.autresServices} />}
     </>
   )
 }

@@ -67,6 +67,62 @@ export type ServiceMethode = {
   lienHref: string | null
 }
 
+export type GarantieItem = { titre: string; description: string }
+
+export type ServiceGaranties = {
+  surTitre: string
+  titre: string
+  items: GarantieItem[] | null
+}
+
+export type ServiceCitation = {
+  surTitre: string
+  texte: string
+  auteur: string
+  auteurTag: string | null
+}
+
+export type SectionRapport = {
+  numero: string
+  titre: string
+  description: string
+  pages: string
+}
+
+export type ServiceLivrableRapport = {
+  surTitre: string
+  titre: string
+  sousTitre: string | null
+  mockupKicker: string | null
+  mockupTitre: string
+  mockupMeta: string | null
+  sections: SectionRapport[] | null
+  annexesTitre: string | null
+  annexes: string[] | null
+}
+
+export type ServiceFaqQuestion = { question: string; reponse: string }
+
+export type ServiceFaq = {
+  surTitre: string
+  titre: string
+  questions: ServiceFaqQuestion[] | null
+}
+
+export type AutreServiceItem = {
+  eyebrow: string
+  titre: string
+  description: string
+  lienLibelle: string | null
+  lienHref: string | null
+}
+
+export type ServiceAutres = {
+  surTitre: string
+  titre: string
+  services: AutreServiceItem[] | null
+}
+
 export type PageService = {
   titre: string
   slug: string
@@ -75,6 +131,11 @@ export type PageService = {
   constat: ServiceConstat | null
   livrable: ServiceLivrable | null
   methode: ServiceMethode | null
+  garanties: ServiceGaranties | null
+  citation: ServiceCitation | null
+  livrableRapport: ServiceLivrableRapport | null
+  faq: ServiceFaq | null
+  autresServices: ServiceAutres | null
 } | null
 
 export async function getPageService(slug: string): Promise<PageService> {
