@@ -55,7 +55,7 @@ const W = 1920
 const H = 800
 const P = 8
 const P_OBS = 6
-const P_BOSS = 7
+const P_BOSS = 5
 const GROUND_Y = H - 80 // 720
 
 // ============================================================
@@ -771,8 +771,8 @@ export function initRunner(
       callbacks.onBossWarn?.(false)
     }
     if (boss.active) {
-      boss.x -= speed * 0.55
-      const bh = { x: boss.x + 80, y: boss.y + 30, w: boss.w - 160, h: boss.h - 40 }
+      boss.x -= speed * 0.25
+      const bh = { x: boss.x + 60, y: boss.y + 20, w: boss.w - 120, h: boss.h - 30 }
       if (aabb(mh.x, mh.y, mh.w, mh.h, bh.x, bh.y, bh.w, bh.h)) { die(); return }
       if (boss.x + boss.w < -60) {
         boss.active = false
