@@ -4,12 +4,12 @@ import { avatarSrc, formatDateFr, formatReadingTime, imageAlt, imageSrc, initial
 import Breadcrumb from './Breadcrumb'
 
 export default function ArticleHero({ article }: { article: Article }) {
-  const cover = imageSrc(article.coverImage, 1600, 900)
+  const cover = imageSrc(article.coverImage, 900, 1200)
   const coverAlt = imageAlt(article.coverImage, article.titre)
   const avatar = avatarSrc(article.auteur, 64)
 
   return (
-    <header className="bg-paper px-6 pb-12 pt-36 lg:px-30.5 lg:pb-16 lg:pt-44">
+    <header className="bg-paper px-6 pb-12 pt-36 lg:px-30.5 lg:pb-14 lg:pt-44">
       <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-8">
         <Breadcrumb
           items={[
@@ -23,77 +23,80 @@ export default function ArticleHero({ article }: { article: Article }) {
           ]}
         />
 
-        <div className="flex flex-col gap-5">
-          <Link
-            href={`/blog/categorie/${article.categorie.slug}`}
-            className="self-start font-mono text-[12px] leading-4 tracking-[0.06em] text-success transition-colors hover:text-success/70"
-          >
-            {`// ${article.categorie.libelle.toLowerCase()}`}
-          </Link>
-          <h1 className="font-display text-[36px] font-semibold leading-10 tracking-[-0.035em] text-ink lg:text-[60px] lg:leading-[64px]">
-            {article.titre}
-          </h1>
-          {article.sousTitre && (
-            <p className="max-w-[800px] text-[18px] leading-[27px] text-ink-soft lg:text-[20px] lg:leading-[30px]">
-              {article.sousTitre}
-            </p>
-          )}
-        </div>
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[423fr_613fr] lg:items-stretch lg:gap-16">
+          {/* Image gauche (3:4) */}
+          <div className="overflow-hidden rounded-[8px] aspect-[3/4]">
+            {cover ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={cover}
+                alt={coverAlt}
+                className="h-full w-full object-cover"
+                fetchPriority="high"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-[#FFFBEE] to-[#E8FFEE]">
+                <span className="rounded-full bg-white/85 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.08em] text-[#666]">
+                  photo · 3:4
+                </span>
+              </div>
+            )}
+          </div>
 
-        <div className="flex flex-wrap items-center gap-3 pt-2">
-          {avatar ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={avatar}
-              alt={article.auteur.nom}
-              className="h-9 w-9 flex-none rounded-full border border-paper-edge object-cover"
-            />
-          ) : (
-            <span
-              aria-hidden
-              className="flex h-9 w-9 flex-none items-center justify-center rounded-full font-display text-[13px] font-bold text-ink"
-              style={{
-                background:
-                  'linear-gradient(135deg, rgba(254, 194, 60, 1) 0%, rgba(63, 193, 99, 1) 100%)',
-                letterSpacing: '0.04em',
-              }}
+          {/* Contenu droite */}
+          <div className="flex flex-col gap-6 lg:justify-center">
+            <Link
+              href={`/blog/categorie/${article.categorie.slug}`}
+              className="self-start font-mono text-[12px] leading-4 tracking-[0.06em] text-success transition-colors hover:text-success/70"
             >
-              {initiales(article.auteur.nom)}
-            </span>
-          )}
-          <span className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
-            {article.auteur.nom}
-          </span>
-          <span aria-hidden className="text-[#666]">·</span>
-          <time
-            dateTime={article.publishedAt}
-            className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]"
-          >
-            {formatDateFr(article.publishedAt)}
-          </time>
-          <span aria-hidden className="text-[#666]">·</span>
-          <span className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
-            {formatReadingTime(article.readingTime)}
-          </span>
-        </div>
+              {`// ${article.categorie.libelle.toLowerCase()}`}
+            </Link>
+            <h1 className="font-display text-[36px] font-semibold leading-10 tracking-[-0.025em] text-ink lg:text-[56px] lg:leading-[58.8px]">
+              {article.titre}
+            </h1>
+            {article.sousTitre && (
+              <p className="max-w-[520px] font-display text-[18px] font-medium leading-7 text-ink-soft lg:text-[22px] lg:leading-[29.7px]">
+                {article.sousTitre}
+              </p>
+            )}
 
-        {/* Image de couverture */}
-        <div className="mt-4 overflow-hidden rounded-[10px] aspect-[16/9]">
-          {cover ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={cover}
-              alt={coverAlt}
-              className="h-full w-full object-cover"
-              fetchPriority="high"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#E8FFEE] via-[#FFFBEE] to-[#FFFBEE]">
-              <span className="rounded-full bg-white/85 px-4 py-2 font-mono text-[12px] uppercase tracking-[0.08em] text-[#666]">
-                photo · 16:9
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-2 pt-2">
+              {avatar ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={avatar}
+                  alt={article.auteur.nom}
+                  className="h-8 w-8 flex-none rounded-full border border-paper-edge object-cover"
+                />
+              ) : (
+                <span
+                  aria-hidden
+                  className="flex h-8 w-8 flex-none items-center justify-center rounded-full font-display text-[12px] font-bold text-ink"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(254, 194, 60, 1) 0%, rgba(63, 193, 99, 1) 100%)',
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  {initiales(article.auteur.nom)}
+                </span>
+              )}
+              <span className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
+                Par {article.auteur.nom}
+              </span>
+              <span aria-hidden className="text-paper-edge">·</span>
+              <time
+                dateTime={article.publishedAt}
+                className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]"
+              >
+                {formatDateFr(article.publishedAt)}
+              </time>
+              <span aria-hidden className="text-paper-edge">·</span>
+              <span className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
+                {formatReadingTime(article.readingTime)} de lecture
               </span>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </header>
