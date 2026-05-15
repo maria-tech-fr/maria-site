@@ -90,12 +90,12 @@ export default async function ArticlePage({ params }: Params) {
             <div className="flex flex-col gap-8">
               <MobileToc items={tocItems} />
               <ArticleContent body={article.body} />
-              <AuthorBlock auteur={article.auteur} />
             </div>
           </div>
         </section>
       </article>
 
+      <AuthorBlock auteur={article.auteur} />
       <RelatedArticles articles={related} />
     </>
   )

@@ -9,7 +9,7 @@ export default function ArticleHero({ article }: { article: Article }) {
   const avatar = avatarSrc(article.auteur, 64)
 
   return (
-    <header className="bg-paper px-6 pb-12 pt-36 lg:px-30.5 lg:pb-14 lg:pt-44">
+    <header className="bg-paper px-6 pb-12 pt-26 lg:px-30.5 lg:pb-14 lg:pt-32">
       <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-8">
         <Breadcrumb
           items={[

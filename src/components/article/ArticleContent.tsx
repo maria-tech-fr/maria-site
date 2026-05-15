@@ -191,26 +191,38 @@ const components: PortableTextComponents = {
     inArticleCta: ({ value }) => {
       const isYellow = value?.variant === 'yellow'
       const bg = isYellow ? 'bg-[#FFFBEE]' : 'bg-[#E8FFEE]'
-      const border = isYellow ? 'border-[rgba(254,194,60,0.4)]' : 'border-[rgba(63,193,99,0.4)]'
-      const accentBorder = isYellow ? 'border-accent' : 'border-success'
+      const borderColor = isYellow ? '#FEC23C' : '#3FC163'
       const label = value?.lienLibelle || 'Découvrir →'
       const href = value?.lienHref || '#'
       return (
         <aside
-          className={`my-12 flex flex-col items-start gap-3 rounded-[10px] border ${border} ${bg} px-8 py-7`}
+          className={`my-10 flex flex-col items-start justify-between gap-4 rounded-[12px] ${bg} px-6 py-4 sm:flex-row sm:items-center`}
+          style={{ borderLeft: `3px solid ${borderColor}` }}
         >
-          {value?.titre && (
-            <h3 className="font-display text-[20px] font-semibold leading-7 tracking-[-0.015em] text-ink lg:text-[22px] lg:leading-7">
-              {value.titre}
-            </h3>
-          )}
-          {value?.description && (
-            <p className="text-[15.5px] leading-6 text-ink-soft">{value.description}</p>
-          )}
+          <div className="flex items-center gap-3.5">
+            <span
+              aria-hidden
+              className="flex h-9 w-9 flex-none items-center justify-center rounded-[8px] bg-white/60"
+            >
+              <CtaIcon isYellow={isYellow} />
+            </span>
+            <div className="flex flex-col">
+              {value?.titre && (
+                <h3 className="font-display text-[16px] font-semibold leading-[20.8px] tracking-[-0.015em] text-ink">
+                  {value.titre}
+                </h3>
+              )}
+              {value?.description && (
+                <p className="pt-0.5 text-[13.5px] leading-[18.9px] text-ink-soft">
+                  {value.description}
+                </p>
+              )}
+            </div>
+          </div>
           {href.startsWith('/') ? (
             <Link
               href={href}
-              className={`mt-1 border-b ${accentBorder} pb-0.5 font-medium text-[14.5px] leading-5 text-ink transition-colors duration-300 ease-out hover:text-ink-soft`}
+              className="flex-none font-medium text-[14px] leading-5 text-ink underline underline-offset-2 transition-colors duration-300 ease-out hover:text-ink-soft"
             >
               {label}
             </Link>
@@ -219,7 +231,7 @@ const components: PortableTextComponents = {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`mt-1 border-b ${accentBorder} pb-0.5 font-medium text-[14.5px] leading-5 text-ink transition-colors duration-300 ease-out hover:text-ink-soft`}
+              className="flex-none font-medium text-[14px] leading-5 text-ink underline underline-offset-2 transition-colors duration-300 ease-out hover:text-ink-soft"
             >
               {label}
             </a>
@@ -233,6 +245,22 @@ const components: PortableTextComponents = {
 /* ============================================================================
  * Helpers
  * ============================================================================ */
+
+function CtaIcon({ isYellow }: { isYellow: boolean }) {
+  // Picto info simple — variante jaune ou vert. Style stroke-only minimal.
+  const color = isYellow ? '#FEC23C' : '#3FC163'
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
+      <circle cx="9" cy="9" r="7.5" stroke={color} strokeWidth="1.5" />
+      <path
+        d="M9 6v0M9 8.5v4"
+        stroke={color}
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
 
 function textFromBlock(value: unknown): string {
   if (!value || typeof value !== 'object') return ''

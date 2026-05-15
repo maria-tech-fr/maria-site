@@ -104,7 +104,7 @@ export default function BlogToolbar({
           <label className="sr-only" htmlFor={`${searchInputId}-sort`}>
             Trier les articles
           </label>
-          <div className="relative w-full lg:w-fit">
+          <div className="relative w-full lg:w-56">
             <select
               id={`${searchInputId}-sort`}
               value={sort}
