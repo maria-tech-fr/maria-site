@@ -5,6 +5,7 @@ import { article } from './article'
 import { articleCategorie } from './articleCategorie'
 import { auteur } from './auteur'
 import { lien } from './lien'
+import { messageContact } from './messageContact'
 import { pageBesoin } from './pageBesoin'
 import { pageService } from './pageService'
 import { parametresGlobaux } from './parametresGlobaux'
@@ -27,4 +28,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   articleCategorie,
   auteur,
   promoBlog,
+  // contact
+  messageContact,
 ]

@@ -2,6 +2,7 @@ import type { StructureResolver } from 'sanity/structure'
 import {
   BulbOutlineIcon,
   CogIcon,
+  CommentIcon,
   DocumentTextIcon,
   EditIcon,
   FolderIcon,
@@ -20,6 +21,7 @@ const HANDLED_COLLECTIONS = [
   'articleCategorie',
   'auteur',
   'promoBlog',
+  'messageContact',
 ] as const
 const HIDDEN_FROM_FALLBACK = [...SINGLETONS, ...HANDLED_COLLECTIONS] as readonly string[]
 
@@ -93,6 +95,14 @@ export const structure: StructureResolver = (S) =>
                 .icon(StarIcon)
                 .child(S.documentTypeList('promoBlog').title('Vignettes promo (blog)')),
             ]),
+        ),
+      S.listItem()
+        .title('Messages contact')
+        .icon(CommentIcon)
+        .child(
+          S.documentTypeList('messageContact')
+            .title('Messages contact')
+            .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
         ),
       S.divider(),
       S.listItem()

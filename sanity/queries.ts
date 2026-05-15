@@ -11,11 +11,54 @@ export const parametresGlobauxQuery = defineQuery(`
   *[_id == "parametresGlobaux"][0]{
     baseline,
     navigation[]{ libelle, href },
-    contact{ email, telephone, calendlyUrl },
+    contact{
+      email,
+      telephone,
+      calendlyUrl,
+      linkedinUrl,
+      adresse{ rue, codePostalVille, pays, mention },
+      horaires{ plage, mention, opens, closes }
+    },
     reseauxSociaux[]{ plateforme, url },
     footer{
       mentionLegales,
       liensLegaux[]{ libelle, href }
+    }
+  }
+`)
+
+export const contactPageQuery = defineQuery(`
+  *[_id == "parametresGlobaux"][0]{
+    contact{
+      email,
+      telephone,
+      calendlyUrl,
+      linkedinUrl,
+      adresse{ rue, codePostalVille, pays, mention },
+      horaires{ plage, mention, opens, closes }
+    },
+    contactPage{
+      hero{ surTitre, titre, description },
+      canaux{
+        surTitre,
+        titre,
+        sousTitre,
+        cards[]{ action, titre, description, cta, href, accent }
+      },
+      formulaire{ surTitre, titre, sousTitre, rgpdMention, submitLabel, submitMeta },
+      infosPratiques{ surTitre, titre },
+      processus{
+        surTitre,
+        titre,
+        sousTitre,
+        etapes[]{ numero, titre, description }
+      },
+      faq{
+        surTitre,
+        titre,
+        questions[]{ question, reponse }
+      },
+      merciHero{ surTitre, titre, description }
     }
   }
 `)
