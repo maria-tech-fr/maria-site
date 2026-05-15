@@ -118,7 +118,7 @@ function ChannelCard({
       : 'text-success border-success'
 
   const cardClass = isDisabled
-    ? 'cursor-not-allowed border-dashed border-[#DCDCDC] opacity-90'
+    ? 'cursor-not-allowed border-dashed border-[#DCDCDC] bg-[#F9F9F9]'
     : 'border-paper-edge bg-paper transition-transform duration-300 ease-out hover:-translate-y-0.5'
 
   // Pour Cal.com on bind directement les data attrs — le SDK Cal s'occupe du clic.
@@ -131,14 +131,22 @@ function ChannelCard({
         }
       : undefined
 
-  const isLinkAction = card.action === 'calcom' || card.action === 'link' || card.action === 'disabled'
   const labelTel = telephoneAffichage && card.action === 'infos' ? ` — ${telephoneAffichage}` : ''
 
   return (
     <article
-      className={`flex h-full flex-col gap-3.5 rounded-[5px] border bg-paper p-10 ${cardClass}`}
+      className={`flex h-full flex-col gap-3.5 rounded-[5px] border p-10 ${cardClass}`}
     >
-      <CanalIcon action={card.action} disabled={isDisabled} />
+      {/* Top row : icone + (badge bientôt disponible si disabled) */}
+      <div className="flex items-start justify-between gap-3">
+        <CanalIcon action={card.action} disabled={isDisabled} />
+        {isDisabled && (
+          <span className="inline-flex items-center rounded-full border border-[#B7FFCA] bg-[#E8FFEE] px-2.5 py-1 font-mono text-[10px] lowercase tracking-[0.06em] text-success">
+            bientôt disponible
+          </span>
+        )}
+      </div>
+
       <div className="flex flex-1 flex-col gap-2.5 pt-6">
         <h3
           className={`font-display text-[22px] font-semibold leading-7 tracking-[-0.02em] text-ink lg:text-[26px] lg:leading-[31px] ${
