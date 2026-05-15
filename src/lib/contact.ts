@@ -81,8 +81,28 @@ export type ContactPageContent = {
     surTitre: string | null
     titre: string | null
     description: string | null
+    skipGameLibelle: string | null
+  } | null
+  merciSuggestions: {
+    surTitre: string | null
+    titre: string | null
+    cards: MerciSuggestionCard[] | null
+  } | null
+  merciCalcomCta: {
+    surTitre: string | null
+    titre: string | null
+    description: string | null
+    ctaLibelle: string | null
   } | null
 } | null
+
+export type MerciSuggestionCard = {
+  titre: string
+  description: string
+  lienLibelle: string
+  lienHref: string
+  accent: 'yellow' | 'green' | null
+}
 
 export type ContactPageData = {
   contact: ContactInfos

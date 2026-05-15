@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import HaloField from '../../../../src/components/HaloField'
-import Reveal from '../../../../src/components/Reveal'
 import { getContactPage } from '../../../../src/lib/contact'
+import ThankYouHero from '../../../../src/components/thank-you/ThankYouHero'
+import MariaRunner from '../../../../src/components/thank-you/MariaRunner'
+import ThankYouSuggestions from '../../../../src/components/thank-you/ThankYouSuggestions'
+import ThankYouCalcomCta from '../../../../src/components/thank-you/ThankYouCalcomCta'
 
 export const metadata: Metadata = {
   title: 'Message reçu — Merci',
@@ -13,71 +14,48 @@ export const metadata: Metadata = {
 
 export default async function ContactMerciPage() {
   const data = await getContactPage()
-  const hero = data?.contactPage?.merciHero ?? null
+  const cp = data?.contactPage ?? null
 
-  const surTitre = hero?.surTitre || '// message reçu'
-  const titre = hero?.titre || 'Merci, votre message est arrivé.'
-  const description =
+  const hero = cp?.merciHero ?? null
+  const surTitreHero = hero?.surTitre || '// merci'
+  const titreHero = hero?.titre || 'Votre message est **bien arrivé**'
+  const descHero =
     hero?.description ||
-    "On vous répond sous 24 h ouvrées. En attendant, vous pouvez consulter notre journal — on y partage nos points de vue sur l'IA en entreprise."
+    "On vous répond personnellement sous 24 h, par un humain, pas un robot."
+  const skipLabel = hero?.skipGameLibelle || 'Passer le jeu et continuer'
+
+  const suggestions = cp?.merciSuggestions ?? null
+  const suggSurTitre = suggestions?.surTitre || '// en attendant'
+  const suggTitre = suggestions?.titre || 'Vous pouvez aussi…'
+  const suggCards = suggestions?.cards ?? []
+
+  const cta = cp?.merciCalcomCta ?? null
+  const ctaSurTitre = cta?.surTitre || '// gagner du temps'
+  const ctaTitre = cta?.titre || 'Plutôt que d’attendre **notre retour…**'
+  const ctaDesc =
+    cta?.description ||
+    'Réservez directement un créneau de 30 minutes avec nous, à un horaire qui vous arrange.'
+  const ctaLibelle = cta?.ctaLibelle || 'Réserver un créneau Cal.com'
+  const calcomUrl = data?.contact?.calendlyUrl ?? null
 
   return (
-    <section className="relative flex flex-1 items-center overflow-hidden bg-ink px-6 pb-22 pt-45.5 lg:px-30.5 lg:pb-30 lg:pt-45.5">
-      <HaloField
-        halos={[
-          { color: '#3FC163', alpha: 0.32, x: '15%', y: '40%', size: 700, blur: 50, duration: 38 },
-          { color: '#FEC23C', alpha: 0.24, x: '85%', y: '60%', size: 620, blur: 50, duration: 42 },
-        ]}
+    <>
+      <ThankYouHero surTitre={surTitreHero} titre={titreHero} description={descHero} />
+      <MariaRunner skipGameLibelle={skipLabel} />
+      {suggCards.length > 0 && (
+        <ThankYouSuggestions
+          surTitre={suggSurTitre}
+          titre={suggTitre}
+          cards={suggCards}
+        />
+      )}
+      <ThankYouCalcomCta
+        surTitre={ctaSurTitre}
+        titre={ctaTitre}
+        description={ctaDesc}
+        ctaLibelle={ctaLibelle}
+        calcomUrl={calcomUrl}
       />
-
-      <div className="relative mx-auto flex w-full max-w-[820px] flex-col gap-7 text-center">
-        <Reveal>
-          <p className="font-mono text-[12px] leading-[18.6px] tracking-[0.08em] text-success-soft">
-            {surTitre}
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <h1 className="font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-paper lg:text-[64px] lg:leading-[68px]">
-            {titre}
-          </h1>
-        </Reveal>
-        <Reveal delay={180}>
-          <p className="mx-auto max-w-[640px] text-[16px] leading-7 text-[#CFCFCF] lg:text-[18px] lg:leading-[28px]">
-            {description}
-          </p>
-        </Reveal>
-        <Reveal delay={260}>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 rounded-[8px] bg-accent px-6 py-3.5 font-medium text-[15px] leading-5 text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft"
-            >
-              Lire le journal
-              <ArrowRight />
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-4 py-3.5 font-medium text-[15px] leading-5 text-paper underline underline-offset-4 transition-colors hover:text-success-soft"
-            >
-              Retour à l’accueil
-            </Link>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-function ArrowRight() {
-  return (
-    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden>
-      <path
-        d="M1 6h13M9 1l5 5-5 5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    </>
   )
 }

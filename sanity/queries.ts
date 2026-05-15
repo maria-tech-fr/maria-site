@@ -58,7 +58,13 @@ export const contactPageQuery = defineQuery(`
         titre,
         questions[]{ question, reponse }
       },
-      merciHero{ surTitre, titre, description }
+      merciHero{ surTitre, titre, description, skipGameLibelle },
+      merciSuggestions{
+        surTitre,
+        titre,
+        cards[]{ titre, description, lienLibelle, lienHref, accent }
+      },
+      merciCalcomCta{ surTitre, titre, description, ctaLibelle }
     }
   }
 `)
