@@ -3,38 +3,8 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createHash } from 'crypto'
-import { z } from 'zod'
 import { writeClient } from '../../sanity/writeClient'
-
-/* ============================================================================
- * Schema
- * ============================================================================ */
-
-export const contactFormSchema = z.object({
-  nom: z.string().min(2, 'Votre nom est requis.').max(100),
-  prenom: z.string().min(2, 'Votre prénom est requis.').max(100),
-  telephone: z.string().max(40).optional().or(z.literal('')),
-  email: z.string().email('Email invalide.').max(254),
-  message: z.string().min(10, 'Votre message est trop court (min. 10 caractères).').max(2000),
-  rgpdConsent: z
-    .union([z.boolean(), z.literal('on'), z.literal('true')])
-    .refine((v) => v === true || v === 'on' || v === 'true', {
-      message: 'Le consentement est requis.',
-    }),
-  // Honeypot — doit être vide. Les bots remplissent.
-  website: z.string().max(0).optional(),
-})
-
-export type ContactFormFields = z.infer<typeof contactFormSchema>
-
-export type ContactSubmitState =
-  | { status: 'idle' }
-  | { status: 'success' }
-  | {
-      status: 'error'
-      message: string
-      fieldErrors?: Partial<Record<keyof ContactFormFields | 'website', string>>
-    }
+import { contactFormSchema, type ContactSubmitState } from './contactSchema'
 
 /* ============================================================================
  * Rate limit en mémoire (Map). Reset au redémarrage du serveur.

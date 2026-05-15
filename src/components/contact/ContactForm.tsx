@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { useActionState, useId, useState } from 'react'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
-import { submitContact, type ContactSubmitState } from '../../lib/contactActions'
+import { submitContact } from '../../lib/contactActions'
+import type { ContactSubmitState } from '../../lib/contactSchema'
 
 type ContactFormProps = {
   surTitre: string
