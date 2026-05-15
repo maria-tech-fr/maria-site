@@ -20,7 +20,7 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://cdn.sanity.io",
   "font-src 'self' data: https://fonts.gstatic.com",
   "connect-src 'self' https://*.sanity.io wss://*.sanity.io",
-  "frame-src 'self' https://calendly.com https://*.calendly.com",
+  "frame-src 'self' https://calendly.com https://*.calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.loom.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",

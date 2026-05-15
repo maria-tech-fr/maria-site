@@ -122,9 +122,9 @@ const components: PortableTextComponents = {
     fullWidthImage: ({ value }) => {
       const asset = value?.image?.asset
       if (!asset?._ref && !asset?._id) return null
-      const url = urlFor(value.image).width(1600).fit('max').auto('format').url()
+      const url = urlFor(value.image).width(1200).fit('max').auto('format').url()
       return (
-        <figure className="my-12 -mx-6 lg:-mx-12 xl:-mx-24">
+        <figure className="my-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={url}
@@ -165,6 +165,39 @@ const components: PortableTextComponents = {
       </aside>
     ),
     video: ({ value }) => {
+      const source: string = value?.source ?? 'url'
+      // Fichier MP4 uploadé : balise <video> native HTML5 + poster optionnel.
+      if (source === 'file') {
+        const fileUrl: string | undefined = value?.fichier?.asset?.url
+        if (!fileUrl) return null
+        const mime: string = value?.fichier?.asset?.mimeType || 'video/mp4'
+        const posterAsset = value?.cover?.asset
+        const poster =
+          posterAsset && (posterAsset._id || posterAsset._ref)
+            ? urlFor(value.cover).width(1200).fit('max').auto('format').url()
+            : undefined
+        return (
+          <figure className="my-10">
+            <div className="overflow-hidden rounded-[8px] border border-paper-edge bg-paper-soft aspect-video">
+              <video
+                controls
+                preload="metadata"
+                poster={poster}
+                className="h-full w-full bg-ink"
+              >
+                <source src={fileUrl} type={mime} />
+                Votre navigateur ne supporte pas la lecture de cette vidéo.
+              </video>
+            </div>
+            {value?.legende && (
+              <figcaption className="mt-3 text-center font-mono text-[12px] leading-4 tracking-[0.04em] text-ink-soft">
+                {value.legende}
+              </figcaption>
+            )}
+          </figure>
+        )
+      }
+      // Lien YouTube/Vimeo/Loom : embed iframe.
       const url: string = value?.url ?? ''
       const embed = embedUrlFor(url)
       if (!embed) return null

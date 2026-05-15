@@ -292,6 +292,11 @@ export const articleBySlugQuery = defineQuery(`
         ...,
         image{ ..., asset->{ _id, url, metadata{ dimensions } } }
       },
+      _type == "video" => {
+        ...,
+        fichier{ asset->{ _id, url, mimeType } },
+        cover{ ..., asset->{ _id, url, metadata{ dimensions } } }
+      },
       markDefs[]{ ... }
     },
     tocItems[]{ anchor, label, exclure },

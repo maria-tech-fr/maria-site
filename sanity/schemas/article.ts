@@ -211,22 +211,58 @@ export const article = defineType({
         {
           type: 'object',
           name: 'video',
-          title: 'Vidéo (YouTube, Vimeo, Loom…)',
+          title: 'Vidéo',
           fields: [
+            defineField({
+              name: 'source',
+              title: 'Source',
+              description: 'Lien YouTube/Vimeo/Loom OU fichier MP4 uploadé.',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Lien (YouTube, Vimeo, Loom…)', value: 'url' },
+                  { title: 'Fichier vidéo (MP4)', value: 'file' },
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'url',
+              validation: (r) => r.required(),
+            }),
             defineField({
               name: 'url',
               title: 'URL de la vidéo',
               description: 'Lien public — YouTube, Vimeo, Loom. L\'embed est généré automatiquement.',
               type: 'url',
-              validation: (r) => r.required(),
+              hidden: ({ parent }) => parent?.source === 'file',
             }),
-            defineField({ name: 'legende', title: 'Légende', type: 'string', validation: (r) => r.max(200) }),
+            defineField({
+              name: 'fichier',
+              title: 'Fichier vidéo (MP4)',
+              description: 'Format recommandé : MP4 H.264. Affiché avec contrôles natifs HTML5.',
+              type: 'file',
+              options: { accept: 'video/mp4,video/webm' },
+              hidden: ({ parent }) => parent?.source !== 'file',
+            }),
+            defineField({
+              name: 'cover',
+              title: 'Image de cover (optionnelle)',
+              description: 'Affichée avant lecture (poster du <video>). Recommandée pour les MP4.',
+              type: 'image',
+              options: { hotspot: true },
+              hidden: ({ parent }) => parent?.source !== 'file',
+            }),
+            defineField({
+              name: 'legende',
+              title: 'Légende',
+              type: 'string',
+              validation: (r) => r.max(200),
+            }),
           ],
           preview: {
-            select: { title: 'legende', subtitle: 'url' },
-            prepare: ({ title, subtitle }) => ({
+            select: { title: 'legende', subtitle: 'url', source: 'source' },
+            prepare: ({ title, subtitle, source }) => ({
               title: title || 'Vidéo',
-              subtitle: subtitle,
+              subtitle: source === 'file' ? '(MP4 uploadé)' : subtitle,
             }),
           },
         },
