@@ -3,17 +3,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { initRunner, type RunnerControls } from './mariaRunnerEngine'
 
-type Props = {
-  skipGameLibelle?: string | null
-}
-
 const SOUND_KEY = 'maria_runner_sound'
 
 function pad5(n: number) {
   return String(Math.max(0, n)).padStart(5, '0')
 }
 
-export default function MariaRunner({ skipGameLibelle }: Props) {
+export default function MariaRunner() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const controlsRef = useRef<RunnerControls | null>(null)
 
@@ -152,15 +148,6 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
           )}
         </div>
 
-        {/* Skip game */}
-        <div className="mt-5 flex justify-center">
-          <a
-            href="#suite"
-            className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-ink-soft underline underline-offset-4 transition-colors duration-300 ease-out hover:text-ink"
-          >
-            {skipGameLibelle || 'Passer le jeu et continuer'} ↓
-          </a>
-        </div>
       </div>
     </section>
   )

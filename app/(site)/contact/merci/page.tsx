@@ -22,8 +22,6 @@ export default async function ContactMerciPage() {
   const descHero =
     hero?.description ||
     "On vous répond personnellement sous 24 h, par un humain, pas un robot."
-  const skipLabel = hero?.skipGameLibelle || 'Passer le jeu et continuer'
-
   const suggestions = cp?.merciSuggestions ?? null
   const suggSurTitre = suggestions?.surTitre || '// en attendant'
   const suggTitre = suggestions?.titre || 'Vous pouvez aussi…'
@@ -41,7 +39,7 @@ export default async function ContactMerciPage() {
   return (
     <>
       <ThankYouHero surTitre={surTitreHero} titre={titreHero} description={descHero} />
-      <MariaRunner skipGameLibelle={skipLabel} />
+      <MariaRunner />
       {suggCards.length > 0 && (
         <ThankYouSuggestions
           surTitre={suggSurTitre}

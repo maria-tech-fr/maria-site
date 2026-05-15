@@ -771,7 +771,7 @@ export function initRunner(
       callbacks.onBossWarn?.(false)
     }
     if (boss.active) {
-      boss.x -= speed * 0.25
+      boss.x -= speed * 0.55
       const bh = { x: boss.x + 60, y: boss.y + 20, w: boss.w - 120, h: boss.h - 30 }
       if (aabb(mh.x, mh.y, mh.w, mh.h, bh.x, bh.y, bh.w, bh.h)) { die(); return }
       if (boss.x + boss.w < -60) {
