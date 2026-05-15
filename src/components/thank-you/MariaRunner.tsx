@@ -7,7 +7,11 @@ type Props = {
   skipGameLibelle?: string | null
 }
 
-const SOUND_KEY = 'maria-runner-sound'
+const SOUND_KEY = 'maria_runner_sound'
+
+function pad5(n: number) {
+  return String(Math.max(0, n)).padStart(5, '0')
+}
 
 export default function MariaRunner({ skipGameLibelle }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -15,11 +19,21 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
 
   const [score, setScore] = useState(0)
   const [record, setRecord] = useState(0)
+  const [scoreFlash, setScoreFlash] = useState(false)
   const [bossWarn, setBossWarn] = useState(false)
-  const [bossToast, setBossToast] = useState<string | null>(null)
-  const [gameOverData, setGameOverData] = useState<{ score: number; record: number; quip: string } | null>(null)
-  const [started, setStarted] = useState(false)
+  const [bossToast, setBossToast] = useState(false)
+  const [gameOverData, setGameOverData] = useState<{
+    score: number; record: number; isNewRecord: boolean; quip: string
+  } | null>(null)
   const [soundOn, setSoundOn] = useState(false)
+
+  // Petit flash sur le score quand il bouge (~300ms)
+  useEffect(() => {
+    if (score === 0) return
+    setScoreFlash(true)
+    const t = setTimeout(() => setScoreFlash(false), 300)
+    return () => clearTimeout(t)
+  }, [score])
 
   // Restaure le toggle son depuis sessionStorage
   useEffect(() => {
@@ -39,10 +53,7 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
         onBossWarn: setBossWarn,
         onBossToast: setBossToast,
         onGameOver: (d) => setGameOverData(d),
-        onStart: () => {
-          setGameOverData(null)
-          setStarted(true)
-        },
+        onStart: () => setGameOverData(null),
       },
       { soundEnabled: soundOn },
     )
@@ -63,10 +74,6 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
     controlsRef.current?.restart()
   }
 
-  function onStartClick() {
-    controlsRef.current?.jump()
-  }
-
   return (
     <section className="relative w-full bg-paper">
       <div className="relative mx-auto w-full max-w-[1280px] px-6 py-10 lg:px-10 lg:py-14">
@@ -74,10 +81,13 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
         <div className="mb-3 flex items-center justify-between font-mono text-[12px] uppercase tracking-[0.08em] text-ink-soft">
           <div className="flex gap-6">
             <span>
-              score <span className="ml-1 text-ink">{score.toString().padStart(5, '0')}</span>
+              score{' '}
+              <span className={`ml-1 transition-colors duration-200 ${scoreFlash ? 'text-success' : 'text-ink'}`}>
+                {pad5(score)}
+              </span>
             </span>
             <span>
-              record <span className="ml-1 text-ink">{record.toString().padStart(5, '0')}</span>
+              record <span className="ml-1 text-ink">{pad5(record)}</span>
             </span>
           </div>
           <button
@@ -87,7 +97,7 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
             aria-pressed={soundOn}
             aria-label={soundOn ? 'Couper le son' : 'Activer le son'}
           >
-            <span aria-hidden>{soundOn ? '🔊' : '🔇'}</span>
+            <SoundIcon on={soundOn} />
             <span>{soundOn ? 'son on' : 'son off'}</span>
           </button>
         </div>
@@ -99,30 +109,10 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
             width={1920}
             height={800}
             className="block h-auto w-full cursor-pointer select-none"
-            aria-label="Maria runner — appuyez sur espace ou cliquez pour sauter."
+            aria-label="Maria runner — appuyez sur espace ou tapez l’écran pour sauter."
           />
 
-          {/* Overlay : start */}
-          {!started && !gameOverData && (
-            <button
-              type="button"
-              onClick={onStartClick}
-              className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-ink/40 backdrop-blur-[2px] transition-opacity duration-300 ease-out"
-            >
-              <span className="font-mono text-[12px] uppercase tracking-[0.1em] text-paper/80">// en attendant la réponse</span>
-              <span className="font-display text-[40px] font-semibold leading-[1.1] tracking-[-0.02em] text-paper lg:text-[56px]">
-                Aidez maria à fuir le bureau.
-              </span>
-              <span className="text-[14px] text-paper/75 lg:text-[16px]">
-                Espace, flèche haut ou clic pour sauter. Boss à 1 000 points.
-              </span>
-              <span className="mt-2 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 font-medium text-[14px] text-ink">
-                ▶ Démarrer
-              </span>
-            </button>
-          )}
-
-          {/* Boss warn */}
+          {/* Boss warn — affiché par le moteur via callback */}
           {bossWarn && (
             <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 rounded-full border border-[#ff5050] bg-ink/85 px-5 py-2 font-mono text-[12px] uppercase tracking-[0.1em] text-[#ff8a8a]">
               ⚠ DASHBOARD.xlsx approche…
@@ -132,19 +122,24 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
           {/* Boss toast — défaite du boss */}
           {bossToast && (
             <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 rounded-full bg-success/95 px-5 py-2 font-mono text-[12px] uppercase tracking-[0.1em] text-paper">
-              ✓ {bossToast}
+              ✓ Boss vaincu — maria a gagné le dashboard
             </div>
           )}
 
           {/* Game over */}
           {gameOverData && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-ink/55 backdrop-blur-[2px]">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-ink/55 px-8 text-center backdrop-blur-[2px]">
               <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-paper/80">// game over</p>
               <p className="font-display text-[48px] font-semibold leading-[1.05] tracking-[-0.02em] text-paper lg:text-[64px]">
-                {gameOverData.score} points
+                {pad5(gameOverData.score)}
               </p>
-              <p className="text-[14px] text-paper/75 lg:text-[16px]">
-                record : {gameOverData.record} · {gameOverData.quip}
+              <p className={`font-mono text-[12px] uppercase tracking-[0.1em] ${gameOverData.isNewRecord ? 'text-accent' : 'text-paper/75'}`}>
+                {gameOverData.isNewRecord
+                  ? 'NOUVEAU RECORD PERSONNEL'
+                  : `RECORD : ${pad5(gameOverData.record)}`}
+              </p>
+              <p className="max-w-[520px] text-[14px] leading-6 text-paper/80 lg:text-[15px]">
+                {gameOverData.quip}
               </p>
               <button
                 type="button"
@@ -168,5 +163,24 @@ export default function MariaRunner({ skipGameLibelle }: Props) {
         </div>
       </div>
     </section>
+  )
+}
+
+function SoundIcon({ on }: { on: boolean }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+      {on ? (
+        <>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+        </>
+      ) : (
+        <>
+          <line x1="23" y1="9" x2="17" y2="15" />
+          <line x1="17" y1="9" x2="23" y2="15" />
+        </>
+      )}
+    </svg>
   )
 }
