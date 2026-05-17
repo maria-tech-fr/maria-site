@@ -96,6 +96,27 @@ html {
   color: var(--color-ink);
 }
 
+/*
+  Curseur clignotant (signature « | » en fin de H1/H2 sur les pages besoin).
+  Animation pas-à-pas pour un effet terminal/console.
+*/
+@keyframes blink-caret {
+  50% { opacity: 0; }
+}
+.cursor-blink {
+  display: inline-block;
+  width: 0.08em;
+  height: 0.78em;
+  margin-left: 0.06em;
+  vertical-align: baseline;
+  transform: translateY(0.04em);
+  background: currentColor;
+  animation: blink-caret 1.05s steps(1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink { animation: none; }
+}
+
 body {
   font-family: var(--font-sans);
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useId, useRef, useState } from 'react'
 import Logo from './Logo'
-import type { BesoinMenuItem } from '../lib/pageBesoin'
+import { FAMILLES, type BesoinMenuItem } from '../lib/pageBesoin'
 import type { ServiceMenuItem } from '../lib/pageService'
 
 type NavProps = {
@@ -25,70 +25,21 @@ type SubmenuItem = {
   picto: { url: string } | null
 }
 
-// ----------------------------------------------------------------------------
-// Besoins — faux contenu statique organisé par familles.
-// 12 besoins répartis en 5 familles. À terme : remplacer par un fetch Sanity
-// avec un champ `famille` sur le doc-type pageBesoin.
-// ----------------------------------------------------------------------------
-type BesoinFamilleItem = { titre: string; slug: string }
-type BesoinFamille = {
-  key: string
-  titre: string
-  tagline: string
-  items: BesoinFamilleItem[]
+// Le mega-menu Besoins se nourrit désormais des items Sanity passés en prop
+// (`besoins`), regroupés par famille via la metadata FAMILLES de pageBesoin.
+type GroupedBesoin = {
+  meta: typeof FAMILLES[number]
+  items: BesoinMenuItem[]
 }
 
-const BESOINS_FAMILIES: BesoinFamille[] = [
-  {
-    key: 'productivite',
-    titre: 'Productivité opérationnelle',
-    tagline: 'Faire mieux, plus vite, au quotidien.',
-    items: [
-      { titre: 'Outils pour commerciaux', slug: 'outils-commerciaux' },
-      { titre: 'Service client augmenté', slug: 'service-client' },
-      { titre: 'Traitement documentaire', slug: 'traitement-documents' },
-    ],
-  },
-  {
-    key: 'organisation',
-    titre: 'Organisation & connaissance',
-    tagline: 'Capter et partager le savoir interne.',
-    items: [
-      { titre: 'Organiser la connaissance', slug: 'organiser-connaissance' },
-      { titre: 'Onboarding intelligent', slug: 'onboarding' },
-      { titre: 'Capitaliser l’expertise', slug: 'capitaliser-expertise' },
-    ],
-  },
-  {
-    key: 'pilotage',
-    titre: 'Pilotage & décision',
-    tagline: 'Voir clair pour bien arbitrer.',
-    items: [
-      { titre: 'Vision données', slug: 'vision-donnees' },
-      { titre: 'Alertes intelligentes', slug: 'alertes-intelligentes' },
-    ],
-  },
-  {
-    key: 'rh',
-    titre: 'RH & formation',
-    tagline: 'Soutenir les équipes humaines.',
-    items: [
-      { titre: 'Trier les candidatures', slug: 'tri-candidatures' },
-      { titre: 'Former les équipes', slug: 'formation-equipes' },
-    ],
-  },
-  {
-    key: 'gouvernance',
-    titre: 'Gouvernance & conformité',
-    tagline: 'Cadrer pour éviter les dérives.',
-    items: [
-      { titre: 'Sécuriser l’usage de l’IA', slug: 'securiser-usage-ia' },
-      { titre: 'Conformité RGPD', slug: 'conformite-rgpd' },
-    ],
-  },
-]
-
-const TOTAL_BESOINS = BESOINS_FAMILIES.reduce((n, f) => n + f.items.length, 0)
+function groupBesoinsByFamille(besoins: BesoinMenuItem[]): GroupedBesoin[] {
+  return FAMILLES.map((meta) => ({
+    meta,
+    items: besoins
+      .filter((b) => b.famille === meta.key)
+      .sort((a, b) => a.ordreMenu - b.ordreMenu),
+  })).filter((g) => g.items.length > 0)
+}
 
 export default function Nav({ services, besoins }: NavProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -157,10 +108,9 @@ export default function Nav({ services, besoins }: NavProps) {
     picto: s.pictoMenu?.asset ? { url: s.pictoMenu.asset.url } : null,
   }))
 
-  // Note : la prop `besoins` (Sanity) est temporairement ignorée — le menu
-  // utilise BESOINS_FAMILIES (faux contenu statique) le temps que les 12
-  // pages soient livrées et classées par famille côté Sanity.
-  void besoins
+  const besoinsGrouped = groupBesoinsByFamille(besoins)
+  const totalBesoins = besoinsGrouped.reduce((n, g) => n + g.items.length, 0)
+  const hasBesoins = totalBesoins > 0
 
   const hasServices = servicesItems.length > 0
 
@@ -209,22 +159,33 @@ export default function Nav({ services, besoins }: NavProps) {
           </Link>
         )}
 
-        <DesktopTrigger
-          label="Besoins"
-          open={desktopOpen === 'besoins'}
-          wrapperRef={besoinsWrapperRef}
-          controlsId={besoinsSubmenuId}
-          onMouseEnter={() => openDesktop('besoins')}
-          onMouseLeave={closeDesktopDelayed}
-          onFocus={() => openDesktop('besoins')}
-          onBlurOut={() => setDesktopOpen((cur) => (cur === 'besoins' ? null : cur))}
-        >
-          <NavBesoinsMega
-            id={besoinsSubmenuId}
-            visible={desktopOpen === 'besoins'}
-            onItemClick={() => setDesktopOpen(null)}
-          />
-        </DesktopTrigger>
+        {hasBesoins ? (
+          <DesktopTrigger
+            label="Besoins"
+            open={desktopOpen === 'besoins'}
+            wrapperRef={besoinsWrapperRef}
+            controlsId={besoinsSubmenuId}
+            onMouseEnter={() => openDesktop('besoins')}
+            onMouseLeave={closeDesktopDelayed}
+            onFocus={() => openDesktop('besoins')}
+            onBlurOut={() => setDesktopOpen((cur) => (cur === 'besoins' ? null : cur))}
+          >
+            <NavBesoinsMega
+              id={besoinsSubmenuId}
+              grouped={besoinsGrouped}
+              total={totalBesoins}
+              visible={desktopOpen === 'besoins'}
+              onItemClick={() => setDesktopOpen(null)}
+            />
+          </DesktopTrigger>
+        ) : (
+          <Link
+            href="/besoins"
+            className="rounded-[5px] px-3.5 py-2 text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
+          >
+            Besoins
+          </Link>
+        )}
 
         <Link
           href="/projets"
@@ -297,14 +258,25 @@ export default function Nav({ services, besoins }: NavProps) {
             </Link>
           )}
 
-          <MobileBesoinsExpand
-            expanded={mobileBesoinsExpanded}
-            setExpanded={setMobileBesoinsExpanded}
-            closeAll={() => {
-              setMobileOpen(false)
-              setMobileBesoinsExpanded(false)
-            }}
-          />
+          {hasBesoins ? (
+            <MobileBesoinsExpand
+              grouped={besoinsGrouped}
+              expanded={mobileBesoinsExpanded}
+              setExpanded={setMobileBesoinsExpanded}
+              closeAll={() => {
+                setMobileOpen(false)
+                setMobileBesoinsExpanded(false)
+              }}
+            />
+          ) : (
+            <Link
+              href="/besoins"
+              className="rounded-[6px] px-4 py-3 text-sm font-work-sans text-ink-soft hover:bg-paper-soft transition-colors duration-300 ease-out"
+              onClick={() => setMobileOpen(false)}
+            >
+              Besoins
+            </Link>
+          )}
 
           <Link
             href="/projets"
@@ -630,14 +602,18 @@ function DefaultPicto({ tone, index }: { tone: SubmenuTone; index: number }) {
 }
 
 // ----------------------------------------------------------------------------
-// NavBesoinsMega — mega-menu desktop pour les besoins (5 familles, 12 items)
+// NavBesoinsMega — mega-menu desktop pour les besoins (5 familles, N items)
 // ----------------------------------------------------------------------------
 function NavBesoinsMega({
   id,
+  grouped,
+  total,
   visible,
   onItemClick,
 }: {
   id: string
+  grouped: GroupedBesoin[]
+  total: number
   visible: boolean
   onItemClick: () => void
 }) {
@@ -652,7 +628,7 @@ function NavBesoinsMega({
     >
       <div className="flex items-center justify-between px-3 pb-3 pt-2">
         <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-soft">
-          // {TOTAL_BESOINS} cas d’usage, classés par famille
+          // {total} cas d’usage, classés par famille
         </p>
         <Link
           href="/besoins"
@@ -664,8 +640,8 @@ function NavBesoinsMega({
       </div>
 
       <div className="grid grid-cols-3 gap-x-3 gap-y-4">
-        {BESOINS_FAMILIES.map((famille) => (
-          <FamilleColumn key={famille.key} famille={famille} onItemClick={onItemClick} />
+        {grouped.map((g) => (
+          <FamilleColumn key={g.meta.key} group={g} onItemClick={onItemClick} />
         ))}
       </div>
     </div>
@@ -673,10 +649,10 @@ function NavBesoinsMega({
 }
 
 function FamilleColumn({
-  famille,
+  group,
   onItemClick,
 }: {
-  famille: BesoinFamille
+  group: GroupedBesoin
   onItemClick: () => void
 }) {
   return (
@@ -684,15 +660,15 @@ function FamilleColumn({
       <div className="flex flex-col gap-1">
         <p className="flex items-center gap-2 font-display text-[13.5px] font-semibold leading-5 tracking-[-0.01em] text-ink">
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-success" />
-          {famille.titre}
+          {group.meta.titre}
           <span className="font-mono text-[10px] font-normal tracking-[0.06em] text-ink-soft">
-            ({famille.items.length})
+            ({group.items.length})
           </span>
         </p>
-        <p className="pl-3.5 text-[11.5px] leading-4 text-ink-soft">{famille.tagline}</p>
+        <p className="pl-3.5 text-[11.5px] leading-4 text-ink-soft">{group.meta.tagline}</p>
       </div>
       <ul className="mt-1 flex flex-col">
-        {famille.items.map((item) => (
+        {group.items.map((item) => (
           <li key={item.slug}>
             <Link
               href={`/besoins/${item.slug}`}
@@ -716,10 +692,12 @@ function FamilleColumn({
 // MobileBesoinsExpand — accordion mobile, familles avec sous-listes
 // ----------------------------------------------------------------------------
 function MobileBesoinsExpand({
+  grouped,
   expanded,
   setExpanded,
   closeAll,
 }: {
+  grouped: GroupedBesoin[]
   expanded: boolean
   setExpanded: (v: boolean | ((p: boolean) => boolean)) => void
   closeAll: () => void
@@ -737,13 +715,13 @@ function MobileBesoinsExpand({
       </button>
       {expanded && (
         <div className="mt-1 flex flex-col gap-3 pl-3 pb-1">
-          {BESOINS_FAMILIES.map((famille) => (
-            <div key={famille.key} className="flex flex-col gap-1">
+          {grouped.map((g) => (
+            <div key={g.meta.key} className="flex flex-col gap-1">
               <p className="flex items-center gap-2 px-4 pt-1 font-display text-[12.5px] font-semibold leading-4 tracking-[-0.01em] text-ink">
                 <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-success" />
-                {famille.titre}
+                {g.meta.titre}
               </p>
-              {famille.items.map((item) => (
+              {g.items.map((item) => (
                 <Link
                   key={item.slug}
                   href={`/besoins/${item.slug}`}

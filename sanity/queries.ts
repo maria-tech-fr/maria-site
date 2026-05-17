@@ -253,9 +253,97 @@ export const besoinsMenuQuery = defineQuery(`
   *[_type == "pageBesoin" && defined(slug.current) && defined(ordreMenu)] | order(ordreMenu asc){
     titre,
     "slug": slug.current,
+    famille,
     ordreMenu,
     introCourte,
     pictoMenu{ asset->{ _id, url, mimeType } }
+  }
+`)
+
+export const pageBesoinSlugsQuery = defineQuery(`
+  *[_type == "pageBesoin" && defined(slug.current)][]{ "slug": slug.current }
+`)
+
+export const pageBesoinQuery = defineQuery(`
+  *[_type == "pageBesoin" && slug.current == $slug][0]{
+    titre,
+    "slug": slug.current,
+    famille,
+    introCourte,
+    hero{ surTitre, titre, sousTitre, ctaPrimaireLibelle, ctaSecondaireLibelle },
+    probleme{
+      surTitre,
+      titre,
+      paragraphes,
+      recogSurTitre,
+      recogTitre,
+      symptomes
+    },
+    cout{
+      surTitre,
+      titre,
+      items[]{ icone, titre, description }
+    },
+    reponse{
+      surTitre,
+      titre,
+      sousTitre,
+      leviers[]{ icone, titre, description }
+    },
+    transformation{
+      surTitre,
+      titre,
+      avant,
+      apres,
+      closing
+    },
+    serviceAssocie{
+      surTitre,
+      titre,
+      cards[]{
+        numero,
+        pitch,
+        ctaLibelle,
+        service->{
+          titre,
+          "slug": slug.current
+        }
+      },
+      formationMention{ texte, lienLibelle, lienHref }
+    },
+    faq{
+      surTitre,
+      titre,
+      questions[]{ question, reponse }
+    },
+    besoinsLies{
+      surTitre,
+      titre,
+      references[]->{
+        titre,
+        "slug": slug.current,
+        introCourte
+      }
+    },
+    ctaFinal{
+      surTitre,
+      titre,
+      sousTitre,
+      ctaPrimaireLibelle,
+      ctaSecondaireLibelle,
+      mention
+    },
+    seo{ titre, description }
+  }
+`)
+
+export const besoinsIndexQuery = defineQuery(`
+  *[_type == "pageBesoin" && defined(slug.current)] | order(famille asc, ordreMenu asc){
+    titre,
+    "slug": slug.current,
+    famille,
+    ordreMenu,
+    introCourte
   }
 `)
 

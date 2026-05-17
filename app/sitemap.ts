@@ -31,12 +31,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: 'monthly',
     priority: 0.8,
   }))
-  const besoins: MetadataRoute.Sitemap = besoinsRaw.map((b) => ({
-    url: `${SITE_URL}/besoins/${b.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.6,
-  }))
+  // Index /besoins + N pages besoin (priorité SEO élevée — portes d'entrée).
+  const besoins: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/besoins`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    ...besoinsRaw.map((b) => ({
+      url: `${SITE_URL}/besoins/${b.slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
+  ]
 
   // Catégories d'articles.
   const categories = await getArticleCategories()
