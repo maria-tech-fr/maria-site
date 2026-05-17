@@ -30,10 +30,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <ContactJsonLd
-        contact={contact}
-        faq={page?.faq?.questions ?? []}
-      />
+      <ContactJsonLd faq={page?.faq?.questions ?? []} />
 
       {page?.hero && (
         <ContactHero

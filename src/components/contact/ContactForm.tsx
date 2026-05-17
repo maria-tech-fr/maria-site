@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useActionState, useId, useState } from 'react'
+import { useActionState, useId } from 'react'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import { submitContact } from '../../lib/contactActions'

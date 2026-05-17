@@ -97,6 +97,22 @@ html {
 }
 
 /*
+  Score flash sur le runner maria : déclenche un flash vert court à chaque
+  changement de score, via re-mount du span (key={score}). Aucun setState
+  dans useEffect nécessaire.
+*/
+@keyframes score-flash {
+  0%   { color: var(--color-success); }
+  100% { color: var(--color-ink); }
+}
+.score-flash {
+  animation: score-flash 0.3s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .score-flash { animation: none; }
+}
+
+/*
   Curseur clignotant (signature « | » en fin de H1/H2 sur les pages besoin).
   Animation pas-à-pas pour un effet terminal/console.
 */

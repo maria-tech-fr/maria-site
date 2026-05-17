@@ -4,6 +4,7 @@ import { getCalApi } from '@calcom/embed-react'
 import { useEffect } from 'react'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
+import { renderWithEmphase } from '../../lib/emphase'
 
 type Props = {
   surTitre: string
@@ -50,7 +51,7 @@ export default function ThankYouCalcomCta({
         </Reveal>
         <Reveal delay={100}>
           <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-[1.1] tracking-[-0.032em] text-paper lg:text-[52px] lg:leading-[1.08]">
-            {renderTitreWithAccent(titre)}
+            {renderWithEmphase(titre, 'text-accent')}
           </h2>
         </Reveal>
         {description && (
@@ -92,18 +93,6 @@ function extractCalLink(url: string): string {
   }
 }
 
-function renderTitreWithAccent(texte: string): React.ReactNode {
-  if (!texte.includes('**')) return texte
-  const parts = texte.split(/\*\*([^*]+)\*\*/g)
-  return parts.map((part, i) => {
-    if (i % 2 === 0) return <span key={i}>{part}</span>
-    return (
-      <span key={i} className="text-accent">
-        {part}
-      </span>
-    )
-  })
-}
 
 function ArrowRight() {
   return (

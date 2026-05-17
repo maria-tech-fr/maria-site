@@ -3,7 +3,7 @@ import BlockHeader from './BlockHeader'
 import Reveal from './Reveal'
 import ArrowRight from './icons/ArrowRight'
 import ServiceIcon from './icons/ServiceIcon'
-import { type Lien, type Services as ServicesData, type ServiceCard, lienExterne, lienHref } from '../lib/accueil'
+import { type Services as ServicesData, type ServiceCard, lienExterne, lienHref } from '../lib/accueil'
 
 export default function Services({ data }: { data: ServicesData }) {
   return (

@@ -1,10 +1,13 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { DM_Mono, Syne, Work_Sans } from 'next/font/google'
 import '../globals.css'
 import Nav from '../../src/components/Nav'
 import Footer from '../../src/components/Footer'
+import OrganizationJsonLd from '../../src/components/OrganizationJsonLd'
 import { getBesoinsMenu } from '../../src/lib/pageBesoin'
 import { getServicesMenu } from '../../src/lib/pageService'
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
 const workSans = Work_Sans({
   variable: '--font-work-sans',
@@ -25,7 +28,14 @@ const dmMono = DM_Mono({
   display: 'swap',
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#FFFFFF',
+}
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'maria — agence IA',
     template: '%s · maria',
@@ -34,6 +44,11 @@ export const metadata: Metadata = {
     "Agence IA spécialisée dans les outils internes, l'amélioration de processus et les agents IA. Des experts humains qui contrôlent l'IA pour des projets maîtrisés et efficaces.",
   icons: {
     icon: [{ url: '/favicon.png', type: 'image/png' }],
+  },
+  openGraph: {
+    siteName: 'maria',
+    locale: 'fr_FR',
+    type: 'website',
   },
 }
 
@@ -61,6 +76,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       className={`${workSans.variable} ${syne.variable} ${dmMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
+        <OrganizationJsonLd />
         <style dangerouslySetInnerHTML={{ __html: HALO_KEYFRAMES }} />
         <div className="fixed inset-x-0 top-0 z-50 px-4 py-3 sm:px-6 lg:px-30.5 lg:py-6">
           <Nav services={services} besoins={besoins} />

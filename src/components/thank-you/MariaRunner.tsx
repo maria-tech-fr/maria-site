@@ -15,7 +15,6 @@ export default function MariaRunner() {
 
   const [score, setScore] = useState(0)
   const [record, setRecord] = useState(0)
-  const [scoreFlash, setScoreFlash] = useState(false)
   const [bossWarn, setBossWarn] = useState(false)
   const [bossToast, setBossToast] = useState(false)
   const [gameOverData, setGameOverData] = useState<{
@@ -23,18 +22,13 @@ export default function MariaRunner() {
   } | null>(null)
   const [soundOn, setSoundOn] = useState(false)
 
-  // Petit flash sur le score quand il bouge (~300ms)
-  useEffect(() => {
-    if (score === 0) return
-    setScoreFlash(true)
-    const t = setTimeout(() => setScoreFlash(false), 300)
-    return () => clearTimeout(t)
-  }, [score])
-
-  // Restaure le toggle son depuis sessionStorage
+  // Restaure le toggle son depuis sessionStorage (client-only lookup).
+  // setState dans useEffect est légitime ici : on synchronise depuis un système
+  // externe (browser storage) non accessible en SSR.
   useEffect(() => {
     try {
       const v = sessionStorage.getItem(SOUND_KEY)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (v === '1') setSoundOn(true)
     } catch { /* noop */ }
   }, [])
@@ -78,7 +72,7 @@ export default function MariaRunner() {
           <div className="flex gap-6">
             <span>
               score{' '}
-              <span className={`ml-1 transition-colors duration-200 ${scoreFlash ? 'text-success' : 'text-ink'}`}>
+              <span key={score} className="score-flash ml-1 text-ink">
                 {pad5(score)}
               </span>
             </span>
@@ -125,7 +119,7 @@ export default function MariaRunner() {
           {/* Game over */}
           {gameOverData && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-ink/55 px-8 text-center backdrop-blur-[2px]">
-              <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-paper/80">// game over</p>
+              <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-paper/80">{'// game over'}</p>
               <p className="font-display text-[48px] font-semibold leading-[1.05] tracking-[-0.02em] text-paper lg:text-[64px]">
                 {pad5(gameOverData.score)}
               </p>

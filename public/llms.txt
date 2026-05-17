@@ -1,0 +1,49 @@
+# maria
+
+> maria est une agence digitale 100 % IA basée en France. Nous concevons des outils IA sur-mesure, des agents et des audits de stratégie IA pour les PME et grands comptes qui veulent industrialiser l'IA sans dériver. Approche anti-bullshit, méthode cadrée, livraisons concrètes.
+
+## Services
+
+- [Audit & stratégie IA](https://maria.tech/services/audit-strategie-ia) : cartographie des usages, gouvernance, plan d'action priorisé.
+- [Outils internes sur-mesure](https://maria.tech/services/outils-internes-sur-mesure) : plateformes IA qui se branchent sur le SI existant.
+- [Agents IA](https://maria.tech/services/agents-ia) : assistants spécialisés cadrés sur la documentation interne, supervision humaine.
+- [Formation IA pour les équipes](https://maria.tech/services/formation) : formations concrètes par métier, sécurité par défaut.
+
+## Cas d'usage (besoins)
+
+Les pages besoins décrivent un problème métier, le coût caché, la réponse maria, et le service associé.
+
+- [Faire gagner du temps aux commerciaux](https://maria.tech/besoins/gagner-du-temps-commerciaux)
+- [Réduire la charge du service client](https://maria.tech/besoins/reduire-charge-service-client)
+- [Industrialiser le traitement de documents](https://maria.tech/besoins/industrialiser-traitement-documents)
+- [Organiser la connaissance de l'entreprise](https://maria.tech/besoins/organiser-connaissance-entreprise)
+- [Faciliter l'onboarding](https://maria.tech/besoins/faciliter-onboarding)
+- [Capitaliser sur l'expertise interne](https://maria.tech/besoins/capitaliser-expertise-interne)
+- [Avoir une vision claire des données métier](https://maria.tech/besoins/vision-claire-donnees-metier)
+- [Mettre en place des alertes intelligentes](https://maria.tech/besoins/alertes-intelligentes)
+- [Trier les candidatures](https://maria.tech/besoins/trier-candidatures)
+- [Former les équipes à l'IA](https://maria.tech/besoins/former-equipes-ia)
+- [Sécuriser l'usage de l'IA](https://maria.tech/besoins/securiser-usage-ia)
+- [Mettre l'IA en conformité RGPD](https://maria.tech/besoins/conformite-rgpd-ia)
+
+## L'agence
+
+- [Présentation, manifeste, méthode, équipe](https://maria.tech/agence)
+- [Projets passés et à venir](https://maria.tech/projets)
+- [Journal (articles)](https://maria.tech/blog)
+
+## Contact
+
+- [Page contact](https://maria.tech/contact)
+- Email : hello@maria.tech
+- Réponse sous 24 h ouvrées · Sans engagement
+
+## Positionnement éditorial
+
+- Cible : décideurs 30-60 ans + équipes métier en PME et grands comptes
+- Ton : sérieux, anti-bullshit, rassurant, concret
+- Spécificités : approche par cas d'usage métier (pas par techno), supervision humaine obligatoire, conformité RGPD intégrée dès la conception, formation transversale qui accompagne chaque projet
+
+## Sitemap
+
+[XML sitemap](https://maria.tech/sitemap.xml)

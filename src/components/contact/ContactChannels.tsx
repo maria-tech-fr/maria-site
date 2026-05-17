@@ -47,6 +47,7 @@ export default function ContactChannels({
       scrollToId('infos-pratiques')
     } else if (action === 'link' && href) {
       if (href.startsWith('http')) window.open(href, '_blank', 'noopener,noreferrer')
+      // eslint-disable-next-line react-hooks/immutability
       else window.location.href = href
     }
     // 'calcom' is handled directly by the Cal.com data attrs on the button (see below).

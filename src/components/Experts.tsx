@@ -1,4 +1,3 @@
-import BlockHeader from './BlockHeader'
 import CtaSecondaire from './CtaSecondaire'
 import Reveal from './Reveal'
 import { type Experts as ExpertsData, type MembreExpert } from '../lib/accueil'

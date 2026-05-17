@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import DarkHero from '../../../src/components/DarkHero'
 import Engagements from '../../../src/components/Engagements'
 import Faq from '../../../src/components/Faq'
+import FaqJsonLd from '../../../src/components/FaqJsonLd'
 import Manifeste from '../../../src/components/Manifeste'
 import NonNegociables from '../../../src/components/NonNegociables'
 import Processus from '../../../src/components/Processus'
@@ -37,7 +38,12 @@ export default async function AgencePage() {
       {agence.processus && <Processus data={agence.processus} />}
       {agence.technos && <Technos data={agence.technos} />}
       {agence.engagements && <Engagements data={agence.engagements} />}
-      {agence.faq && <Faq data={agence.faq} />}
+      {agence.faq && (
+        <>
+          <Faq data={agence.faq} />
+          <FaqJsonLd questions={agence.faq.questions} />
+        </>
+      )}
     </>
   )
 }

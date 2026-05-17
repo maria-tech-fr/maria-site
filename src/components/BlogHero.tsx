@@ -1,5 +1,6 @@
 import HaloField from './HaloField'
 import Reveal from './Reveal'
+import { renderWithEmphase } from '../lib/emphase'
 
 type BlogHeroProps = {
   surTitre?: string
@@ -26,7 +27,7 @@ export default function BlogHero({ surTitre = '// blog', titre, description }: B
         </Reveal>
         <Reveal delay={100}>
           <h1 className="max-w-260 whitespace-pre-line font-display text-[44px] font-semibold leading-12 tracking-[-0.035em] text-paper lg:text-[92px] lg:leading-[92px]">
-            {renderTitreWithAccent(titre)}
+            {renderWithEmphase(titre, 'text-accent')}
           </h1>
         </Reveal>
         {description && (
@@ -41,15 +42,3 @@ export default function BlogHero({ surTitre = '// blog', titre, description }: B
   )
 }
 
-function renderTitreWithAccent(texte: string): React.ReactNode {
-  if (!texte.includes('**')) return texte
-  const parts = texte.split(/\*\*([^*]+)\*\*/g)
-  return parts.map((part, i) => {
-    if (i % 2 === 0) return <span key={i}>{part}</span>
-    return (
-      <span key={i} className="text-accent">
-        {part}
-      </span>
-    )
-  })
-}
