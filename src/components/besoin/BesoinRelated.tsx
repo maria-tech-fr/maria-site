@@ -25,11 +25,11 @@ export default function BesoinRelated({ surTitre, titre, references }: Props) {
 
       <div className="relative flex flex-col gap-12">
         <Reveal>
-          <div className="flex max-w-[40ch] flex-col gap-4">
+          <div className="flex flex-col gap-4">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.025em] text-ink text-balance lg:text-[44px]">
+            <h2 className="font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.025em] text-ink lg:text-[44px]">
               {titre}
             </h2>
           </div>

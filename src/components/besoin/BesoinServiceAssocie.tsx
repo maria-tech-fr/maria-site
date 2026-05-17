@@ -46,11 +46,11 @@ export default function BesoinServiceAssocie({
 
       <div className="relative flex flex-col gap-14">
         <Reveal>
-          <div className="flex max-w-[42ch] flex-col gap-5">
+          <div className="flex flex-col gap-5">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-paper text-balance lg:text-[52px]">
+            <h2 className="font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-paper lg:text-[52px]">
               {titre}
             </h2>
           </div>
@@ -103,7 +103,7 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
   return (
     <Link
       href={href}
-      className="group/svc relative flex h-full flex-col gap-5 overflow-hidden rounded-[16px] border border-white/10 bg-[#2a2a2a] p-10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-success/50 lg:p-12"
+      className="group/svc relative flex h-full flex-col gap-5 overflow-hidden rounded-[8px] border border-white/10 bg-[#2a2a2a] p-10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-success/50 lg:p-12"
     >
       {/* Halo radial interne */}
       <span
@@ -126,7 +126,7 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
       <p className="relative whitespace-pre-line text-[15.5px] leading-[1.6] text-[#BFBFBF]">
         {card.pitch}
       </p>
-      <span className="relative mt-auto inline-flex items-center gap-2 border-b border-success pb-1 font-medium text-[15px] leading-5 text-success transition-colors duration-300 ease-out group-hover/svc:text-success-soft">
+      <span className="relative mt-auto inline-flex w-fit items-center gap-2 self-start border-b border-success pb-1 font-medium text-[15px] leading-5 text-success transition-colors duration-300 ease-out group-hover/svc:text-success-soft">
         {card.ctaLibelle || 'Découvrir ce service'}
         <ArrowRight />
       </span>

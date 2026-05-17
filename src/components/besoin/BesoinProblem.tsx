@@ -32,8 +32,8 @@ export default function BesoinProblem({
           <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
             {surTitre}
           </p>
-          <h2 className="max-w-[18ch] font-display text-[36px] font-semibold leading-[1.1] tracking-[-0.028em] text-ink text-balance lg:text-[48px] lg:leading-[1.1]">
-            {renderTitreWithHighlight(titre)}
+          <h2 className="font-display text-[36px] font-semibold leading-[1.1] tracking-[-0.028em] text-ink lg:text-[48px] lg:leading-[1.1]">
+            {titre.replace(/\*\*/g, '')}
           </h2>
           <div className="flex flex-col gap-5">
             {paragraphes.map((p, i) => (
@@ -75,16 +75,3 @@ export default function BesoinProblem({
   )
 }
 
-function renderTitreWithHighlight(texte: string): React.ReactNode {
-  if (!texte.includes('**')) return texte
-  const parts = texte.split(/\*\*([^*]+)\*\*/g)
-  return parts.map((part, i) => {
-    if (i % 2 === 0) return <span key={i}>{part}</span>
-    return (
-      <span key={i} className="relative inline-block">
-        <span aria-hidden className="absolute inset-x-0 bottom-[0.08em] h-[0.38em] bg-accent" />
-        <span className="relative">{part}</span>
-      </span>
-    )
-  })
-}

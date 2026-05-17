@@ -28,15 +28,15 @@ export default function BesoinAnswer({ surTitre, titre, sousTitre, leviers }: Pr
 
       <div className="relative flex flex-col gap-14">
         <Reveal>
-          <div className="flex max-w-[62ch] flex-col gap-5">
+          <div className="flex flex-col gap-5">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink text-balance lg:text-[52px]">
+            <h2 className="font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
               {titre}
             </h2>
             {sousTitre && (
-              <p className="text-[17px] leading-[1.6] text-ink-soft lg:text-[18px]">
+              <p className="max-w-[62ch] text-[17px] leading-[1.6] text-ink-soft lg:text-[18px]">
                 {sousTitre}
               </p>
             )}
@@ -47,7 +47,7 @@ export default function BesoinAnswer({ surTitre, titre, sousTitre, leviers }: Pr
           {leviers.map((l, i) => (
             <Reveal key={i} delay={120 + i * 60} className="h-full">
               <article
-                className={`group/lever flex h-full flex-col gap-3 rounded-[16px] border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_18px_40px_-22px_rgba(254,194,60,0.55)]`}
+                className={`group/lever flex h-full flex-col gap-3 rounded-[8px] border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_8px_20px_-12px_rgba(254,194,60,0.25)]`}
               >
                 <span
                   className={`mb-3 flex h-11 w-11 items-center justify-center rounded-[10px] border ${

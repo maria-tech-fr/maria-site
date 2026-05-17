@@ -634,18 +634,15 @@ function FamilleColumn({
   onItemClick: () => void
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-[10px] p-3">
-      <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1 rounded-[8px] bg-success-tint/60 px-3.5 py-2.5">
         <p className="flex items-center gap-2 font-display text-[13.5px] font-semibold leading-5 tracking-[-0.01em] text-ink">
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-success" />
           {group.meta.titre}
-          <span className="font-mono text-[10px] font-normal tracking-[0.06em] text-ink-soft">
-            ({group.items.length})
-          </span>
         </p>
         <p className="pl-3.5 text-[11.5px] leading-4 text-ink-soft">{group.meta.tagline}</p>
       </div>
-      <ul className="mt-1 flex flex-col">
+      <ul className="flex flex-col px-1">
         {group.items.map((item) => (
           <li key={item.slug}>
             <Link

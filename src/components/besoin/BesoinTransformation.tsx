@@ -21,11 +21,11 @@ export default function BesoinTransformation({ surTitre, titre, avant, apres, cl
 
       <div className="relative flex flex-col gap-14">
         <Reveal>
-          <div className="flex max-w-[40ch] flex-col gap-5">
+          <div className="flex flex-col gap-5">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink text-balance lg:text-[52px]">
+            <h2 className="font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
               {titre}
             </h2>
           </div>
@@ -34,7 +34,7 @@ export default function BesoinTransformation({ surTitre, titre, avant, apres, cl
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
           {/* Aujourd'hui */}
           <Reveal delay={120} className="h-full">
-            <div className="flex h-full flex-col gap-5 rounded-[16px] border border-paper-edge bg-paper p-9 lg:p-11">
+            <div className="flex h-full flex-col gap-5 rounded-[8px] border border-paper-edge bg-paper p-9 lg:p-11">
               <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#888]">
                 // aujourd’hui
               </p>
@@ -57,7 +57,7 @@ export default function BesoinTransformation({ surTitre, titre, avant, apres, cl
 
           {/* Avec maria */}
           <Reveal delay={180} className="h-full">
-            <div className="flex h-full flex-col gap-5 rounded-[16px] border border-[#C9EAD3] bg-success-tint p-9 lg:p-11">
+            <div className="flex h-full flex-col gap-5 rounded-[8px] border border-[#C9EAD3] bg-success-tint p-9 lg:p-11">
               <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#2a7a44]">
                 // avec maria
               </p>
