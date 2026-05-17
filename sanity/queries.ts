@@ -337,15 +337,6 @@ export const pageBesoinQuery = defineQuery(`
   }
 `)
 
-export const besoinsIndexQuery = defineQuery(`
-  *[_type == "pageBesoin" && defined(slug.current)] | order(famille asc, ordreMenu asc){
-    titre,
-    "slug": slug.current,
-    famille,
-    ordreMenu,
-    introCourte
-  }
-`)
 
 /* ============================================================================
  * BLOG

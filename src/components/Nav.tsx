@@ -159,7 +159,7 @@ export default function Nav({ services, besoins }: NavProps) {
           </Link>
         )}
 
-        {hasBesoins ? (
+        {hasBesoins && (
           <DesktopTrigger
             label="Besoins"
             open={desktopOpen === 'besoins'}
@@ -178,13 +178,6 @@ export default function Nav({ services, besoins }: NavProps) {
               onItemClick={() => setDesktopOpen(null)}
             />
           </DesktopTrigger>
-        ) : (
-          <Link
-            href="/besoins"
-            className="rounded-[5px] px-3.5 py-2 text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
-          >
-            Besoins
-          </Link>
         )}
 
         <Link
@@ -258,7 +251,7 @@ export default function Nav({ services, besoins }: NavProps) {
             </Link>
           )}
 
-          {hasBesoins ? (
+          {hasBesoins && (
             <MobileBesoinsExpand
               grouped={besoinsGrouped}
               expanded={mobileBesoinsExpanded}
@@ -268,14 +261,6 @@ export default function Nav({ services, besoins }: NavProps) {
                 setMobileBesoinsExpanded(false)
               }}
             />
-          ) : (
-            <Link
-              href="/besoins"
-              className="rounded-[6px] px-4 py-3 text-sm font-work-sans text-ink-soft hover:bg-paper-soft transition-colors duration-300 ease-out"
-              onClick={() => setMobileOpen(false)}
-            >
-              Besoins
-            </Link>
           )}
 
           <Link
@@ -626,17 +611,10 @@ function NavBesoinsMega({
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
-      <div className="flex items-center justify-between px-3 pb-3 pt-2">
+      <div className="px-3 pb-3 pt-2">
         <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-soft">
           // {total} cas d’usage, classés par famille
         </p>
-        <Link
-          href="/besoins"
-          onClick={onItemClick}
-          className="font-mono text-[10px] uppercase tracking-[0.08em] text-success underline underline-offset-4 transition-colors duration-300 ease-out hover:text-success-soft"
-        >
-          Voir tous →
-        </Link>
       </div>
 
       <div className="grid grid-cols-3 gap-x-3 gap-y-4">

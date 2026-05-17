@@ -64,8 +64,7 @@ export default async function PageBesoin({
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Besoins', item: `${SITE_URL}/besoins` },
-      { '@type': 'ListItem', position: 3, name: data.titre, item: `${SITE_URL}/besoins/${data.slug}` },
+      { '@type': 'ListItem', position: 2, name: data.titre, item: `${SITE_URL}/besoins/${data.slug}` },
     ],
   }
 
@@ -114,7 +113,7 @@ function renderBlocks(data: NonNullable<PageBesoinData>, famille: string | undef
       )}
 
       {/* Hairline divider hero → problème (2 sections claires) */}
-      <div className="h-px bg-gradient-to-r from-transparent via-ink/10 to-transparent" />
+      <div className="h-px bg-linear-to-r from-transparent via-ink/10 to-transparent" />
 
       {/* 2 — Le problème */}
       {data.probleme?.titre && data.probleme?.symptomes && (

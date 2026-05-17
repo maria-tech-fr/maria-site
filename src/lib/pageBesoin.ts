@@ -1,6 +1,5 @@
 import { client } from '../../sanity/client'
 import {
-  besoinsIndexQuery,
   besoinsMenuQuery,
   pageBesoinQuery,
   pageBesoinSlugsQuery,
@@ -155,22 +154,3 @@ export async function getPageBesoinSlugs(): Promise<string[]> {
   return (rows ?? []).map((r) => r.slug).filter(Boolean)
 }
 
-/* ----------------------------------------------------------------------------
- * Index /besoins
- * -------------------------------------------------------------------------- */
-export type BesoinIndexItem = {
-  titre: string
-  slug: string
-  famille: BesoinFamilleKey | null
-  ordreMenu: number
-  introCourte: string | null
-}
-
-export async function getBesoinsIndex(): Promise<BesoinIndexItem[]> {
-  const rows = await client.fetch<BesoinIndexItem[]>(
-    besoinsIndexQuery,
-    {},
-    { next: { revalidate: 60, tags: ['pageBesoin'] } },
-  )
-  return rows ?? []
-}
