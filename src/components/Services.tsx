@@ -23,7 +23,7 @@ export default function Services({ data }: { data: ServicesData }) {
       {data.cards && data.cards.length > 0 && (
         <div className="mt-10 grid grid-cols-1 gap-3.75 md:grid-cols-3 lg:mt-[46px]">
           {data.cards.map((card, i) => (
-            <Reveal key={i} delay={150 + i * 100}>
+            <Reveal key={i} delay={150 + i * 100} className="h-full">
               <ServiceCardItem card={card} index={i} />
             </Reveal>
           ))}
@@ -43,7 +43,7 @@ function ServiceCardItem({ card, index }: { card: ServiceCard; index: number }) 
     'group inline-flex items-center gap-2 pt-[15px] text-[14px] font-medium leading-[21.7px] text-ink'
 
   return (
-    <article className="group/card relative flex flex-col rounded-[5px] border border-paper-edge bg-paper px-7 pt-8 pb-7 lg:px-8 lg:pt-9 lg:pb-8">
+    <article className="group/card relative flex h-full flex-col rounded-[5px] border border-paper-edge bg-paper px-7 pt-8 pb-7 lg:px-8 lg:pt-9 lg:pb-8">
       {/* Bordure dégradée jaune↔vert visible uniquement au hover. Drift lent en arrière-plan. */}
       <div
         aria-hidden

@@ -13,7 +13,7 @@ export default function Constat({ data }: { data: ConstatData }) {
         ]}
       />
 
-      <div className="relative flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-x-27.5">
+      <div className="relative flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-x-15">
         <Reveal className="flex flex-1 flex-col gap-2.5">
           <BlockHeader
             surTitre={data.surTitre}
@@ -23,7 +23,7 @@ export default function Constat({ data }: { data: ConstatData }) {
           />
         </Reveal>
 
-        <Reveal className="w-full lg:w-132 lg:shrink-0" delay={150}>
+        <Reveal className="w-full lg:w-115 lg:shrink-0" delay={150}>
           <div className="flex flex-col gap-4 lg:pt-2">
             {data.paragraphes?.map((p, i) => (
               <p
