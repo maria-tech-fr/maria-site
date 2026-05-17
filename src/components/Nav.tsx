@@ -229,7 +229,7 @@ export default function Nav({ services, besoins }: NavProps) {
 
       {/* Mobile dropdown */}
       {mobileOpen && (
-        <div className="absolute left-0 right-0 top-full mt-3 flex flex-col gap-1 rounded-[10px] border border-ink/6 bg-white/95 p-3 shadow-lg backdrop-blur-lg lg:hidden">
+        <div className="absolute left-0 right-0 top-full mt-3 flex flex-col gap-1 rounded-[10px] border border-ink/6 bg-paper p-3 shadow-lg lg:hidden">
           {hasServices ? (
             <MobileExpand
               label="Services"
@@ -458,7 +458,7 @@ function NavSubmenu({
       id={id}
       role="menu"
       aria-label={ariaLabel}
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper/96 p-3.25 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] backdrop-blur-sm transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-3.25 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
@@ -607,7 +607,7 @@ function NavBesoinsMega({
       id={id}
       role="menu"
       aria-label="Sous-menu Besoins par familles"
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-[min(92vw,920px)] -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper/96 p-4 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] backdrop-blur-sm transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-[min(92vw,920px)] -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-4 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
@@ -617,7 +617,7 @@ function NavBesoinsMega({
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-x-3 gap-y-4">
+      <div className="grid grid-cols-2 gap-x-3 gap-y-4">
         {grouped.map((g) => (
           <FamilleColumn key={g.meta.key} group={g} onItemClick={onItemClick} />
         ))}

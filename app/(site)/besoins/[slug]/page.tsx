@@ -14,7 +14,6 @@ import BesoinTransformation from '../../../../src/components/besoin/BesoinTransf
 import BesoinServiceAssocie from '../../../../src/components/besoin/BesoinServiceAssocie'
 import Faq from '../../../../src/components/Faq'
 import BesoinRelated from '../../../../src/components/besoin/BesoinRelated'
-import BesoinCtaFinal from '../../../../src/components/besoin/BesoinCtaFinal'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -184,18 +183,6 @@ function renderBlocks(data: NonNullable<PageBesoinData>, famille: string | undef
           surTitre={data.besoinsLies.surTitre || '// besoins liés'}
           titre={data.besoinsLies.titre || 'Vous pourriez aussi avoir besoin de…'}
           references={data.besoinsLies.references}
-        />
-      )}
-
-      {/* 8 — CTA final */}
-      {data.ctaFinal?.titre && (
-        <BesoinCtaFinal
-          surTitre={data.ctaFinal.surTitre || '// passons à l’action'}
-          titre={data.ctaFinal.titre}
-          sousTitre={data.ctaFinal.sousTitre}
-          ctaPrimaireLibelle={data.ctaFinal.ctaPrimaireLibelle}
-          ctaSecondaireLibelle={data.ctaFinal.ctaSecondaireLibelle}
-          mention={data.ctaFinal.mention}
         />
       )}
 
