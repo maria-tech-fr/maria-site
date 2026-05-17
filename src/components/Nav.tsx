@@ -617,7 +617,7 @@ function NavBesoinsMega({
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-3 gap-y-4">
+      <div className="grid grid-cols-2 gap-x-3 gap-y-8">
         {grouped.map((g) => (
           <FamilleColumn key={g.meta.key} group={g} onItemClick={onItemClick} />
         ))}
