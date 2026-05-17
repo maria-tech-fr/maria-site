@@ -25,12 +25,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getPageServiceSlugs(),
     getBesoinsMenu(),
   ])
-  const services: MetadataRoute.Sitemap = serviceSlugs.map((slug) => ({
-    url: `${SITE_URL}/services/${slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }))
+  const services: MetadataRoute.Sitemap = [
+    ...serviceSlugs.map((slug) => ({
+      url: `${SITE_URL}/services/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
+    // Page Formation (service transversal singleton, slug fixe)
+    {
+      url: `${SITE_URL}/services/formation`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+  ]
   // N pages besoin (priorité SEO élevée — portes d'entrée).
   const besoins: MetadataRoute.Sitemap = besoinsRaw.map((b) => ({
     url: `${SITE_URL}/besoins/${b.slug}`,

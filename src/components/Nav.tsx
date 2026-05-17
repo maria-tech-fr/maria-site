@@ -240,6 +240,11 @@ export default function Nav({ services, besoins }: NavProps) {
                 setMobileOpen(false)
                 setMobileServicesExpanded(false)
               }}
+              transversalLink={{
+                href: '/services/formation',
+                eyebrow: '// transversal',
+                titre: 'Formation IA pour les équipes',
+              }}
             />
           ) : (
             <Link
@@ -348,12 +353,15 @@ function MobileExpand({
   expanded,
   setExpanded,
   closeAll,
+  transversalLink,
 }: {
   label: string
   items: SubmenuItem[]
   expanded: boolean
   setExpanded: (v: boolean | ((p: boolean) => boolean)) => void
   closeAll: () => void
+  /** Lien discret affiché en bas sous un séparateur, pour les services transversaux. */
+  transversalLink?: { href: string; eyebrow: string; titre: string }
 }) {
   return (
     <>
@@ -378,6 +386,20 @@ function MobileExpand({
               {item.titre}
             </Link>
           ))}
+          {transversalLink && (
+            <Link
+              href={transversalLink.href}
+              onClick={closeAll}
+              className="mt-1 flex flex-col gap-0.5 rounded-[6px] border-t border-paper-edge px-4 pb-2.5 pt-3 text-left transition-colors duration-300 ease-out hover:bg-paper-soft"
+            >
+              <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
+                {transversalLink.eyebrow}
+              </span>
+              <span className="font-display text-[14px] font-semibold leading-[18px] tracking-[-0.01em] text-ink">
+                {transversalLink.titre}
+              </span>
+            </Link>
+          )}
         </div>
       )}
     </>
@@ -509,6 +531,29 @@ function NavSubmenu({
           </li>
         ))}
       </ul>
+
+      {/* Entrée discrète : Formation (service transversal). Séparateur fin + lien
+          compact, signalée sans être au même niveau que les 3 cards. */}
+      {tone === 'accent' && (
+        <div className="mt-2 border-t border-paper-edge pt-2">
+          <Link
+            href="/services/formation"
+            role="menuitem"
+            onClick={onItemClick}
+            className="group flex items-center justify-between gap-3 rounded-[8px] px-5 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
+          >
+            <span className="flex flex-col gap-0.5">
+              <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
+                // transversal
+              </span>
+              <span className="font-display text-[13.5px] font-semibold leading-[17px] tracking-[-0.01em] text-ink">
+                Formation IA pour les équipes
+              </span>
+            </span>
+            <Arrow />
+          </Link>
+        </div>
+      )}
     </div>
   )
 }

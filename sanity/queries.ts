@@ -488,6 +488,76 @@ export const promosBlogQuery = defineQuery(`
 `)
 
 
+export const pageFormationQuery = defineQuery(`
+  *[_type == "pageFormation"][0]{
+    hero{ surTitre, titre, sousTitre, ctaPrimaireLibelle, ctaSecondaireLibelle },
+    audiences{
+      surTitre,
+      titre,
+      cards[]{ icone, titre, description }
+    },
+    constat{
+      surTitre,
+      titre,
+      paragraphes
+    },
+    catalogue{
+      surTitre,
+      titre,
+      sousTitre,
+      familles[]{
+        label,
+        tagline,
+        formations[]{ numero, titre, public, description, duree }
+      }
+    },
+    pedagogie{
+      surTitre,
+      titre,
+      sousTitre,
+      principes[]{ numero, titre, description }
+    },
+    formats{
+      surTitre,
+      titre,
+      cards[]{ icone, titre, description }
+    },
+    transversale{
+      surTitre,
+      titre,
+      intro,
+      liens[]{
+        numero,
+        pitch,
+        service->{ titre, "slug": slug.current }
+      }
+    },
+    faq{
+      surTitre,
+      titre,
+      questions[]{ question, reponse }
+    },
+    ctaFinal{
+      surTitre,
+      titre,
+      sousTitre,
+      ctaPrimaireLibelle,
+      ctaSecondaireLibelle,
+      mention
+    },
+    services{
+      surTitre,
+      titre,
+      cards[]{
+        eyebrow,
+        pitch,
+        service->{ titre, "slug": slug.current }
+      }
+    },
+    seo{ titre, description }
+  }
+`)
+
 export const pageServiceQuery = defineQuery(`
   *[_type == "pageService" && slug.current == $slug][0]{
     titre,
