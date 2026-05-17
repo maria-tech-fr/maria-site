@@ -617,7 +617,7 @@ function NavBesoinsMega({
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-3 gap-y-8">
+      <div className="grid grid-cols-2 gap-x-10 gap-y-8">
         {grouped.map((g) => (
           <FamilleColumn key={g.meta.key} group={g} onItemClick={onItemClick} />
         ))}
@@ -635,9 +635,9 @@ function FamilleColumn({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-1 rounded-[8px] bg-success-tint/60 px-3.5 py-2.5">
+      <div className="flex flex-col gap-1 rounded-[8px] bg-accent-tint px-3.5 py-2.5">
         <p className="flex items-center gap-2 font-display text-[13.5px] font-semibold leading-5 tracking-[-0.01em] text-ink">
-          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-success" />
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
           {group.meta.titre}
         </p>
         <p className="pl-3.5 text-[11.5px] leading-4 text-ink-soft">{group.meta.tagline}</p>
@@ -693,7 +693,7 @@ function MobileBesoinsExpand({
           {grouped.map((g) => (
             <div key={g.meta.key} className="flex flex-col gap-1">
               <p className="flex items-center gap-2 px-4 pt-1 font-display text-[12.5px] font-semibold leading-4 tracking-[-0.01em] text-ink">
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-success" />
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
                 {g.meta.titre}
               </p>
               {g.items.map((item) => (
