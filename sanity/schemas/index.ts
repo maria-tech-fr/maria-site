@@ -9,6 +9,7 @@ import { messageContact } from './messageContact'
 import { pageBesoin } from './pageBesoin'
 import { pageCharteIA } from './pageCharteIA'
 import { pageFormation } from './pageFormation'
+import { pagePillier } from './pagePillier'
 import { pageService } from './pageService'
 import { parametresGlobaux } from './parametresGlobaux'
 import { projets } from './projets'
@@ -24,6 +25,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   projets,
   pageFormation,
   pageCharteIA,
+  pagePillier,
   // collections
   pageService,
   pageBesoin,

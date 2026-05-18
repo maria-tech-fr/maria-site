@@ -108,6 +108,13 @@ export default function Footer() {
             className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
           >
             Confidentialité
+          </Link>{' '}
+          ·{' '}
+          <Link
+            href="/charte-ia"
+            className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
+          >
+            Charte IA
           </Link>
         </div>
       </section>

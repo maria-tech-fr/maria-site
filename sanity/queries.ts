@@ -488,6 +488,51 @@ export const promosBlogQuery = defineQuery(`
 `)
 
 
+export const pagePillierQuery = defineQuery(`
+  *[_type == "pagePillier" && slug == $slug][0]{
+    slug,
+    hero{
+      surTitre,
+      titre,
+      sousTitre,
+      ctaPrimaireLibelle,
+      ctaPrimaireHref,
+      ctaSecondaireLibelle,
+      ctaSecondaireAncre
+    },
+    vision{ surTitre, titre, paragraphes },
+    articulation{
+      surTitre,
+      titre,
+      intro,
+      etapes[]{ numero, verbe, titre, description },
+      transversal{ label, titre, description, ctaLibelle, ctaHref }
+    },
+    whyMaria{
+      surTitre,
+      titre,
+      piliers[]{ icone, titre, description },
+      charteLien{ texte, libelle, href }
+    },
+    faq{
+      surTitre,
+      titre,
+      questions[]{ question, reponse }
+    },
+    finalCta{
+      surTitre,
+      titre,
+      sousTitre,
+      ctaPrimaireLibelle,
+      ctaPrimaireHref,
+      ctaSecondaireLibelle,
+      ctaSecondaireHref,
+      mention
+    },
+    seo{ titre, description }
+  }
+`)
+
 export const pageCharteIAQuery = defineQuery(`
   *[_type == "pageCharteIA"][0]{
     hero{ surTitre, titre, sousTitre },
