@@ -6,7 +6,6 @@ import CharteIntro from '../../../src/components/charte-ia/CharteIntro'
 import CharteEngagements from '../../../src/components/charte-ia/CharteEngagements'
 import CharteLignesRouges from '../../../src/components/charte-ia/CharteLignesRouges'
 import CharteDisclaimer from '../../../src/components/charte-ia/CharteDisclaimer'
-import CharteRevision from '../../../src/components/charte-ia/CharteRevision'
 import CharteCta from '../../../src/components/charte-ia/CharteCta'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
@@ -80,18 +79,16 @@ export default async function PageCharteIA() {
       {/* 1 — Hero */}
       {data.hero?.titre && (
         <CharteHero
-          surTitre={data.hero.surTitre || '// charte de gouvernance ia'}
+          surTitre={data.hero.surTitre || '// charte'}
           titre={data.hero.titre}
           sousTitre={data.hero.sousTitre}
-          lastUpdated={lastUpdated}
         />
       )}
 
-      {/* 2 — Préambule */}
-      {data.preambule?.titre && data.preambule.paragraphes && data.preambule.paragraphes.length > 0 && (
+      {/* 2 — Préambule (sans titre H2, juste sur-titre + paragraphes) */}
+      {data.preambule?.paragraphes && data.preambule.paragraphes.length > 0 && (
         <CharteIntro
-          surTitre={data.preambule.surTitre || '// préambule'}
-          titre={data.preambule.titre}
+          surTitre={data.preambule.surTitre || '// pourquoi cette charte'}
           paragraphes={data.preambule.paragraphes}
         />
       )}
@@ -116,18 +113,15 @@ export default async function PageCharteIA() {
         />
       )}
 
-      {/* 5 — Disclaimer */}
+      {/* 5+6 — Disclaimer + révision fusionnés en un seul bloc */}
       {data.disclaimer?.titre && data.disclaimer.paragraphes && data.disclaimer.paragraphes.length > 0 && (
         <CharteDisclaimer
-          surTitre={data.disclaimer.surTitre || '// ce que cette charte n’est pas'}
+          surTitre={data.disclaimer.surTitre || '// honnêteté'}
           titre={data.disclaimer.titre}
           paragraphes={data.disclaimer.paragraphes}
+          lastUpdated={lastUpdated}
+          revisionMention={data.revision?.mention}
         />
-      )}
-
-      {/* 6 — Révision (date) */}
-      {lastUpdated && (
-        <CharteRevision lastUpdated={lastUpdated} mention={data.revision?.mention} />
       )}
 
       {/* 7 — CTA final */}
