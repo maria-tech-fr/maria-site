@@ -202,13 +202,6 @@ const ARTICLE = {
     'La plupart des entreprises ont besoin d’un agent sur un périmètre précis, pas d’un chatbot partout ni d’un agent autonome sur tout.',
   ],
 
-  /* ---- Offres liées (maillage business) ---- */
-  relatedOffers: [
-    { _key: 'ro-1', label: 'Agents IA', href: '/services/agents-ia', kind: 'service' },
-    { _key: 'ro-2', label: 'Réduire la charge de mon service client', href: '/besoins/reduire-charge-service-client', kind: 'besoin' },
-    { _key: 'ro-3', label: 'Outils internes sur-mesure', href: '/services/outils-internes-sur-mesure', kind: 'service' },
-  ],
-
   /* ---- Body ---- */
   body: [
     /* ===== Section 1 — Le constat ===== */
@@ -336,15 +329,6 @@ const ARTICLE = {
       'À retenir',
       'Sous-dimensionner (un chatbot là où il faut un agent) gaspille le projet : il ne règle pas le vrai problème. Sur-dimensionner (un agent autonome là où un chatbot suffit) gaspille le budget et crée un risque. Le bon choix n’est pas le plus ambitieux : c’est le plus juste.',
     ),
-  ],
-
-  /* ---- Synthèse finale ---- */
-  keyTakeaways: [
-    'Chatbot = répondre. Agent IA = agir. C’est la distinction fondatrice, tout en découle.',
-    'La bonne question n’est pas « lequel est le plus moderne ? » mais « ai-je besoin d’une réponse ou d’une action ? ».',
-    'Un chatbot suffit pour l’information stable et documentée. Un agent est nécessaire dès qu’il faut croiser des sources, s’adapter ou exécuter.',
-    'Un agent IA exige toujours un périmètre cadré et une supervision humaine : l’autonomie est un curseur, pas un objectif.',
-    'Le bon choix est le plus juste, pas le plus ambitieux. Sur-dimensionner coûte aussi cher que sous-dimensionner.',
   ],
 
   /* ---- FAQ finale (alimente schema FAQPage avec les H2-questions) ---- */

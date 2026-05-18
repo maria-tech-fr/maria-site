@@ -419,51 +419,6 @@ export const article = defineType({
       validation: (r) => r.max(5),
     }),
     defineField({
-      name: 'relatedOffers',
-      title: 'Services / besoins liés à ce sujet',
-      description: 'Optionnel. Affiché sous le sommaire (sticky desktop). Renforce le maillage interne vers les pages business (services, besoins, formation). 2 à 4 entrées recommandées.',
-      type: 'array',
-      group: 'geo',
-      of: [
-        {
-          type: 'object',
-          name: 'relatedOffer',
-          fields: [
-            defineField({ name: 'label', title: 'Libellé', type: 'string', validation: (r) => r.required().max(60) }),
-            defineField({ name: 'href', title: 'Destination (chemin interne)', description: 'Ex : /services/agents-ia, /besoins/gagner-du-temps-commerciaux, /formation, /charte-ia.', type: 'string', validation: (r) => r.required() }),
-            defineField({
-              name: 'kind',
-              title: 'Type',
-              type: 'string',
-              options: {
-                list: [
-                  { title: 'Service', value: 'service' },
-                  { title: 'Besoin', value: 'besoin' },
-                  { title: 'Formation', value: 'formation' },
-                  { title: 'Charte IA', value: 'charte' },
-                ],
-                layout: 'radio',
-              },
-              validation: (r) => r.required(),
-            }),
-          ],
-          preview: {
-            select: { title: 'label', subtitle: 'href' },
-          },
-        },
-      ],
-      validation: (r) => r.max(6),
-    }),
-    defineField({
-      name: 'keyTakeaways',
-      title: 'Ce qu\'il faut retenir',
-      description: 'Optionnel mais recommandé. Synthèse finale en 3 à 5 puces — affichée juste avant la FAQ. Doit pouvoir résumer l\'article à elle seule (les IA en extraient souvent les puces).',
-      type: 'array',
-      group: 'geo',
-      of: [{ type: 'string', validation: (r) => r.max(250) }],
-      validation: (r) => r.max(5),
-    }),
-    defineField({
       name: 'faq',
       title: 'FAQ finale',
       description: 'Optionnel mais recommandé. Question + réponse. Génère un schema FAQPage (Google) ET sert de matière première pour les IA. 3 à 8 questions idéales. Chaque réponse doit pouvoir être lue isolément.',

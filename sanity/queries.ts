@@ -428,8 +428,6 @@ export const articleBySlugQuery = defineQuery(`
       markDefs[]{ ... }
     },
     tldr,
-    relatedOffers[]{ label, href, kind },
-    keyTakeaways,
     faq[]{ question, reponse },
     tocItems[]{ anchor, label, exclure },
     sidebarCta{ titre, description, lienLibelle, lienHref, variant },

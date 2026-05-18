@@ -4,6 +4,8 @@ Ce dossier contient le gabarit d'article maria, optimisé SEO + GEO (« Generati
 
 Tout le contenu d'un article vit dans **Sanity** (`/machine` → Article). Aucun fichier n'est à modifier en code pour publier un article.
 
+> 💡 Pour rédiger un nouvel article avec un assistant IA (Claude/GPT) directement au format du gabarit, voir [PROMPT.md](./PROMPT.md).
+
 ## Anatomie d'un article complet
 
 ```
@@ -18,7 +20,7 @@ Tout le contenu d'un article vit dans **Sanity** (`/machine` → Article). Aucun
 │  │  │    │  • H2-questions « ? »        │  ← alimentent FAQPage
 │  │  │    │  • H3 (sous-thématique)      │
 │  │  │    │  • listes                    │
-│  │  │    │  • À retenir (vert)          │
+│  │  │    │  • À retenir (vert)          │  ← synthèse extractible
 │  │  │    │  • Point de vigilance (jaune)│
 │  │  │    │  • Ce qu'on en pense (signa.)│  ← marque maria
 │  │  │    │  • Définition (terme/déf)    │  ← extrait IA
@@ -26,18 +28,14 @@ Tout le contenu d'un article vit dans **Sanity** (`/machine` → Article). Aucun
 │  │  │    │  • Citation attribuée        │  ← autorité
 │  │  │    │  • CTA in-article            │
 │  └──┘    │  • images, vidéos, etc.      │
-│ Offres   │                              │
-│ liées    │                              │
 ├────────────────────────────────────────┤
-│ ★ Ce qu'il faut retenir (jaune)        │  ← synthèse finale
-├────────────────────────────────────────┤
-│ ★ FAQ finale (accordéons)              │  ← double matière FAQPage
+│ ★ FAQ finale (accordéons)              │  ← matière FAQPage
 ├────────────────────────────────────────┤
 │ Auteur · Articles liés                 │
 └────────────────────────────────────────┘
 ```
 
-Les blocs marqués ★ sont les **briques GEO**. Toutes optionnelles, mais à remplir systématiquement sur les nouveaux articles.
+Les blocs marqués ★ sont les **briques GEO**. Optionnelles, à remplir systématiquement sur les nouveaux articles. Pour la synthèse finale, utiliser un callout « À retenir » en fin de corps si besoin.
 
 ## Règles d'or
 
@@ -89,8 +87,9 @@ Quand vous **actualisez réellement** le contenu (chiffres, exemples, recos), re
 
 ## Maillage interne
 
-- **`relatedOffers`** (sous le sommaire sticky) : 2 à 4 liens vers `/services/*`, `/besoins/*`, `/formation`, `/charte-ia`. Renforce le maillage business.
-- **Liens dans le corps** : contextualiser librement vers les autres articles, services, besoins.
+- **Liens dans le corps** : contextualiser librement vers les autres articles, services, besoins. Les liens internes (`/...`) sont stylés en soulignement vert ; les liens externes (`https://...`) en soulignement jaune, avec un picto ↗ et `target="_blank"`.
+- **CTA in-article** : utiliser le bloc `CTA en cours d'article` pour renvoyer vers une page business spécifique (1-2 max).
+- **CTA latéral** : le champ `sidebarCta` ajoute un encart sous le sommaire (optionnel).
 - **Articles liés** (bas de page) : générés automatiquement (même catégorie, fallback récents).
 
 ## Validation
@@ -101,9 +100,8 @@ Quand vous **actualisez réellement** le contenu (chiffres, exemples, recos), re
 - [ ] TL;DR de 3-5 puces (au moins 3)
 - [ ] Au moins 1 H2-question avec sa réponse autoportante
 - [ ] Au moins 1 bloc « À retenir » ou « Définition » ou « Tableau »
-- [ ] Synthèse « Ce qu'il faut retenir » (3-5 puces)
 - [ ] FAQ finale (3-8 Q/R)
-- [ ] 2-4 offres liées (`relatedOffers`)
+- [ ] CTA latéral (`sidebarCta`) rempli si pertinent
 - [ ] `updatedAt` rempli si actualisation réelle
 - [ ] SEO : titre < 70 caractères, meta description < 160
 
@@ -114,10 +112,8 @@ Quand vous **actualisez réellement** le contenu (chiffres, exemples, recos), re
 | `ArticleHero.tsx` | Hero (catégorie, H1, chapô, auteur, image) |
 | `ArticleTldr.tsx` | « L'essentiel » (TL;DR) — vert |
 | `TableOfContents.tsx` + `MobileToc.tsx` | Sommaire sticky / mobile |
-| `ArticleRelatedOffers.tsx` | Offres liées sous le sommaire |
 | `ArticleSidebarCta.tsx` | CTA latéral sous le sommaire |
 | `ArticleContent.tsx` | Rendu Portable Text (tous les blocs body) |
-| `ArticleKeyTakeaways.tsx` | « Ce qu'il faut retenir » — jaune |
 | `ArticleFaq.tsx` | FAQ finale (accordéons) |
 | `AuthorBlock.tsx` | Bloc auteur (fin d'article) |
 | `RelatedArticles.tsx` | 3 articles liés |

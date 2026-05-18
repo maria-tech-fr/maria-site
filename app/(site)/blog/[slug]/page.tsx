@@ -4,8 +4,6 @@ import ArticleContent from '../../../../src/components/article/ArticleContent'
 import ArticleFaq from '../../../../src/components/article/ArticleFaq'
 import ArticleHero from '../../../../src/components/article/ArticleHero'
 import ArticleJsonLd from '../../../../src/components/article/ArticleJsonLd'
-import ArticleKeyTakeaways from '../../../../src/components/article/ArticleKeyTakeaways'
-import ArticleRelatedOffers from '../../../../src/components/article/ArticleRelatedOffers'
 import ArticleSidebarCta from '../../../../src/components/article/ArticleSidebarCta'
 import ArticleTldr from '../../../../src/components/article/ArticleTldr'
 import AuthorBlock from '../../../../src/components/article/AuthorBlock'
@@ -87,9 +85,6 @@ export default async function ArticlePage({ params }: Params) {
             {/* Sidebar */}
             <div className="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
               <TableOfContents items={tocItems} />
-              {article.relatedOffers && article.relatedOffers.length > 0 && (
-                <ArticleRelatedOffers items={article.relatedOffers} />
-              )}
               {article.sidebarCta && <ArticleSidebarCta cta={article.sidebarCta} />}
             </div>
 
@@ -100,9 +95,6 @@ export default async function ArticlePage({ params }: Params) {
                 <ArticleTldr items={article.tldr} />
               )}
               <ArticleContent body={article.body} />
-              {article.keyTakeaways && article.keyTakeaways.length > 0 && (
-                <ArticleKeyTakeaways items={article.keyTakeaways} />
-              )}
               {article.faq && article.faq.length > 0 && (
                 <ArticleFaq items={article.faq} />
               )}
