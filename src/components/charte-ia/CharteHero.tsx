@@ -14,14 +14,15 @@ export default function CharteHero({ surTitre, titre, sousTitre, lastUpdated }: 
     <section className="relative overflow-hidden bg-paper px-6 pb-20 pt-40 lg:px-30.5 lg:pb-24 lg:pt-44">
       <HaloField
         halos={[
-          { color: '#FEC23C', alpha: 0.34, x: '92%', y: '20%', size: 560, blur: 60, duration: 44 },
-          { color: '#3FC163', alpha: 0.22, x: '8%', y: '85%', size: 460, blur: 60, duration: 48 },
+          { color: '#FEC23C', alpha: 0.48, x: '88%', y: '18%', size: 680, blur: 55, duration: 42 },
+          { color: '#FEC23C', alpha: 0.22, x: '12%', y: '70%', size: 520, blur: 60, duration: 46 },
+          { color: '#3FC163', alpha: 0.18, x: '70%', y: '92%', size: 420, blur: 60, duration: 50 },
         ]}
       />
 
       <article className="relative mx-auto flex w-full max-w-[760px] flex-col gap-6">
         <Reveal>
-          <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+          <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-ink-soft">
             {surTitre}
           </p>
         </Reveal>
