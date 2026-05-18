@@ -6,7 +6,6 @@ import CharteIntro from '../../../src/components/charte-ia/CharteIntro'
 import CharteEngagements from '../../../src/components/charte-ia/CharteEngagements'
 import CharteLignesRouges from '../../../src/components/charte-ia/CharteLignesRouges'
 import CharteDisclaimer from '../../../src/components/charte-ia/CharteDisclaimer'
-import CharteCta from '../../../src/components/charte-ia/CharteCta'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -124,16 +123,6 @@ export default async function PageCharteIA() {
         />
       )}
 
-      {/* 7 — CTA final */}
-      {data.cta?.titre && (
-        <CharteCta
-          surTitre={data.cta.surTitre || '// engagement réciproque'}
-          titre={data.cta.titre}
-          sousTitre={data.cta.sousTitre}
-          ctaLibelle={data.cta.ctaLibelle || 'Parler à maria'}
-          ctaHref={data.cta.ctaHref || '/contact'}
-        />
-      )}
     </main>
   )
 }

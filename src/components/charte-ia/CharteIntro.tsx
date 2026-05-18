@@ -12,8 +12,7 @@ export default function CharteIntro({ surTitre, paragraphes }: Props) {
     <section className="relative overflow-hidden bg-paper px-6 py-16 lg:px-30.5 lg:py-24">
       <HaloField
         halos={[
-          { color: '#3FC163', alpha: 0.32, x: '10%', y: '15%', size: 600, blur: 65, duration: 46 },
-          { color: '#3FC163', alpha: 0.18, x: '88%', y: '85%', size: 440, blur: 65, duration: 50 },
+          { color: '#3FC163', alpha: 0.36, x: '92%', y: '50%', size: 620, blur: 65, duration: 46 },
         ]}
       />
 
