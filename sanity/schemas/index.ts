@@ -7,6 +7,7 @@ import { auteur } from './auteur'
 import { lien } from './lien'
 import { messageContact } from './messageContact'
 import { pageBesoin } from './pageBesoin'
+import { pageCharteIA } from './pageCharteIA'
 import { pageFormation } from './pageFormation'
 import { pageService } from './pageService'
 import { parametresGlobaux } from './parametresGlobaux'
@@ -22,6 +23,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   agence,
   projets,
   pageFormation,
+  pageCharteIA,
   // collections
   pageService,
   pageBesoin,

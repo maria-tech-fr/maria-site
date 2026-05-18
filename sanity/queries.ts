@@ -488,6 +488,39 @@ export const promosBlogQuery = defineQuery(`
 `)
 
 
+export const pageCharteIAQuery = defineQuery(`
+  *[_type == "pageCharteIA"][0]{
+    hero{ surTitre, titre, sousTitre },
+    preambule{ surTitre, titre, paragraphes },
+    engagements{
+      surTitre,
+      titre,
+      sousTitre,
+      items[]{ numero, titre, description }
+    },
+    lignesRouges{
+      surTitre,
+      titre,
+      intro,
+      items
+    },
+    disclaimer{
+      surTitre,
+      titre,
+      paragraphes
+    },
+    cta{
+      surTitre,
+      titre,
+      sousTitre,
+      ctaLibelle,
+      ctaHref
+    },
+    revision{ lastUpdated, mention },
+    seo{ titre, description }
+  }
+`)
+
 export const pageFormationQuery = defineQuery(`
   *[_type == "pageFormation"][0]{
     hero{ surTitre, titre, sousTitre, ctaPrimaireLibelle, ctaSecondaireLibelle },

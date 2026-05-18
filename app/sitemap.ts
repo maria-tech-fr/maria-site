@@ -4,6 +4,7 @@ import {
   getArticleSlugs,
 } from '../src/lib/article'
 import { getBesoinsMenu } from '../src/lib/pageBesoin'
+import { getPageCharteIA } from '../src/lib/pageCharteIA'
 import { getPageServiceSlugs } from '../src/lib/pageService'
 import { client } from '../sanity/client'
 
@@ -12,12 +13,24 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
 
+  // Charte IA : lastmod piloté par le champ revision.lastUpdated du singleton.
+  const charte = await getPageCharteIA()
+  const charteLastMod = charte?.revision?.lastUpdated
+    ? new Date(charte.revision.lastUpdated)
+    : now
+
   // Pages fixes du site.
   const fixed: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: 'monthly', priority: 1.0 },
     { url: `${SITE_URL}/agence`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${SITE_URL}/projets`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    {
+      url: `${SITE_URL}/charte-ia`,
+      lastModified: charteLastMod,
+      changeFrequency: 'yearly',
+      priority: 0.6,
+    },
   ]
 
   // Pages services / besoins.
