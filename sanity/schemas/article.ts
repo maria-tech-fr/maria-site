@@ -12,6 +12,7 @@ export const article = defineType({
   groups: [
     { name: 'meta', title: 'Métadonnées', default: true },
     { name: 'contenu', title: 'Contenu' },
+    { name: 'geo', title: 'GEO (extracts IA)' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
@@ -73,6 +74,14 @@ export const article = defineType({
       options: { dateFormat: 'YYYY-MM-DD', timeFormat: 'HH:mm' },
       validation: (r) => r.required(),
       initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
+      name: 'updatedAt',
+      title: 'Date de mise à jour (manuelle, optionnelle)',
+      description: 'À renseigner quand on actualise réellement le contenu (chiffres, exemples, recos). Sert au champ dateModified pour Google et les IA — signal de fraîcheur fort. Si laissé vide, on utilise la date de modif Sanity automatique.',
+      type: 'datetime',
+      group: 'meta',
+      options: { dateFormat: 'YYYY-MM-DD', timeFormat: 'HH:mm' },
     }),
     defineField({
       name: 'readingTime',
@@ -180,6 +189,7 @@ export const article = defineType({
           type: 'object',
           name: 'callout',
           title: 'Encart « À retenir »',
+          description: 'Synthèse factuelle extractible (variant vert). Le bloc le plus cité par les IA dans un article.',
           fields: [
             defineField({ name: 'titre', title: 'Titre', type: 'string', validation: (r) => r.max(80) }),
             defineField({ name: 'texte', title: 'Texte', type: 'text', rows: 3, validation: (r) => r.required().max(400) }),
@@ -189,6 +199,109 @@ export const article = defineType({
             prepare: ({ title, subtitle }) => ({
               title: title || 'À retenir',
               subtitle: subtitle ? subtitle.slice(0, 60) : undefined,
+            }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'avisMaria',
+          title: 'Encart « Ce qu\'on en pense chez maria »',
+          description: 'Prise de position assumée de l\'agence — citation de marque, opinion experte. Bordure dégradée jaune↔vert, signature « — l\'équipe maria ».',
+          fields: [
+            defineField({ name: 'titre', title: 'Titre (optionnel)', type: 'string', description: 'Si laissé vide : « Ce qu\'on en pense chez maria ».', validation: (r) => r.max(80) }),
+            defineField({ name: 'texte', title: 'Texte', type: 'text', rows: 4, validation: (r) => r.required().max(500) }),
+            defineField({ name: 'signature', title: 'Signature (optionnelle)', type: 'string', description: 'Par défaut : « — l\'équipe maria ». Peut être personnalisé (ex : « — Alexandre, directeur technique »).', validation: (r) => r.max(80) }),
+          ],
+          preview: {
+            select: { title: 'titre', subtitle: 'texte' },
+            prepare: ({ title, subtitle }) => ({
+              title: title || 'Ce qu\'on en pense chez maria',
+              subtitle: subtitle ? subtitle.slice(0, 60) : undefined,
+            }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'definition',
+          title: 'Encart « Définition »',
+          description: 'Encadré terme + définition. Format très extrait par les moteurs génératifs (ChatGPT, Perplexity).',
+          fields: [
+            defineField({ name: 'terme', title: 'Terme', type: 'string', validation: (r) => r.required().max(80) }),
+            defineField({ name: 'definition', title: 'Définition', type: 'text', rows: 3, validation: (r) => r.required().max(400) }),
+          ],
+          preview: {
+            select: { title: 'terme', subtitle: 'definition' },
+            prepare: ({ title, subtitle }) => ({
+              title: title ? `Déf. : ${title}` : 'Définition',
+              subtitle: subtitle ? subtitle.slice(0, 60) : undefined,
+            }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'tableau',
+          title: 'Tableau comparatif',
+          description: 'Tableau structuré (en-têtes + lignes). Format particulièrement bien extrait par les moteurs génératifs.',
+          fields: [
+            defineField({ name: 'legende', title: 'Légende (optionnelle)', type: 'string', validation: (r) => r.max(120) }),
+            defineField({
+              name: 'enTetes',
+              title: 'En-têtes de colonnes',
+              type: 'array',
+              of: [{ type: 'string' }],
+              validation: (r) => r.required().min(2).max(6),
+            }),
+            defineField({
+              name: 'lignes',
+              title: 'Lignes',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  name: 'ligne',
+                  fields: [
+                    defineField({
+                      name: 'cellules',
+                      title: 'Cellules (dans l\'ordre des en-têtes)',
+                      type: 'array',
+                      of: [{ type: 'string' }],
+                      validation: (r) => r.required().min(2).max(6),
+                    }),
+                  ],
+                  preview: {
+                    select: { cellules: 'cellules' },
+                    prepare: ({ cellules }) => ({
+                      title: Array.isArray(cellules) ? cellules.join(' · ').slice(0, 80) : 'Ligne',
+                    }),
+                  },
+                },
+              ],
+              validation: (r) => r.required().min(1),
+            }),
+          ],
+          preview: {
+            select: { title: 'legende', lignes: 'lignes' },
+            prepare: ({ title, lignes }) => ({
+              title: title || 'Tableau',
+              subtitle: `${Array.isArray(lignes) ? lignes.length : 0} ligne${(Array.isArray(lignes) ? lignes.length : 0) > 1 ? 's' : ''}`,
+            }),
+          },
+        },
+        {
+          type: 'object',
+          name: 'quoteAttribuee',
+          title: 'Citation attribuée',
+          description: 'Citation avec attribution claire (nom, rôle). Améliore l\'autorité de la page pour les IA.',
+          fields: [
+            defineField({ name: 'texte', title: 'Texte', type: 'text', rows: 3, validation: (r) => r.required().max(400) }),
+            defineField({ name: 'auteur', title: 'Auteur', type: 'string', validation: (r) => r.required().max(80) }),
+            defineField({ name: 'role', title: 'Rôle (optionnel)', type: 'string', validation: (r) => r.max(120) }),
+          ],
+          preview: {
+            select: { title: 'auteur', subtitle: 'texte', role: 'role' },
+            prepare: ({ title, subtitle, role }) => ({
+              title: title ? (role ? `${title} — ${role}` : title) : 'Citation',
+              subtitle: subtitle ? `« ${subtitle.slice(0, 60)}… »` : undefined,
             }),
           },
         },
@@ -295,6 +408,85 @@ export const article = defineType({
           },
         },
       ],
+    }),
+    defineField({
+      name: 'tldr',
+      title: 'L\'essentiel (TL;DR)',
+      description: 'Optionnel mais FORTEMENT recommandé. 3 à 5 puces, réponses directes au sujet de l\'article. Affiché juste après le chapô. C\'est le bloc le plus extrait par les IA (ChatGPT, Perplexity, AI Overviews). Chaque puce doit pouvoir être lue isolément.',
+      type: 'array',
+      group: 'geo',
+      of: [{ type: 'string', validation: (r) => r.max(200) }],
+      validation: (r) => r.max(5),
+    }),
+    defineField({
+      name: 'relatedOffers',
+      title: 'Services / besoins liés à ce sujet',
+      description: 'Optionnel. Affiché sous le sommaire (sticky desktop). Renforce le maillage interne vers les pages business (services, besoins, formation). 2 à 4 entrées recommandées.',
+      type: 'array',
+      group: 'geo',
+      of: [
+        {
+          type: 'object',
+          name: 'relatedOffer',
+          fields: [
+            defineField({ name: 'label', title: 'Libellé', type: 'string', validation: (r) => r.required().max(60) }),
+            defineField({ name: 'href', title: 'Destination (chemin interne)', description: 'Ex : /services/agents-ia, /besoins/gagner-du-temps-commerciaux, /formation, /charte-ia.', type: 'string', validation: (r) => r.required() }),
+            defineField({
+              name: 'kind',
+              title: 'Type',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Service', value: 'service' },
+                  { title: 'Besoin', value: 'besoin' },
+                  { title: 'Formation', value: 'formation' },
+                  { title: 'Charte IA', value: 'charte' },
+                ],
+                layout: 'radio',
+              },
+              validation: (r) => r.required(),
+            }),
+          ],
+          preview: {
+            select: { title: 'label', subtitle: 'href' },
+          },
+        },
+      ],
+      validation: (r) => r.max(6),
+    }),
+    defineField({
+      name: 'keyTakeaways',
+      title: 'Ce qu\'il faut retenir',
+      description: 'Optionnel mais recommandé. Synthèse finale en 3 à 5 puces — affichée juste avant la FAQ. Doit pouvoir résumer l\'article à elle seule (les IA en extraient souvent les puces).',
+      type: 'array',
+      group: 'geo',
+      of: [{ type: 'string', validation: (r) => r.max(250) }],
+      validation: (r) => r.max(5),
+    }),
+    defineField({
+      name: 'faq',
+      title: 'FAQ finale',
+      description: 'Optionnel mais recommandé. Question + réponse. Génère un schema FAQPage (Google) ET sert de matière première pour les IA. 3 à 8 questions idéales. Chaque réponse doit pouvoir être lue isolément.',
+      type: 'array',
+      group: 'geo',
+      of: [
+        {
+          type: 'object',
+          name: 'faqItem',
+          fields: [
+            defineField({ name: 'question', title: 'Question', type: 'string', validation: (r) => r.required().max(160) }),
+            defineField({ name: 'reponse', title: 'Réponse (autoportante)', description: 'Doit pouvoir être lue isolément, sans le contexte de la question d\'avant. 2 à 5 phrases.', type: 'text', rows: 4, validation: (r) => r.required().max(800) }),
+          ],
+          preview: {
+            select: { title: 'question', subtitle: 'reponse' },
+            prepare: ({ title, subtitle }) => ({
+              title: title || 'Question',
+              subtitle: subtitle ? subtitle.slice(0, 60) : undefined,
+            }),
+          },
+        },
+      ],
+      validation: (r) => r.max(10),
     }),
     defineField({
       name: 'tocItems',

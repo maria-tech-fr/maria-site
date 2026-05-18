@@ -407,7 +407,7 @@ export const articleBySlugQuery = defineQuery(`
     sousTitre,
     intro,
     publishedAt,
-    "updatedAt": _updatedAt,
+    "updatedAt": coalesce(updatedAt, _updatedAt),
     readingTime,
     featured,
     coverImage{ asset->{ _id, url, metadata{ dimensions } }, alt },
@@ -427,6 +427,10 @@ export const articleBySlugQuery = defineQuery(`
       },
       markDefs[]{ ... }
     },
+    tldr,
+    relatedOffers[]{ label, href, kind },
+    keyTakeaways,
+    faq[]{ question, reponse },
     tocItems[]{ anchor, label, exclure },
     sidebarCta{ titre, description, lienLibelle, lienHref, variant },
     seo{

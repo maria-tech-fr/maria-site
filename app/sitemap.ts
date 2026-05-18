@@ -74,10 +74,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  // Articles individuels — récupère slug + _updatedAt pour lastModified plus précis.
+  // Articles individuels — lastModified prend en priorité le champ manuel
+  // `updatedAt` (signal GEO/SEO fort : « le rédacteur a vraiment actualisé »),
+  // fallback sur `_updatedAt` (date de modif Sanity automatique).
   const articleSlugsRaw = await getArticleSlugs()
-  const articleDates = await client.fetch<Array<{ slug: string; updatedAt: string }>>(
-    `*[_type == "article" && defined(slug.current)]{ "slug": slug.current, "updatedAt": _updatedAt }`,
+  const articleDates = await client.fetch<
+    Array<{ slug: string; updatedAt: string }>
+  >(
+    `*[_type == "article" && defined(slug.current)]{ "slug": slug.current, "updatedAt": coalesce(updatedAt, _updatedAt) }`,
     {},
     { next: { revalidate: 60, tags: ['article'] } },
   )

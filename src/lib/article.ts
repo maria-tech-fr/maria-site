@@ -68,11 +68,29 @@ export type SidebarCta = {
   variant: 'green' | 'yellow' | null
 }
 
+/** Lien vers une offre business (service / besoin / formation / charte), affiché
+ *  sous le sommaire pour renforcer le maillage interne. */
+export type RelatedOffer = {
+  label: string
+  href: string
+  kind: 'service' | 'besoin' | 'formation' | 'charte'
+}
+
+/** Élément de la FAQ finale — alimente schema FAQPage + matière 1re pour les IA. */
+export type FaqItem = {
+  question: string
+  reponse: string
+}
+
 /** Article complet — utilisé sur la page /blog/[slug]. */
 export type Article = ArticleCard & {
   sousTitre: string | null
   updatedAt: string | null
   body: ArticleBodyBlock[] | null
+  tldr: string[] | null
+  relatedOffers: RelatedOffer[] | null
+  keyTakeaways: string[] | null
+  faq: FaqItem[] | null
   tocItems: TocItemOverride[] | null
   sidebarCta: SidebarCta | null
   seo: {

@@ -164,6 +164,114 @@ const components: PortableTextComponents = {
         </p>
       </aside>
     ),
+    avisMaria: ({ value }) => (
+      // Encart « Ce qu'on en pense chez maria » — bordure dégradée jaune↔vert
+      // (même pattern d'animation que les ServiceCards de la home au hover,
+      // ici toujours visible). Signature « — l'équipe maria » personnalisable.
+      <aside className="group/avis relative my-10 rounded-[10px] bg-paper px-7 py-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-px rounded-[10px]"
+          style={{
+            padding: '1.5px',
+            background:
+              'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
+            backgroundSize: '200% 100%',
+            animation: 'border-drift 28s linear infinite',
+            WebkitMask:
+              'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            maskComposite: 'exclude',
+          }}
+        />
+        <p className="relative pb-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-soft">
+          // {value?.titre || 'Ce qu’on en pense chez maria'}
+        </p>
+        <p className="relative whitespace-pre-line text-[16px] leading-[26px] text-ink lg:text-[17px] lg:leading-[28px]">
+          {value?.texte}
+        </p>
+        <p className="relative mt-3 font-mono text-[11px] tracking-[0.04em] text-ink-soft">
+          {value?.signature || '— l’équipe maria'}
+        </p>
+      </aside>
+    ),
+    definition: ({ value }) => (
+      // Encart définition — pattern « terme | définition », très extrait par
+      // les IA. Rendu en <dl>/<dt>/<dd> pour sémantique HTML stricte.
+      <aside className="my-10 rounded-[10px] border-l-[3px] border-l-accent bg-paper-soft px-6 py-5 lg:px-7 lg:py-6">
+        <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">
+          // définition
+        </p>
+        <dl className="mt-2 flex flex-col gap-1.5">
+          <dt className="font-display text-[18px] font-semibold leading-7 tracking-[-0.018em] text-ink lg:text-[20px]">
+            {value?.terme}
+          </dt>
+          <dd className="whitespace-pre-line text-[15px] leading-6 text-ink-soft lg:text-[16px] lg:leading-[26px]">
+            {value?.definition}
+          </dd>
+        </dl>
+      </aside>
+    ),
+    tableau: ({ value }) => {
+      const headers: string[] = Array.isArray(value?.enTetes) ? value.enTetes : []
+      type Ligne = { _key?: string; cellules?: string[] }
+      const lignes: Ligne[] = Array.isArray(value?.lignes) ? value.lignes : []
+      if (headers.length === 0 || lignes.length === 0) return null
+      return (
+        <figure className="my-10 overflow-x-auto">
+          <table className="w-full min-w-[480px] border-collapse text-left">
+            {value?.legende && (
+              <caption className="caption-bottom pt-3 text-center font-mono text-[12px] leading-4 tracking-[0.04em] text-ink-soft">
+                {value.legende}
+              </caption>
+            )}
+            <thead>
+              <tr>
+                {headers.map((h: string, i: number) => (
+                  <th
+                    key={i}
+                    scope="col"
+                    className="border-b-2 border-ink/15 bg-paper-soft px-4 py-3 font-mono text-[11px] uppercase tracking-[0.06em] text-ink"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {lignes.map((ligne, ri) => {
+                const cellules: string[] = Array.isArray(ligne?.cellules) ? ligne.cellules : []
+                return (
+                  <tr key={ligne._key ?? ri} className="border-b border-paper-edge last:border-b-0">
+                    {cellules.map((c: string, ci: number) => (
+                      <td
+                        key={ci}
+                        className="px-4 py-3 align-top text-[14px] leading-[22px] text-ink lg:text-[15px] lg:leading-[24px]"
+                      >
+                        {c}
+                      </td>
+                    ))}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </figure>
+      )
+    },
+    quoteAttribuee: ({ value }) => (
+      // Citation attribuée — auteur + rôle visibles, améliore l'autorité GEO.
+      // Différenciée de <blockquote> standard par l'attribution explicite.
+      <figure className="my-10 border-l-2 border-l-ink pl-6">
+        <blockquote className="font-display text-[18px] italic leading-7 text-ink lg:text-[20px] lg:leading-8">
+          « {value?.texte} »
+        </blockquote>
+        <figcaption className="mt-3 text-[13px] leading-5 text-ink-soft">
+          <span className="font-medium text-ink">{value?.auteur}</span>
+          {value?.role && <span>, {value.role}</span>}
+        </figcaption>
+      </figure>
+    ),
     video: ({ value }) => {
       const source: string = value?.source ?? 'url'
       // Fichier MP4 uploadé : balise <video> native HTML5 + poster optionnel.
@@ -335,8 +443,35 @@ function embedUrlFor(url: string): string | null {
   }
 }
 
+/* ============================================================================
+ * Garde-fou GEO : un H2 finissant par « ? » doit être suivi immédiatement
+ * d'un paragraphe (la réponse autoportante extractible pour FAQPage / IA).
+ * On warn en dev/build seulement — pas d'impact runtime sur le visiteur.
+ * ============================================================================ */
+
+function warnH2QuestionWithoutAnswer(body: ArticleBodyBlock[]): void {
+  if (process.env.NODE_ENV === 'production') return
+  for (let i = 0; i < body.length; i++) {
+    const block = body[i] as { _type?: string; style?: string; children?: Array<{ text?: string }> }
+    if (block?._type !== 'block' || block?.style !== 'h2') continue
+    const text = (block.children ?? []).map((c) => c.text ?? '').join('').trim()
+    if (!text.endsWith('?')) continue
+    const next = body[i + 1] as { _type?: string; style?: string } | undefined
+    const nextIsParagraph = next?._type === 'block' && (next.style === 'normal' || !next.style)
+    if (!nextIsParagraph) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[article-gabarit] H2-question « ${text} » n'est PAS suivi d'un paragraphe. ` +
+          `Pour le GEO (FAQPage + IA), une question doit avoir une réponse autoportante en 1er bloc. ` +
+          `Bloc suivant : ${next?._type ?? 'absent'}/${next?.style ?? '—'}.`,
+      )
+    }
+  }
+}
+
 export default function ArticleContent({ body }: { body: ArticleBodyBlock[] | null }) {
   if (!body || body.length === 0) return null
+  warnH2QuestionWithoutAnswer(body)
   return (
     <div className="article-prose">
       <PortableText value={body} components={components} />
