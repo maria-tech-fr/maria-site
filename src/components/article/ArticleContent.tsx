@@ -52,19 +52,28 @@ const components: PortableTextComponents = {
       </ul>
     ),
     number: ({ children }) => (
-      <ol className="my-6 ml-1 flex list-inside list-decimal flex-col gap-2 text-[17px] leading-[28px] text-ink lg:text-[18px] lg:leading-[31px]">
+      // Style maria : compteur custom « 01 · » « 02 · » en DM Mono vert,
+      // cohérent avec les sections numérotées du reste du site (méthode home,
+      // étapes service, etc.). On retire la puce native pour reprendre la main.
+      <ol className="my-6 flex flex-col gap-3 [counter-reset:article-item]">
         {children}
       </ol>
     ),
   },
   listItem: {
     bullet: ({ children }) => (
-      <li className="flex items-start gap-3">
+      <li className="flex items-start gap-3 text-[17px] leading-[28px] text-ink lg:text-[18px] lg:leading-[31px]">
         <span aria-hidden className="mt-3 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
         <span className="flex-1">{children}</span>
       </li>
     ),
-    number: ({ children }) => <li className="ml-1">{children}</li>,
+    number: ({ children }) => (
+      <li
+        className="relative flex items-start gap-4 pl-0 text-[17px] leading-[28px] text-ink before:flex-none before:font-mono before:text-[13px] before:font-medium before:tracking-[0.06em] before:text-success before:content-[counter(article-item,decimal-leading-zero)_'_·'] [counter-increment:article-item] lg:text-[18px] lg:leading-[31px]"
+      >
+        <span className="flex-1">{children}</span>
+      </li>
+    ),
   },
   marks: {
     strong: ({ children }) => <strong className="font-semibold text-ink">{children}</strong>,
@@ -85,14 +94,16 @@ const components: PortableTextComponents = {
           </Link>
         )
       }
+      const isExternalNewTab = blank || !treatAsInternal
       return (
         <a
           href={href}
-          target={blank || !treatAsInternal ? '_blank' : undefined}
-          rel={blank || !treatAsInternal ? 'noopener noreferrer' : undefined}
+          target={isExternalNewTab ? '_blank' : undefined}
+          rel={isExternalNewTab ? 'noopener noreferrer' : undefined}
           className="font-medium text-ink underline decoration-accent/70 decoration-1 underline-offset-2 transition-colors hover:text-accent"
         >
           {children}
+          {isExternalNewTab && <ExternalLinkIcon />}
         </a>
       )
     },
@@ -386,6 +397,31 @@ const components: PortableTextComponents = {
 /* ============================================================================
  * Helpers
  * ============================================================================ */
+
+function ExternalLinkIcon() {
+  // Petite flèche ↗ discrète, alignée sur la baseline du texte. Signale
+  // qu'un lien ouvre un nouvel onglet (nouvelle fenêtre). Taille proche de
+  // 0.85em pour ne pas dominer le texte alentour.
+  return (
+    <svg
+      aria-hidden
+      width="11"
+      height="11"
+      viewBox="0 0 12 12"
+      fill="none"
+      className="ml-1 inline-block align-baseline text-ink/60 transition-colors group-hover:text-accent"
+      style={{ verticalAlign: 'baseline' }}
+    >
+      <path
+        d="M4 3h5v5M9 3 3.5 8.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
 
 function CtaIcon({ isYellow }: { isYellow: boolean }) {
   // Picto info simple — variante jaune ou vert. Style stroke-only minimal.
