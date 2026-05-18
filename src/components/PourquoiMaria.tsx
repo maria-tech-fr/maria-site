@@ -24,11 +24,13 @@ export default function PourquoiMaria({ data }: { data: PourquoiMariaData }) {
         )}
       </div>
 
-      <Reveal delay={350}>
-        <p className="mx-auto mt-10 max-w-225 whitespace-pre-line text-center font-display text-[24px] font-medium leading-8 tracking-[-0.02em] text-ink lg:text-[36px] lg:leading-11.25">
-          {data.conclusion}
-        </p>
-      </Reveal>
+      {data.conclusion && data.conclusion.trim() && (
+        <Reveal delay={350}>
+          <p className="mx-auto mt-10 max-w-225 whitespace-pre-line text-center font-display text-[24px] font-medium leading-8 tracking-[-0.02em] text-ink lg:text-[36px] lg:leading-11.25">
+            {data.conclusion}
+          </p>
+        </Reveal>
+      )}
     </section>
   )
 }

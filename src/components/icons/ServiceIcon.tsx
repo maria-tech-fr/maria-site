@@ -4,6 +4,7 @@ const SERVICE_ICONS: Record<ServiceIconName, (props: IconProps) => React.JSX.Ele
   'outils-internes': OutilsInternesIcon,
   'agents-chatbots': AgentsChatbotsIcon,
   communication: CommunicationIcon,
+  'audit-strategie': AuditStrategieIcon,
 }
 
 export default function ServiceIcon({
@@ -88,6 +89,45 @@ function AgentsChatbotsIcon({ className = '' }: IconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  )
+}
+
+function AuditStrategieIcon({ className = '' }: IconProps) {
+  // Loupe sur grille — évoque cartographie, audit, analyse de données.
+  // Garde la même base 54×54 avec fond F9F9F9 et stroke ink 1.6.
+  return (
+    <svg className={className} width="54" height="54" viewBox="0 0 54 54" fill="none" aria-hidden>
+      <rect width="54" height="54" rx="5" fill="#F9F9F9" />
+      <rect
+        x="16.5"
+        y="16.5"
+        width="13"
+        height="13"
+        rx="1.5"
+        stroke="#212121"
+        strokeWidth="1.63333"
+      />
+      <path
+        d="M16.5 23H29.5M23 16.5V29.5"
+        stroke="#212121"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      <circle
+        cx="32"
+        cy="32"
+        r="4.5"
+        stroke="#212121"
+        strokeWidth="1.63333"
+      />
+      <path
+        d="M35.5 35.5L38.5 38.5"
+        stroke="#212121"
+        strokeWidth="1.63333"
+        strokeLinecap="round"
+      />
+      <circle cx="32" cy="32" r="1.6" fill="#3FC163" />
     </svg>
   )
 }

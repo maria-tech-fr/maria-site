@@ -210,6 +210,7 @@ export const accueil = defineType({
                   type: 'string',
                   options: {
                     list: [
+                      { title: 'Audit & stratégie (loupe sur grille)', value: 'audit-strategie' },
                       { title: 'Outils internes (fenêtre)', value: 'outils-internes' },
                       { title: 'Agents & Chatbots (robot)', value: 'agents-chatbots' },
                       { title: 'Communication (bulle)', value: 'communication' },
@@ -359,7 +360,7 @@ export const accueil = defineType({
             }),
           ],
         }),
-        defineField({ name: 'conclusion', title: 'Conclusion (texte)', description: 'Phrase centrale finale. Ex : « Chez maria, les deux travaillent ensemble. Toujours. »', type: 'text', rows: 2, validation: (r) => r.required().max(240) }),
+        defineField({ name: 'conclusion', title: 'Conclusion (texte, optionnel)', description: 'Phrase centrale finale, affichée sous les deux cartes. Laisser vide pour ne pas afficher de phrase de conclusion.', type: 'text', rows: 2, validation: (r) => r.max(240) }),
       ],
     }),
     defineField({

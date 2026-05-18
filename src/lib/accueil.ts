@@ -36,7 +36,11 @@ export type Constat = {
   citation: string | null
 }
 
-export type ServiceIconName = 'outils-internes' | 'agents-chatbots' | 'communication'
+export type ServiceIconName =
+  | 'outils-internes'
+  | 'agents-chatbots'
+  | 'communication'
+  | 'audit-strategie'
 
 export type ServiceCard = {
   icone: ServiceIconName
@@ -93,7 +97,7 @@ export type PourquoiMaria = {
   titre: string
   cardMachine: CarteMachineHumain | null
   cardHumain: CarteMachineHumain | null
-  conclusion: string
+  conclusion: string | null
 }
 
 export type MembreExpert = {
