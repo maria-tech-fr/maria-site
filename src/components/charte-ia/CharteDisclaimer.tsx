@@ -42,16 +42,20 @@ export default function CharteDisclaimer({
 
         {(lastUpdated || revisionMention) && (
           <Reveal delay={180}>
-            <div className="mt-8 flex flex-col gap-2 border-t border-paper-edge pt-7 font-mono text-[13px] leading-[1.7] text-ink-soft lg:text-[13.5px]">
+            <div className="mt-8 flex flex-col gap-2 border-t border-paper-edge pt-7 font-mono text-[13px] leading-[1.7] lg:text-[13.5px]">
               {lastUpdated && (
                 <span>
                   <span className="font-medium text-ink">
                     Dernière mise à jour : {formatDateFR(lastUpdated)}.
                   </span>
-                  {revisionMention && <> {revisionMention}</>}
+                  {revisionMention && (
+                    <span className="text-[#9A9A9A]"> {revisionMention}</span>
+                  )}
                 </span>
               )}
-              {!lastUpdated && revisionMention && <span>{revisionMention}</span>}
+              {!lastUpdated && revisionMention && (
+                <span className="text-[#9A9A9A]">{revisionMention}</span>
+              )}
             </div>
           </Reveal>
         )}

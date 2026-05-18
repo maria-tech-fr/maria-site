@@ -10,7 +10,7 @@ type Props = {
 
 export default function CharteEngagements({ surTitre, titre, sousTitre, items }: Props) {
   return (
-    <section className="bg-paper px-6 py-16 lg:px-30.5 lg:py-24">
+    <section className="bg-paper-soft px-6 py-16 lg:px-30.5 lg:py-24">
       <div className="mx-auto flex w-full max-w-[760px] flex-col gap-12 lg:mx-0 lg:max-w-[920px]">
         <Reveal>
           <header className="flex flex-col gap-4">

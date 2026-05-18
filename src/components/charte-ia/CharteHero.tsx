@@ -12,8 +12,9 @@ export default function CharteHero({ surTitre, titre, sousTitre }: Props) {
     <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-45.5 lg:px-30.5 lg:pb-22.5 lg:pt-45.5">
       <HaloField
         halos={[
-          { color: '#FEC23C', alpha: 0.22, x: '88%', y: '78%', size: 620, blur: 70, duration: 46 },
-          { color: '#3FC163', alpha: 0.16, x: '92%', y: '20%', size: 460, blur: 70, duration: 50 },
+          { color: '#FEC23C', alpha: 0.4, x: '85%', y: '70%', size: 700, blur: 60, duration: 42 },
+          { color: '#FEC23C', alpha: 0.22, x: '92%', y: '18%', size: 460, blur: 65, duration: 48 },
+          { color: '#3FC163', alpha: 0.22, x: '15%', y: '88%', size: 520, blur: 65, duration: 50 },
         ]}
       />
 

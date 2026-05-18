@@ -25,6 +25,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/agence`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${SITE_URL}/projets`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    // Pages piliers SEO (index services / besoins).
+    { url: `${SITE_URL}/services`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/besoins`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     {
       url: `${SITE_URL}/charte-ia`,
       lastModified: charteLastMod,

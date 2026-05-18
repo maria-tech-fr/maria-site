@@ -13,8 +13,8 @@ export default function CharteLignesRouges({ surTitre, titre, intro, items }: Pr
     <section className="relative overflow-hidden bg-ink px-6 py-16 lg:px-30.5 lg:py-24">
       <HaloField
         halos={[
-          { color: '#FEC23C', alpha: 0.22, x: '92%', y: '12%', size: 600, blur: 70, duration: 46 },
-          { color: '#FEC23C', alpha: 0.12, x: '8%', y: '85%', size: 460, blur: 70, duration: 52 },
+          { color: '#FEC23C', alpha: 0.4, x: '88%', y: '15%', size: 680, blur: 65, duration: 44 },
+          { color: '#FEC23C', alpha: 0.22, x: '12%', y: '78%', size: 520, blur: 65, duration: 50 },
         ]}
       />
 
