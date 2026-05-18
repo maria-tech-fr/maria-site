@@ -36,6 +36,18 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
   },
   poweredByHeader: false,
+  async redirects() {
+    // Formation est passée d'un sous-service (/services/formation) à un service
+    // transversal top-level (/formation). Le 301 permanent maintient les
+    // anciens partages/backlinks pendant la transition SEO.
+    return [
+      {
+        source: '/services/formation',
+        destination: '/formation',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

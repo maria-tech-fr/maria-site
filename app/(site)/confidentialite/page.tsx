@@ -67,7 +67,7 @@ export default function ConfidentialitePage() {
             </p>
           </Section>
 
-          <Section title="Cookies">
+          <Section title="Cookies" anchorId="cookies">
             <p>
               Ce site n’utilise pas de cookies de tracking publicitaire. Seuls les cookies strictement nécessaires au fonctionnement du site sont déposés (préférences d’affichage, état du formulaire). Aucun consentement préalable n’est requis pour ces cookies fonctionnels.
             </p>
@@ -84,9 +84,18 @@ export default function ConfidentialitePage() {
   )
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  anchorId,
+  children,
+}: {
+  title: string
+  /** Si renseigné, ajoute id={anchorId} pour permettre un lien d'ancre (#anchorId). */
+  anchorId?: string
+  children: React.ReactNode
+}) {
   return (
-    <div className="flex flex-col gap-3">
+    <div id={anchorId} className="flex flex-col gap-3 scroll-mt-32">
       <h2 className="font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.02em] text-ink lg:text-[24px]">
         {title}
       </h2>

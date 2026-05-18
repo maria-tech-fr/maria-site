@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.6,
     },
+    { url: `${SITE_URL}/plan-du-site`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
   ]
 
   // Pages services / besoins.
@@ -48,9 +49,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
-    // Page Formation (service transversal singleton, slug fixe)
+    // Page Formation (service transversal singleton, slug fixe, route top-level)
     {
-      url: `${SITE_URL}/services/formation`,
+      url: `${SITE_URL}/formation`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.8,

@@ -11,17 +11,22 @@ const ROUTES_WITHOUT_CTA = ['/contact/merci']
 type FooterLink = { label: string; href: string }
 
 const servicesLinks: FooterLink[] = [
-  { label: 'Sites web', href: '/services/sites-web' },
-  { label: 'Outils IA', href: '/services/outils-ia' },
-  { label: 'Communication', href: '/services/communication' },
-  { label: 'Formation', href: '/services/formation' },
+  { label: 'Audit & stratégie', href: '/services/audit-strategie-ia' },
+  { label: 'Outils internes', href: '/services/outils-internes-sur-mesure' },
+  { label: 'Agents IA', href: '/services/agents-ia' },
+  { label: 'Formation', href: '/formation' },
 ]
 
 const mariaLinks: FooterLink[] = [
-  { label: 'Projets', href: '/projets' },
   { label: 'L’agence', href: '/agence' },
-  { label: 'Journal', href: '/blog' },
+  { label: 'Projets', href: '/projets' },
   { label: 'Contact', href: '/contact' },
+]
+
+const ressourcesLinks: FooterLink[] = [
+  { label: 'Journal', href: '/blog' },
+  { label: 'Charte IA', href: '/charte-ia' },
+  { label: 'Plan du site', href: '/plan-du-site' },
 ]
 
 export default function Footer() {
@@ -82,63 +87,86 @@ export default function Footer() {
         </section>
       )}
 
-      <section className="bg-[#0F0F0F] px-6 py-12 text-paper lg:px-30.5 lg:py-15">
-        <div className="flex flex-col gap-10 border-b border-white/8 pb-7.5 lg:flex-row lg:items-start lg:justify-between lg:gap-0">
-          <Link href="/" aria-label="maria — accueil" className="shrink-0">
-            <Logo className="h-9 w-auto text-paper lg:h-10" />
-          </Link>
+      <section className="bg-ink px-6 py-12 text-paper lg:px-30.5 lg:py-15">
+        <div className="flex flex-col gap-10 border-b border-white/10 pb-10 lg:flex-row lg:items-start lg:justify-between lg:gap-12 lg:pb-12">
+          <div className="flex max-w-sm flex-col gap-4">
+            <Link href="/" aria-label="maria — accueil" className="shrink-0">
+              <Logo className="h-9 w-auto text-paper lg:h-10" />
+            </Link>
+            <p className="text-[14px] leading-5.5 text-[#9A9A9A]">
+              L’agence partenaire IA pour l’interne.
+            </p>
+          </div>
 
-          <div className="flex flex-col gap-8 sm:flex-row sm:gap-10">
-            <FooterColumn heading="SERVICES" items={servicesLinks} />
-            <FooterColumn heading="MARIA" items={mariaLinks} />
+          <div className="grid w-full grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-12 lg:w-auto">
+            <FooterColumn heading="SERVICES" items={servicesLinks} pathname={pathname} />
+            <FooterColumn heading="MARIA" items={mariaLinks} pathname={pathname} />
+            <FooterColumn heading="RESSOURCES" items={ressourcesLinks} pathname={pathname} />
           </div>
         </div>
 
-        <div className="pt-5 text-[12px] leading-[18.6px] text-[#666666]">
-          © 2026 maria ·{' '}
-          <Link
-            href="/mentions-legales"
-            className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
+        <div className="flex flex-col items-start justify-between gap-4 pt-6 text-[12px] leading-[18.6px] text-[#666666] sm:flex-row sm:items-center">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span>© 2026 maria</span>
+            <span aria-hidden>·</span>
+            <Link
+              href="/mentions-legales"
+              className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
+            >
+              Mentions légales
+            </Link>
+            <span aria-hidden>·</span>
+            <Link
+              href="/confidentialite"
+              className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
+            >
+              Confidentialité
+            </Link>
+          </div>
+          <span
+            aria-hidden
+            className="inline-flex items-baseline font-mono text-[14px] font-medium tracking-[-0.02em] text-paper"
           >
-            Mentions légales
-          </Link>{' '}
-          ·{' '}
-          <Link
-            href="/confidentialite"
-            className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
-          >
-            Confidentialité
-          </Link>{' '}
-          ·{' '}
-          <Link
-            href="/charte-ia"
-            className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
-          >
-            Charte IA
-          </Link>
+            maria
+            <span className="cursor-blink text-success" />
+          </span>
         </div>
       </section>
     </footer>
   )
 }
 
-function FooterColumn({ heading, items }: { heading: string; items: FooterLink[] }) {
+function FooterColumn({
+  heading,
+  items,
+  pathname,
+}: {
+  heading: string
+  items: FooterLink[]
+  pathname: string
+}) {
   return (
-    <div className="w-full sm:w-43.5">
-      <h3 className="font-mono text-[11px] leading-4.25 tracking-[0.08em] text-paper">
+    <div>
+      <h3 className="font-mono text-[11px] uppercase leading-4.25 tracking-[0.08em] text-success">
         {heading}
       </h3>
       <ul className="mt-4.5 flex flex-col gap-2.5">
-        {items.map((item) => (
-          <li key={item.href}>
-            <Link
-              href={item.href}
-              className="text-[14px] leading-[21.7px] text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
+        {items.map((item) => {
+          const isActive = pathname === item.href
+          return (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                aria-current={isActive ? 'page' : undefined}
+                className={`text-[14px] leading-[21.7px] transition-colors duration-300 ease-out hover:text-paper ${
+                  isActive ? 'text-paper' : 'text-[#9A9A9A]'
+                }`}
+              >
+                {item.label}
+              </Link>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )

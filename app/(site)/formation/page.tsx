@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getPageFormation } from '../../../../src/lib/pageFormation'
-import FormationHero from '../../../../src/components/formation/FormationHero'
-import FormationAudiences from '../../../../src/components/formation/FormationAudiences'
-import FormationConstat from '../../../../src/components/formation/FormationConstat'
-import FormationCatalogue from '../../../../src/components/formation/FormationCatalogue'
-import FormationPedagogie from '../../../../src/components/formation/FormationPedagogie'
-import FormationFormats from '../../../../src/components/formation/FormationFormats'
-import FormationTransversale from '../../../../src/components/formation/FormationTransversale'
-import Faq from '../../../../src/components/Faq'
-import FormationCta from '../../../../src/components/formation/FormationCta'
-import FormationServicesLinks from '../../../../src/components/formation/FormationServicesLinks'
+import { getPageFormation } from '../../../src/lib/pageFormation'
+import FormationHero from '../../../src/components/formation/FormationHero'
+import FormationAudiences from '../../../src/components/formation/FormationAudiences'
+import FormationConstat from '../../../src/components/formation/FormationConstat'
+import FormationCatalogue from '../../../src/components/formation/FormationCatalogue'
+import FormationPedagogie from '../../../src/components/formation/FormationPedagogie'
+import FormationFormats from '../../../src/components/formation/FormationFormats'
+import FormationTransversale from '../../../src/components/formation/FormationTransversale'
+import Faq from '../../../src/components/Faq'
+import FormationCta from '../../../src/components/formation/FormationCta'
+import FormationServicesLinks from '../../../src/components/formation/FormationServicesLinks'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     data?.seo?.description ||
     'maria forme vos équipes et vos décideurs à l’IA : usages métier, sécurité des données, gouvernance. Des formations concrètes, ancrées dans votre réalité.'
-  const canonical = `${SITE_URL}/services/formation`
+  const canonical = `${SITE_URL}/formation`
   return {
     title,
     description,
@@ -38,7 +38,7 @@ export default async function PageFormation() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Formation IA', item: `${SITE_URL}/services/formation` },
+      { '@type': 'ListItem', position: 2, name: 'Formation IA', item: `${SITE_URL}/formation` },
     ],
   }
 

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useId, useRef, useState } from 'react'
 import Logo from './Logo'
 import { FAMILLES, type BesoinMenuItem } from '../lib/pageBesoin'
@@ -42,6 +43,15 @@ function groupBesoinsByFamille(besoins: BesoinMenuItem[]): GroupedBesoin[] {
 }
 
 export default function Nav({ services, besoins }: NavProps) {
+  const pathname = usePathname()
+  // Marque la section courante : un href est considéré « actif » si le
+  // pathname commence par cet href (ex : /services/agents-ia → /services).
+  // Pour /, on exige une égalité stricte.
+  function isActive(href: string): boolean {
+    if (href === '/') return pathname === '/'
+    return pathname === href || pathname.startsWith(`${href}/`)
+  }
+
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileServicesExpanded, setMobileServicesExpanded] = useState(false)
   const [mobileBesoinsExpanded, setMobileBesoinsExpanded] = useState(false)
@@ -130,6 +140,7 @@ export default function Nav({ services, besoins }: NavProps) {
         {hasServices ? (
           <DesktopTrigger
             label="Services"
+            active={isActive('/services') || isActive('/formation')}
             open={desktopOpen === 'services'}
             wrapperRef={servicesWrapperRef}
             controlsId={servicesSubmenuId}
@@ -141,7 +152,8 @@ export default function Nav({ services, besoins }: NavProps) {
             <NavSubmenu
               id={servicesSubmenuId}
               ariaLabel="Sous-menu Services"
-              header={`// ${servicesItems.length} expertise${servicesItems.length > 1 ? 's' : ''}`}
+              pillarHref="/services"
+              pillarLabel="Voir tous nos services"
               tone="accent"
               items={servicesItems}
               showNumero
@@ -151,17 +163,15 @@ export default function Nav({ services, besoins }: NavProps) {
             />
           </DesktopTrigger>
         ) : (
-          <Link
-            href="/services"
-            className="rounded-[5px] px-3.5 py-2 text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
-          >
+          <NavLink href="/services" active={isActive('/services')}>
             Services
-          </Link>
+          </NavLink>
         )}
 
         {hasBesoins && (
           <DesktopTrigger
             label="Besoins"
+            active={isActive('/besoins')}
             open={desktopOpen === 'besoins'}
             wrapperRef={besoinsWrapperRef}
             controlsId={besoinsSubmenuId}
@@ -180,20 +190,18 @@ export default function Nav({ services, besoins }: NavProps) {
           </DesktopTrigger>
         )}
 
-        <Link
-          href="/projets"
-          className="rounded-[5px] px-3.5 py-2 text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
-        >
+        <NavLink href="/projets" active={isActive('/projets')}>
           Projets
-        </Link>
-        <Link
-          href="/agence"
-          className="rounded-[5px] px-3.5 py-2 text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
-        >
+        </NavLink>
+        <NavLink href="/agence" active={isActive('/agence')}>
           L’agence
-        </Link>
+        </NavLink>
+        <NavLink href="/blog" active={isActive('/blog')}>
+          Journal
+        </NavLink>
         <Link
           href="/contact"
+          aria-current={isActive('/contact') ? 'page' : undefined}
           className="rounded-[5px] bg-accent px-4.5 py-2.75 text-sm font-medium font-work-sans text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft"
         >
           Parlons de votre projet
@@ -240,20 +248,18 @@ export default function Nav({ services, besoins }: NavProps) {
                 setMobileOpen(false)
                 setMobileServicesExpanded(false)
               }}
+              pillarHref="/services"
+              pillarLabel="Voir tous nos services"
               transversalLink={{
-                href: '/services/formation',
+                href: '/formation',
                 eyebrow: '// transversal',
                 titre: 'Formation IA pour les équipes',
               }}
             />
           ) : (
-            <Link
-              href="/services"
-              className="rounded-[6px] px-4 py-3 text-sm font-work-sans text-ink-soft hover:bg-paper-soft transition-colors duration-300 ease-out"
-              onClick={() => setMobileOpen(false)}
-            >
+            <MobileLink href="/services" onClick={() => setMobileOpen(false)} active={isActive('/services')}>
               Services
-            </Link>
+            </MobileLink>
           )}
 
           {hasBesoins && (
@@ -265,25 +271,23 @@ export default function Nav({ services, besoins }: NavProps) {
                 setMobileOpen(false)
                 setMobileBesoinsExpanded(false)
               }}
+              pillarHref="/besoins"
+              pillarLabel="Voir tous les besoins"
             />
           )}
 
-          <Link
-            href="/projets"
-            className="rounded-[6px] px-4 py-3 text-sm font-work-sans text-ink-soft hover:bg-paper-soft transition-colors duration-300 ease-out"
-            onClick={() => setMobileOpen(false)}
-          >
+          <MobileLink href="/projets" onClick={() => setMobileOpen(false)} active={isActive('/projets')}>
             Projets
-          </Link>
-          <Link
-            href="/agence"
-            className="rounded-[6px] px-4 py-3 text-sm font-work-sans text-ink-soft hover:bg-paper-soft transition-colors duration-300 ease-out"
-            onClick={() => setMobileOpen(false)}
-          >
+          </MobileLink>
+          <MobileLink href="/agence" onClick={() => setMobileOpen(false)} active={isActive('/agence')}>
             L’agence
-          </Link>
+          </MobileLink>
+          <MobileLink href="/blog" onClick={() => setMobileOpen(false)} active={isActive('/blog')}>
+            Journal
+          </MobileLink>
           <Link
             href="/contact"
+            aria-current={isActive('/contact') ? 'page' : undefined}
             className="mt-2 inline-flex items-center justify-center rounded-[5px] bg-accent px-4 py-3 text-sm font-work-sans font-medium text-ink hover:bg-accent-soft transition-colors duration-500 ease-in-out"
             onClick={() => setMobileOpen(false)}
           >
@@ -295,8 +299,56 @@ export default function Nav({ services, besoins }: NavProps) {
   )
 }
 
+function NavLink({
+  href,
+  active,
+  children,
+}: {
+  href: string
+  active: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <Link
+      href={href}
+      aria-current={active ? 'page' : undefined}
+      className={`rounded-[5px] px-3.5 py-2 text-sm font-work-sans transition-colors duration-300 ease-out hover:bg-paper-soft ${
+        active ? 'text-ink' : 'text-ink-soft'
+      }`}
+    >
+      {children}
+    </Link>
+  )
+}
+
+function MobileLink({
+  href,
+  active,
+  onClick,
+  children,
+}: {
+  href: string
+  active: boolean
+  onClick: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <Link
+      href={href}
+      aria-current={active ? 'page' : undefined}
+      onClick={onClick}
+      className={`rounded-[6px] px-4 py-3 text-sm font-work-sans transition-colors duration-300 ease-out hover:bg-paper-soft ${
+        active ? 'text-ink' : 'text-ink-soft'
+      }`}
+    >
+      {children}
+    </Link>
+  )
+}
+
 function DesktopTrigger({
   label,
+  active,
   open,
   wrapperRef,
   controlsId,
@@ -307,6 +359,7 @@ function DesktopTrigger({
   children,
 }: {
   label: string
+  active: boolean
   open: boolean
   wrapperRef: React.RefObject<HTMLDivElement | null>
   controlsId: string
@@ -337,7 +390,10 @@ function DesktopTrigger({
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={controlsId}
-        className="flex items-center gap-1.5 rounded-[5px] px-3.5 py-2 text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
+        aria-current={active ? 'page' : undefined}
+        className={`flex items-center gap-1.5 rounded-[5px] px-3.5 py-2 text-sm font-work-sans transition-colors duration-300 ease-out hover:bg-paper-soft ${
+          active ? 'text-ink' : 'text-ink-soft'
+        }`}
       >
         {label}
         <Chevron open={open} />
@@ -353,6 +409,8 @@ function MobileExpand({
   expanded,
   setExpanded,
   closeAll,
+  pillarHref,
+  pillarLabel,
   transversalLink,
 }: {
   label: string
@@ -360,6 +418,9 @@ function MobileExpand({
   expanded: boolean
   setExpanded: (v: boolean | ((p: boolean) => boolean)) => void
   closeAll: () => void
+  /** Lien vers la page pilier, affiché en tête de section. */
+  pillarHref: string
+  pillarLabel: string
   /** Lien discret affiché en bas sous un séparateur, pour les services transversaux. */
   transversalLink?: { href: string; eyebrow: string; titre: string }
 }) {
@@ -376,6 +437,19 @@ function MobileExpand({
       </button>
       {expanded && (
         <div className="mt-1 flex flex-col gap-1 pl-3">
+          <Link
+            href={pillarHref}
+            onClick={closeAll}
+            className="group flex items-center justify-between gap-3 rounded-[6px] px-4 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
+          >
+            <span className="font-display text-[13px] font-semibold tracking-[-0.01em] text-ink">
+              {pillarLabel}
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
+              →
+            </span>
+          </Link>
+          <div className="my-1 mx-4 border-t border-paper-edge" />
           {items.map((item) => (
             <Link
               key={item.href}
@@ -449,7 +523,8 @@ function Chevron({ open }: { open: boolean }) {
 function NavSubmenu({
   id,
   ariaLabel,
-  header,
+  pillarHref,
+  pillarLabel,
   tone,
   items,
   showNumero,
@@ -459,7 +534,8 @@ function NavSubmenu({
 }: {
   id: string
   ariaLabel: string
-  header: string
+  pillarHref: string
+  pillarLabel: string
   tone: SubmenuTone
   items: SubmenuItem[]
   showNumero: boolean
@@ -484,9 +560,8 @@ function NavSubmenu({
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
-      <p className="px-5 pb-2.5 pt-3 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-soft">
-        {header}
-      </p>
+      <PillarHeader href={pillarHref} label={pillarLabel} onClick={onItemClick} />
+      <div className="mx-3 mb-2 border-t border-paper-edge" />
       <ul className="flex flex-col gap-1">
         {items.map((item, i) => (
           <li key={item.href}>
@@ -537,7 +612,7 @@ function NavSubmenu({
       {tone === 'accent' && (
         <div className="mt-2 border-t border-paper-edge pt-2">
           <Link
-            href="/services/formation"
+            href="/formation"
             role="menuitem"
             onClick={onItemClick}
             className="group flex items-center justify-between gap-3 rounded-[8px] px-5 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
@@ -560,6 +635,35 @@ function NavSubmenu({
 
 function formatNumero(n: number): string {
   return n < 10 ? `0${n}` : String(n)
+}
+
+function PillarHeader({
+  href,
+  label,
+  onClick,
+}: {
+  href: string
+  label: string
+  onClick: () => void
+}) {
+  // En-tête cliquable du méga-menu : pointe vers la page pilier (/services
+  // ou /besoins). Renforcé visuellement (Syne + flèche) pour signaler que
+  // c'est un lien distinct des sous-items.
+  return (
+    <Link
+      href={href}
+      role="menuitem"
+      onClick={onClick}
+      className="group flex items-center justify-between gap-3 rounded-[10px] px-5 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
+    >
+      <span className="font-display text-[13px] font-semibold leading-5 tracking-[-0.01em] text-ink">
+        {label}
+      </span>
+      <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.06em] text-success transition-transform duration-300 ease-out group-hover:translate-x-0.5">
+        →
+      </span>
+    </Link>
+  )
 }
 
 function Arrow() {
@@ -656,11 +760,17 @@ function NavBesoinsMega({
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
-      <div className="px-3 pb-3 pt-2">
-        <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-soft">
-          // {total} cas d’usage, classés par famille
+      <div className="flex items-center justify-between gap-3 px-2 pb-2 pt-1">
+        <PillarHeader
+          href="/besoins"
+          label="Voir tous les besoins"
+          onClick={onItemClick}
+        />
+        <p className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-soft">
+          // {total} cas d’usage
         </p>
       </div>
+      <div className="mx-2 mb-4 border-t border-paper-edge" />
 
       <div className="grid grid-cols-2 gap-x-10 gap-y-8">
         {grouped.map((g) => (
@@ -716,11 +826,15 @@ function MobileBesoinsExpand({
   expanded,
   setExpanded,
   closeAll,
+  pillarHref,
+  pillarLabel,
 }: {
   grouped: GroupedBesoin[]
   expanded: boolean
   setExpanded: (v: boolean | ((p: boolean) => boolean)) => void
   closeAll: () => void
+  pillarHref: string
+  pillarLabel: string
 }) {
   return (
     <>
@@ -735,6 +849,19 @@ function MobileBesoinsExpand({
       </button>
       {expanded && (
         <div className="mt-1 flex flex-col gap-3 pl-3 pb-1">
+          <Link
+            href={pillarHref}
+            onClick={closeAll}
+            className="mx-1 flex items-center justify-between gap-3 rounded-[6px] px-3 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
+          >
+            <span className="font-display text-[13px] font-semibold tracking-[-0.01em] text-ink">
+              {pillarLabel}
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
+              →
+            </span>
+          </Link>
+          <div className="mx-4 border-t border-paper-edge" />
           {grouped.map((g) => (
             <div key={g.meta.key} className="flex flex-col gap-1">
               <p className="flex items-center gap-2 px-4 pt-1 font-display text-[12.5px] font-semibold leading-4 tracking-[-0.01em] text-ink">
