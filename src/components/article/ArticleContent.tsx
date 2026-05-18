@@ -69,7 +69,7 @@ const components: PortableTextComponents = {
     ),
     number: ({ children }) => (
       <li
-        className="relative flex items-start gap-4 pl-0 text-[17px] leading-[28px] text-ink before:flex-none before:font-mono before:text-[13px] before:font-medium before:tracking-[0.06em] before:text-success before:content-[counter(article-item,decimal-leading-zero)_'_·'] [counter-increment:article-item] lg:text-[18px] lg:leading-[31px]"
+        className="relative flex items-start gap-4 pl-0 text-[17px] leading-[28px] text-ink before:flex-none before:font-mono before:text-[13px] before:font-medium before:tracking-[0.06em] before:text-success before:content-[counter(article-item,decimal-leading-zero)] [counter-increment:article-item] lg:text-[18px] lg:leading-[31px]"
       >
         <span className="flex-1">{children}</span>
       </li>
