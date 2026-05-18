@@ -62,16 +62,6 @@ export type PagePillierData = {
     titre: string | null
     questions: { question: string; reponse: string }[] | null
   } | null
-  finalCta: {
-    surTitre: string | null
-    titre: string | null
-    sousTitre: string | null
-    ctaPrimaireLibelle: string | null
-    ctaPrimaireHref: string | null
-    ctaSecondaireLibelle: string | null
-    ctaSecondaireHref: string | null
-    mention: string | null
-  } | null
   seo: {
     titre: string | null
     description: string | null

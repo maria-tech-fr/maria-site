@@ -519,16 +519,6 @@ export const pagePillierQuery = defineQuery(`
       titre,
       questions[]{ question, reponse }
     },
-    finalCta{
-      surTitre,
-      titre,
-      sousTitre,
-      ctaPrimaireLibelle,
-      ctaPrimaireHref,
-      ctaSecondaireLibelle,
-      ctaSecondaireHref,
-      mention
-    },
     seo{ titre, description }
   }
 `)

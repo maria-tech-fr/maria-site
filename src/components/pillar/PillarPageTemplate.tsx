@@ -5,7 +5,6 @@ import PillarVision from './PillarVision'
 import PillarArticulation from './PillarArticulation'
 import PillarWhyMaria from './PillarWhyMaria'
 import PillarFaq from './PillarFaq'
-import PillarFinalCta from './PillarFinalCta'
 
 type Props = {
   data: NonNullable<PagePillierData>
@@ -15,9 +14,12 @@ type Props = {
 
 /**
  * Gabarit mutualisé des pages piliers (/services et /besoins).
- * 6 blocs communs + 1 bloc central injecté via children.
+ * 5 blocs communs + 1 bloc central injecté via children.
  *
- * Ordre : Hero → Vision → [Central] → Articulation → WhyMaria → FAQ → CTA final.
+ * Ordre : Hero → Vision → [Central] → Articulation → WhyMaria → FAQ.
+ *
+ * Pas de CTA final propre à la page : le bloc CTA « Un projet IA en tête »
+ * du footer global tient ce rôle pour les 2 piliers.
  */
 export default function PillarPageTemplate({ data, children }: Props) {
   return (
@@ -76,20 +78,6 @@ export default function PillarPageTemplate({ data, children }: Props) {
           surTitre={data.faq.surTitre || '// vos questions'}
           titre={data.faq.titre || 'Les questions qu’on nous pose.'}
           questions={data.faq.questions}
-        />
-      )}
-
-      {/* 7 — CTA final */}
-      {data.finalCta?.titre && (
-        <PillarFinalCta
-          surTitre={data.finalCta.surTitre || '// passons à l’action'}
-          titre={data.finalCta.titre}
-          sousTitre={data.finalCta.sousTitre}
-          ctaPrimaireLibelle={data.finalCta.ctaPrimaireLibelle}
-          ctaPrimaireHref={data.finalCta.ctaPrimaireHref}
-          ctaSecondaireLibelle={data.finalCta.ctaSecondaireLibelle}
-          ctaSecondaireHref={data.finalCta.ctaSecondaireHref}
-          mention={data.finalCta.mention}
         />
       )}
     </>

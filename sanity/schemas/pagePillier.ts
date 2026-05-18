@@ -19,7 +19,7 @@ export const pagePillier = defineType({
     { name: 'vision', title: 'Vision' },
     { name: 'articulation', title: 'Articulation' },
     { name: 'why', title: 'Pourquoi maria' },
-    { name: 'faq', title: 'FAQ + CTA final' },
+    { name: 'faq', title: 'FAQ' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
@@ -212,29 +212,9 @@ export const pagePillier = defineType({
       ],
     }),
 
-    // -- CTA FINAL (Bloc 7) --
-    defineField({
-      name: 'finalCta',
-      title: 'Bloc 7 — CTA final',
-      type: 'object',
-      group: 'faq',
-      fields: [
-        defineField({ name: 'surTitre', title: 'Sur-titre', type: 'string', initialValue: '// passons à l’action' }),
-        defineField({
-          name: 'titre',
-          title: 'Titre (H2)',
-          description: 'Encadrer un fragment avec **...** pour surligner en jaune.',
-          type: 'text',
-          rows: 2,
-        }),
-        defineField({ name: 'sousTitre', title: 'Sous-titre', type: 'text', rows: 2 }),
-        defineField({ name: 'ctaPrimaireLibelle', title: 'CTA primaire', type: 'string', initialValue: 'Réserver un échange' }),
-        defineField({ name: 'ctaPrimaireHref', title: 'CTA primaire destination', type: 'string', initialValue: '/contact' }),
-        defineField({ name: 'ctaSecondaireLibelle', title: 'CTA secondaire', type: 'string', initialValue: 'Découvrir notre méthode' }),
-        defineField({ name: 'ctaSecondaireHref', title: 'CTA secondaire destination', type: 'string', initialValue: '/agence#processus' }),
-        defineField({ name: 'mention', title: 'Mention discrète', type: 'string', initialValue: 'Réponse sous 24 h · Sans engagement' }),
-      ],
-    }),
+    // Note : pas de CTA final propre à la page pilier. Le bloc CTA
+    // « Un projet IA en tête » du footer global tient ce rôle pour les
+    // 2 piliers (services + besoins).
 
     // -- SEO --
     defineField({
