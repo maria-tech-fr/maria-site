@@ -6,11 +6,14 @@ type Props = {
   surTitre: string
   titre: string
   paragraphes: string[]
+  /** Fond de section. Services → paper (blanc). Besoins → paper-soft (gris). */
+  bg?: 'paper' | 'paper-soft'
 }
 
-export default function PillarVision({ surTitre, titre, paragraphes }: Props) {
+export default function PillarVision({ surTitre, titre, paragraphes, bg = 'paper' }: Props) {
+  const bgClass = bg === 'paper-soft' ? 'bg-paper-soft' : 'bg-paper'
   return (
-    <section className="relative overflow-hidden bg-paper px-6 py-16 lg:px-30.5 lg:py-30">
+    <section className={`relative overflow-hidden ${bgClass} px-6 py-16 lg:px-30.5 lg:py-30`}>
       <HaloField
         halos={[
           { color: '#FEC23C', alpha: 0.3, x: '92%', y: '12%', size: 540, blur: 50, duration: 38 },

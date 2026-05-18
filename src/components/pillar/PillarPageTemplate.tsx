@@ -35,12 +35,14 @@ export default function PillarPageTemplate({ data, children }: Props) {
         />
       )}
 
-      {/* 2 — Vision */}
+      {/* 2 — Vision. Fond paper sur services, paper-soft sur besoins (rythme
+            visuel : bloc central inverse — besoins central blanc, services central gris). */}
       {data.vision?.titre && data.vision.paragraphes && data.vision.paragraphes.length > 0 && (
         <PillarVision
           surTitre={data.vision.surTitre || '// notre approche'}
           titre={data.vision.titre}
           paragraphes={data.vision.paragraphes}
+          bg={data.slug === 'besoins' ? 'paper-soft' : 'paper'}
         />
       )}
 
