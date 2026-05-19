@@ -82,26 +82,65 @@ export default function ConfidentialitePage() {
       </LegalSection>
 
       <LegalSection title="Destinataires / sous-traitants">
+        <p>
+          Pour faire fonctionner le site, nous nous appuyons sur les
+          sous-traitants suivants :
+        </p>
         <ul className="ml-1 flex flex-col gap-2">
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
-            <span>[À COMPLÉTER : envoi d’e-mails — a priori Resend]</span>
+            <span>
+              <strong className="text-ink">Vercel Inc.</strong> — hébergement
+              du site (États-Unis, sous encadrement contractuel européen).
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
-            <span>[À COMPLÉTER : prise de rendez-vous — a priori Cal.com]</span>
+            <span>
+              <strong className="text-ink">Sanity.io</strong> — stockage du
+              contenu éditorial (Union européenne).
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
-            <span>[À COMPLÉTER : mesure d’audience — a priori Google Analytics 4]</span>
+            <span>
+              <strong className="text-ink">Resend</strong> — envoi des
+              e-mails transactionnels liés au formulaire de contact (Union
+              européenne).
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
-            <span>[À COMPLÉTER : gestion du consentement — a priori Axeptio]</span>
+            <span>
+              <strong className="text-ink">Cal.com</strong> — prise de
+              rendez-vous en ligne (États-Unis, sous accord de traitement
+              des données conforme RGPD).
+            </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
-            <span>[À COMPLÉTER : hébergeur — a priori Vercel]</span>
+            <span>
+              <strong className="text-ink">Axeptio</strong> — gestion du
+              consentement RGPD (Union européenne).
+            </span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
+            <span>
+              <strong className="text-ink">Google Analytics 4</strong> —
+              mesure d’audience, chargée <em>uniquement après votre consentement</em>,
+              avec IP anonymisée et signaux publicitaires désactivés
+              (États-Unis, sous accord de traitement des données conforme RGPD).
+            </span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
+            <span>
+              <strong className="text-ink">WhatsApp Business / Meta</strong>
+              {' '}— si vous cliquez sur le bouton WhatsApp du site, vous êtes
+              redirigé vers les serveurs Meta (États-Unis) et vos échanges
+              sont soumis aux conditions de WhatsApp.
+            </span>
           </li>
         </ul>
         <p>
@@ -116,8 +155,9 @@ export default function ConfidentialitePage() {
           .
         </p>
         <p className="text-ink-soft/70">
-          [À COMPLÉTER : transferts hors UE éventuels (Vercel, Google) +
-          garanties applicables — à faire valider juridiquement.]
+          [À COMPLÉTER : précisions sur les transferts hors UE (Vercel,
+          Google, Cal.com, Meta) et garanties applicables (Standard Contractual
+          Clauses, accords adéquation) — à faire valider juridiquement.]
         </p>
       </LegalSection>
 

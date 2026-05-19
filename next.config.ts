@@ -15,12 +15,19 @@ const securityHeaders = [
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  // script-src : on autorise les domaines des tiers activables (Axeptio
+  // consentement + GA4 mesure d'audience). Ces tiers ne se chargent que
+  // si les env vars correspondantes sont posées — voir composants
+  // ConsentBanner/Analytics — mais le CSP doit les laisser passer.
+  "script-src 'self' 'unsafe-inline' https://static.axept.io https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "img-src 'self' data: blob: https://cdn.sanity.io",
+  // img-src : pixels GA4 + assets Axeptio + images Sanity.
+  "img-src 'self' data: blob: https://cdn.sanity.io https://*.google-analytics.com https://*.googletagmanager.com",
   "font-src 'self' data: https://fonts.gstatic.com",
-  "connect-src 'self' https://*.sanity.io wss://*.sanity.io",
-  "frame-src 'self' https://calendly.com https://*.calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.loom.com",
+  // connect-src : appels API GA4 + Axeptio + Sanity.
+  "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://*.google-analytics.com https://*.googletagmanager.com https://*.axept.io",
+  // frame-src : iframes Cal.com (embed) + médias article.
+  "frame-src 'self' https://cal.com https://*.cal.com https://calendly.com https://*.calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.loom.com",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",

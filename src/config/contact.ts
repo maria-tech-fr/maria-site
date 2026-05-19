@@ -36,6 +36,25 @@ export const whatsappConfig = {
   excludedRoutes: ['/contact/merci'],
 } as const
 
+/**
+ * URL Cal.com de prise de rendez-vous.
+ *
+ * Source en cascade :
+ *  1. `NEXT_PUBLIC_CALCOM_URL` (env var, priorité maximale, configurable
+ *     dans Vercel sans redéploiement de Sanity).
+ *  2. Valeur Sanity `parametresGlobaux.contact.calendlyUrl` — passée en
+ *     argument côté serveur. Permet à l'équipe non-tech de modifier
+ *     l'URL depuis le Studio sans toucher au code.
+ *  3. null → les composants qui consomment doivent fallback proprement
+ *     (lien vers /contact, désactivation, etc.).
+ */
+export function getCalcomUrl(sanityFallback?: string | null): string | null {
+  const fromEnv = process.env.NEXT_PUBLIC_CALCOM_URL
+  if (fromEnv && fromEnv.trim()) return fromEnv.trim()
+  if (sanityFallback && sanityFallback.trim()) return sanityFallback.trim()
+  return null
+}
+
 export function getWaLink(message?: string): string {
   const msg = message ?? whatsappConfig.prefilledMessage
   return `https://wa.me/${whatsappConfig.number}?text=${encodeURIComponent(msg)}`

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import HaloField from './HaloField'
 import Logo from './Logo'
 import ArrowRight from './icons/ArrowRight'
+import CookieSettingsLink from './analytics/CookieSettingsLink'
 
 const ROUTES_WITHOUT_CTA = ['/contact/merci']
 
@@ -128,6 +129,9 @@ export default function Footer() {
             >
               Cookies
             </Link>
+            {/* Lien « Gérer mes cookies » : ne s'affiche que si Axeptio est
+                configuré (NEXT_PUBLIC_AXEPTIO_CLIENT_ID). Sinon noop. */}
+            <CookieSettingsLink />
           </div>
           <span
             aria-hidden
