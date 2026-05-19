@@ -1,86 +1,102 @@
 import type { Metadata } from 'next'
+import LegalPageLayout, {
+  LegalSection,
+} from '../../../src/components/legal/LegalPageLayout'
+import { legalInfo } from '../../../src/content/legal/info'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
+// TODO: passer index:true après validation juridique du contenu.
 export const metadata: Metadata = {
-  title: 'Mentions légales',
-  description: 'Mentions légales du site maria — éditeur, hébergeur, contact.',
+  title: 'Mentions légales | maria',
+  description:
+    'Mentions légales du site maria : éditeur, directeur de la publication, hébergeur, propriété intellectuelle, droit applicable.',
   alternates: { canonical: `${SITE_URL}/mentions-legales` },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: true },
 }
 
 export default function MentionsLegalesPage() {
   return (
-    <section className="bg-paper px-6 pb-22 pt-40 lg:px-30.5 lg:pb-30 lg:pt-44">
-      <div className="mx-auto flex w-full max-w-[820px] flex-col gap-10">
-        <header className="flex flex-col gap-4">
-          <p className="font-mono text-[12px] uppercase tracking-[0.08em] text-success">
-            // mentions légales
-          </p>
-          <h1 className="font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.032em] text-ink lg:text-[60px]">
-            Mentions légales
-          </h1>
-        </header>
+    <LegalPageLayout
+      surTitre="// mentions légales"
+      titre="Mentions légales"
+      derniereMaj={legalInfo.derniereMaj}
+    >
+      <LegalSection title="Éditeur du site">
+        <p>Le site maria est édité par :</p>
+        <p>
+          <strong className="text-ink">{legalInfo.denomination}</strong> — {legalInfo.formeJuridique}
+          <br />
+          Capital social : {legalInfo.capital} €
+          <br />
+          Siège social : {legalInfo.siegeSocial}
+          <br />
+          RCS {legalInfo.rcsVille} n° {legalInfo.rcsNumero}
+          <br />
+          SIRET : {legalInfo.siret}
+          <br />
+          N° TVA intracommunautaire : {legalInfo.tva}
+          <br />
+          E-mail :{' '}
+          <a
+            href={`mailto:${legalInfo.emailLegal}`}
+            className="border-b border-success text-ink hover:text-success"
+          >
+            {legalInfo.emailLegal}
+          </a>
+          <br />
+          Téléphone : {legalInfo.telephone}
+        </p>
+      </LegalSection>
 
-        <div className="flex flex-col gap-8 text-[16px] leading-7 text-ink-soft lg:text-[17px]">
-          <Section title="Éditeur du site">
-            <p>
-              maria — agence digitale 100 % IA
-              <br />
-              Forme juridique : à compléter
-              <br />
-              Siège social : à compléter
-              <br />
-              SIREN : à compléter
-              <br />
-              Directeur de la publication : à compléter
-              <br />
-              Contact : <a href="mailto:hello@maria.tech" className="border-b border-success text-ink hover:text-success">hello@maria.tech</a>
-            </p>
-          </Section>
+      <LegalSection title="Directeur de la publication">
+        <p>{legalInfo.directeurPublication}</p>
+      </LegalSection>
 
-          <Section title="Hébergement">
-            <p>
-              Vercel Inc.
-              <br />
-              440 N Barranca Avenue #4133
-              <br />
-              Covina, CA 91723, USA
-              <br />
-              <a href="https://vercel.com" target="_blank" rel="noreferrer noopener" className="border-b border-success text-ink hover:text-success">vercel.com</a>
-            </p>
-          </Section>
+      <LegalSection title="Hébergement">
+        <p>
+          Le Site est hébergé par : <strong className="text-ink">{legalInfo.hebergeur}</strong>
+          <br />
+          {legalInfo.hebergeurAdresse}
+        </p>
+      </LegalSection>
 
-          <Section title="Propriété intellectuelle">
-            <p>
-              L’ensemble des contenus du site (textes, images, code source, charte graphique) sont la propriété de maria ou de leurs ayants droit respectifs. Toute reproduction, totale ou partielle, sans autorisation préalable écrite est interdite.
-            </p>
-          </Section>
+      <LegalSection title="Propriété intellectuelle">
+        <p>
+          L’ensemble des éléments du Site (textes, graphismes, logo, identité
+          visuelle, illustrations, structure, mascotte) est la propriété
+          exclusive de {legalInfo.denomination}, sauf mention contraire, et est
+          protégé par le droit de la propriété intellectuelle. Toute reproduction
+          non autorisée est interdite.
+        </p>
+        <p>
+          La marque « maria » et son logo sont {legalInfo.proprieteMarque}.
+        </p>
+      </LegalSection>
 
-          <Section title="Liens externes">
-            <p>
-              Le site peut contenir des liens vers des sites tiers. maria n’est pas responsable du contenu de ces sites.
-            </p>
-          </Section>
+      <LegalSection title="Liens hypertextes">
+        <p>
+          Le Site peut contenir des liens vers des sites tiers. maria n’exerce
+          aucun contrôle sur ces sites et décline toute responsabilité quant à
+          leur contenu.
+        </p>
+      </LegalSection>
 
-          <Section title="Crédits">
-            <p>
-              Design et développement : maria. Typographies : Syne, Work Sans, DM Mono (Google Fonts).
-            </p>
-          </Section>
-        </div>
-      </div>
-    </section>
-  )
-}
+      <LegalSection title="Responsabilité">
+        <p>
+          maria s’efforce d’assurer l’exactitude des informations diffusées
+          mais ne peut garantir leur exhaustivité ou l’absence d’erreur. Les
+          informations sont fournies à titre indicatif et susceptibles
+          d’évoluer.
+        </p>
+      </LegalSection>
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col gap-3">
-      <h2 className="font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.02em] text-ink lg:text-[24px]">
-        {title}
-      </h2>
-      {children}
-    </div>
+      <LegalSection title="Droit applicable">
+        <p>
+          Les présentes mentions sont régies par le droit français. Tout
+          litige relève des tribunaux compétents {legalInfo.ressortTribunaux}.
+        </p>
+      </LegalSection>
+    </LegalPageLayout>
   )
 }

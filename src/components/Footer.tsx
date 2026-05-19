@@ -26,7 +26,6 @@ const mariaLinks: FooterLink[] = [
 const ressourcesLinks: FooterLink[] = [
   { label: 'Journal', href: '/blog' },
   { label: 'Charte IA', href: '/charte-ia' },
-  { label: 'Plan du site', href: '/plan-du-site' },
 ]
 
 export default function Footer() {
@@ -121,6 +120,13 @@ export default function Footer() {
               className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
             >
               Confidentialité
+            </Link>
+            <span aria-hidden>·</span>
+            <Link
+              href="/cookies"
+              className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
+            >
+              Cookies
             </Link>
           </div>
           <span
