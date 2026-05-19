@@ -15,7 +15,7 @@ import BesoinServiceAssocie from '../../../../src/components/besoin/BesoinServic
 import Faq from '../../../../src/components/Faq'
 import BesoinRelated from '../../../../src/components/besoin/BesoinRelated'
 import JsonLd from '../../../../src/components/JsonLd'
-import { buildBreadcrumbSchema, buildFaqSchema } from '../../../../src/lib/schema'
+import { buildFaqSchema } from '../../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -61,17 +61,9 @@ export default async function PageBesoin({
 
   const famille = getFamilleMeta(data.famille)
 
-  // Le breadcrumb passe par /besoins (pilier) pour signaler la hiérarchie
-  // « Accueil > Besoins > [titre du besoin] ».
+  // BreadcrumbList rendu par le composant <Breadcrumb> dans BesoinHero (source unique).
   return (
     <>
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'Besoins', url: '/besoins' },
-          { name: data.titre, url: `/besoins/${data.slug}` },
-        ])}
-      />
       <JsonLd data={buildFaqSchema(data.faq?.questions)} />
 
       {renderBlocks(data, famille?.titre)}
@@ -90,6 +82,11 @@ function renderBlocks(data: NonNullable<PageBesoinData>, famille: string | undef
           sousTitre={data.hero.sousTitre}
           ctaPrimaireLibelle={data.hero.ctaPrimaireLibelle}
           ctaSecondaireLibelle={data.hero.ctaSecondaireLibelle}
+          breadcrumb={[
+            { label: 'Accueil', href: '/' },
+            { label: 'Besoins', href: '/besoins' },
+            { label: data.titre },
+          ]}
         />
       )}
 

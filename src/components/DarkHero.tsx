@@ -1,3 +1,4 @@
+import Breadcrumb, { type BreadcrumbSegment } from './Breadcrumb'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
 
@@ -5,6 +6,10 @@ import Reveal from './Reveal'
   Hero foncé partagé entre les pages agence et projets : même structure visuelle
   (fond ink, halos animés orange + vert en diagonale, H1 jaune accent en deux
   lignes avec overlap caractéristique). Seul le contenu change.
+
+  La prop `breadcrumb` remplace le sur-titre Sanity quand elle est fournie
+  (nouveau format signature, voir Breadcrumb.tsx). On garde `surTitre` en
+  fallback pour rétro-compatibilité — à terme `surTitre` sera retiré.
 */
 
 type DarkHeroData = {
@@ -13,7 +18,12 @@ type DarkHeroData = {
   description: string
 }
 
-export default function DarkHero({ data }: { data: DarkHeroData }) {
+type Props = {
+  data: DarkHeroData
+  breadcrumb?: BreadcrumbSegment[]
+}
+
+export default function DarkHero({ data, breadcrumb }: Props) {
   return (
     <section className="relative overflow-hidden bg-ink px-6 pt-24 pb-12 sm:px-8 lg:px-30.5 lg:pt-45 lg:pb-18">
       <HaloField
@@ -26,9 +36,13 @@ export default function DarkHero({ data }: { data: DarkHeroData }) {
       <div className="relative flex flex-col gap-12 lg:gap-30">
         <Reveal>
           <div className="flex flex-col gap-3.75">
-            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-              {data.surTitre}
-            </p>
+            {breadcrumb ? (
+              <Breadcrumb segments={breadcrumb} tone="dark" />
+            ) : (
+              <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+                {data.surTitre}
+              </p>
+            )}
             <h1 className="font-display text-[40px] font-semibold leading-11 tracking-[-0.0507em] text-accent lg:text-[80px] lg:leading-[112.52px]">
               {(() => {
                 const [line1, ...rest] = data.titre.split('\n')

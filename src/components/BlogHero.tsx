@@ -1,3 +1,4 @@
+import Breadcrumb, { type BreadcrumbSegment } from './Breadcrumb'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
 import { renderWithEmphase } from '../lib/emphase'
@@ -7,9 +8,15 @@ type BlogHeroProps = {
   /** Multi-lignes via \n. Encadrer un fragment avec **...** pour le rendre en jaune. */
   titre: string
   description?: string
+  breadcrumb?: BreadcrumbSegment[]
 }
 
-export default function BlogHero({ surTitre = '// blog', titre, description }: BlogHeroProps) {
+export default function BlogHero({
+  surTitre = '// blog',
+  titre,
+  description,
+  breadcrumb,
+}: BlogHeroProps) {
   return (
     <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-45.5 lg:px-30.5 lg:pb-22.5 lg:pt-45.5">
       <HaloField
@@ -21,9 +28,13 @@ export default function BlogHero({ surTitre = '// blog', titre, description }: B
 
       <div className="relative flex flex-col gap-6">
         <Reveal>
-          <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-            {surTitre}
-          </p>
+          {breadcrumb ? (
+            <Breadcrumb segments={breadcrumb} tone="dark" />
+          ) : (
+            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+              {surTitre}
+            </p>
+          )}
         </Reveal>
         <Reveal delay={100}>
           <h1 className="max-w-260 whitespace-pre-line font-display text-[44px] font-semibold leading-12 tracking-[-0.035em] text-paper lg:text-[92px] lg:leading-[92px]">

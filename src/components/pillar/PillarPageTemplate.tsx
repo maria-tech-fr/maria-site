@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import type { BreadcrumbSegment } from '../Breadcrumb'
 import type { PagePillierData } from '../../lib/pagePillier'
 import PillarHero from './PillarHero'
 import PillarVision from './PillarVision'
@@ -10,6 +11,8 @@ type Props = {
   data: NonNullable<PagePillierData>
   /** Bloc central injecté entre Vision (bloc 2) et Articulation (bloc 4). */
   children: ReactNode
+  /** Fil d'Ariane signature passé au Hero. */
+  breadcrumb?: BreadcrumbSegment[]
 }
 
 /**
@@ -21,7 +24,7 @@ type Props = {
  * Pas de CTA final propre à la page : le bloc CTA « Un projet IA en tête »
  * du footer global tient ce rôle pour les 2 piliers.
  */
-export default function PillarPageTemplate({ data, children }: Props) {
+export default function PillarPageTemplate({ data, children, breadcrumb }: Props) {
   return (
     <>
       {/* 1 — Hero */}
@@ -34,6 +37,7 @@ export default function PillarPageTemplate({ data, children }: Props) {
           ctaPrimaireHref={data.hero.ctaPrimaireHref}
           ctaSecondaireLibelle={data.hero.ctaSecondaireLibelle}
           ctaSecondaireAncre={data.hero.ctaSecondaireAncre}
+          breadcrumb={breadcrumb}
         />
       )}
 

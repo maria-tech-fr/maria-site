@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Breadcrumb, { type BreadcrumbSegment } from '../Breadcrumb'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import { renderWithEmphase } from '../../lib/emphase'
@@ -9,6 +10,7 @@ type Props = {
   sousTitre?: string | null
   ctaPrimaireLibelle?: string | null
   ctaSecondaireLibelle?: string | null
+  breadcrumb?: BreadcrumbSegment[]
 }
 
 export default function BesoinHero({
@@ -17,6 +19,7 @@ export default function BesoinHero({
   sousTitre,
   ctaPrimaireLibelle,
   ctaSecondaireLibelle,
+  breadcrumb,
 }: Props) {
   const primLib = ctaPrimaireLibelle || 'Parler de ce besoin'
   const secLib = ctaSecondaireLibelle || 'Voir le service associé'
@@ -34,9 +37,13 @@ export default function BesoinHero({
       <div className="relative flex flex-col gap-15">
         <Reveal>
           <div className="flex flex-col gap-6">
-            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-              {surTitre}
-            </p>
+            {breadcrumb ? (
+              <Breadcrumb segments={breadcrumb} tone="light" />
+            ) : (
+              <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+                {surTitre}
+              </p>
+            )}
             <h1 className="max-w-260 whitespace-pre-line font-display text-[44px] font-semibold leading-12 tracking-[-0.04em] text-ink lg:text-[80px] lg:leading-[90px]">
               {renderWithEmphase(titre, 'text-accent')}
             </h1>

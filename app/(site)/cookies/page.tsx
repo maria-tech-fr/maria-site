@@ -23,6 +23,10 @@ export default function CookiesPage() {
       surTitre="// cookies"
       titre="Politique de gestion des cookies"
       derniereMaj={legalInfo.derniereMaj}
+      breadcrumb={[
+        { label: 'Accueil', href: '/' },
+        { label: 'Politique cookies' },
+      ]}
     >
       <LegalSection title="Qu’est-ce qu’un cookie ?">
         <p>

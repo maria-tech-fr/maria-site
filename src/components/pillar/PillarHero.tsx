@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Breadcrumb, { type BreadcrumbSegment } from '../Breadcrumb'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import { renderWithEmphase } from '../../lib/emphase'
@@ -11,6 +12,8 @@ type Props = {
   ctaPrimaireHref?: string | null
   ctaSecondaireLibelle?: string | null
   ctaSecondaireAncre?: string | null
+  /** Si fourni, remplace le sur-titre par un fil d'Ariane signature. */
+  breadcrumb?: BreadcrumbSegment[]
 }
 
 export default function PillarHero({
@@ -21,6 +24,7 @@ export default function PillarHero({
   ctaPrimaireHref,
   ctaSecondaireLibelle,
   ctaSecondaireAncre,
+  breadcrumb,
 }: Props) {
   const primLib = ctaPrimaireLibelle || 'Parler de votre projet'
   const primHref = ctaPrimaireHref || '/contact'
@@ -39,9 +43,13 @@ export default function PillarHero({
 
       <div className="relative mx-auto flex w-full max-w-[1100px] flex-col gap-9">
         <Reveal>
-          <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-            {surTitre}
-          </p>
+          {breadcrumb ? (
+            <Breadcrumb segments={breadcrumb} tone="dark" />
+          ) : (
+            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+              {surTitre}
+            </p>
+          )}
         </Reveal>
         <Reveal delay={100}>
           <h1 className="max-w-[20ch] font-display text-[48px] font-semibold leading-[1.02] tracking-[-0.035em] text-paper text-balance lg:text-[88px] lg:leading-[1.02]">

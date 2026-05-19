@@ -1,9 +1,16 @@
+import Breadcrumb, { type BreadcrumbSegment } from './Breadcrumb'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
 import type { ServiceHero as ServiceHeroData } from '../lib/pageService'
 import { renderWithEmphase } from '../lib/emphase'
 
-export default function ServiceHero({ data }: { data: ServiceHeroData }) {
+type Props = {
+  data: ServiceHeroData
+  /** Si fourni, remplace le sur-titre Sanity par un fil d'Ariane signature. */
+  breadcrumb?: BreadcrumbSegment[]
+}
+
+export default function ServiceHero({ data, breadcrumb }: Props) {
   const ctaHref = data.ctaHref || '#'
   // Ajoute la flèche → si l'éditeur ne l'a pas mise dans le libellé.
   const ctaLabel = /[→→]\s*$/.test(data.ctaLibelle)
@@ -22,9 +29,13 @@ export default function ServiceHero({ data }: { data: ServiceHeroData }) {
       <div className="relative flex flex-col gap-15">
         <Reveal>
           <div className="flex flex-col gap-6">
-            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-              {data.surTitre}
-            </p>
+            {breadcrumb ? (
+              <Breadcrumb segments={breadcrumb} tone="light" />
+            ) : (
+              <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+                {data.surTitre}
+              </p>
+            )}
             <h1 className="max-w-260 whitespace-pre-line font-display text-[44px] font-semibold leading-12 tracking-[-0.04em] text-ink lg:text-[80px] lg:leading-[90px]">
               {renderWithEmphase(
                 data.titre,

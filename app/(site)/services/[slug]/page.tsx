@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Faq from '../../../../src/components/Faq'
 import FaqJsonLd from '../../../../src/components/FaqJsonLd'
 import JsonLd from '../../../../src/components/JsonLd'
-import { buildBreadcrumbSchema, buildServiceSchema } from '../../../../src/lib/schema'
+import { buildServiceSchema } from '../../../../src/lib/schema'
 import ServiceAutres from '../../../../src/components/ServiceAutres'
 import ServiceCitation from '../../../../src/components/ServiceCitation'
 import ServiceConstat from '../../../../src/components/ServiceConstat'
@@ -47,9 +47,8 @@ export default async function ServicePage({ params }: Params) {
 
   if (!page) notFound()
 
-  // JSON-LD : Service + BreadcrumbList. Le schema Organization est global.
-  // Le breadcrumb passe par /services (pilier) pour signaler la hiérarchie
-  // à Google — `Accueil > Services > [titre]`.
+  // Service JSON-LD pour Google. Le BreadcrumbList est rendu par le
+  // composant <Breadcrumb> à l'intérieur du Hero (source unique).
   return (
     <>
       <JsonLd
@@ -59,14 +58,16 @@ export default async function ServicePage({ params }: Params) {
           description: page.hero?.description ?? null,
         })}
       />
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'Services', url: '/services' },
-          { name: page.titre, url: `/services/${slug}` },
-        ])}
-      />
-      {page.hero && <ServiceHero data={page.hero} />}
+      {page.hero && (
+        <ServiceHero
+          data={page.hero}
+          breadcrumb={[
+            { label: 'Accueil', href: '/' },
+            { label: 'Services', href: '/services' },
+            { label: page.titre },
+          ]}
+        />
+      )}
       {page.pourQui && <ServicePourQui data={page.pourQui} />}
       {page.constat && <ServiceConstat data={page.constat} />}
       {page.livrable && <ServiceLivrable data={page.livrable} />}

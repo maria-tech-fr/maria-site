@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Article } from '../../lib/article'
 import { avatarSrc, formatDateFr, formatReadingTime, imageAlt, imageSrc, initiales } from '../../lib/blog'
-import Breadcrumb from './Breadcrumb'
+import Breadcrumb from '../Breadcrumb'
 
 export default function ArticleHero({ article }: { article: Article }) {
   const cover = imageSrc(article.coverImage, 900, 1200)
@@ -12,7 +12,8 @@ export default function ArticleHero({ article }: { article: Article }) {
     <header className="bg-paper px-6 pb-12 pt-26 lg:px-30.5 lg:pb-14 lg:pt-32">
       <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-8">
         <Breadcrumb
-          items={[
+          tone="light"
+          segments={[
             { label: 'Accueil', href: '/' },
             { label: 'Journal', href: '/blog' },
             {

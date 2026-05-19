@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Breadcrumb, { type BreadcrumbSegment } from '../Breadcrumb'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 
@@ -8,6 +9,7 @@ type Props = {
   sousTitre?: string | null
   ctaPrimaireLibelle?: string | null
   ctaSecondaireLibelle?: string | null
+  breadcrumb?: BreadcrumbSegment[]
 }
 
 export default function FormationHero({
@@ -16,6 +18,7 @@ export default function FormationHero({
   sousTitre,
   ctaPrimaireLibelle,
   ctaSecondaireLibelle,
+  breadcrumb,
 }: Props) {
   const primLib = ctaPrimaireLibelle || 'Parler de vos besoins de formation'
   const secLib = ctaSecondaireLibelle || 'Voir nos formations'
@@ -32,9 +35,13 @@ export default function FormationHero({
 
       <div className="relative mx-auto flex w-full max-w-[1100px] flex-col gap-9">
         <Reveal>
-          <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-            {surTitre}
-          </p>
+          {breadcrumb ? (
+            <Breadcrumb segments={breadcrumb} tone="light" />
+          ) : (
+            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+              {surTitre}
+            </p>
+          )}
         </Reveal>
         <Reveal delay={100}>
           <h1 className="max-w-[20ch] font-display text-[48px] font-semibold leading-[1.02] tracking-[-0.035em] text-ink text-balance lg:text-[80px] lg:leading-[1.02]">

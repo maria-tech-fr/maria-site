@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import Breadcrumb, { type BreadcrumbSegment } from '../Breadcrumb'
 
 /*
   Layout commun des 3 pages légales (mentions, confidentialité, cookies).
@@ -7,7 +8,8 @@ import type { ReactNode } from 'react'
 */
 
 type Props = {
-  /** Sur-titre DM Mono vert, ex. « // mentions légales ». */
+  /** Sur-titre DM Mono vert, ex. « // mentions légales ». Fallback si
+   *  `breadcrumb` n'est pas fourni. */
   surTitre: string
   /** H1 — unique de la page. */
   titre: string
@@ -15,6 +17,8 @@ type Props = {
   chapo?: string
   /** Date de dernière mise à jour affichée sous le hero. */
   derniereMaj: string
+  /** Si fourni, remplace le sur-titre par un fil d'Ariane signature. */
+  breadcrumb?: BreadcrumbSegment[]
   children: ReactNode
 }
 
@@ -23,15 +27,20 @@ export default function LegalPageLayout({
   titre,
   chapo,
   derniereMaj,
+  breadcrumb,
   children,
 }: Props) {
   return (
     <section className="bg-paper px-6 pb-22 pt-40 lg:px-30.5 lg:pb-30 lg:pt-44">
       <div className="mx-auto flex w-full max-w-[720px] flex-col gap-10">
         <header className="flex flex-col gap-4">
-          <p className="font-mono text-[12px] uppercase tracking-[0.08em] text-success">
-            {surTitre}
-          </p>
+          {breadcrumb ? (
+            <Breadcrumb segments={breadcrumb} tone="light" />
+          ) : (
+            <p className="font-mono text-[12px] uppercase tracking-[0.08em] text-success">
+              {surTitre}
+            </p>
+          )}
           <h1 className="font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.032em] text-ink lg:text-[60px]">
             {titre}
           </h1>

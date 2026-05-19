@@ -3,8 +3,6 @@ import BlogFeaturedArticle from '../../../src/components/BlogFeaturedArticle'
 import BlogHero from '../../../src/components/BlogHero'
 import BlogListingSection from '../../../src/components/BlogListingSection'
 import BlogToolbar from '../../../src/components/BlogToolbar'
-import JsonLd from '../../../src/components/JsonLd'
-import { buildBreadcrumbSchema } from '../../../src/lib/schema'
 import {
   getArticleCategories,
   getArticlesListing,
@@ -82,15 +80,13 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
   return (
     <>
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'Journal', url: '/blog' },
-        ])}
-      />
       <BlogHero
         titre={'Nos points de vue sur\nl’IA **en entreprise**'}
         description="Stratégie, méthode, gouvernance, retours d'expérience. Ce que nous pensons, ce que nous apprenons, ce que nous partageons."
+        breadcrumb={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Journal' },
+        ]}
       />
 
       {featured && <BlogFeaturedArticle article={featured} />}

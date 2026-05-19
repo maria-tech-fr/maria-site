@@ -69,21 +69,9 @@ export default function ArticleJsonLd({ article }: { article: Article }) {
     articleSection: article.categorie.libelle,
   }
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Journal', item: `${SITE_URL}/blog` },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: article.categorie.libelle,
-        item: `${SITE_URL}/blog/categorie/${article.categorie.slug}`,
-      },
-      { '@type': 'ListItem', position: 4, name: article.titre, item: url },
-    ],
-  }
+  // BreadcrumbList n'est PLUS émis ici : ArticleHero rend le composant
+  // <Breadcrumb> qui émet le schema en même temps que l'UI visible
+  // (source unique).
 
   // FAQPage : H2-questions (auto-extraites du corps) + entrées de la FAQ
   // finale. Déduplique sur la question normalisée (insensible à la casse +
@@ -118,10 +106,6 @@ export default function ArticleJsonLd({ article }: { article: Article }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       {faqSchema && (
         <script

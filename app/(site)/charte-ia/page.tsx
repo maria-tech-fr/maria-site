@@ -7,7 +7,6 @@ import CharteEngagements from '../../../src/components/charte-ia/CharteEngagemen
 import CharteLignesRouges from '../../../src/components/charte-ia/CharteLignesRouges'
 import CharteDisclaimer from '../../../src/components/charte-ia/CharteDisclaimer'
 import JsonLd from '../../../src/components/JsonLd'
-import { buildBreadcrumbSchema } from '../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -57,12 +56,6 @@ export default async function PageCharteIA() {
 
   return (
     <main>
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'Charte de gouvernance IA', url: '/charte-ia' },
-        ])}
-      />
       <JsonLd data={articleJsonLd} />
 
       {/* 1 — Hero */}
@@ -71,6 +64,10 @@ export default async function PageCharteIA() {
           surTitre={data.hero.surTitre || '// charte'}
           titre={data.hero.titre}
           sousTitre={data.hero.sousTitre}
+          breadcrumb={[
+            { label: 'Accueil', href: '/' },
+            { label: 'Charte de gouvernance IA' },
+          ]}
         />
       )}
 

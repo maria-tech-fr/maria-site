@@ -8,8 +8,6 @@ import NonNegociables from '../../../src/components/NonNegociables'
 import Processus from '../../../src/components/Processus'
 import Technos from '../../../src/components/Technos'
 import Valeurs from '../../../src/components/Valeurs'
-import JsonLd from '../../../src/components/JsonLd'
-import { buildBreadcrumbSchema } from '../../../src/lib/schema'
 import { getAgence } from '../../../src/lib/agence'
 
 export const metadata: Metadata = {
@@ -33,13 +31,13 @@ export default async function AgencePage() {
 
   return (
     <>
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'L’agence', url: '/agence' },
-        ])}
+      <DarkHero
+        data={agence.hero}
+        breadcrumb={[
+          { label: 'Accueil', href: '/' },
+          { label: 'L’agence' },
+        ]}
       />
-      <DarkHero data={agence.hero} />
       {agence.manifeste && <Manifeste data={agence.manifeste} />}
       {agence.valeurs && <Valeurs data={agence.valeurs} />}
       {agence.nonNegociables && <NonNegociables data={agence.nonNegociables} />}

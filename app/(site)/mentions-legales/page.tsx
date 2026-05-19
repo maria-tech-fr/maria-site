@@ -21,6 +21,10 @@ export default function MentionsLegalesPage() {
       surTitre="// mentions légales"
       titre="Mentions légales"
       derniereMaj={legalInfo.derniereMaj}
+      breadcrumb={[
+        { label: 'Accueil', href: '/' },
+        { label: 'Mentions légales' },
+      ]}
     >
       <LegalSection title="Éditeur du site">
         <p>Le site maria est édité par :</p>

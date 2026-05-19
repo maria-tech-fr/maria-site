@@ -12,7 +12,7 @@ import Faq from '../../../src/components/Faq'
 import FormationCta from '../../../src/components/formation/FormationCta'
 import FormationServicesLinks from '../../../src/components/formation/FormationServicesLinks'
 import JsonLd from '../../../src/components/JsonLd'
-import { buildBreadcrumbSchema, buildFaqSchema } from '../../../src/lib/schema'
+import { buildFaqSchema } from '../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -37,12 +37,6 @@ export default async function PageFormation() {
 
   return (
     <>
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'Formation IA', url: '/formation' },
-        ])}
-      />
       <JsonLd data={buildFaqSchema(data.faq?.questions)} />
 
       {/* 1 — Hero */}
@@ -53,6 +47,10 @@ export default async function PageFormation() {
           sousTitre={data.hero.sousTitre}
           ctaPrimaireLibelle={data.hero.ctaPrimaireLibelle}
           ctaSecondaireLibelle={data.hero.ctaSecondaireLibelle}
+          breadcrumb={[
+            { label: 'Accueil', href: '/' },
+            { label: 'Formation' },
+          ]}
         />
       )}
 

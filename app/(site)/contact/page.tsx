@@ -6,8 +6,6 @@ import ContactHero from '../../../src/components/contact/ContactHero'
 import ContactInfo from '../../../src/components/contact/ContactInfo'
 import ContactJsonLd from '../../../src/components/contact/ContactJsonLd'
 import ContactProcess from '../../../src/components/contact/ContactProcess'
-import JsonLd from '../../../src/components/JsonLd'
-import { buildBreadcrumbSchema } from '../../../src/lib/schema'
 import { getContactPage } from '../../../src/lib/contact'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
@@ -32,12 +30,6 @@ export default async function ContactPage() {
 
   return (
     <>
-      <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'Contact', url: '/contact' },
-        ])}
-      />
       <ContactJsonLd faq={page?.faq?.questions ?? []} />
 
       {page?.hero && (
@@ -45,6 +37,10 @@ export default async function ContactPage() {
           surTitre={page.hero.surTitre || '// contact'}
           titre={page.hero.titre}
           description={page.hero.description}
+          breadcrumb={[
+            { label: 'Accueil', href: '/' },
+            { label: 'Contact' },
+          ]}
         />
       )}
 

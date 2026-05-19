@@ -1,3 +1,4 @@
+import Breadcrumb, { type BreadcrumbSegment } from '../Breadcrumb'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 
@@ -5,9 +6,10 @@ type Props = {
   surTitre: string
   titre: string
   sousTitre?: string | null
+  breadcrumb?: BreadcrumbSegment[]
 }
 
-export default function CharteHero({ surTitre, titre, sousTitre }: Props) {
+export default function CharteHero({ surTitre, titre, sousTitre, breadcrumb }: Props) {
   return (
     <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-45.5 lg:px-30.5 lg:pb-22.5 lg:pt-45.5">
       <HaloField
@@ -20,9 +22,13 @@ export default function CharteHero({ surTitre, titre, sousTitre }: Props) {
 
       <article className="relative mx-auto flex w-full max-w-[760px] flex-col gap-7 lg:mx-0 lg:max-w-[820px]">
         <Reveal>
-          <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-            {surTitre}
-          </p>
+          {breadcrumb ? (
+            <Breadcrumb segments={breadcrumb} tone="dark" />
+          ) : (
+            <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
+              {surTitre}
+            </p>
+          )}
         </Reveal>
         <Reveal delay={100}>
           <h1 className="font-display text-[44px] font-semibold leading-[1.05] tracking-[-0.035em] text-paper text-balance lg:text-[80px] lg:leading-[1.02]">

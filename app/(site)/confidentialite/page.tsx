@@ -24,6 +24,10 @@ export default function ConfidentialitePage() {
       titre="Politique de confidentialité"
       chapo="maria accorde une importance particulière à la protection des données personnelles. Cette politique explique quelles données nous collectons, pourquoi, et quels sont vos droits."
       derniereMaj={legalInfo.derniereMaj}
+      breadcrumb={[
+        { label: 'Accueil', href: '/' },
+        { label: 'Politique de confidentialité' },
+      ]}
     >
       <LegalSection title="Responsable du traitement">
         <p>

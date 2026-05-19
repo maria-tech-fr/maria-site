@@ -133,13 +133,6 @@ export default function Footer() {
                 configuré (NEXT_PUBLIC_AXEPTIO_CLIENT_ID). Sinon noop. */}
             <CookieSettingsLink />
           </div>
-          <span
-            aria-hidden
-            className="inline-flex items-baseline font-mono text-[14px] font-medium tracking-[-0.02em] text-paper"
-          >
-            maria
-            <span className="cursor-blink text-success" />
-          </span>
         </div>
       </section>
     </footer>
@@ -157,7 +150,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className="font-mono text-[11px] uppercase leading-4.25 tracking-[0.08em] text-success">
+      <h3 className="font-mono text-[11px] uppercase leading-4.25 tracking-[0.08em] text-paper">
         {heading}
       </h3>
       <ul className="mt-4.5 flex flex-col gap-2.5">

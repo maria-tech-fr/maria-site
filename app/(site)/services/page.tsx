@@ -6,7 +6,7 @@ import PillarPageTemplate from '../../../src/components/pillar/PillarPageTemplat
 import ServicesCentralBlock from '../../../src/components/pillar/ServicesCentralBlock'
 import FaqJsonLd from '../../../src/components/FaqJsonLd'
 import JsonLd from '../../../src/components/JsonLd'
-import { buildBreadcrumbSchema, buildItemListSchema } from '../../../src/lib/schema'
+import { buildItemListSchema } from '../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -36,19 +36,19 @@ export default async function PillarServicesPage() {
   return (
     <main>
       <JsonLd
-        data={buildBreadcrumbSchema([
-          { name: 'Accueil', url: '/' },
-          { name: 'Services', url: '/services' },
-        ])}
-      />
-      <JsonLd
         data={buildItemListSchema(
           services.map((s) => ({ name: s.titre, url: `/services/${s.slug}` })),
         )}
       />
       <FaqJsonLd questions={pillar.faq?.questions} />
 
-      <PillarPageTemplate data={pillar}>
+      <PillarPageTemplate
+        data={pillar}
+        breadcrumb={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Services' },
+        ]}
+      >
         <ServicesCentralBlock services={services} />
       </PillarPageTemplate>
     </main>
