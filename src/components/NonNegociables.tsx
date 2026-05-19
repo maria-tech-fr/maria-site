@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
 import type { NonNegociables as NonNegociablesData, PointNonNegociable } from '../lib/agence'
@@ -37,6 +38,21 @@ export default function NonNegociables({ data }: { data: NonNegociablesData }) {
             ))}
           </div>
         )}
+
+        {/* Renvoi discret vers la Charte IA — sous la liste, intégré au flux,
+            taille corps. Pas de bouton, pas d'encadré : juste une phrase
+            opposable + lien souligné vert. */}
+        <Reveal delay={100 + (data.points?.length ?? 0) * 80}>
+          <p className="max-w-180 text-[15px] leading-6 text-ink-soft lg:text-[16px] lg:leading-[26px]">
+            Ces non-négociables sont publics et opposables.{' '}
+            <Link
+              href="/charte-ia"
+              className="border-b border-success text-ink transition-colors duration-300 ease-out hover:text-success"
+            >
+              Lire notre charte de gouvernance IA →
+            </Link>
+          </p>
+        </Reveal>
       </div>
     </section>
   )

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import BlockHeader from './BlockHeader'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
@@ -35,6 +36,21 @@ export default function Valeurs({ data }: { data: ValeursData }) {
             ))}
           </div>
         )}
+
+        {/* Renvoi discret vers la Charte IA — version fond sombre. Texte
+            gris clair lisible, lien souligné vert success (cohérent avec la
+            palette de la section). */}
+        <Reveal delay={150 + (data.principes?.length ?? 0) * 100}>
+          <p className="max-w-180 text-[15px] leading-6 text-[#BFBFBF] lg:text-[16px] lg:leading-6.5">
+            Ces principes sont formalisés dans notre charte de gouvernance IA.{' '}
+            <Link
+              href="/charte-ia"
+              className="border-b border-success text-paper transition-colors duration-300 ease-out hover:text-success"
+            >
+              La lire →
+            </Link>
+          </p>
+        </Reveal>
       </div>
     </section>
   )
