@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Reveal from './Reveal'
 import type { AutreServiceItem, ServiceAutres as ServiceAutresData } from '../lib/pageService'
 
@@ -17,12 +18,24 @@ export default function ServiceAutres({ data }: { data: ServiceAutresData }) {
         </Reveal>
 
         {data.services && data.services.length > 0 && (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
-            {data.services.map((service, i) => (
-              <Reveal key={i} delay={120 + i * 80}>
-                <AutreServiceCard service={service} />
-              </Reveal>
-            ))}
+          <div className="flex flex-col gap-10">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
+              {data.services.map((service, i) => (
+                <Reveal key={i} delay={120 + i * 80}>
+                  <AutreServiceCard service={service} />
+                </Reveal>
+              ))}
+            </div>
+            {/* Lien discret vers la page pilier — sous les cards, volontairement
+                en retrait pour ne pas concurrencer visuellement. */}
+            <Reveal delay={120 + data.services.length * 80}>
+              <Link
+                href="/services"
+                className="self-start border-b border-success pb-0.5 font-medium text-[14.5px] leading-5 text-ink transition-colors duration-300 ease-out hover:border-success/60 hover:text-success"
+              >
+                Voir tous nos services →
+              </Link>
+            </Reveal>
           </div>
         )}
       </div>

@@ -42,3 +42,7 @@ next-env.d.ts
 
 # scratch
 /tmp
+
+# exports ponctuels (script export-content.mjs)
+/export-content/
+/export-content.zip
