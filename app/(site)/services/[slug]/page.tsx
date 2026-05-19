@@ -4,6 +4,7 @@ import Faq from '../../../../src/components/Faq'
 import FaqJsonLd from '../../../../src/components/FaqJsonLd'
 import JsonLd from '../../../../src/components/JsonLd'
 import { buildServiceSchema } from '../../../../src/lib/schema'
+import { DEFAULT_OG_IMAGE } from '../../../../src/lib/seo'
 import ServiceAutres from '../../../../src/components/ServiceAutres'
 import ServiceCitation from '../../../../src/components/ServiceCitation'
 import ServiceConstat from '../../../../src/components/ServiceConstat'
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title,
     description,
     alternates: { canonical },
-    openGraph: { title, description, type: 'website', url: canonical },
+    openGraph: { title, description, type: 'website', url: canonical, images: [DEFAULT_OG_IMAGE] },
   }
 }
 

@@ -35,10 +35,16 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   const title = article.seo?.titre || `${article.titre} | maria`
   const description = article.seo?.description || article.intro || article.sousTitre || ''
+  // Cascade OG article :
+  //   1. champ ogImage spécifique au CMS si présent
+  //   2. image de couverture (coverImage)
+  //   3. image OG générique du site (héritée du layout racine via
+  //      `metadataBase`) — on retourne `undefined` pour laisser
+  //      Next.js cascader.
   const ogImageSrc =
     imageSrc(article.seo?.ogImage ?? null, 1200, 630) ||
     imageSrc(article.coverImage, 1200, 630) ||
-    `${SITE_URL}/favicon.png`
+    undefined
 
   return {
     title,
@@ -52,7 +58,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt || article.publishedAt,
       authors: [article.auteur.nom],
-      images: ogImageSrc ? [ogImageSrc] : undefined,
+      ...(ogImageSrc ? { images: [ogImageSrc] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.titre,
+      description,
+      ...(ogImageSrc ? { images: [ogImageSrc] } : {}),
     },
   }
 }

@@ -3,6 +3,7 @@ import BlogFeaturedArticle from '../../../src/components/BlogFeaturedArticle'
 import BlogHero from '../../../src/components/BlogHero'
 import BlogListingSection from '../../../src/components/BlogListingSection'
 import BlogToolbar from '../../../src/components/BlogToolbar'
+import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
 import {
   getArticleCategories,
   getArticlesListing,
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
       "Stratégie, méthode, gouvernance, retours d'expérience. Ce que nous pensons, ce que nous apprenons, ce que nous partageons.",
     type: 'website',
     url: '/blog',
+    images: [DEFAULT_OG_IMAGE],
   },
 }
 

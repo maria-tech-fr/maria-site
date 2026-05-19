@@ -13,6 +13,7 @@ import FormationCta from '../../../src/components/formation/FormationCta'
 import FormationServicesLinks from '../../../src/components/formation/FormationServicesLinks'
 import JsonLd from '../../../src/components/JsonLd'
 import { buildFaqSchema } from '../../../src/lib/schema'
+import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -27,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     alternates: { canonical },
-    openGraph: { title, description, type: 'website', url: canonical },
+    openGraph: { title, description, type: 'website', url: canonical, images: [DEFAULT_OG_IMAGE] },
   }
 }
 

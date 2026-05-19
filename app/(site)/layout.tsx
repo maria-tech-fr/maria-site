@@ -52,6 +52,24 @@ export const metadata: Metadata = {
     siteName: 'maria',
     locale: 'fr_FR',
     type: 'website',
+    // Image OG générique du site — 1200×630.
+    // ASSET À FOURNIR : /public/og/default.jpg (cf. README ci-dessous).
+    // Toutes les pages non-articles héritent automatiquement de cette
+    // image. Les articles ont leur propre cascade (ogImage → coverImage
+    // → fallback ici). `metadataBase` (défini plus haut) convertit le
+    // chemin relatif en URL absolue.
+    images: [
+      {
+        url: '/og/default.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'maria — agence IA pour l’interne',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og/default.jpg'],
   },
 }
 

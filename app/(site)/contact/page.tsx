@@ -7,6 +7,7 @@ import ContactInfo from '../../../src/components/contact/ContactInfo'
 import ContactJsonLd from '../../../src/components/contact/ContactJsonLd'
 import ContactProcess from '../../../src/components/contact/ContactProcess'
 import { getContactPage } from '../../../src/lib/contact'
+import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     description: "Parlons de votre projet IA. Réponse sous 24 h.",
     type: 'website',
     url: `${SITE_URL}/contact`,
+    images: [DEFAULT_OG_IMAGE],
   },
 }
 

@@ -7,6 +7,7 @@ import CharteEngagements from '../../../src/components/charte-ia/CharteEngagemen
 import CharteLignesRouges from '../../../src/components/charte-ia/CharteLignesRouges'
 import CharteDisclaimer from '../../../src/components/charte-ia/CharteDisclaimer'
 import JsonLd from '../../../src/components/JsonLd'
+import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -26,6 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       type: 'article',
       url: canonical,
+      images: [DEFAULT_OG_IMAGE],
       ...(data?.revision?.lastUpdated
         ? { modifiedTime: new Date(data.revision.lastUpdated).toISOString() }
         : {}),

@@ -11,6 +11,7 @@ import {
   type ArticleSort,
 } from '../../../../../src/lib/article'
 import type { PromoForGrid } from '../../../../../src/lib/blog'
+import { DEFAULT_OG_IMAGE } from '../../../../../src/lib/seo'
 
 const PAGE_SIZE = 13
 
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: categorie.description,
       type: 'website',
       url: `/blog/categorie/${slug}`,
+      images: [DEFAULT_OG_IMAGE],
     },
   }
 }
