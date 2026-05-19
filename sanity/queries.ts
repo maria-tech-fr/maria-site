@@ -351,7 +351,7 @@ const articleCardProjection = `{
   publishedAt,
   readingTime,
   featured,
-  coverImage{ asset->{ _id, url, metadata{ dimensions } }, alt },
+  coverImage{ asset->{ _id, url, metadata{ dimensions } }, hotspot, crop, alt },
   categorie->{ "slug": slug.current, libelle },
   auteur->{ nom, role, avatar{ asset->{ _id, url } } }
 }`
@@ -410,7 +410,7 @@ export const articleBySlugQuery = defineQuery(`
     "updatedAt": coalesce(updatedAt, _updatedAt),
     readingTime,
     featured,
-    coverImage{ asset->{ _id, url, metadata{ dimensions } }, alt },
+    coverImage{ asset->{ _id, url, metadata{ dimensions } }, hotspot, crop, alt },
     categorie->{ "slug": slug.current, libelle, description },
     auteur->{ nom, role, bio, avatar{ asset->{ _id, url } } },
     body[]{

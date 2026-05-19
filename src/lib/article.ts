@@ -21,6 +21,11 @@ export type SanityImageRef = {
     url: string
     metadata?: { dimensions?: { width: number; height: number; aspectRatio: number } }
   } | null
+  /** Position du focal point (hotspot) défini dans Sanity Studio. Coordonnées
+   *  relatives (0..1) sur l'image originale. */
+  hotspot?: { x: number; y: number; height: number; width: number } | null
+  /** Rectangle de crop (0..1) éventuellement défini par-dessus le hotspot. */
+  crop?: { top: number; bottom: number; left: number; right: number } | null
 } | null
 
 export type CategorieRef = {

@@ -30,15 +30,21 @@ export function initiales(nom: string | null | undefined): string {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
 }
 
-/** URL Sanity optimisée pour une image ou null si pas d'asset. */
+/** URL Sanity optimisée pour une image ou null si pas d'asset.
+ *
+ *  IMPORTANT : on passe l'OBJET image entier (avec hotspot + crop)
+ *  à urlFor — pas juste l'asset. Sans cela, le focal point défini
+ *  dans le Studio est ignoré et toutes les images sont croppées au
+ *  centre par défaut. La query GROQ doit aussi projeter `hotspot` et
+ *  `crop` à côté de `asset` (cf. sanity/queries.ts).
+ */
 export function imageSrc(
   image: (SanityImageRef & { alt?: string }) | null | undefined,
   width: number,
   height?: number,
 ): string | null {
-  const asset = image?.asset
-  if (!asset) return null
-  const builder = urlFor(asset).width(width).auto('format').fit('crop')
+  if (!image?.asset) return null
+  const builder = urlFor(image).width(width).auto('format').fit('crop')
   if (height) builder.height(height)
   return builder.url()
 }
