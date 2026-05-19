@@ -4,6 +4,8 @@ import EtudeDeCas from '../../../src/components/EtudeDeCas'
 import ProjetsAVenir from '../../../src/components/ProjetsAVenir'
 import ProjetsPasses from '../../../src/components/ProjetsPasses'
 import SavoirFaire from '../../../src/components/SavoirFaire'
+import JsonLd from '../../../src/components/JsonLd'
+import { buildBreadcrumbSchema } from '../../../src/lib/schema'
 import { getProjets } from '../../../src/lib/projets'
 
 export const metadata: Metadata = {
@@ -27,6 +29,12 @@ export default async function ProjetsPage() {
 
   return (
     <>
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Accueil', url: '/' },
+          { name: 'Projets', url: '/projets' },
+        ])}
+      />
       <DarkHero data={projets.hero} />
       {projets.etudeDeCas && <EtudeDeCas data={projets.etudeDeCas} />}
       {projets.savoirFaire && <SavoirFaire data={projets.savoirFaire} />}

@@ -46,15 +46,15 @@ export default async function OrganizationJsonLd() {
     '@id': `${SITE_URL}#organization`,
     name: 'maria',
     legalName: 'maria',
-    alternateName: 'maria — agence IA',
+    alternateName: 'maria — agence IA pour l’interne',
     url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
       url: `${SITE_URL}/favicon.png`,
     },
     description:
-      'Agence digitale 100 % IA. Conception d’outils internes, agents IA et audit & stratégie IA pour PME et grands comptes. Approche cadrée, supervision humaine, conformité RGPD intégrée.',
-    slogan: 'Faire de l’IA un avantage. Pas un risque.',
+      'Agence IA pour l’interne. maria conçoit l’IA qui rend vos équipes plus efficaces et mieux organisées : audit & stratégie IA, outils internes sur-mesure, agents IA. Approche cadrée, supervision humaine, conformité RGPD intégrée.',
+    slogan: 'L’IA utile, à l’intérieur de votre entreprise.',
     knowsAbout: [
       'Intelligence artificielle',
       'Agents IA',

@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Faq from '../../../../src/components/Faq'
 import FaqJsonLd from '../../../../src/components/FaqJsonLd'
+import JsonLd from '../../../../src/components/JsonLd'
+import { buildBreadcrumbSchema, buildServiceSchema } from '../../../../src/lib/schema'
 import ServiceAutres from '../../../../src/components/ServiceAutres'
 import ServiceCitation from '../../../../src/components/ServiceCitation'
 import ServiceConstat from '../../../../src/components/ServiceConstat'
@@ -46,38 +48,23 @@ export default async function ServicePage({ params }: Params) {
   if (!page) notFound()
 
   // JSON-LD : Service + BreadcrumbList. Le schema Organization est global.
-  const serviceJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: page.titre,
-    url: `${SITE_URL}/services/${slug}`,
-    provider: { '@id': `${SITE_URL}#organization` },
-    serviceType: page.titre,
-    ...(page.hero?.description ? { description: page.hero.description } : {}),
-    areaServed: [
-      { '@type': 'Country', name: 'France' },
-      { '@type': 'AdministrativeArea', name: 'Europe' },
-    ],
-  }
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: page.titre, item: `${SITE_URL}/services/${slug}` },
-    ],
-  }
-
+  // Le breadcrumb passe par /services (pilier) pour signaler la hiérarchie
+  // à Google — `Accueil > Services > [titre]`.
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      <JsonLd
+        data={buildServiceSchema({
+          name: page.titre,
+          url: `/services/${slug}`,
+          description: page.hero?.description ?? null,
+        })}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Accueil', url: '/' },
+          { name: 'Services', url: '/services' },
+          { name: page.titre, url: `/services/${slug}` },
+        ])}
       />
       {page.hero && <ServiceHero data={page.hero} />}
       {page.pourQui && <ServicePourQui data={page.pourQui} />}

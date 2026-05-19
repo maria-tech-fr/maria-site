@@ -14,6 +14,8 @@ import BesoinTransformation from '../../../../src/components/besoin/BesoinTransf
 import BesoinServiceAssocie from '../../../../src/components/besoin/BesoinServiceAssocie'
 import Faq from '../../../../src/components/Faq'
 import BesoinRelated from '../../../../src/components/besoin/BesoinRelated'
+import JsonLd from '../../../../src/components/JsonLd'
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -58,39 +60,19 @@ export default async function PageBesoin({
   if (!data) notFound()
 
   const famille = getFamilleMeta(data.famille)
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: data.titre, item: `${SITE_URL}/besoins/${data.slug}` },
-    ],
-  }
 
-  const faqJsonLd = data.faq?.questions && data.faq.questions.length > 0
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: data.faq.questions.map((q) => ({
-          '@type': 'Question',
-          name: q.question,
-          acceptedAnswer: { '@type': 'Answer', text: q.reponse },
-        })),
-      }
-    : null
-
+  // Le breadcrumb passe par /besoins (pilier) pour signaler la hiérarchie
+  // « Accueil > Besoins > [titre du besoin] ».
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Accueil', url: '/' },
+          { name: 'Besoins', url: '/besoins' },
+          { name: data.titre, url: `/besoins/${data.slug}` },
+        ])}
       />
-      {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-      )}
+      <JsonLd data={buildFaqSchema(data.faq?.questions)} />
 
       {renderBlocks(data, famille?.titre)}
     </>

@@ -5,6 +5,8 @@ import { getPagePillier } from '../../../src/lib/pagePillier'
 import PillarPageTemplate from '../../../src/components/pillar/PillarPageTemplate'
 import NeedsCentralBlock from '../../../src/components/pillar/NeedsCentralBlock'
 import FaqJsonLd from '../../../src/components/FaqJsonLd'
+import JsonLd from '../../../src/components/JsonLd'
+import { buildBreadcrumbSchema, buildItemListSchema } from '../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -31,38 +33,18 @@ export default async function PillarBesoinsPage() {
 
   if (!pillar) notFound()
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Besoins', item: `${SITE_URL}/besoins` },
-    ],
-  }
-
-  const itemListJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Besoins IA en entreprise — maria',
-    numberOfItems: besoins.length,
-    itemListElement: besoins.map((b, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      url: `${SITE_URL}/besoins/${b.slug}`,
-      name: b.titre,
-      ...(b.introCourte ? { description: b.introCourte } : {}),
-    })),
-  }
-
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Accueil', url: '/' },
+          { name: 'Besoins', url: '/besoins' },
+        ])}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      <JsonLd
+        data={buildItemListSchema(
+          besoins.map((b) => ({ name: b.titre, url: `/besoins/${b.slug}` })),
+        )}
       />
       <FaqJsonLd questions={pillar.faq?.questions} />
 

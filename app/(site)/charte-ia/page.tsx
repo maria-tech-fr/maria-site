@@ -6,6 +6,8 @@ import CharteIntro from '../../../src/components/charte-ia/CharteIntro'
 import CharteEngagements from '../../../src/components/charte-ia/CharteEngagements'
 import CharteLignesRouges from '../../../src/components/charte-ia/CharteLignesRouges'
 import CharteDisclaimer from '../../../src/components/charte-ia/CharteDisclaimer'
+import JsonLd from '../../../src/components/JsonLd'
+import { buildBreadcrumbSchema } from '../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -38,15 +40,6 @@ export default async function PageCharteIA() {
 
   const lastUpdated = data.revision?.lastUpdated || null
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Charte de gouvernance IA', item: `${SITE_URL}/charte-ia` },
-    ],
-  }
-
   const articleJsonLd = lastUpdated
     ? {
         '@context': 'https://schema.org',
@@ -64,16 +57,13 @@ export default async function PageCharteIA() {
 
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Accueil', url: '/' },
+          { name: 'Charte de gouvernance IA', url: '/charte-ia' },
+        ])}
       />
-      {articleJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-        />
-      )}
+      <JsonLd data={articleJsonLd} />
 
       {/* 1 — Hero */}
       {data.hero?.titre && (

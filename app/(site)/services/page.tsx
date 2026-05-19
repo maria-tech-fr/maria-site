@@ -5,6 +5,8 @@ import { getServicesMenu } from '../../../src/lib/pageService'
 import PillarPageTemplate from '../../../src/components/pillar/PillarPageTemplate'
 import ServicesCentralBlock from '../../../src/components/pillar/ServicesCentralBlock'
 import FaqJsonLd from '../../../src/components/FaqJsonLd'
+import JsonLd from '../../../src/components/JsonLd'
+import { buildBreadcrumbSchema, buildItemListSchema } from '../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -31,39 +33,18 @@ export default async function PillarServicesPage() {
 
   if (!pillar) notFound()
 
-  // JSON-LD : Breadcrumb + ItemList des 3 services + FAQPage
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` },
-    ],
-  }
-
-  const itemListJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Services IA maria',
-    numberOfItems: services.length,
-    itemListElement: services.map((s, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      url: `${SITE_URL}/services/${s.slug}`,
-      name: s.titre,
-      ...(s.introCourte ? { description: s.introCourte } : {}),
-    })),
-  }
-
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Accueil', url: '/' },
+          { name: 'Services', url: '/services' },
+        ])}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      <JsonLd
+        data={buildItemListSchema(
+          services.map((s) => ({ name: s.titre, url: `/services/${s.slug}` })),
+        )}
       />
       <FaqJsonLd questions={pillar.faq?.questions} />
 

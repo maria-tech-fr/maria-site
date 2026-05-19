@@ -11,6 +11,8 @@ import FormationTransversale from '../../../src/components/formation/FormationTr
 import Faq from '../../../src/components/Faq'
 import FormationCta from '../../../src/components/formation/FormationCta'
 import FormationServicesLinks from '../../../src/components/formation/FormationServicesLinks'
+import JsonLd from '../../../src/components/JsonLd'
+import { buildBreadcrumbSchema, buildFaqSchema } from '../../../src/lib/schema'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
@@ -33,39 +35,15 @@ export default async function PageFormation() {
   const data = await getPageFormation()
   if (!data) notFound()
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Formation IA', item: `${SITE_URL}/formation` },
-    ],
-  }
-
-  const faqJsonLd = data.faq?.questions && data.faq.questions.length > 0
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: data.faq.questions.map((q) => ({
-          '@type': 'Question',
-          name: q.question,
-          acceptedAnswer: { '@type': 'Answer', text: q.reponse },
-        })),
-      }
-    : null
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Accueil', url: '/' },
+          { name: 'Formation IA', url: '/formation' },
+        ])}
       />
-      {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-      )}
+      <JsonLd data={buildFaqSchema(data.faq?.questions)} />
 
       {/* 1 — Hero */}
       {data.hero?.titre && (
