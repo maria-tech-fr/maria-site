@@ -4,6 +4,7 @@ import '../globals.css'
 import Nav from '../../src/components/Nav'
 import Footer from '../../src/components/Footer'
 import OrganizationJsonLd from '../../src/components/OrganizationJsonLd'
+import WhatsappWidget from '../../src/components/whatsapp/WhatsappWidget'
 import { getBesoinsMenu } from '../../src/lib/pageBesoin'
 import { getServicesMenu } from '../../src/lib/pageService'
 
@@ -83,6 +84,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         </div>
         <main className="flex-1">{children}</main>
         <Footer />
+        <WhatsappWidget />
       </body>
     </html>
   )
