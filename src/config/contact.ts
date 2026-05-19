@@ -10,7 +10,7 @@ export const whatsappConfig = {
   number: '33637415798',
 
   /** Message pré-rempli dans l'éditeur WhatsApp (sera URL-encodé). */
-  prefilledMessage: "Bonjour maria, j'ai une question :",
+  prefilledMessage: "Bonjour, j'aimerais vous parler de mon projet :",
 
   /**
    * Plage « heures ouvrées » utilisée pour switcher le wording de la carte

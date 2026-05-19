@@ -26,7 +26,7 @@ export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Pr
     ? { label: '// on est là', body: 'Une vraie réponse, par un humain, sur WhatsApp.' }
     : {
         label: '// hors ligne',
-        body: 'L’équipe est hors ligne pour le moment — écrivez quand même, on revient vers vous dès l’ouverture.',
+        body: 'L’équipe est hors ligne pour le moment. Écrivez-nous quand même, on revient vers vous dès l’ouverture.',
       }
 
   return (
@@ -70,18 +70,15 @@ export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Pr
             <span className="truncate font-display text-[15px] font-semibold tracking-[-0.01em] text-ink">
               maria · l’équipe
             </span>
-            <span className="flex-none font-mono text-[10.5px] tracking-[0.04em] text-[#9a9a9a]">
-              à l’instant
-            </span>
+            {isOffice && (
+              <span className="flex-none font-mono text-[10.5px] tracking-[0.04em] text-[#9a9a9a]">
+                à l’instant
+              </span>
+            )}
           </div>
-          <div className="flex flex-col gap-1.5">
-            <p className="font-display text-[15px] font-semibold leading-[1.25] tracking-[-0.01em] text-ink">
-              Pas de bot. Pas de formulaire.
-            </p>
-            <p className="text-[14px] leading-[1.45] text-ink-soft">
-              {status.body}
-            </p>
-          </div>
+          <p className="text-[14px] leading-[1.45] text-ink-soft">
+            {status.body}
+          </p>
         </div>
       </div>
 

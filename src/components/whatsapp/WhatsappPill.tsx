@@ -18,7 +18,7 @@ export default function WhatsappPill({ visible, onOpen }: Props) {
       type="button"
       onClick={onOpen}
       aria-label="Ouvrir le contact WhatsApp"
-      className={`group fixed bottom-6 right-6 z-[60] inline-flex items-center gap-2.5 rounded-full border border-ink/8 bg-paper py-2 pl-2 pr-2.5 font-sans text-ink shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_18px_40px_-18px_rgba(33,33,33,0.28),0_6px_14px_-10px_rgba(33,33,33,0.18)] transition-[transform,opacity,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_22px_44px_-18px_rgba(33,33,33,0.35),0_8px_18px_-10px_rgba(33,33,33,0.22)] motion-reduce:transition-none ${
+      className={`group fixed bottom-6 right-6 z-[60] inline-flex items-center gap-2.5 rounded-full border border-ink/8 bg-paper py-2 pl-2 pr-2.5 font-sans text-ink shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_18px_40px_-18px_rgba(33,33,33,0.28),0_6px_14px_-10px_rgba(33,33,33,0.18)] transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
         visible ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-3 scale-[0.96] opacity-0'
       } max-sm:bottom-3 max-sm:right-3`}
     >
