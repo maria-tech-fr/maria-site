@@ -1,13 +1,16 @@
 # maria
 
-> maria est une agence digitale 100 % IA basée en France. Nous concevons des outils IA sur-mesure, des agents et des audits de stratégie IA pour les PME et grands comptes qui veulent industrialiser l'IA sans dériver. Approche anti-bullshit, méthode cadrée, livraisons concrètes.
+> maria est une agence partenaire IA pour l'interne, basée en France. Nous concevons l'IA qui rend les équipes plus efficaces et mieux organisées : audit & stratégie IA, outils internes sur-mesure, agents IA. Pour PME et grands comptes qui veulent industrialiser l'IA sans dériver. Approche anti-bullshit, méthode cadrée, supervision humaine, conformité RGPD intégrée.
 
 ## Services
 
 - [Audit & stratégie IA](https://maria.tech/services/audit-strategie-ia) : cartographie des usages, gouvernance, plan d'action priorisé.
 - [Outils internes sur-mesure](https://maria.tech/services/outils-internes-sur-mesure) : plateformes IA qui se branchent sur le SI existant.
 - [Agents IA](https://maria.tech/services/agents-ia) : assistants spécialisés cadrés sur la documentation interne, supervision humaine.
-- [Formation IA pour les équipes](https://maria.tech/services/formation) : formations concrètes par métier, sécurité par défaut.
+
+## Formation (transversale)
+
+- [Formation IA pour les équipes](https://maria.tech/formation) : formations concrètes par métier, sécurité par défaut. Proposée avec chaque projet.
 
 ## Cas d'usage (besoins)
 
@@ -31,11 +34,12 @@ Les pages besoins décrivent un problème métier, le coût caché, la réponse 
 - [Présentation, manifeste, méthode, équipe](https://maria.tech/agence)
 - [Projets passés et à venir](https://maria.tech/projets)
 - [Journal (articles)](https://maria.tech/blog)
+- [Charte de gouvernance IA](https://maria.tech/charte-ia)
 
 ## Contact
 
 - [Page contact](https://maria.tech/contact)
-- Email : hello@maria.tech
+- Email : [À CONFIRMER : adresse réelle, ex. hello@maria.tech]
 - Réponse sous 24 h ouvrées · Sans engagement
 
 ## Positionnement éditorial
