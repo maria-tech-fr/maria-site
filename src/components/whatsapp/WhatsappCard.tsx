@@ -91,7 +91,7 @@ export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Pr
           onClick={onReply}
           className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-accent px-3 py-2.25 font-sans text-[13px] font-medium text-ink transition-colors duration-300 ease-out hover:bg-accent-soft"
         >
-          Répondre
+          {isOffice ? 'Répondre' : 'Nous écrire'}
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path
               d="M5 12h14M13 6l6 6-6 6"
