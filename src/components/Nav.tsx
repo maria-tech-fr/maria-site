@@ -148,6 +148,9 @@ export default function Nav({ services, besoins }: NavProps) {
             onMouseLeave={closeDesktopDelayed}
             onFocus={() => openDesktop('services')}
             onBlurOut={() => setDesktopOpen((cur) => (cur === 'services' ? null : cur))}
+            onToggle={() =>
+              setDesktopOpen((cur) => (cur === 'services' ? null : 'services'))
+            }
           >
             <NavSubmenu
               id={servicesSubmenuId}
@@ -179,6 +182,9 @@ export default function Nav({ services, besoins }: NavProps) {
             onMouseLeave={closeDesktopDelayed}
             onFocus={() => openDesktop('besoins')}
             onBlurOut={() => setDesktopOpen((cur) => (cur === 'besoins' ? null : cur))}
+            onToggle={() =>
+              setDesktopOpen((cur) => (cur === 'besoins' ? null : 'besoins'))
+            }
           >
             <NavBesoinsMega
               id={besoinsSubmenuId}
@@ -356,6 +362,7 @@ function DesktopTrigger({
   onMouseLeave,
   onFocus,
   onBlurOut,
+  onToggle,
   children,
 }: {
   label: string
@@ -367,6 +374,10 @@ function DesktopTrigger({
   onMouseLeave: () => void
   onFocus: () => void
   onBlurOut: () => void
+  /** Tap / clic sur le trigger : toggle l'ouverture (essentiel sur tablette
+   *  tactile, où il n'y a pas de hover réel ; sur desktop c'est un complément
+   *  qui permet de fermer manuellement le sous-menu déjà ouvert). */
+  onToggle: () => void
   children: React.ReactNode
 }) {
   return (
@@ -391,6 +402,7 @@ function DesktopTrigger({
         aria-expanded={open}
         aria-controls={controlsId}
         aria-current={active ? 'page' : undefined}
+        onClick={onToggle}
         className={`flex items-center gap-1.5 rounded-[5px] px-3.5 py-2 text-sm font-work-sans transition-colors duration-300 ease-out hover:bg-paper-soft ${
           active ? 'text-ink' : 'text-ink-soft'
         }`}

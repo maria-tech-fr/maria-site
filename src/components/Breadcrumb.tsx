@@ -68,7 +68,14 @@ export default function Breadcrumb({ segments, tone = 'light' }: Props) {
           {segments.map((seg, i) => {
             const isLast = i === segments.length - 1
             return (
-              <li key={`${i}-${seg.label}`} className="flex items-center gap-x-1.5">
+              <li
+                key={`${i}-${seg.label}`}
+                // `min-w-0` permet à l'item de wrap correctement quand un
+                // segment est très long ; combiné à `break-words` sur le
+                // segment courant, on évite tout débordement / scroll
+                // horizontal sur mobile et tablette portrait.
+                className="flex min-w-0 items-center gap-x-1.5"
+              >
                 {seg.href && !isLast ? (
                   <Link
                     href={seg.href}
@@ -77,7 +84,13 @@ export default function Breadcrumb({ segments, tone = 'light' }: Props) {
                     {seg.label}
                   </Link>
                 ) : (
-                  <span aria-current="page" className={current}>
+                  <span
+                    aria-current="page"
+                    // `break-words` autorise la coupure interne pour le
+                    // segment courant uniquement — les parents restent
+                    // intacts (règle du brief responsive).
+                    className={`${current} break-words`}
+                  >
                     {seg.label}
                   </span>
                 )}
