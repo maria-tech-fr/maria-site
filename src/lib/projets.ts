@@ -1,5 +1,6 @@
 import { client } from '../../sanity/client'
 import { projetsQuery } from '../../sanity/queries'
+import type { SeoMeta } from './seo'
 
 export type ProjetsHero = {
   surTitre: string
@@ -113,6 +114,7 @@ export type Projets = {
   savoirFaire: SavoirFaire | null
   projetsPasses: ProjetsPasses | null
   projetsAVenir: ProjetsAVenir | null
+  seo: SeoMeta
 } | null
 
 export async function getProjets(): Promise<Projets> {

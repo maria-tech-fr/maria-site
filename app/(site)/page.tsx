@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Constat from '../../src/components/Constat'
 import Experts from '../../src/components/Experts'
 import Hero from '../../src/components/Hero'
@@ -7,6 +8,19 @@ import ProjetVedette from '../../src/components/ProjetVedette'
 import Reassurance from '../../src/components/Reassurance'
 import Services from '../../src/components/Services'
 import { getAccueil } from '../../src/lib/accueil'
+import { resolveSeo } from '../../src/lib/seo'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const accueil = await getAccueil()
+  const { title, ...rest } = resolveSeo(accueil?.seo, {
+    title: 'maria — agence IA pour l’interne',
+    description:
+      'maria conçoit l’IA qui rend vos équipes plus efficaces et mieux organisées : audit & stratégie, outils internes sur-mesure, agents IA. Cadrée, sécurisée, supervisée.',
+    path: '/',
+  })
+  // La home utilise le titre par défaut (sans le template « %s · maria »).
+  return { title: { absolute: title }, ...rest }
+}
 
 export default async function Home() {
   const accueil = await getAccueil()

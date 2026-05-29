@@ -4,7 +4,7 @@ import Faq from '../../../../src/components/Faq'
 import FaqJsonLd from '../../../../src/components/FaqJsonLd'
 import JsonLd from '../../../../src/components/JsonLd'
 import { buildServiceSchema } from '../../../../src/lib/schema'
-import { DEFAULT_OG_IMAGE } from '../../../../src/lib/seo'
+import { resolveSeo } from '../../../../src/lib/seo'
 import ServiceAutres from '../../../../src/components/ServiceAutres'
 import ServiceCitation from '../../../../src/components/ServiceCitation'
 import ServiceConstat from '../../../../src/components/ServiceConstat'
@@ -18,8 +18,6 @@ import ServiceProjetPhare from '../../../../src/components/ServiceProjetPhare'
 import ServiceRepartition from '../../../../src/components/ServiceRepartition'
 import { getPageService, getPageServiceSlugs } from '../../../../src/lib/pageService'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
-
 export async function generateStaticParams() {
   const slugs = await getPageServiceSlugs()
   return slugs.map((slug) => ({ slug }))
@@ -31,15 +29,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const page = await getPageService(slug)
   if (!page) return { title: 'Service' }
-  const canonical = `${SITE_URL}/services/${slug}`
-  const title = page.titre
-  const description = page.hero?.description ?? undefined
-  return {
-    title,
-    description,
-    alternates: { canonical },
-    openGraph: { title, description, type: 'website', url: canonical, images: [DEFAULT_OG_IMAGE] },
-  }
+  // SEO Sanity prioritaire, fallback sur titre BO + description du hero.
+  return resolveSeo(page.seo, {
+    title: page.titre,
+    description: page.hero?.description ?? `${page.titre} — maria, agence IA pour l’interne.`,
+    path: `/services/${slug}`,
+  })
 }
 
 export default async function ServicePage({ params }: Params) {

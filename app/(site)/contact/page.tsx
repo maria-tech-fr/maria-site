@@ -7,22 +7,16 @@ import ContactInfo from '../../../src/components/contact/ContactInfo'
 import ContactJsonLd from '../../../src/components/contact/ContactJsonLd'
 import ContactProcess from '../../../src/components/contact/ContactProcess'
 import { getContactPage } from '../../../src/lib/contact'
-import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
+import { resolveSeo } from '../../../src/lib/seo'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
-
-export const metadata: Metadata = {
-  title: 'Contact — Parlons de votre projet IA',
-  description:
-    "4 façons d'entrer en contact avec maria : formulaire, téléphone, rendez-vous Cal.com. Réponse sous 24 h ouvrées, sans engagement.",
-  alternates: { canonical: '/contact' },
-  openGraph: {
-    title: 'Contact | maria',
-    description: "Parlons de votre projet IA. Réponse sous 24 h.",
-    type: 'website',
-    url: `${SITE_URL}/contact`,
-    images: [DEFAULT_OG_IMAGE],
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getContactPage()
+  return resolveSeo(data?.contactPage?.seo, {
+    title: 'Contact — Parlons de votre projet IA',
+    description:
+      "4 façons d'entrer en contact avec maria : formulaire, téléphone, rendez-vous Cal.com. Réponse sous 24 h ouvrées, sans engagement.",
+    path: '/contact',
+  })
 }
 
 export default async function ContactPage() {

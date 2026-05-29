@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { seoField } from './fields/seo'
 
 export const agence = defineType({
   name: 'agence',
@@ -13,8 +14,10 @@ export const agence = defineType({
     { name: 'technos', title: 'Technos' },
     { name: 'engagements', title: 'Engagements' },
     { name: 'faq', title: 'FAQ' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
+    seoField('seo'),
     defineField({
       name: 'hero',
       title: 'Hero',

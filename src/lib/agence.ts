@@ -1,5 +1,6 @@
 import { client } from '../../sanity/client'
 import { agenceQuery } from '../../sanity/queries'
+import type { SeoMeta } from './seo'
 
 export type AgenceHero = {
   surTitre: string
@@ -86,6 +87,7 @@ export type Agence = {
   technos: Technos | null
   engagements: Engagements | null
   faq: Faq | null
+  seo: SeoMeta
 } | null
 
 export async function getAgence(): Promise<Agence> {

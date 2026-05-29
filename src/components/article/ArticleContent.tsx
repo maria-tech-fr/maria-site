@@ -495,7 +495,6 @@ function warnH2QuestionWithoutAnswer(body: ArticleBodyBlock[]): void {
     const next = body[i + 1] as { _type?: string; style?: string } | undefined
     const nextIsParagraph = next?._type === 'block' && (next.style === 'normal' || !next.style)
     if (!nextIsParagraph) {
-      // eslint-disable-next-line no-console
       console.warn(
         `[article-gabarit] H2-question « ${text} » n'est PAS suivi d'un paragraphe. ` +
           `Pour le GEO (FAQPage + IA), une question doit avoir une réponse autoportante en 1er bloc. ` +

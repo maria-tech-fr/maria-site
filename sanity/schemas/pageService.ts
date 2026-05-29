@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { seoField } from './fields/seo'
 
 /**
  * Doc type des pages services. Une page = un document avec slug administrable.
@@ -26,8 +27,10 @@ export const pageService = defineType({
     { name: 'repartition', title: 'Répartition' },
     { name: 'faq', title: 'FAQ' },
     { name: 'autresServices', title: 'Autres services' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
+    seoField('seo'),
     defineField({
       name: 'titre',
       title: 'Titre de la page (BO uniquement)',

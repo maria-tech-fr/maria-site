@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { seoField } from './fields/seo'
 
 export const parametresGlobaux = defineType({
   name: 'parametresGlobaux',
@@ -107,6 +108,7 @@ export const parametresGlobaux = defineType({
       type: 'object',
       description: 'Contenu administrable de la page /contact.',
       fields: [
+        seoField(),
         defineField({
           name: 'hero',
           title: 'Hero',

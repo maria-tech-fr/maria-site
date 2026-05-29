@@ -5,11 +5,16 @@ import ProjetsAVenir from '../../../src/components/ProjetsAVenir'
 import ProjetsPasses from '../../../src/components/ProjetsPasses'
 import SavoirFaire from '../../../src/components/SavoirFaire'
 import { getProjets } from '../../../src/lib/projets'
+import { resolveSeo } from '../../../src/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Projets',
-  description:
-    'Étude de cas et projets réalisés par maria. Du cadrage à la mise en production, ce que nos équipes savent construire.',
+export async function generateMetadata(): Promise<Metadata> {
+  const projets = await getProjets()
+  return resolveSeo(projets?.seo, {
+    title: 'Projets',
+    description:
+      'Étude de cas et projets réalisés par maria. Du cadrage à la mise en production, ce que nos équipes savent construire.',
+    path: '/projets',
+  })
 }
 
 export default async function ProjetsPage() {

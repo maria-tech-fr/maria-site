@@ -9,11 +9,16 @@ import Processus from '../../../src/components/Processus'
 import Technos from '../../../src/components/Technos'
 import Valeurs from '../../../src/components/Valeurs'
 import { getAgence } from '../../../src/lib/agence'
+import { resolveSeo } from '../../../src/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'L’agence',
-  description:
-    'maria conçoit des sites, des outils et des contenus assistés par IA. Pensés, cadrés et sécurisés par des experts.',
+export async function generateMetadata(): Promise<Metadata> {
+  const agence = await getAgence()
+  return resolveSeo(agence?.seo, {
+    title: 'L’agence',
+    description:
+      'maria, agence IA pour l’interne : notre manifeste, nos non-négociables, notre méthode et l’équipe qui cadre vos projets d’IA.',
+    path: '/agence',
+  })
 }
 
 export default async function AgencePage() {

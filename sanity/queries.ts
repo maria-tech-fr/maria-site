@@ -38,6 +38,7 @@ export const contactPageQuery = defineQuery(`
       horaires{ plage, mention, opens, closes }
     },
     contactPage{
+      seo{ titre, description, ogImage{ asset->{ _id, url } } },
       hero{ surTitre, titre, description },
       canaux{
         surTitre,
@@ -128,7 +129,8 @@ export const accueilQuery = defineQuery(`
       description,
       membres[]{ nom, role, badge, photo{ asset->{ _id, url, metadata{ dimensions } }, hotspot, crop } },
       lien${lienProjection}
-    }
+    },
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)
 
@@ -172,7 +174,8 @@ export const agenceQuery = defineQuery(`
       surTitre,
       titre,
       questions[]{ question, reponse }
-    }
+    },
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)
 
@@ -231,7 +234,8 @@ export const projetsQuery = defineQuery(`
         mention,
         picto{ asset->{ _id, url, mimeType } }
       }
-    }
+    },
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)
 
@@ -713,6 +717,7 @@ export const pageServiceQuery = defineQuery(`
       surTitre,
       titre,
       services[]{ eyebrow, titre, description, lienLibelle, lienHref }
-    }
+    },
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)

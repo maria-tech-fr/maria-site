@@ -1,5 +1,6 @@
 import { client } from '../../sanity/client'
 import { contactPageQuery } from '../../sanity/queries'
+import type { SeoMeta } from './seo'
 
 export type ContactInfos = {
   email: string | null
@@ -43,6 +44,7 @@ export type QuestionFaqContact = {
 }
 
 export type ContactPageContent = {
+  seo: SeoMeta
   hero: {
     surTitre: string | null
     titre: string

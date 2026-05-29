@@ -19,7 +19,6 @@ import {
 import { buildToc, computeReadingTime } from '../../../../src/lib/articleHelpers'
 import { imageSrc } from '../../../../src/lib/blog'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
 type Params = { params: Promise<{ slug: string }> }
 

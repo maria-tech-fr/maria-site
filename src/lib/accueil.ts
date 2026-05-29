@@ -1,6 +1,7 @@
 import { client } from '../../sanity/client'
 import { accueilQuery } from '../../sanity/queries'
 import type { SanityImageRef } from './article'
+import type { SeoMeta } from './seo'
 
 export type Lien = {
   libelle: string
@@ -130,6 +131,7 @@ export type Accueil = {
   projetVedette: ProjetVedette | null
   pourquoiMaria: PourquoiMaria | null
   experts: Experts | null
+  seo: SeoMeta
 } | null
 
 export async function getAccueil(): Promise<Accueil> {

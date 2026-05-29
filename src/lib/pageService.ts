@@ -4,6 +4,7 @@ import {
   pageServiceSlugsQuery,
   servicesMenuQuery,
 } from '../../sanity/queries'
+import type { SeoMeta } from './seo'
 
 export type ServiceMenuItem = {
   titre: string
@@ -177,6 +178,7 @@ export type PageService = {
   repartition: ServiceRepartition | null
   faq: ServiceFaq | null
   autresServices: ServiceAutres | null
+  seo: SeoMeta
 } | null
 
 export async function getPageService(slug: string): Promise<PageService> {
