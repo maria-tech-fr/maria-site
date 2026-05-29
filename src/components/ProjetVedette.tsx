@@ -1,7 +1,8 @@
 import CountUpValue from './CountUpValue'
 import CtaSecondaire from './CtaSecondaire'
 import Reveal from './Reveal'
-import { type Metrique, type ProjetVedette as ProjetVedetteData } from '../lib/accueil'
+import { type ClientLogo, type Metrique, type ProjetVedette as ProjetVedetteData } from '../lib/accueil'
+import { imageSrc } from '../lib/blog'
 
 const couleurBarre: Record<Metrique['couleur'], string> = {
   accent: 'border-b-accent',
@@ -64,7 +65,7 @@ export default function ProjetVedette({ data }: { data: ProjetVedetteData }) {
   )
 }
 
-function ClientsMarquee({ clients }: { clients: string[] }) {
+function ClientsMarquee({ clients }: { clients: ClientLogo[] }) {
   // Doublé pour boucler sans rupture, animation translate -50%
   const items = [...clients, ...clients]
   // Cadence proportionnelle au nombre de logos pour conserver une vitesse perçue stable
@@ -85,14 +86,36 @@ function ClientsMarquee({ clients }: { clients: string[] }) {
         style={{ animation: `marquee ${duration}s linear infinite` }}
       >
         {items.map((c, i) => (
-          <div
-            key={i}
-            className="flex h-8 w-44 shrink-0 items-center justify-center rounded-sm bg-linear-to-b from-[#E0E0E0] to-[#ECECEC] font-mono text-[10px] leading-[15.5px] tracking-[0.08em] text-ink-soft"
-          >
-            {c}
-          </div>
+          <ClientItem key={i} client={c} />
         ))}
       </div>
+    </div>
+  )
+}
+
+function ClientItem({ client }: { client: ClientLogo }) {
+  const logo = client.logo?.asset ? imageSrc(client.logo, 320, 120) : null
+
+  // Avec logo : image en niveaux de gris, retour couleur au survol (mur de
+  // logos sobre). Sans logo : fallback sur le nom en plaque grise (comportement
+  // d'origine), ce qui permet de mélanger logos et noms le temps de tout récupérer.
+  if (logo) {
+    return (
+      <div className="group flex h-8 w-44 shrink-0 items-center justify-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logo}
+          alt={client.nom}
+          className="max-h-8 w-auto max-w-40 object-contain opacity-70 grayscale transition-[filter,opacity] duration-300 ease-out group-hover:opacity-100 group-hover:grayscale-0"
+          loading="lazy"
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex h-8 w-44 shrink-0 items-center justify-center rounded-sm bg-linear-to-b from-[#E0E0E0] to-[#ECECEC] font-mono text-[10px] leading-[15.5px] tracking-[0.08em] text-ink-soft">
+      {client.nom}
     </div>
   )
 }

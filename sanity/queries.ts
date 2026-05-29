@@ -113,7 +113,7 @@ export const accueilQuery = defineQuery(`
       metriques[]{ valeur, libelle, couleur },
       lien${lienProjection},
       surTitreClients,
-      clients
+      clients[]{ nom, logo{ asset->{ _id, url, metadata{ dimensions } }, hotspot, crop } }
     },
     pourquoiMaria{
       surTitre,
@@ -126,7 +126,7 @@ export const accueilQuery = defineQuery(`
       surTitre,
       titre,
       description,
-      membres[]{ nom, role, badge },
+      membres[]{ nom, role, badge, photo{ asset->{ _id, url, metadata{ dimensions } }, hotspot, crop } },
       lien${lienProjection}
     }
   }

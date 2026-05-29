@@ -1,5 +1,6 @@
 import { client } from '../../sanity/client'
 import { accueilQuery } from '../../sanity/queries'
+import type { SanityImageRef } from './article'
 
 export type Lien = {
   libelle: string
@@ -77,13 +78,18 @@ export type Metrique = {
   couleur: 'accent' | 'success' | 'ink'
 }
 
+export type ClientLogo = {
+  nom: string
+  logo: SanityImageRef | null
+}
+
 export type ProjetVedette = {
   surTitre: string
   titre: string
   metriques: Metrique[] | null
   lien: Lien | null
   surTitreClients: string | null
-  clients: string[] | null
+  clients: ClientLogo[] | null
 }
 
 export type CarteMachineHumain = {
@@ -104,6 +110,7 @@ export type MembreExpert = {
   nom: string
   role: string
   badge: string | null
+  photo: SanityImageRef | null
 }
 
 export type Experts = {

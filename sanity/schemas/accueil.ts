@@ -312,10 +312,29 @@ export const accueil = defineType({
         defineField({
           name: 'clients',
           title: 'Logos clients',
-          description: 'Pour l’instant nom textuel — un upload de logo viendra plus tard.',
+          description:
+            'Une entrée par client. Le nom est obligatoire (sert de texte alternatif et de fallback). Le logo est optionnel : sans logo, le nom s’affiche dans une plaque grise.',
           type: 'array',
-          of: [{ type: 'string' }],
-          validation: (r) => r.max(8),
+          of: [
+            {
+              type: 'object',
+              name: 'clientLogo',
+              fields: [
+                defineField({ name: 'nom', title: 'Nom du client', type: 'string', validation: (r) => r.required().max(60) }),
+                defineField({
+                  name: 'logo',
+                  title: 'Logo (optionnel)',
+                  description: 'PNG ou SVG sur fond transparent idéalement. Affiché en niveaux de gris, couleur au survol.',
+                  type: 'image',
+                  options: { hotspot: true },
+                }),
+              ],
+              preview: {
+                select: { title: 'nom', media: 'logo' },
+              },
+            },
+          ],
+          validation: (r) => r.max(12),
         }),
       ],
     }),
@@ -386,6 +405,13 @@ export const accueil = defineType({
                 defineField({ name: 'nom', title: 'Nom complet', type: 'string', validation: (r) => r.required().max(60) }),
                 defineField({ name: 'role', title: 'Rôle', description: 'Ex : Directeur technique', type: 'string', validation: (r) => r.required().max(60) }),
                 defineField({
+                  name: 'photo',
+                  title: 'Photo (optionnelle)',
+                  description: 'Portrait carré idéalement. Sans photo, on affiche les initiales sur un dégradé maria.',
+                  type: 'image',
+                  options: { hotspot: true },
+                }),
+                defineField({
                   name: 'badge',
                   title: 'Badge (optionnel)',
                   description: 'Petit libellé affiché sur la photo (ex : « cofondateur »). Laisser vide pour ne rien afficher.',
@@ -393,7 +419,7 @@ export const accueil = defineType({
                   validation: (r) => r.max(40),
                 }),
               ],
-              preview: { select: { title: 'nom', subtitle: 'role' } },
+              preview: { select: { title: 'nom', subtitle: 'role', media: 'photo' } },
             },
           ],
           validation: (r) => r.min(1).max(6),
