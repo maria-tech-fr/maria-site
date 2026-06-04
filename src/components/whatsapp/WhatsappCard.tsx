@@ -23,7 +23,7 @@ type Props = {
 
 export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Props) {
   const status = isOffice
-    ? { label: '// on est là', body: 'Une question ? Une humain (un vrai) vous répond sur WhatsApp.' }
+    ? { label: '// on est là', body: 'Une question ? Un humain (un vrai) vous répond sur WhatsApp.' }
     : {
         label: '// hors ligne',
         body: 'L’équipe est hors ligne pour le moment. Écrivez-nous quand même, on revient vers vous dès l’ouverture.',
