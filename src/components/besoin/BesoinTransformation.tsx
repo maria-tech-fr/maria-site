@@ -6,10 +6,9 @@ type Props = {
   titre: string
   avant: string[]
   apres: string[]
-  closing?: string | null
 }
 
-export default function BesoinTransformation({ surTitre, titre, avant, apres, closing }: Props) {
+export default function BesoinTransformation({ surTitre, titre, avant, apres }: Props) {
   return (
     <section className="relative overflow-hidden bg-accent-tint px-6 py-16 lg:px-30.5 lg:py-30">
       <HaloField
@@ -83,13 +82,6 @@ export default function BesoinTransformation({ surTitre, titre, avant, apres, cl
           </Reveal>
         </div>
 
-        {closing && (
-          <Reveal delay={260}>
-            <p className="mx-auto max-w-[38ch] text-center font-display text-[22px] font-medium italic leading-[1.3] tracking-[-0.015em] text-ink lg:text-[28px]">
-              {closing}
-            </p>
-          </Reveal>
-        )}
       </div>
     </section>
   )

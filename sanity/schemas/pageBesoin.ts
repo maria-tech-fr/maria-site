@@ -247,7 +247,6 @@ export const pageBesoin = defineType({
           of: [{ type: 'string' }],
           validation: (r) => r.min(2).max(6),
         }),
-        defineField({ name: 'closing', title: 'Phrase de clôture (italique, centrée)', type: 'text', rows: 2, validation: (r) => r.max(300) }),
       ],
     }),
 
@@ -356,28 +355,6 @@ export const pageBesoin = defineType({
           ],
           validation: (r) => r.min(1).max(4),
         }),
-      ],
-    }),
-
-    // -- Bloc 8 : CTA final --
-    defineField({
-      name: 'ctaFinal',
-      title: 'Bloc 8 — CTA final',
-      type: 'object',
-      group: 'content',
-      fields: [
-        defineField({ name: 'surTitre', title: 'Sur-titre', type: 'string', initialValue: '// passons à l’action' }),
-        defineField({
-          name: 'titre',
-          title: 'Titre (H2)',
-          description: 'Encadrer le mot-clé avec **...** pour le surligner en jaune.',
-          type: 'text',
-          rows: 2,
-        }),
-        defineField({ name: 'sousTitre', title: 'Sous-titre', type: 'text', rows: 2 }),
-        defineField({ name: 'ctaPrimaireLibelle', title: 'CTA primaire', type: 'string', initialValue: 'Réserver un échange' }),
-        defineField({ name: 'ctaSecondaireLibelle', title: 'CTA secondaire', type: 'string', initialValue: 'Voir le service associé' }),
-        defineField({ name: 'mention', title: 'Mention (DM Mono)', type: 'string', initialValue: 'RÉPONSE SOUS 24 H · SANS ENGAGEMENT' }),
       ],
     }),
 

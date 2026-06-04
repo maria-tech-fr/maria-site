@@ -299,8 +299,7 @@ export const pageBesoinQuery = defineQuery(`
       surTitre,
       titre,
       avant,
-      apres,
-      closing
+      apres
     },
     serviceAssocie{
       surTitre,
@@ -329,14 +328,6 @@ export const pageBesoinQuery = defineQuery(`
         "slug": slug.current,
         introCourte
       }
-    },
-    ctaFinal{
-      surTitre,
-      titre,
-      sousTitre,
-      ctaPrimaireLibelle,
-      ctaSecondaireLibelle,
-      mention
     },
     seo{ titre, description }
   }

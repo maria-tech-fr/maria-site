@@ -96,7 +96,6 @@ export type PageBesoinData = {
     titre: string | null
     avant: string[] | null
     apres: string[] | null
-    closing: string | null
   } | null
   serviceAssocie: {
     surTitre: string | null
@@ -122,14 +121,6 @@ export type PageBesoinData = {
     surTitre: string | null
     titre: string | null
     references: { titre: string; slug: string; introCourte: string | null }[] | null
-  } | null
-  ctaFinal: {
-    surTitre: string | null
-    titre: string | null
-    sousTitre: string | null
-    ctaPrimaireLibelle: string | null
-    ctaSecondaireLibelle: string | null
-    mention: string | null
   } | null
   seo: {
     titre: string | null

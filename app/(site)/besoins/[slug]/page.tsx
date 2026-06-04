@@ -133,7 +133,6 @@ function renderBlocks(data: NonNullable<PageBesoinData>, famille: string | undef
           titre={data.transformation.titre}
           avant={data.transformation.avant}
           apres={data.transformation.apres}
-          closing={data.transformation.closing}
         />
       )}
 
