@@ -8,7 +8,7 @@ export default function ServiceRepartition({ data }: { data: ServiceRepartitionD
   if (!data.titre && !hasA && !hasB) return null
 
   return (
-    <section className="relative overflow-hidden bg-[#FFFBEE] px-6 py-16 lg:px-30.5 lg:py-22.5">
+    <section className="relative overflow-hidden bg-paper-soft px-6 py-16 lg:px-30.5 lg:py-22.5">
       <HaloField
         halos={[
           { color: '#3FC163', alpha: 0.22, x: '8%', y: '88%', size: 580, blur: 50, duration: 38 },

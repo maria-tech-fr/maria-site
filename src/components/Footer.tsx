@@ -161,9 +161,11 @@ function FooterColumn({
               <Link
                 href={item.href}
                 aria-current={isActive ? 'page' : undefined}
-                className={`text-[14px] leading-[21.7px] transition-colors duration-300 ease-out hover:text-paper ${
-                  isActive ? 'text-paper' : 'text-[#9A9A9A]'
-                }`}
+                // Pas de highlight visuel du lien actif dans le footer — c'est
+                // une zone de navigation secondaire, mettre la page courante
+                // en exergue ne sert à rien à l'utilisateur (il sait où il est).
+                // L'attribut aria-current reste pour l'accessibilité.
+                className="text-[14px] leading-[21.7px] text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
               >
                 {item.label}
               </Link>

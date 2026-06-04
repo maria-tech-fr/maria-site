@@ -72,7 +72,9 @@ export default async function ServicePage({ params }: Params) {
       {page.repartition && <ServiceRepartition data={page.repartition} />}
       {page.citation && <ServiceCitation data={page.citation} />}
       {page.livrableRapport && <ServiceLivrableRapport data={page.livrableRapport} />}
-      {page.projetPhare && <ServiceProjetPhare data={page.projetPhare} />}
+      {page.projetPhare && page.projetPhare.actif !== false && (
+        <ServiceProjetPhare data={page.projetPhare} />
+      )}
       {page.faq && (
         <>
           <Faq data={page.faq} />

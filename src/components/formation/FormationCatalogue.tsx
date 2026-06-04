@@ -64,8 +64,8 @@ function FamilleBlock({ famille }: { famille: FormationFamille }) {
             isSingle ? 'lg:grid-cols-1 lg:max-w-[760px]' : 'md:grid-cols-2'
           } lg:gap-6`}
         >
-          {famille.formations.map((f) => (
-            <FormationCard key={f.numero} formation={f} />
+          {famille.formations.map((f, i) => (
+            <FormationCard key={f.numero} formation={f} index={i} />
           ))}
         </div>
       </div>
@@ -73,10 +73,28 @@ function FamilleBlock({ famille }: { famille: FormationFamille }) {
   )
 }
 
-function FormationCard({ formation }: { formation: FormationItem }) {
+function FormationCard({ formation, index }: { formation: FormationItem; index: number }) {
   return (
-    <article className="group/f flex h-full flex-col gap-4 rounded-[8px] border border-paper-edge bg-paper p-9 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_8px_20px_-12px_rgba(254,194,60,0.30)]">
-      <span className="font-mono text-[32px] font-medium leading-none tracking-[-0.02em] text-accent">
+    <article className="group/f relative flex h-full flex-col gap-4 rounded-[8px] border border-paper-edge bg-paper p-9 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-12px_rgba(63,193,99,0.25)]">
+      {/* Bordure dégradée jaune↔vert visible uniquement au hover. Même
+          pattern qu'en HP (Services 3 cartes) : drift lent en arrière-plan
+          via un overlay masqué pour ne peindre que le contour. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-px rounded-[8px] opacity-0 transition-opacity duration-500 ease-in-out group-hover/f:opacity-100"
+        style={{
+          padding: '1px',
+          background:
+            'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
+          backgroundSize: '200% 100%',
+          animation: `border-drift 32s linear infinite ${-index * 4}s`,
+          WebkitMask:
+            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          maskComposite: 'exclude',
+        }}
+      />
+      <span className="relative font-mono text-[32px] font-medium leading-none tracking-[-0.02em] text-accent">
         {formation.numero}
       </span>
       <h4 className="max-w-[24ch] font-display text-[22px] font-semibold leading-[1.2] tracking-[-0.018em] text-ink">

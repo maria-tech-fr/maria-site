@@ -337,6 +337,13 @@ export const pageService = defineType({
       group: 'projetPhare',
       options: { collapsible: false },
       fields: [
+        defineField({
+          name: 'actif',
+          title: 'Afficher ce bloc',
+          description: 'Décocher pour masquer entièrement le bloc « Projet phare » sur cette page service (utile tant qu’il n’y a pas de projet à présenter).',
+          type: 'boolean',
+          initialValue: true,
+        }),
         defineField({ name: 'surTitre', title: 'Sur-titre', description: 'Ex : « // projet en cours »', type: 'string', validation: (r) => r.max(60) }),
         defineField({ name: 'titre', title: 'Titre (H2)', type: 'text', rows: 3, validation: (r) => r.max(200) }),
         defineField({ name: 'description', title: 'Description', type: 'text', rows: 5, validation: (r) => r.max(600) }),

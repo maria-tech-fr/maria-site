@@ -13,7 +13,7 @@ import {
   UsersIcon,
 } from '@sanity/icons'
 
-const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence', 'projets'] as const
+const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence', 'projets', 'pageFormation', 'pageCharteIA'] as const
 const HANDLED_COLLECTIONS = [
   'pageService',
   'pageBesoin',
@@ -63,12 +63,32 @@ export const structure: StructureResolver = (S) =>
           S.documentTypeList('pageService')
             .title('Pages services'),
         ),
+      // Formation est un service transversal singleton — on la range au plus
+      // près des services pour la trouver tout de suite dans le Studio.
+      S.listItem()
+        .title('Page formation')
+        .icon(RocketIcon)
+        .child(
+          S.editor()
+            .id('pageFormation')
+            .schemaType('pageFormation')
+            .documentId('pageFormation'),
+        ),
       S.listItem()
         .title('Pages besoins')
         .icon(BulbOutlineIcon)
         .child(
           S.documentTypeList('pageBesoin')
             .title('Pages besoins'),
+        ),
+      S.listItem()
+        .title('Page charte IA')
+        .icon(BulbOutlineIcon)
+        .child(
+          S.editor()
+            .id('pageCharteIA')
+            .schemaType('pageCharteIA')
+            .documentId('pageCharteIA'),
         ),
       S.divider(),
       S.listItem()

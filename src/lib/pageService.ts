@@ -122,6 +122,7 @@ export type ServiceLivrableRapport = {
 export type KpiProjet = { chiffre: string; libelle: string }
 
 export type ServiceProjetPhare = {
+  actif: boolean | null
   surTitre: string | null
   titre: string | null
   description: string | null

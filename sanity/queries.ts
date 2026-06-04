@@ -697,6 +697,7 @@ export const pageServiceQuery = defineQuery(`
       annexes
     },
     projetPhare{
+      actif,
       surTitre,
       titre,
       description,
