@@ -23,7 +23,7 @@ type Props = {
 
 export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Props) {
   const status = isOffice
-    ? { label: '// on est là', body: 'Une vraie réponse, par un humain, sur WhatsApp.' }
+    ? { label: '// on est là', body: 'Une question ? Une humain (un vrai) vous répond sur WhatsApp.' }
     : {
         label: '// hors ligne',
         body: 'L’équipe est hors ligne pour le moment. Écrivez-nous quand même, on revient vers vous dès l’ouverture.',
@@ -68,13 +68,8 @@ export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Pr
         <div className="min-w-0 flex-1">
           <div className="mb-2 flex items-baseline justify-between gap-2">
             <span className="truncate font-display text-[15px] font-semibold tracking-[-0.01em] text-ink">
-              maria · l’équipe
+              maria
             </span>
-            {isOffice && (
-              <span className="flex-none font-mono text-[10.5px] tracking-[0.04em] text-[#9a9a9a]">
-                à l’instant
-              </span>
-            )}
           </div>
           <p className="text-[14px] leading-[1.45] text-ink-soft">
             {status.body}
@@ -91,7 +86,7 @@ export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Pr
           onClick={onReply}
           className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-accent px-3 py-2.25 font-sans text-[13px] font-medium text-ink transition-colors duration-300 ease-out hover:bg-accent-soft"
         >
-          {isOffice ? 'Répondre' : 'Nous écrire'}
+          Nous écrire
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path
               d="M5 12h14M13 6l6 6-6 6"

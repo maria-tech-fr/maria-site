@@ -39,10 +39,10 @@ export default function WhatsappPill({ visible, onOpen }: Props) {
       {/* Label deux lignes */}
       <span className="flex min-w-0 flex-col items-start gap-0.5 text-left leading-[1.15]">
         <span className="font-display text-[13.5px] font-semibold tracking-[-0.01em] text-ink">
-          maria · l’équipe
+          maria
         </span>
-        <span className="font-mono text-[10.5px] uppercase tracking-[0.06em] text-success">
-          Une question ?
+        <span className="font-mono text-[10.5px] normal-case tracking-[0.06em] text-success">
+          une question ?
         </span>
       </span>
 
