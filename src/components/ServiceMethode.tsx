@@ -3,8 +3,9 @@ import Reveal from './Reveal'
 import type { EtapeMethode, ServiceMethode as ServiceMethodeData } from '../lib/pageService'
 
 export default function ServiceMethode({ data }: { data: ServiceMethodeData }) {
-  const lienHref = data.lienHref || '/agence#processus'
-  const lienLibelle = data.lienLibelle || 'Voir notre méthode complète →'
+  // Le lien n'est rendu que si Sanity fournit explicitement les 2 champs.
+  // Vidage côté Studio = pas de lien (pas de fallback en dur).
+  const hasLien = !!(data.lienHref && data.lienLibelle)
 
   return (
     <section className="relative overflow-hidden bg-ink px-6 py-16 lg:px-30.5 lg:py-22.5">
@@ -41,14 +42,16 @@ export default function ServiceMethode({ data }: { data: ServiceMethodeData }) {
           </div>
         )}
 
-        <Reveal delay={200}>
-          <a
-            href={lienHref}
-            className="inline-flex self-start font-medium text-[15px] leading-6 text-success underline decoration-success/40 underline-offset-4 transition-colors duration-300 ease-out hover:text-accent hover:decoration-accent/60"
-          >
-            {lienLibelle}
-          </a>
-        </Reveal>
+        {hasLien && (
+          <Reveal delay={200}>
+            <a
+              href={data.lienHref!}
+              className="inline-flex self-start font-medium text-[15px] leading-6 text-success underline decoration-success/40 underline-offset-4 transition-colors duration-300 ease-out hover:text-accent hover:decoration-accent/60"
+            >
+              {data.lienLibelle}
+            </a>
+          </Reveal>
+        )}
       </div>
     </section>
   )

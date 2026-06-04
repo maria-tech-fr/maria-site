@@ -44,7 +44,9 @@ export default async function Home() {
       {accueil.constat && <Constat data={accueil.constat} />}
       {accueil.services && <Services data={accueil.services} />}
       {accueil.methode && <Methode data={accueil.methode} />}
-      {accueil.projetVedette && <ProjetVedette data={accueil.projetVedette} />}
+      {accueil.projetVedette && accueil.projetVedette.actif !== false && (
+        <ProjetVedette data={accueil.projetVedette} />
+      )}
       {accueil.pourquoiMaria && <PourquoiMaria data={accueil.pourquoiMaria} />}
       {accueil.experts && <Experts data={accueil.experts} />}
     </>

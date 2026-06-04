@@ -15,15 +15,15 @@ type Props = {
 // Géré en code car éditorialisé et stable. À déplacer en Sanity si besoin de
 // pilotage CMS plus tard.
 const TAG_BY_SLUG: Record<string, string> = {
-  'audit-strategie-ia': 'pour qui ne sait pas par où commencer',
-  'outils-internes-sur-mesure': 'pour qui a un besoin métier précis',
-  'agents-ia': 'pour qui veut soulager ses équipes',
+  'audit-et-strategie-ia': 'pour qui ne sait pas par où commencer',
+  'outils-IA-internes-sur-mesure': 'pour qui a un besoin métier précis',
+  'agents-conversationnels-ia': 'pour qui veut soulager ses équipes',
 }
 
 const HOOK_BY_SLUG: Record<string, string> = {
-  'audit-strategie-ia': 'Cadrer avant de coder.',
-  'outils-internes-sur-mesure': 'Les plateformes que vos équipes utilisent au quotidien.',
-  'agents-ia': 'Les assistants qui travaillent aux côtés de vos équipes.',
+  'audit-et-strategie-ia': 'Cadrer avant de coder.',
+  'outils-IA-internes-sur-mesure': 'Les plateformes que vos équipes utilisent au quotidien.',
+  'agents-conversationnels-ia': 'Les assistants qui travaillent aux côtés de vos équipes.',
 }
 
 export default function ServicesCentralBlock({ services }: Props) {

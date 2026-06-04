@@ -4,9 +4,9 @@
 
 ## Services
 
-- [Audit & stratégie IA](https://maria.tech/services/audit-strategie-ia) : cartographie des usages, gouvernance, plan d'action priorisé.
-- [Outils internes sur-mesure](https://maria.tech/services/outils-internes-sur-mesure) : plateformes IA qui se branchent sur le SI existant.
-- [Agents IA](https://maria.tech/services/agents-ia) : assistants spécialisés cadrés sur la documentation interne, supervision humaine.
+- [Audit & stratégie IA](https://maria.tech/services/audit-et-strategie-ia) : cartographie des usages, gouvernance, plan d'action priorisé.
+- [Outils internes sur-mesure](https://maria.tech/services/outils-IA-internes-sur-mesure) : plateformes IA qui se branchent sur le SI existant.
+- [Agents IA](https://maria.tech/services/agents-conversationnels-ia) : assistants spécialisés cadrés sur la documentation interne, supervision humaine.
 
 ## Formation (transversale)
 

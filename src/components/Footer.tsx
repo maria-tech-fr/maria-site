@@ -12,9 +12,9 @@ const ROUTES_WITHOUT_CTA = ['/contact/merci']
 type FooterLink = { label: string; href: string }
 
 const servicesLinks: FooterLink[] = [
-  { label: 'Audit & stratégie', href: '/services/audit-strategie-ia' },
-  { label: 'Outils internes', href: '/services/outils-internes-sur-mesure' },
-  { label: 'Agents IA', href: '/services/agents-ia' },
+  { label: 'Audit & stratégie', href: '/services/audit-et-strategie-ia' },
+  { label: 'Outils internes', href: '/services/outils-IA-internes-sur-mesure' },
+  { label: 'Agents IA', href: '/services/agents-conversationnels-ia' },
   { label: 'Formation', href: '/formation' },
 ]
 

@@ -45,7 +45,9 @@ export default function Breadcrumb({ segments, tone = 'light' }: Props) {
   // rester lisibles sur sombre.
   const accent = tone === 'dark' ? 'text-success-soft' : 'text-success'
   const link = tone === 'dark' ? 'text-success-soft hover:text-paper' : 'text-success hover:text-ink'
-  const current = tone === 'dark' ? 'text-success-soft/60' : 'text-success/60'
+  // Segment courant : même vert que les liens (le `aria-current="page"` et
+  // l'absence de soulignement/hover suffisent à signaler qu'il n'est pas cliquable).
+  const current = tone === 'dark' ? 'text-success-soft' : 'text-success'
   const separator = tone === 'dark' ? 'text-success-soft/40' : 'text-success/40'
 
   // URL absolue à utiliser pour le segment courant dans le schema

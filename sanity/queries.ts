@@ -109,6 +109,7 @@ export const accueilQuery = defineQuery(`
       lien${lienProjection}
     },
     projetVedette{
+      actif,
       surTitre,
       titre,
       metriques[]{ valeur, libelle, couleur },

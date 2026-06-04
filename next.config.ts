@@ -44,13 +44,30 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   async redirects() {
-    // Formation est passée d'un sous-service (/services/formation) à un service
-    // transversal top-level (/formation). Le 301 permanent maintient les
-    // anciens partages/backlinks pendant la transition SEO.
     return [
+      // Formation est passée d'un sous-service (/services/formation) à un service
+      // transversal top-level (/formation). Le 308 permanent maintient les
+      // anciens partages/backlinks pendant la transition SEO.
       {
         source: '/services/formation',
         destination: '/formation',
+        permanent: true,
+      },
+      // Slugs services renommés (décisions éditoriales). Redirections 308
+      // pour préserver les backlinks externes existants.
+      {
+        source: '/services/audit-strategie-ia',
+        destination: '/services/audit-et-strategie-ia',
+        permanent: true,
+      },
+      {
+        source: '/services/agents-ia',
+        destination: '/services/agents-conversationnels-ia',
+        permanent: true,
+      },
+      {
+        source: '/services/outils-internes-sur-mesure',
+        destination: '/services/outils-IA-internes-sur-mesure',
         permanent: true,
       },
     ]

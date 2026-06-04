@@ -85,6 +85,8 @@ export type ClientLogo = {
 }
 
 export type ProjetVedette = {
+  /** Affichage du bloc piloté depuis le Studio. true = visible (défaut). */
+  actif: boolean | null
   surTitre: string
   titre: string
   metriques: Metrique[] | null

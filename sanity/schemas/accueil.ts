@@ -275,6 +275,13 @@ export const accueil = defineType({
       group: 'projetVedette',
       options: { collapsible: false },
       fields: [
+        defineField({
+          name: 'actif',
+          title: 'Afficher ce bloc sur la page d’accueil',
+          description: 'Décocher pour masquer entièrement la section « Étude de cas » de la home (utile tant qu’il n’y a pas encore de projet à présenter).',
+          type: 'boolean',
+          initialValue: true,
+        }),
         defineField({ name: 'surTitre', title: 'Sur-titre', type: 'string', validation: (r) => r.required().max(60) }),
         defineField({ name: 'titre', title: 'Titre', type: 'text', rows: 3, validation: (r) => r.required().max(180) }),
         defineField({
