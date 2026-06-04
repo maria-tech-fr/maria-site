@@ -1,48 +1,20 @@
-import type { Metadata } from 'next'
-import DarkHero from '../../../src/components/DarkHero'
-import EtudeDeCas from '../../../src/components/EtudeDeCas'
-import ProjetsAVenir from '../../../src/components/ProjetsAVenir'
-import ProjetsPasses from '../../../src/components/ProjetsPasses'
-import SavoirFaire from '../../../src/components/SavoirFaire'
-import { getProjets } from '../../../src/lib/projets'
-import { resolveSeo } from '../../../src/lib/seo'
+import { notFound } from 'next/navigation'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const projets = await getProjets()
-  return resolveSeo(projets?.seo, {
-    title: 'Projets',
-    description:
-      'Étude de cas et projets réalisés par maria. Du cadrage à la mise en production, ce que nos équipes savent construire.',
-    path: '/projets',
-  })
-}
+/*
+  Page /projets temporairement dépubliée — pas encore de contenu client
+  à présenter. On renvoie 404 (la 404 maria globale s'affiche) pour que
+  toute visite directe redirige vers les sorties standards (accueil,
+  services, besoins, contact).
 
-export default async function ProjetsPage() {
-  const projets = await getProjets()
+  Pour rétablir la page : revenir au commit précédent ou réimporter le
+  rendu complet (cf. composants DarkHero, EtudeDeCas, SavoirFaire,
+  ProjetsPasses, ProjetsAVenir + getProjets).
 
-  if (!projets?.hero) {
-    return (
-      <section className="flex flex-1 items-center justify-center px-6 py-24">
-        <p className="font-mono text-sm uppercase tracking-[0.2em] text-ink-soft">
-          maria — page projets à créer dans le Studio
-        </p>
-      </section>
-    )
-  }
+  Note : la route est aussi retirée du sitemap, du llms.txt et du
+  footer/nav. Le doc Sanity `projets` est conservé en base — son
+  contenu sera réutilisé tel quel lors de la republication.
+*/
 
-  return (
-    <>
-      <DarkHero
-        data={projets.hero}
-        breadcrumb={[
-          { label: 'Accueil', href: '/' },
-          { label: 'Projets' },
-        ]}
-      />
-      {projets.etudeDeCas && <EtudeDeCas data={projets.etudeDeCas} />}
-      {projets.savoirFaire && <SavoirFaire data={projets.savoirFaire} />}
-      {projets.projetsPasses && <ProjetsPasses data={projets.projetsPasses} />}
-      {projets.projetsAVenir && <ProjetsAVenir data={projets.projetsAVenir} />}
-    </>
-  )
+export default function ProjetsPage() {
+  notFound()
 }

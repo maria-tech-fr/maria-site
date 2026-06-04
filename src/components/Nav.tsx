@@ -196,9 +196,8 @@ export default function Nav({ services, besoins }: NavProps) {
           </DesktopTrigger>
         )}
 
-        <NavLink href="/projets" active={isActive('/projets')}>
-          Projets
-        </NavLink>
+        {/* Entrée « Projets » retirée tant que la page n'a pas de contenu
+            client à présenter — la page elle-même renvoie 404 pour l'instant. */}
         <NavLink href="/agence" active={isActive('/agence')}>
           L’agence
         </NavLink>
@@ -282,9 +281,7 @@ export default function Nav({ services, besoins }: NavProps) {
             />
           )}
 
-          <MobileLink href="/projets" onClick={() => setMobileOpen(false)} active={isActive('/projets')}>
-            Projets
-          </MobileLink>
+          {/* Entrée « Projets » retirée (mêmes raisons qu'en desktop). */}
           <MobileLink href="/agence" onClick={() => setMobileOpen(false)} active={isActive('/agence')}>
             L’agence
           </MobileLink>

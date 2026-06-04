@@ -32,7 +32,6 @@ Les pages besoins décrivent un problème métier, le coût caché, la réponse 
 ## L'agence
 
 - [Présentation, manifeste, méthode, équipe](https://maria.tech/agence)
-- [Projets passés et à venir](https://maria.tech/projets)
 - [Journal (articles)](https://maria.tech/blog)
 - [Charte de gouvernance IA](https://maria.tech/charte-ia)
 

@@ -20,7 +20,7 @@ const servicesLinks: FooterLink[] = [
 
 const mariaLinks: FooterLink[] = [
   { label: 'L’agence', href: '/agence' },
-  { label: 'Projets', href: '/projets' },
+  // Entrée « Projets » retirée tant que la page n'a pas de contenu client.
   { label: 'Contact', href: '/contact' },
 ]
 
