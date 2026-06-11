@@ -15,21 +15,6 @@ type Props = {
   sousTitre?: string | null
 }
 
-// Tag hook (signal d'audience) court, par slug, pour chaque service.
-// Géré en code car éditorialisé et stable. À déplacer en Sanity si besoin de
-// pilotage CMS plus tard.
-const TAG_BY_SLUG: Record<string, string> = {
-  'audit-et-strategie-ia': 'pour qui ne sait pas par où commencer',
-  'outils-IA-internes-sur-mesure': 'pour qui a un besoin métier précis',
-  'agents-conversationnels-ia': 'pour qui veut soulager ses équipes',
-}
-
-const HOOK_BY_SLUG: Record<string, string> = {
-  'audit-et-strategie-ia': 'Cadrer avant de coder.',
-  'outils-IA-internes-sur-mesure': 'Les plateformes que vos équipes utilisent au quotidien.',
-  'agents-conversationnels-ia': 'Les assistants qui travaillent aux côtés de vos équipes.',
-}
-
 export default function ServicesCentralBlock({ services, surTitre, titre, sousTitre }: Props) {
   const headerSurTitre = surTitre || '// nos 3 services'
   const headerTitre = titre || 'Trois services. Une logique : cadrer, construire, déployer.'
@@ -91,17 +76,17 @@ export default function ServicesCentralBlock({ services, surTitre, titre, sousTi
                 <h3 className="mt-6 max-w-[18ch] font-display text-[24px] font-semibold leading-[1.15] tracking-[-0.022em] text-ink lg:text-[28px]">
                   {s.titre}
                 </h3>
-                {HOOK_BY_SLUG[s.slug] && (
+                {s.accroche && (
                   <p className="font-medium text-[15.5px] leading-[1.4] text-ink lg:text-[16px]">
-                    {HOOK_BY_SLUG[s.slug]}
+                    {s.accroche}
                   </p>
                 )}
                 {s.introCourte && (
                   <p className="text-[15px] leading-[1.6] text-ink-soft">{s.introCourte}</p>
                 )}
-                {TAG_BY_SLUG[s.slug] && (
+                {s.audienceTag && (
                   <span className="inline-flex w-fit items-center rounded-full border border-[#C9EAD3] bg-success-tint px-2.5 py-1 font-mono text-[11px] lowercase tracking-[0.05em] text-success">
-                    {TAG_BY_SLUG[s.slug]}
+                    {s.audienceTag}
                   </span>
                 )}
                 <span className="mt-auto inline-flex w-fit border-b-[1.5px] border-accent pb-0.5 font-medium text-[15px] leading-5 text-ink transition-colors duration-300 ease-out group-hover/sv:border-success group-hover/sv:text-success">

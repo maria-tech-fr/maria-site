@@ -11,6 +11,8 @@ export type ServiceMenuItem = {
   slug: string
   ordreMenu: number
   introCourte: string | null
+  accroche: string | null
+  audienceTag: string | null
   pictoMenu: {
     asset: { _id: string; url: string; mimeType: string } | null
   } | null

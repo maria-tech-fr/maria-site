@@ -66,6 +66,22 @@ export const pageService = defineType({
       validation: (r) => r.required().max(120),
     }),
     defineField({
+      name: 'accroche',
+      title: 'Accroche (page /services)',
+      description: 'Une ligne en gras, affichée sous le titre dans la card du bloc « nos 3 services » sur la page /services. Ex : « Cadrer avant de coder. »',
+      type: 'string',
+      group: 'meta',
+      validation: (r) => r.max(120),
+    }),
+    defineField({
+      name: 'audienceTag',
+      title: 'Tag audience (page /services)',
+      description: 'Petit tag vert affiché en bas de la card sur /services. Ex : « pour qui ne sait pas par où commencer ».',
+      type: 'string',
+      group: 'meta',
+      validation: (r) => r.max(80),
+    }),
+    defineField({
       name: 'pictoMenu',
       title: 'Picto sous-menu',
       description: 'Petit picto (SVG ou PNG) affiché dans la card du sous-menu. Optionnel — un picto par défaut est utilisé sinon.',

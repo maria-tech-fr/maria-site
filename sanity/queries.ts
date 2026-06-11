@@ -250,6 +250,8 @@ export const servicesMenuQuery = defineQuery(`
     "slug": slug.current,
     ordreMenu,
     introCourte,
+    accroche,
+    audienceTag,
     pictoMenu{ asset->{ _id, url, mimeType } }
   }
 `)
