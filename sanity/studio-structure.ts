@@ -13,10 +13,20 @@ import {
   UsersIcon,
 } from '@sanity/icons'
 
-const SINGLETONS = ['parametresGlobaux', 'accueil', 'agence', 'projets', 'pageFormation', 'pageCharteIA'] as const
+const SINGLETONS = [
+  'parametresGlobaux',
+  'accueil',
+  'agence',
+  'projets',
+  'pageFormation',
+  'pageCharteIA',
+  'pagePillierServices',
+  'pagePillierBesoins',
+] as const
 const HANDLED_COLLECTIONS = [
   'pageService',
   'pageBesoin',
+  'pagePillier',
   'article',
   'articleCategorie',
   'auteur',
@@ -56,30 +66,67 @@ export const structure: StructureResolver = (S) =>
             .schemaType('projets')
             .documentId('projets'),
         ),
+      // Dossier « Services » : regroupe la page pilier /services + les 3 pages
+      // services + la page formation (qui est un service transversal singleton).
       S.listItem()
-        .title('Pages services')
+        .title('Services')
         .icon(RocketIcon)
         .child(
-          S.documentTypeList('pageService')
-            .title('Pages services'),
+          S.list()
+            .title('Services')
+            .items([
+              S.listItem()
+                .title('Page « /services » (pilier)')
+                .icon(RocketIcon)
+                .child(
+                  S.editor()
+                    .id('pagePillierServices')
+                    .schemaType('pagePillier')
+                    .documentId('pagePillierServices'),
+                ),
+              S.listItem()
+                .title('Pages services')
+                .icon(RocketIcon)
+                .child(
+                  S.documentTypeList('pageService')
+                    .title('Pages services'),
+                ),
+              S.listItem()
+                .title('Page formation')
+                .icon(RocketIcon)
+                .child(
+                  S.editor()
+                    .id('pageFormation')
+                    .schemaType('pageFormation')
+                    .documentId('pageFormation'),
+                ),
+            ]),
         ),
-      // Formation est un service transversal singleton — on la range au plus
-      // près des services pour la trouver tout de suite dans le Studio.
+      // Dossier « Besoins » : page pilier /besoins + liste des pages besoins.
       S.listItem()
-        .title('Page formation')
-        .icon(RocketIcon)
-        .child(
-          S.editor()
-            .id('pageFormation')
-            .schemaType('pageFormation')
-            .documentId('pageFormation'),
-        ),
-      S.listItem()
-        .title('Pages besoins')
+        .title('Besoins')
         .icon(BulbOutlineIcon)
         .child(
-          S.documentTypeList('pageBesoin')
-            .title('Pages besoins'),
+          S.list()
+            .title('Besoins')
+            .items([
+              S.listItem()
+                .title('Page « /besoins » (pilier)')
+                .icon(BulbOutlineIcon)
+                .child(
+                  S.editor()
+                    .id('pagePillierBesoins')
+                    .schemaType('pagePillier')
+                    .documentId('pagePillierBesoins'),
+                ),
+              S.listItem()
+                .title('Pages besoins')
+                .icon(BulbOutlineIcon)
+                .child(
+                  S.documentTypeList('pageBesoin')
+                    .title('Pages besoins'),
+                ),
+            ]),
         ),
       S.listItem()
         .title('Page charte IA')
