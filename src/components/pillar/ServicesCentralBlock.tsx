@@ -81,9 +81,6 @@ export default function ServicesCentralBlock({ services, surTitre, titre, sousTi
                     {s.accroche}
                   </p>
                 )}
-                {s.introCourte && (
-                  <p className="text-[15px] leading-[1.6] text-ink-soft">{s.introCourte}</p>
-                )}
                 {s.audienceTag && (
                   <span className="inline-flex w-fit items-center rounded-full border border-[#C9EAD3] bg-success-tint px-2.5 py-1 font-mono text-[11px] lowercase tracking-[0.05em] text-success">
                     {s.audienceTag}

@@ -565,12 +565,12 @@ function NavSubmenu({
       id={id}
       role="menu"
       aria-label={ariaLabel}
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-3.25 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
       <PillarHeader href={pillarHref} label={pillarLabel} onClick={onItemClick} />
-      <div className="mx-3 mb-2 border-t border-paper-edge" />
+      <div className="mx-3 my-2 border-t border-paper-edge" />
       <ul className="flex flex-col gap-1">
         {items.map((item, i) => (
           <li key={item.href}>
@@ -656,19 +656,19 @@ function PillarHeader({
   onClick: () => void
 }) {
   // En-tête cliquable du méga-menu : pointe vers la page pilier (/services
-  // ou /besoins). Renforcé visuellement (Syne + flèche) pour signaler que
-  // c'est un lien distinct des sous-items.
+  // ou /besoins). La flèche reste collée au label (pas de justify-between)
+  // pour rester cohérente entre les deux sous-menus.
   return (
     <Link
       href={href}
       role="menuitem"
       onClick={onClick}
-      className="group flex items-center justify-between gap-3 rounded-[10px] px-5 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
+      className="group inline-flex items-center gap-2 rounded-[10px] px-3 py-2 transition-colors duration-300 ease-out hover:bg-paper-soft"
     >
       <span className="font-display text-[13px] font-semibold leading-5 tracking-[-0.01em] text-ink">
         {label}
       </span>
-      <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.06em] text-success transition-transform duration-300 ease-out group-hover:translate-x-0.5">
+      <span className="inline-flex items-center font-mono text-[10px] uppercase tracking-[0.06em] text-success transition-transform duration-300 ease-out group-hover:translate-x-0.5">
         →
       </span>
     </Link>
@@ -765,21 +765,21 @@ function NavBesoinsMega({
       id={id}
       role="menu"
       aria-label="Sous-menu Besoins par familles"
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-[min(92vw,920px)] -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-4 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-[min(92vw,920px)] -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
-      <div className="flex items-center justify-between gap-3 px-2 pb-2 pt-1">
+      <div className="flex items-center justify-between gap-3">
         <PillarHeader
           href="/besoins"
           label="Voir tous les besoins"
           onClick={onItemClick}
         />
-        <p className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-soft">
+        <p className="pr-3 font-mono text-[10px] uppercase tracking-[0.06em] text-success">
           // {total} cas d’usage
         </p>
       </div>
-      <div className="mx-2 mb-4 border-t border-paper-edge" />
+      <div className="mx-3 my-2 border-t border-paper-edge" />
 
       <div className="grid grid-cols-2 gap-x-10 gap-y-8">
         {grouped.map((g) => (

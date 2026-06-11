@@ -36,22 +36,6 @@ const NEED_LINE_BY_SLUG: Record<string, string> = {
   'conformite-rgpd-ia': 'Cadrer les traitements avant que ça pose problème.',
 }
 
-/**
- * Phrase de contexte par famille (italique, sous le H3).
- */
-const FAMILLE_PHRASE: Record<BesoinFamilleKey, string> = {
-  'productivite-operationnelle':
-    'Quand vos équipes passent plus de temps à reporter ce qu’elles font qu’à le faire.',
-  'organisation-connaissance':
-    'Quand l’information existe mais que personne ne la retrouve.',
-  'pilotage-decision':
-    'Quand vous pilotez à l’instinct faute de données fiables à temps.',
-  'rh-formation':
-    'Quand le volume écrase la qualité du recrutement ou de la montée en compétence.',
-  'gouvernance-conformite':
-    'Quand l’IA circule déjà dans vos équipes sans cadre ni contrôle.',
-}
-
 export default function NeedsCentralBlock({ besoins, surTitre, titre, sousTitre }: Props) {
   const headerSurTitre = surTitre || '// les 12 besoins'
   const headerTitre = titre || 'Cinq familles. Douze besoins. Trouvez le vôtre.'
@@ -105,16 +89,13 @@ export default function NeedsCentralBlock({ besoins, surTitre, titre, sousTitre 
         <div className="flex flex-col">
           {groups.map((g, idx) => {
             const num = String(idx + 1).padStart(2, '0')
-            const isFirst = idx === 0
             return (
               <Reveal key={g.meta.key}>
                 <FamilyChapter
                   num={num}
-                  label={`// ${g.meta.titre.toLowerCase()}`}
-                  titre={g.meta.tagline}
-                  phrase={FAMILLE_PHRASE[g.meta.key]}
+                  titre={g.meta.titre}
+                  tagline={g.meta.tagline}
                   items={g.items}
-                  isFirst={isFirst}
                 />
               </Reveal>
             )
@@ -127,38 +108,27 @@ export default function NeedsCentralBlock({ besoins, surTitre, titre, sousTitre 
 
 function FamilyChapter({
   num,
-  label,
   titre,
-  phrase,
+  tagline,
   items,
-  isFirst,
 }: {
   num: string
-  label: string
   titre: string
-  phrase: string
+  tagline: string
   items: BesoinMenuItem[]
-  isFirst: boolean
 }) {
   return (
-    <section
-      className={`grid grid-cols-1 items-start gap-8 py-12 lg:grid-cols-[380px_1fr] lg:gap-20 lg:py-16 ${
-        isFirst ? 'border-t-[2px] border-ink lg:pt-12' : 'border-t border-paper-edge'
-      }`}
-    >
+    <section className="grid grid-cols-1 items-start gap-8 border-t border-paper-edge py-12 lg:grid-cols-[380px_1fr] lg:gap-20 lg:py-16">
       {/* Colonne gauche — sticky en desktop */}
       <header className="flex flex-col gap-3 lg:sticky lg:top-30">
         <span className="font-display text-[56px] font-bold leading-[0.9] tracking-[-0.04em] text-accent lg:text-[72px]">
           {num}
         </span>
-        <span className="mt-2 font-mono text-[12px] leading-[19.2px] tracking-[0.08em] text-success">
-          {label}
-        </span>
-        <h3 className="max-w-[18ch] font-display text-[24px] font-semibold leading-[1.15] tracking-[-0.022em] text-ink lg:text-[30px]">
+        <h3 className="mt-2 max-w-[18ch] font-display text-[24px] font-semibold leading-[1.15] tracking-[-0.022em] text-ink lg:text-[30px]">
           {titre}
         </h3>
         <p className="max-w-[38ch] text-[15px] italic leading-[1.55] text-[#666] lg:text-[15.5px]">
-          {phrase}
+          {tagline}
         </p>
       </header>
 
@@ -179,7 +149,7 @@ function NeedRow({ item }: { item: BesoinMenuItem }) {
   return (
     <Link
       href={`/besoins/${item.slug}`}
-      className="group/n grid grid-cols-1 items-center gap-3 border-t border-paper-edge py-5 transition-all duration-200 ease-out first:border-t-0 hover:pl-2 sm:grid-cols-[1fr_auto] sm:gap-8"
+      className="group/n -mx-3 grid grid-cols-1 items-center gap-3 rounded-[5px] border-t border-paper-edge px-3 py-5 transition-colors duration-200 ease-out first:border-t-0 hover:bg-paper-soft sm:grid-cols-[1fr_auto] sm:gap-8"
     >
       <div className="flex min-w-0 flex-col gap-1.5">
         <h4 className="text-balance font-display text-[19px] font-semibold leading-[1.25] tracking-[-0.018em] text-ink transition-colors duration-200 ease-out group-hover/n:text-success lg:text-[20px]">
@@ -191,7 +161,7 @@ function NeedRow({ item }: { item: BesoinMenuItem }) {
       </div>
       <span
         aria-hidden
-        className="hidden h-[38px] w-[38px] flex-none items-center justify-center rounded-full border border-paper-edge bg-paper-soft transition-all duration-200 ease-out group-hover/n:border-success group-hover/n:bg-success sm:flex"
+        className="hidden h-[38px] w-[38px] flex-none items-center justify-center rounded-full border border-paper-edge bg-paper transition-colors duration-200 ease-out group-hover/n:border-success group-hover/n:bg-success sm:flex"
       >
         <svg
           width="14"
@@ -202,7 +172,7 @@ function NeedRow({ item }: { item: BesoinMenuItem }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-ink transition-all duration-200 ease-out group-hover/n:translate-x-0.5 group-hover/n:text-paper"
+          className="text-ink transition-colors duration-200 ease-out group-hover/n:text-paper"
         >
           <path d="M5 12h14" />
           <path d="m13 6 6 6-6 6" />

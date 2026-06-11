@@ -1,6 +1,7 @@
 import type { StructureResolver } from 'sanity/structure'
 import {
   BulbOutlineIcon,
+  ClipboardIcon,
   CogIcon,
   CommentIcon,
   DocumentTextIcon,
@@ -76,7 +77,7 @@ export const structure: StructureResolver = (S) =>
             .title('Services')
             .items([
               S.listItem()
-                .title('Page « /services » (pilier)')
+                .title('Tous les services')
                 .icon(RocketIcon)
                 .child(
                   S.editor()
@@ -111,7 +112,7 @@ export const structure: StructureResolver = (S) =>
             .title('Besoins')
             .items([
               S.listItem()
-                .title('Page « /besoins » (pilier)')
+                .title('Tous les besoins')
                 .icon(BulbOutlineIcon)
                 .child(
                   S.editor()
@@ -130,7 +131,7 @@ export const structure: StructureResolver = (S) =>
         ),
       S.listItem()
         .title('Page charte IA')
-        .icon(BulbOutlineIcon)
+        .icon(ClipboardIcon)
         .child(
           S.editor()
             .id('pageCharteIA')

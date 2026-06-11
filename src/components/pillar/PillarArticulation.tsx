@@ -66,17 +66,6 @@ export default function PillarArticulation({ surTitre, titre, intro, etapes, tra
                 <p className="text-[14px] leading-[1.55] text-[#BFBFBF]">
                   {etape.description}
                 </p>
-                {i < etapes.length - 1 && (
-                  <span
-                    aria-hidden
-                    className="absolute right-[-13px] top-1/2 hidden -translate-y-1/2 lg:flex"
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14" />
-                      <path d="m13 6 6 6-6 6" />
-                    </svg>
-                  </span>
-                )}
               </article>
             </Reveal>
           ))}
@@ -85,8 +74,8 @@ export default function PillarArticulation({ surTitre, titre, intro, etapes, tra
         {/* Bandeau transversal optionnel */}
         {hasTransversal && (
           <Reveal delay={260}>
-            <div className="grid grid-cols-1 items-center gap-6 rounded-[16px] border border-white/[0.06] bg-ink-soft p-10 lg:grid-cols-[auto_1fr_auto] lg:gap-12 lg:p-12">
-              <div className="flex max-w-[16ch] flex-col gap-3">
+            <div className="grid grid-cols-1 items-center gap-6 rounded-[16px] border border-white/[0.06] bg-ink-soft p-10 lg:grid-cols-[auto_1fr_auto] lg:gap-x-16 lg:gap-y-12 lg:p-12">
+              <div className="flex max-w-[24ch] flex-col gap-3">
                 {transversal!.label && (
                   <span className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
                     {transversal!.label}
