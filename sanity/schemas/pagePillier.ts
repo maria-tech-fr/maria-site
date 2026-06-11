@@ -17,6 +17,7 @@ export const pagePillier = defineType({
     { name: 'meta', title: 'Méta', default: true },
     { name: 'hero', title: 'Hero' },
     { name: 'vision', title: 'Vision' },
+    { name: 'central', title: 'Bloc central (en-tête)' },
     { name: 'articulation', title: 'Articulation' },
     { name: 'why', title: 'Pourquoi maria' },
     { name: 'faq', title: 'FAQ' },
@@ -79,6 +80,20 @@ export const pagePillier = defineType({
           of: [{ type: 'text', rows: 4 }],
           validation: (r) => r.min(1).max(6),
         }),
+      ],
+    }),
+
+    // -- BLOC CENTRAL (en-tête) --
+    defineField({
+      name: 'central',
+      title: 'Bloc 3 — Bloc central (en-tête)',
+      description: 'Sur-titre + titre + sous-titre de la section qui liste les 3 services (ou les besoins). Les cards elles-mêmes sont alimentées automatiquement depuis les pages Services / Besoins.',
+      type: 'object',
+      group: 'central',
+      fields: [
+        defineField({ name: 'surTitre', title: 'Sur-titre', type: 'string', validation: (r) => r.max(80) }),
+        defineField({ name: 'titre', title: 'Titre (H2)', type: 'text', rows: 2, validation: (r) => r.max(200) }),
+        defineField({ name: 'sousTitre', title: 'Sous-titre', type: 'text', rows: 3, validation: (r) => r.max(400) }),
       ],
     }),
 

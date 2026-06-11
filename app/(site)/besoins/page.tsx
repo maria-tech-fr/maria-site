@@ -50,7 +50,12 @@ export default async function PillarBesoinsPage() {
           { label: 'Besoins' },
         ]}
       >
-        <NeedsCentralBlock besoins={besoins} />
+        <NeedsCentralBlock
+          besoins={besoins}
+          surTitre={pillar.central?.surTitre}
+          titre={pillar.central?.titre}
+          sousTitre={pillar.central?.sousTitre}
+        />
       </PillarPageTemplate>
     </main>
   )

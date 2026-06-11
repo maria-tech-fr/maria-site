@@ -40,7 +40,7 @@ export default function Hero({ data }: { data: HeroData }) {
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 lg:gap-x-10 lg:gap-y-4">
             <CtaPrincipal lien={data.ctaPrincipal} />
-            {data.ctaSecondaire && <CtaSecondaire lien={data.ctaSecondaire} />}
+            {data.ctaSecondaire && <CtaSecondaire lien={data.ctaSecondaire} withArrow />}
           </div>
         </div>
       </Reveal>

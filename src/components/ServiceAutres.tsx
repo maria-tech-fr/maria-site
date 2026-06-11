@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Reveal from './Reveal'
+import ArrowRight from './icons/ArrowRight'
 import type { AutreServiceItem, ServiceAutres as ServiceAutresData } from '../lib/pageService'
 
 export default function ServiceAutres({ data }: { data: ServiceAutresData }) {
@@ -26,14 +27,14 @@ export default function ServiceAutres({ data }: { data: ServiceAutresData }) {
                 </Reveal>
               ))}
             </div>
-            {/* Lien discret vers la page pilier — sous les cards, volontairement
-                en retrait pour ne pas concurrencer visuellement. */}
+            {/* Lien discret vers la page pilier — soulignement façon HP. */}
             <Reveal delay={120 + data.services.length * 80}>
               <Link
                 href="/services"
-                className="self-start border-b border-success pb-0.5 font-medium text-[14.5px] leading-5 text-ink transition-colors duration-300 ease-out hover:border-success/60 hover:text-success"
+                className="group inline-flex items-center gap-2 self-start font-medium text-[14.5px] leading-5 text-ink"
               >
-                Voir tous nos services →
+                <UnderlineLabel label="Voir tous nos services" />
+                <ArrowRight />
               </Link>
             </Reveal>
           </div>
@@ -45,9 +46,19 @@ export default function ServiceAutres({ data }: { data: ServiceAutresData }) {
 
 function AutreServiceCard({ service }: { service: AutreServiceItem }) {
   const lienHref = service.lienHref || '#'
-  const lienLibelle = service.lienLibelle || 'En savoir plus →'
+  const lienLibelle = service.lienLibelle || 'En savoir plus'
+  const isExternal = /^https?:\/\//.test(lienHref)
+  const linkContent = (
+    <>
+      <UnderlineLabel label={lienLibelle} />
+      <ArrowRight />
+    </>
+  )
+  const linkClass =
+    'group mt-auto inline-flex items-center gap-2 self-start font-medium text-[14.5px] leading-5 text-ink'
+
   return (
-    <article className="group flex h-full flex-col gap-4 rounded-[5px] border border-paper-edge bg-paper px-11 py-12">
+    <article className="flex h-full flex-col gap-4 rounded-[5px] border border-paper-edge bg-paper px-11 py-12">
       <p className="font-mono text-[11px] leading-4 uppercase tracking-[0.08em] text-ink-soft">
         {service.eyebrow}
       </p>
@@ -57,12 +68,27 @@ function AutreServiceCard({ service }: { service: AutreServiceItem }) {
       <p className="whitespace-pre-line pb-2 text-[15.5px] leading-6 text-ink-soft">
         {service.description}
       </p>
-      <a
-        href={lienHref}
-        className="self-start border-b border-accent pb-0.5 font-medium text-[14.5px] leading-5 text-ink transition-colors duration-300 ease-out hover:border-accent/60 hover:text-accent"
-      >
-        {lienLibelle}
-      </a>
+      {isExternal ? (
+        <a href={lienHref} target="_blank" rel="noreferrer noopener" className={linkClass}>
+          {linkContent}
+        </a>
+      ) : (
+        <Link href={lienHref} className={linkClass}>
+          {linkContent}
+        </Link>
+      )}
     </article>
+  )
+}
+
+function UnderlineLabel({ label }: { label: string }) {
+  return (
+    <span className="relative pb-0.5">
+      {label}
+      <span
+        aria-hidden
+        className="absolute bottom-0 left-0 right-0 h-px origin-right scale-x-0 bg-ink transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"
+      />
+    </span>
   )
 }

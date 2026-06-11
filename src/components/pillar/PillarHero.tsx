@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Breadcrumb, { type BreadcrumbSegment } from '../Breadcrumb'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
+import ArrowRight from '../icons/ArrowRight'
 import { renderWithEmphase } from '../../lib/emphase'
 
 type Props = {
@@ -54,7 +55,6 @@ export default function PillarHero({
         <Reveal delay={100}>
           <h1 className="max-w-[20ch] font-display text-[48px] font-semibold leading-[1.02] tracking-[-0.035em] text-paper text-balance lg:text-[88px] lg:leading-[1.02]">
             {renderWithEmphase(titre, 'text-accent')}
-            <span aria-hidden className="cursor-blink text-paper" />
           </h1>
         </Reveal>
         {sousTitre && (
@@ -74,9 +74,16 @@ export default function PillarHero({
             </Link>
             <a
               href={secAncre}
-              className="inline-flex items-center gap-2 border-b border-success pb-0.5 font-medium text-[15px] leading-5 text-success transition-colors duration-300 ease-out hover:text-success-soft"
+              className="group inline-flex items-center gap-2 font-medium text-[15px] leading-5 text-success"
             >
-              {secLib}
+              <span className="relative pb-0.5">
+                {secLib}
+                <span
+                  aria-hidden
+                  className="absolute bottom-0 left-0 right-0 h-px origin-right scale-x-0 bg-success transition-transform duration-300 ease-out group-hover:origin-left group-hover:scale-x-100"
+                />
+              </span>
+              <ArrowRight />
             </a>
           </div>
         </Reveal>

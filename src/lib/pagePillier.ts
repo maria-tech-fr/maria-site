@@ -34,6 +34,11 @@ export type PagePillierData = {
     titre: string | null
     paragraphes: string[] | null
   } | null
+  central: {
+    surTitre: string | null
+    titre: string | null
+    sousTitre: string | null
+  } | null
   articulation: {
     surTitre: string | null
     titre: string | null

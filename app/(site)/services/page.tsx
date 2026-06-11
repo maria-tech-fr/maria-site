@@ -50,7 +50,12 @@ export default async function PillarServicesPage() {
           { label: 'Services' },
         ]}
       >
-        <ServicesCentralBlock services={services} />
+        <ServicesCentralBlock
+          services={services}
+          surTitre={pillar.central?.surTitre}
+          titre={pillar.central?.titre}
+          sousTitre={pillar.central?.sousTitre}
+        />
       </PillarPageTemplate>
     </main>
   )

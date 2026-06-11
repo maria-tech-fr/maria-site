@@ -11,6 +11,9 @@ import { FAMILLES, type BesoinFamilleKey, type BesoinMenuItem } from '../../lib/
  */
 type Props = {
   besoins: BesoinMenuItem[]
+  surTitre?: string | null
+  titre?: string | null
+  sousTitre?: string | null
 }
 
 /**
@@ -49,7 +52,10 @@ const FAMILLE_PHRASE: Record<BesoinFamilleKey, string> = {
     'Quand l’IA circule déjà dans vos équipes sans cadre ni contrôle.',
 }
 
-export default function NeedsCentralBlock({ besoins }: Props) {
+export default function NeedsCentralBlock({ besoins, surTitre, titre, sousTitre }: Props) {
+  const headerSurTitre = surTitre || '// les 12 besoins'
+  const headerTitre = titre || 'Cinq familles. Douze besoins. Trouvez le vôtre.'
+  const headerSousTitre = sousTitre || 'Vous n’avez pas à choisir une catégorie « technique ». Repérez la situation qui ressemble le plus à la vôtre.'
   // Regroupement par famille, ordreMenu trié.
   const byFamille = new Map<BesoinFamilleKey, BesoinMenuItem[]>()
   for (const b of besoins) {
@@ -85,13 +91,13 @@ export default function NeedsCentralBlock({ besoins }: Props) {
         <Reveal>
           <div className="flex max-w-[880px] flex-col gap-5">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-              // les 12 besoins
+              {headerSurTitre}
             </p>
-            <h2 className="max-w-[22ch] font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
-              Cinq familles. Douze besoins. Trouvez le vôtre.
+            <h2 className="max-w-[22ch] whitespace-pre-line font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
+              {headerTitre}
             </h2>
-            <p className="max-w-[62ch] text-[17px] leading-[1.6] text-ink-soft lg:text-[18px]">
-              Vous n’avez pas à choisir une catégorie « technique ». Repérez la situation qui ressemble le plus à la vôtre.
+            <p className="max-w-[62ch] whitespace-pre-line text-[17px] leading-[1.6] text-ink-soft lg:text-[18px]">
+              {headerSousTitre}
             </p>
           </div>
         </Reveal>

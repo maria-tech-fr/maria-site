@@ -19,7 +19,7 @@ export default function Constat({ data }: { data: ConstatData }) {
             surTitre={data.surTitre}
             titre={data.titre}
             surTitreClass="text-accent"
-            titreClass="text-paper"
+            titreClass="max-w-[680px] text-paper"
           />
         </Reveal>
 

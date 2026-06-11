@@ -5,10 +5,14 @@ import type { ServiceMenuItem } from '../../lib/pageService'
 
 /**
  * Bloc central du pilier /services : 3 cards de service.
- * Reçoit la liste tirée de getServicesMenu (Sanity).
+ * Reçoit la liste tirée de getServicesMenu (Sanity) et l'en-tête éditable
+ * depuis le doc pagePillier (champ `central`).
  */
 type Props = {
   services: ServiceMenuItem[]
+  surTitre?: string | null
+  titre?: string | null
+  sousTitre?: string | null
 }
 
 // Tag hook (signal d'audience) court, par slug, pour chaque service.
@@ -26,7 +30,10 @@ const HOOK_BY_SLUG: Record<string, string> = {
   'agents-conversationnels-ia': 'Les assistants qui travaillent aux côtés de vos équipes.',
 }
 
-export default function ServicesCentralBlock({ services }: Props) {
+export default function ServicesCentralBlock({ services, surTitre, titre, sousTitre }: Props) {
+  const headerSurTitre = surTitre || '// nos 3 services'
+  const headerTitre = titre || 'Trois services. Une logique : cadrer, construire, déployer.'
+  const headerSousTitre = sousTitre || 'Chacun se suffit à lui-même. Ensemble, ils couvrent tout le cycle d’un projet IA interne.'
   return (
     <section
       id="central"
@@ -44,13 +51,13 @@ export default function ServicesCentralBlock({ services }: Props) {
         <Reveal>
           <div className="flex max-w-[880px] flex-col gap-5">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-              // nos 3 services
+              {headerSurTitre}
             </p>
-            <h2 className="max-w-[24ch] font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
-              Trois services. Une logique : cadrer, construire, déployer.
+            <h2 className="max-w-[24ch] whitespace-pre-line font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
+              {headerTitre}
             </h2>
-            <p className="max-w-[62ch] text-[17px] leading-[1.6] text-ink-soft lg:text-[18px]">
-              Chacun se suffit à lui-même. Ensemble, ils couvrent tout le cycle d’un projet IA interne.
+            <p className="max-w-[62ch] whitespace-pre-line text-[17px] leading-[1.6] text-ink-soft lg:text-[18px]">
+              {headerSousTitre}
             </p>
           </div>
         </Reveal>
@@ -60,8 +67,24 @@ export default function ServicesCentralBlock({ services }: Props) {
             <Reveal key={s.slug} delay={100 + i * 80} className="h-full">
               <Link
                 href={`/services/${s.slug}`}
-                className="group/sv flex h-full flex-col gap-4 rounded-[16px] border border-paper-edge bg-paper p-10 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-accent hover:shadow-[0_22px_48px_-22px_rgba(254,194,60,0.40)] lg:p-11"
+                className="group/sv relative flex h-full flex-col gap-4 rounded-[16px] border border-paper-edge bg-paper p-10 transition-shadow duration-300 ease-out hover:shadow-[0_22px_48px_-22px_rgba(63,193,99,0.30)] lg:p-11"
               >
+                {/* Bordure dégradée jaune↔vert visible au hover (pattern HP). */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -inset-px rounded-[16px] opacity-0 transition-opacity duration-500 ease-in-out group-hover/sv:opacity-100"
+                  style={{
+                    padding: '1px',
+                    background:
+                      'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
+                    backgroundSize: '200% 100%',
+                    animation: `border-drift 32s linear infinite ${-i * 4}s`,
+                    WebkitMask:
+                      'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                  }}
+                />
                 <span className="font-mono text-[36px] font-medium leading-none tracking-[-0.02em] text-success lg:text-[42px]">
                   {String(s.ordreMenu).padStart(2, '0')}
                 </span>

@@ -19,7 +19,6 @@ export function seoField(group?: string) {
     ...(group ? { group } : {}),
     description:
       'Optionnel. Laissé vide, le site reprend des valeurs par défaut cohérentes. Renseigné, ces valeurs prennent le dessus.',
-    options: { collapsible: true, collapsed: true },
     fields: [
       defineField({
         name: 'titre',

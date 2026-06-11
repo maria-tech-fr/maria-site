@@ -61,13 +61,13 @@ function ExpertCard({ membre, index }: { membre: MembreExpert; index: number }) 
       />
 
       <div
-        className="relative flex h-65 items-end p-5"
+        className="relative flex aspect-square items-end p-5"
         style={{
           background: 'linear-gradient(129deg, #DEDEDE 0%, #E8E8E8 100%)',
         }}
       >
         {(() => {
-          const photo = membre.photo?.asset ? imageSrc(membre.photo, 600, 760) : null
+          const photo = membre.photo?.asset ? imageSrc(membre.photo, 760, 760) : null
           if (photo) {
             return (
               /* eslint-disable-next-line @next/next/no-img-element */

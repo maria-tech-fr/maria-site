@@ -499,6 +499,7 @@ export const pagePillierQuery = defineQuery(`
       ctaSecondaireAncre
     },
     vision{ surTitre, titre, paragraphes },
+    central{ surTitre, titre, sousTitre },
     articulation{
       surTitre,
       titre,
