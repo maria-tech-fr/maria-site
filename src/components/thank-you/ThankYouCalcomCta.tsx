@@ -1,6 +1,5 @@
 'use client'
 
-import { getCalApi } from '@calcom/embed-react'
 import { useEffect } from 'react'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
@@ -23,12 +22,34 @@ export default function ThankYouCalcomCta({
   ctaLibelle,
   calcomUrl,
 }: Props) {
+  // Init Cal.com différé à l'idle pour sortir le SDK du critical path.
   useEffect(() => {
     if (!calcomUrl) return
-    ;(async () => {
-      const cal = await getCalApi({ namespace: NS })
-      cal('ui', { theme: 'light', hideEventTypeDetails: false, layout: 'month_view' })
-    })()
+    let cancelled = false
+    function init() {
+      if (cancelled) return
+      import('@calcom/embed-react').then(({ getCalApi }) => {
+        getCalApi({ namespace: NS }).then((cal) => {
+          if (cancelled) return
+          cal('ui', { theme: 'light', hideEventTypeDetails: false, layout: 'month_view' })
+        })
+      })
+    }
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void) => number })
+      .requestIdleCallback
+    if (typeof ric === 'function') {
+      const id = ric(init)
+      return () => {
+        cancelled = true
+        ;(window as Window & { cancelIdleCallback?: (id: number) => void })
+          .cancelIdleCallback?.(id)
+      }
+    }
+    const id = window.setTimeout(init, 1500)
+    return () => {
+      cancelled = true
+      window.clearTimeout(id)
+    }
   }, [calcomUrl])
 
   const hasCal = !!calcomUrl

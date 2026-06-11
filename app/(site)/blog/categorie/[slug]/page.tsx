@@ -89,6 +89,11 @@ export default async function BlogCategoriePage({ params, searchParams }: Params
         surTitre={`// ${categorie.libelle.toLowerCase()}`}
         titre={`**${categorie.libelle}**\nNos articles`}
         description={categorie.description}
+        breadcrumb={[
+          { label: 'Accueil', href: '/' },
+          { label: 'Journal', href: '/blog' },
+          { label: categorie.libelle },
+        ]}
       />
 
       <BlogToolbar

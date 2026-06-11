@@ -229,3 +229,15 @@ body {
   .wa-ping-dot,
   .wa-mini-ping { animation: none; }
 }
+
+/*
+  Filet global prefers-reduced-motion : neutralise les animations bruyantes
+  (halos, border-drift, marquee) qui tournent en boucle infinie sur quasi
+  toutes les pages. Composantes interactives spécifiques (Reveal, CountUp,
+  score-flash, cursor-blink, wa-*) gèrent leur propre cas plus haut.
+*/
+@media (prefers-reduced-motion: reduce) {
+  [style*="animation"][style*="halo-wander"] { animation: none !important; }
+  [style*="border-drift"] { animation: none !important; }
+  [style*="marquee"] { animation: none !important; }
+}

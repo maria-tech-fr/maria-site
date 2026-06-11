@@ -38,7 +38,7 @@ Les pages besoins décrivent un problème métier, le coût caché, la réponse 
 ## Contact
 
 - [Page contact](https://maria.tech/contact)
-- Email : [À CONFIRMER : adresse réelle, ex. hello@maria.tech]
+- Email : hello@maria.tech
 - Réponse sous 24 h ouvrées · Sans engagement
 
 ## Positionnement éditorial

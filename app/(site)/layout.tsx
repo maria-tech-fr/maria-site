@@ -4,7 +4,10 @@ import '../globals.css'
 import Nav from '../../src/components/Nav'
 import Footer from '../../src/components/Footer'
 import OrganizationJsonLd from '../../src/components/OrganizationJsonLd'
-import WhatsappWidget from '../../src/components/whatsapp/WhatsappWidget'
+// Widget WhatsApp : import via un wrapper client qui le charge en
+// `dynamic(..., { ssr: false })` après hydratation. Le bundle du widget
+// (carte + pill + sessionStorage) est sorti du critical path.
+import WhatsappWidgetLazy from '../../src/components/whatsapp/WhatsappWidgetLazy'
 import ConsentBanner from '../../src/components/analytics/ConsentBanner'
 import Analytics from '../../src/components/analytics/Analytics'
 import { getBesoinsMenu } from '../../src/lib/pageBesoin'
@@ -104,7 +107,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         </div>
         <main className="flex-1">{children}</main>
         <Footer />
-        <WhatsappWidget />
+        <WhatsappWidgetLazy />
         {/* Consentement (Axeptio) + analytics (GA4) : composants noop tant
             que les env vars `NEXT_PUBLIC_AXEPTIO_CLIENT_ID` /
             `NEXT_PUBLIC_GA_ID` ne sont pas posées dans Vercel. Prêts-à-câbler. */}

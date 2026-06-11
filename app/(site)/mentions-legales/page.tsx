@@ -6,13 +6,13 @@ import { legalInfo } from '../../../src/content/legal/info'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
-// TODO: passer index:true après validation juridique du contenu.
+// Indexable (LCEN) : les mentions légales sont une obligation d'éditeur et
+// doivent rester atteignables par les moteurs de recherche.
 export const metadata: Metadata = {
   title: 'Mentions légales | maria',
   description:
     'Mentions légales du site maria : éditeur, directeur de la publication, hébergeur, propriété intellectuelle, droit applicable.',
   alternates: { canonical: `${SITE_URL}/mentions-legales` },
-  robots: { index: false, follow: true },
 }
 
 export default function MentionsLegalesPage() {

@@ -8,7 +8,8 @@ import { legalInfo } from '../../../src/content/legal/info'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
-// TODO: passer index:true après validation juridique du contenu.
+// Volontairement noindex : page d'information utilisateur, atteignable via
+// le footer et le bandeau de consentement. Pas d'enjeu SEO.
 export const metadata: Metadata = {
   title: 'Politique cookies | maria',
   description:
