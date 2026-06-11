@@ -135,7 +135,7 @@ export default function ContactForm({
               label="votre message"
               required
               error={errors?.message}
-              placeholder="Dites-nous en quelques lignes ce que vous cherchez à faire — même de façon vague."
+              placeholder="Dites-nous en quelques lignes ce que vous cherchez à faire, même de façon vague."
               defaultValue={values?.message}
             />
 
