@@ -26,8 +26,7 @@ export default function NotFoundMessage() {
         </Reveal>
         <Reveal delay={100}>
           <h1 className="mt-9 max-w-[18ch] font-display text-[48px] font-semibold leading-[1.02] tracking-[-0.035em] text-balance text-paper lg:text-[96px]">
-            Page introuvable. Mais tout le reste est là.
-            <span aria-hidden className="cursor-blink text-paper" />
+            Cette page est introuvable, mais tout le reste est là.
           </h1>
         </Reveal>
         <Reveal delay={200}>

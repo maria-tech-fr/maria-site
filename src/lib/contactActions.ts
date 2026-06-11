@@ -103,6 +103,17 @@ export async function submitContact(_prev: ContactSubmitState, formData: FormDat
     website: String(formData.get('website') ?? ''),
   }
 
+  // Valeurs à renvoyer dans l'état d'erreur pour ré-hydrater le formulaire.
+  // On exclut le honeypot (`website`) qui doit rester vide côté UI.
+  const values = {
+    nom: raw.nom,
+    prenom: raw.prenom,
+    telephone: raw.telephone,
+    email: raw.email,
+    message: raw.message,
+    rgpdConsent: raw.rgpdConsent === 'on' || raw.rgpdConsent === 'true',
+  }
+
   const parsed = contactFormSchema.safeParse(raw)
   if (!parsed.success) {
     const flat = parsed.error.flatten().fieldErrors as Record<string, string[] | undefined>
@@ -116,6 +127,7 @@ export async function submitContact(_prev: ContactSubmitState, formData: FormDat
       fieldErrors: fieldErrors as ContactSubmitState extends { fieldErrors?: infer F }
         ? NonNullable<F>
         : never,
+      values,
     }
   }
 
@@ -137,6 +149,7 @@ export async function submitContact(_prev: ContactSubmitState, formData: FormDat
     return {
       status: 'error',
       message: 'Trop de tentatives. Réessayez dans quelques minutes.',
+      values,
     }
   }
 
@@ -162,6 +175,7 @@ export async function submitContact(_prev: ContactSubmitState, formData: FormDat
     return {
       status: 'error',
       message: 'Une erreur technique est survenue. Réessayez ou contactez-nous directement par email.',
+      values,
     }
   }
 

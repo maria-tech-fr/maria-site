@@ -16,7 +16,7 @@ export default function BlogPromoCard({ promo }: { promo: PromoForGrid }) {
       className={`flex h-full flex-col justify-between gap-4 rounded-[8px] border ${border} ${bg} p-7`}
     >
       <div className="flex flex-col gap-3">
-        <p className={`font-mono text-[11px] leading-4 uppercase tracking-[0.08em] ${label}`}>
+        <p className={`font-mono text-[11px] leading-4 tracking-[0.08em] ${label}`}>
           {promo.label}
         </p>
         <h3 className="font-display text-[20px] font-semibold leading-7 tracking-[-0.018em] text-ink lg:text-[22px] lg:leading-[27px]">

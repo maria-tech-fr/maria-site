@@ -94,7 +94,7 @@ export default function Footer() {
               <Logo className="h-9 w-auto text-paper lg:h-10" />
             </Link>
             <p className="text-[14px] leading-5.5 text-[#9A9A9A]">
-              L’agence partenaire IA pour l’interne.
+              Agence IA, par des humains
             </p>
           </div>
 

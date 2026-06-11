@@ -22,6 +22,15 @@ export const contactFormSchema = z.object({
 
 export type ContactFormFields = z.infer<typeof contactFormSchema>
 
+export type ContactFormValues = {
+  nom?: string
+  prenom?: string
+  telephone?: string
+  email?: string
+  message?: string
+  rgpdConsent?: boolean
+}
+
 export type ContactSubmitState =
   | { status: 'idle' }
   | { status: 'success' }
@@ -29,4 +38,6 @@ export type ContactSubmitState =
       status: 'error'
       message: string
       fieldErrors?: Partial<Record<keyof ContactFormFields | 'website', string>>
+      /** Valeurs saisies pour ré-hydrater le formulaire après erreur. */
+      values?: ContactFormValues
     }

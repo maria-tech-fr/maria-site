@@ -28,6 +28,10 @@ export default function ContactForm({
 }: ContactFormProps) {
   const [state, formAction, pending] = useActionState(submitContact, initialState)
   const errors = state.status === 'error' ? state.fieldErrors : undefined
+  // En cas d'erreur, on conserve les valeurs saisies pour ré-hydrater le
+  // formulaire. Le hook useActionState ne renvoie pas le formData ; le serveur
+  // nous retourne explicitement `values` dans l'état d'erreur.
+  const values = state.status === 'error' ? state.values : undefined
   const nomId = useId()
   const prenomId = useId()
   const telId = useId()
@@ -90,6 +94,7 @@ export default function ContactForm({
                 required
                 error={errors?.nom}
                 placeholder="Dupont"
+                defaultValue={values?.nom}
               />
               <Field
                 id={prenomId}
@@ -98,6 +103,7 @@ export default function ContactForm({
                 required
                 error={errors?.prenom}
                 placeholder="Claire"
+                defaultValue={values?.prenom}
               />
             </div>
 
@@ -109,6 +115,7 @@ export default function ContactForm({
               optional
               error={errors?.telephone}
               placeholder="06 12 34 56 78"
+              defaultValue={values?.telephone}
             />
 
             <Field
@@ -119,6 +126,7 @@ export default function ContactForm({
               required
               error={errors?.email}
               placeholder="claire.dupont@entreprise.com"
+              defaultValue={values?.email}
             />
 
             <FieldTextarea
@@ -128,6 +136,7 @@ export default function ContactForm({
               required
               error={errors?.message}
               placeholder="Dites-nous en quelques lignes ce que vous cherchez à faire — même de façon vague."
+              defaultValue={values?.message}
             />
 
             <div className="flex items-start gap-3 pt-1">
@@ -139,6 +148,7 @@ export default function ContactForm({
                 aria-required="true"
                 aria-invalid={errors?.rgpdConsent ? 'true' : undefined}
                 aria-describedby={errors?.rgpdConsent ? `${rgpdId}-err` : undefined}
+                defaultChecked={values?.rgpdConsent ?? false}
                 className="mt-1 h-4 w-4 flex-none accent-success"
               />
               <label htmlFor={rgpdId} className="text-[13px] leading-[19.5px] text-ink-soft">
@@ -196,6 +206,7 @@ function Field({
   optional,
   error,
   placeholder,
+  defaultValue,
 }: {
   id: string
   name: string
@@ -205,6 +216,7 @@ function Field({
   optional?: boolean
   error?: string
   placeholder?: string
+  defaultValue?: string
 }) {
   const errId = `${id}-err`
   return (
@@ -230,6 +242,7 @@ function Field({
         aria-invalid={error ? 'true' : undefined}
         aria-describedby={error ? errId : undefined}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         className={`w-full rounded-[8px] border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
           error ? 'border-red-400' : 'border-paper-edge focus:border-success'
         }`}
@@ -250,6 +263,7 @@ function FieldTextarea({
   required,
   error,
   placeholder,
+  defaultValue,
 }: {
   id: string
   name: string
@@ -257,6 +271,7 @@ function FieldTextarea({
   required?: boolean
   error?: string
   placeholder?: string
+  defaultValue?: string
 }) {
   const errId = `${id}-err`
   return (
@@ -277,6 +292,7 @@ function FieldTextarea({
         aria-invalid={error ? 'true' : undefined}
         aria-describedby={error ? errId : undefined}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         className={`w-full resize-y rounded-[8px] border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
           error ? 'border-red-400' : 'border-paper-edge focus:border-success'
         }`}
