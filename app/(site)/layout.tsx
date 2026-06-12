@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { headers } from 'next/headers'
 import { DM_Mono, Syne, Work_Sans } from 'next/font/google'
 import '../globals.css'
 import Nav from '../../src/components/Nav'
@@ -90,10 +91,12 @@ const HALO_KEYFRAMES = `
 `
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const [services, besoins] = await Promise.all([
+  const [services, besoins, hdrs] = await Promise.all([
     getServicesMenu(),
     getBesoinsMenu(),
+    headers(),
   ])
+  const nonce = hdrs.get('x-nonce') ?? undefined
   return (
     <html
       lang="fr"
@@ -101,7 +104,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <OrganizationJsonLd />
-        <style dangerouslySetInnerHTML={{ __html: HALO_KEYFRAMES }} />
+        <style nonce={nonce} dangerouslySetInnerHTML={{ __html: HALO_KEYFRAMES }} />
         <div className="fixed inset-x-0 top-0 z-50 px-4 py-3 sm:px-6 lg:px-30.5 lg:py-6">
           <Nav services={services} besoins={besoins} />
         </div>
@@ -111,7 +114,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         {/* Consentement (Axeptio) + analytics (GA4) : composants noop tant
             que les env vars `NEXT_PUBLIC_AXEPTIO_CLIENT_ID` /
             `NEXT_PUBLIC_GA_ID` ne sont pas posées dans Vercel. Prêts-à-câbler. */}
-        <ConsentBanner />
+        <ConsentBanner nonce={nonce} />
         <Analytics />
       </body>
     </html>

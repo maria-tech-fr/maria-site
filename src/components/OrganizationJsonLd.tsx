@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import { getContactPage } from '../lib/contact'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
@@ -8,7 +9,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
  * Lit les coordonnées depuis Sanity (singleton parametresGlobaux.contact).
  */
 export default async function OrganizationJsonLd() {
-  const data = await getContactPage()
+  const [data, hdrs] = await Promise.all([getContactPage(), headers()])
+  const nonce = hdrs.get('x-nonce') ?? undefined
   const contact = data?.contact
 
   const address = contact?.adresse
@@ -92,10 +94,12 @@ export default async function OrganizationJsonLd() {
     <>
       <script
         type="application/ld+json"
+        nonce={nonce}
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
       />
       <script
         type="application/ld+json"
+        nonce={nonce}
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
       />
     </>

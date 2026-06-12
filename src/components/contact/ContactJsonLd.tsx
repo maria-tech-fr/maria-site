@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import type { QuestionFaqContact } from '../../lib/contact'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
@@ -10,11 +11,12 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
  * Le schema Organization est désormais émis globalement par
  * OrganizationJsonLd dans le layout — on ne le duplique plus ici.
  */
-export default function ContactJsonLd({
+export default async function ContactJsonLd({
   faq,
 }: {
   faq: QuestionFaqContact[]
 }) {
+  const nonce = (await headers()).get('x-nonce') ?? undefined
   const contactPage = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
@@ -40,11 +42,13 @@ export default function ContactJsonLd({
     <>
       <script
         type="application/ld+json"
+        nonce={nonce}
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPage) }}
       />
       {faqPage && (
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
         />
       )}

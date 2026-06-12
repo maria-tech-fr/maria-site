@@ -7,35 +7,41 @@ const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   {
+    // Surface API navigateur réduite au strict nécessaire pour un site
+    // marketing : aucune feature browser sensible n'est requise. On bloque
+    // tout par défaut (clauses vides = personne ne peut utiliser la feature).
+    // Si on a un jour besoin d'une feature, on l'ouvre à 'self' uniquement.
     key: 'Permissions-Policy',
-    value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+    value: [
+      'accelerometer=()',
+      'autoplay=()',
+      'camera=()',
+      'display-capture=()',
+      'encrypted-media=()',
+      'fullscreen=(self)',
+      'geolocation=()',
+      'gyroscope=()',
+      'interest-cohort=()',
+      'magnetometer=()',
+      'microphone=()',
+      'midi=()',
+      'payment=()',
+      'picture-in-picture=()',
+      'publickey-credentials-get=()',
+      'screen-wake-lock=()',
+      'sync-xhr=()',
+      'usb=()',
+      'xr-spatial-tracking=()',
+    ].join(', '),
   },
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
 ]
 
-const contentSecurityPolicy = [
-  "default-src 'self'",
-  // script-src : on autorise les domaines des tiers activables (Axeptio
-  // consentement + GA4 mesure d'audience). Ces tiers ne se chargent que
-  // si les env vars correspondantes sont posées — voir composants
-  // ConsentBanner/Analytics — mais le CSP doit les laisser passer.
-  "script-src 'self' 'unsafe-inline' https://static.axept.io https://www.googletagmanager.com",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  // img-src : pixels GA4 + assets Axeptio + images Sanity.
-  "img-src 'self' data: blob: https://cdn.sanity.io https://*.google-analytics.com https://*.googletagmanager.com",
-  "font-src 'self' data: https://fonts.gstatic.com",
-  // connect-src : appels API GA4 + Axeptio + Sanity.
-  "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://*.google-analytics.com https://*.googletagmanager.com https://*.axept.io",
-  // frame-src : iframes Cal.com (embed) + médias article.
-  "frame-src 'self' https://cal.com https://*.cal.com https://calendly.com https://*.calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.loom.com",
-  "frame-ancestors 'self'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "object-src 'none'",
-  'upgrade-insecure-requests',
-].join('; ')
+// Content-Security-Policy : déplacé dans `middleware.ts` car il intègre un
+// nonce cryptographique par requête (cf. middleware.ts). Garder un CSP
+// statique ici en doublon créerait un conflit de headers — la version
+// nonce-based est la seule active.
 
-const cspHeader = { key: 'Content-Security-Policy', value: contentSecurityPolicy }
 const noIndexHeader = { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }
 
 const nextConfig: NextConfig = {
@@ -80,10 +86,6 @@ const nextConfig: NextConfig = {
           ...securityHeaders,
           ...(INDEXING_ALLOWED ? [] : [noIndexHeader]),
         ],
-      },
-      {
-        source: '/((?!machine|api).*)',
-        headers: [cspHeader],
       },
       {
         source: '/machine/:path*',
