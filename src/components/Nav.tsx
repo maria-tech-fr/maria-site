@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Logo from './Logo'
 import { FAMILLES, type BesoinMenuItem } from '../lib/pageBesoin'
 import type { ServiceMenuItem } from '../lib/pageService'
@@ -391,10 +392,18 @@ function MobileMenu({
     }
   }, [open])
 
+  // Portal vers document.body : la <nav> parente a `backdrop-blur-lg`
+  // (backdrop-filter), qui crée un containing block pour les éléments
+  // `position: fixed` descendants. Sans portal, le menu serait positionné
+  // par rapport à la barre de nav et non au viewport (overlay minuscule
+  // dans la nav).
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
   const hasServices = services.length > 0
   const hasBesoins = besoinsGrouped.length > 0
 
-  return (
+  const menu = (
     <div
       role="dialog"
       aria-modal="true"
@@ -451,6 +460,9 @@ function MobileMenu({
       </div>
     </div>
   )
+
+  if (!mounted) return null
+  return createPortal(menu, document.body)
 }
 
 function MobileRootView({
