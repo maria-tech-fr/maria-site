@@ -5,25 +5,7 @@ import { redirect } from 'next/navigation'
 import { createHash } from 'crypto'
 import { writeClient } from '../../sanity/writeClient'
 import { contactFormSchema, type ContactSubmitState } from './contactSchema'
-
-/* ============================================================================
- * Rate limit en mémoire (Map). Reset au redémarrage du serveur.
- * Pour un trafic faible c'est suffisant. Upgrader vers Upstash si besoin.
- * ============================================================================ */
-
-const RATE_LIMIT_MAX = 3
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000 // 15 min
-
-const submissions = new Map<string, number[]>()
-
-function isRateLimited(ipHash: string): boolean {
-  const now = Date.now()
-  const history = (submissions.get(ipHash) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS)
-  if (history.length >= RATE_LIMIT_MAX) return true
-  history.push(now)
-  submissions.set(ipHash, history)
-  return false
-}
+import { checkContactRateLimit } from './rateLimit'
 
 /* ============================================================================
  * Resend optionnel
@@ -145,7 +127,8 @@ export async function submitContact(_prev: ContactSubmitState, formData: FormDat
     'unknown'
   const ipHash = createHash('sha256').update(ip).digest('hex').slice(0, 16)
 
-  if (isRateLimited(ipHash)) {
+  const rateLimit = await checkContactRateLimit(ipHash)
+  if (rateLimit.limited) {
     return {
       status: 'error',
       message: 'Trop de tentatives. Réessayez dans quelques minutes.',
