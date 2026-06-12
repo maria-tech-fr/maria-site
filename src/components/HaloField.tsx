@@ -66,12 +66,17 @@ export default function HaloField({ halos, staticMode = false }: HaloFieldProps)
         const rgb = hexToRgb(h.color)
         const { wx, wy } = budgets[i]
 
-        // Sur mobile : taille réduite (60% du design max) + blur réduit
-        // (50% min) pour limiter le coût de compositing. iOS Safari peut
-        // throttler agressivement les animations sur des éléments blur >
-        // 35px ; en cappant à ~25px sur mobile on garde l'effet visuel.
-        const sizeStyle = `clamp(${Math.round(h.size * 0.6)}px, 110vw, ${h.size}px)`
-        const blurStyle = `clamp(${Math.round(blur * 0.5)}px, 6vw, ${blur}px)`
+        // Sur mobile : taille et blur très réduits pour rendre le déplacement
+        // perceptible sur un petit viewport (un halo de 400 px qui dérive de
+        // 90 px = mouvement de 22 %, peu visible ; un halo de 200 px qui
+        // dérive de 90 px = mouvement de 45 %, clairement perçu). iOS Safari
+        // throttle aussi les éléments blur > 35 px, on garde le blur léger.
+        const sizeStyle = `clamp(${Math.round(h.size * 0.4)}px, 60vw, ${h.size}px)`
+        const blurStyle = `clamp(${Math.round(blur * 0.4)}px, 5vw, ${blur}px)`
+        // Sur mobile, on accélère l'animation : iOS Safari arrête souvent les
+        // animations lentes (> 30 s) si l'élément quitte momentanément le
+        // viewport ; un cycle plus rapide reste « vivant » à l'œil.
+        const mobileDuration = Math.max(12, Math.round(duration * 0.5))
 
         return (
           <div
@@ -102,7 +107,7 @@ export default function HaloField({ halos, staticMode = false }: HaloFieldProps)
                       // rester dans le territoire de chaque halo.
                       ['--wx' as string]: `${wx}vw`,
                       ['--wy' as string]: `${wy}vw`,
-                      animation: `halo-wander-${pattern} ${duration}s ease-in-out ${delay}s infinite`,
+                      animation: `halo-wander-${pattern} ${mobileDuration}s ease-in-out ${delay}s infinite`,
                       willChange: 'transform',
                       // Hint navigateur supplémentaire pour ne pas
                       // détacher la couche pendant l'animation.

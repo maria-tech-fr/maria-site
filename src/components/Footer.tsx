@@ -1,13 +1,27 @@
 'use client'
 
+import { getCalApi } from '@calcom/embed-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 import HaloField from './HaloField'
 import Logo from './Logo'
 import ArrowRight from './icons/ArrowRight'
 import CookieSettingsLink from './analytics/CookieSettingsLink'
 
 const ROUTES_WITHOUT_CTA = ['/contact/merci']
+// Namespace partagé avec ContactChannels — le SDK Cal.com mutualise la
+// config UI entre les deux composants une fois initialisée.
+const CAL_NAMESPACE = 'maria-contact'
+
+function extractCalLink(url: string): string {
+  try {
+    const u = new URL(url)
+    return u.pathname.replace(/^\//, '')
+  } catch {
+    return url
+  }
+}
 
 type FooterLink = { label: string; href: string }
 
@@ -29,9 +43,28 @@ const ressourcesLinks: FooterLink[] = [
   { label: 'Charte IA', href: '/charte-ia' },
 ]
 
-export default function Footer() {
+export default function Footer({ calcomUrl }: { calcomUrl: string | null }) {
   const pathname = usePathname()
   const showCta = !ROUTES_WITHOUT_CTA.includes(pathname)
+  const isContactPage = pathname === '/contact'
+  // Sur la page contact, le CTA pré-footer ouvre Cal.com (au lieu de
+  // renvoyer vers /contact, ce qui serait un lien vers soi-même).
+  // Sur les autres pages, le CTA navigue vers /contact comme avant.
+  const useCalPopup = isContactPage && !!calcomUrl
+  const ctaLabel = isContactPage ? 'Réserver un échange' : 'Parlons de votre projet'
+
+  // Initialise Cal.com UI quand on est sur /contact (le SDK est partagé
+  // avec ContactChannels via le même namespace, mais on doit faire un
+  // appel d'init dans CE composant aussi pour s'assurer que le SDK est
+  // chargé même si ContactChannels n'a pas encore monté).
+  useEffect(() => {
+    if (!useCalPopup) return
+    ;(async () => {
+      const cal = await getCalApi({ namespace: CAL_NAMESPACE })
+      cal('ui', { theme: 'light', hideEventTypeDetails: false, layout: 'month_view' })
+    })()
+  }, [useCalPopup])
+
   return (
     <footer className="font-sans">
       {showCta && (
@@ -72,13 +105,26 @@ export default function Footer() {
             </div>
 
             <div className="flex w-full flex-col items-center gap-4.75">
-              <Link
-                href="/contact"
-                className="inline-flex h-13 w-full max-w-75 items-center justify-center gap-2 rounded-[5px] bg-accent text-[15px] font-medium leading-[24.8px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft lg:h-[56.8px] lg:w-[245.36px] lg:text-[16px]"
-              >
-                Réserver un échange
-                <ArrowRight size="md" />
-              </Link>
+              {useCalPopup ? (
+                <button
+                  type="button"
+                  data-cal-namespace={CAL_NAMESPACE}
+                  data-cal-link={extractCalLink(calcomUrl!)}
+                  data-cal-config='{"layout":"month_view"}'
+                  className="inline-flex h-13 w-full max-w-75 items-center justify-center gap-2 rounded-[5px] bg-accent text-[15px] font-medium leading-[24.8px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft lg:h-[56.8px] lg:w-[245.36px] lg:text-[16px]"
+                >
+                  {ctaLabel}
+                  <ArrowRight size="md" />
+                </button>
+              ) : (
+                <Link
+                  href="/contact"
+                  className="inline-flex h-13 w-full max-w-75 items-center justify-center gap-2 rounded-[5px] bg-accent text-[15px] font-medium leading-[24.8px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft lg:h-[56.8px] lg:w-[245.36px] lg:text-[16px]"
+                >
+                  {ctaLabel}
+                  <ArrowRight size="md" />
+                </Link>
+              )}
               <p className="text-center font-mono text-[11px] leading-4.25 tracking-[0.08em] text-[#AAAAAA]">
                 RÉPONSE SOUS 24 H · DEVIS GRATUIT · SANS ENGAGEMENT
               </p>

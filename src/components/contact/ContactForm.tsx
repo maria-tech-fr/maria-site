@@ -244,7 +244,7 @@ function Field({
         placeholder={placeholder}
         defaultValue={defaultValue}
         className={`w-full rounded-lg border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
-          error ? 'border-red-400' : 'border-paper-edge focus:border-success'
+          error ? 'border-red-400' : 'border-[#D8D8D8] focus:border-success'
         }`}
       />
       {error && (
@@ -294,7 +294,7 @@ function FieldTextarea({
         placeholder={placeholder}
         defaultValue={defaultValue}
         className={`w-full resize-y rounded-lg border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
-          error ? 'border-red-400' : 'border-paper-edge focus:border-success'
+          error ? 'border-red-400' : 'border-[#D8D8D8] focus:border-success'
         }`}
       />
       {error && (

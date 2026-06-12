@@ -10,6 +10,7 @@ import OrganizationJsonLd from '../../src/components/OrganizationJsonLd'
 import WhatsappWidgetLazy from '../../src/components/whatsapp/WhatsappWidgetLazy'
 import ConsentBanner from '../../src/components/analytics/ConsentBanner'
 import Analytics from '../../src/components/analytics/Analytics'
+import { getContactPage } from '../../src/lib/contact'
 import { getBesoinsMenu } from '../../src/lib/pageBesoin'
 import { getServicesMenu } from '../../src/lib/pageService'
 
@@ -90,10 +91,12 @@ const HALO_KEYFRAMES = `
 `
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const [services, besoins] = await Promise.all([
+  const [services, besoins, contactData] = await Promise.all([
     getServicesMenu(),
     getBesoinsMenu(),
+    getContactPage(),
   ])
+  const calcomUrl = contactData?.contact?.calendlyUrl ?? null
   return (
     <html
       lang="fr"
@@ -106,7 +109,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <Nav services={services} besoins={besoins} />
         </div>
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer calcomUrl={calcomUrl} />
         <WhatsappWidgetLazy />
         {/* Consentement (Axeptio) + analytics (GA4) : composants noop tant
             que les env vars `NEXT_PUBLIC_AXEPTIO_CLIENT_ID` /
