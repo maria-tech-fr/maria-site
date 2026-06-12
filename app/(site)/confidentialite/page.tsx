@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import LegalPageLayout, {
   LegalSection,
+  LegalSubsection,
   LegalTable,
 } from '../../../src/components/legal/LegalPageLayout'
 import { legalInfo } from '../../../src/content/legal/info'
@@ -9,12 +10,12 @@ import { legalInfo } from '../../../src/content/legal/info'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
 // Volontairement noindex : la page reste atteignable via les liens (footer,
-// formulaire contact) — pas d'enjeu SEO à l'indexer. À revoir si la page
+// formulaire contact) - pas d'enjeu SEO à l'indexer. À revoir si la page
 // devient un actif éditorial autonome.
 export const metadata: Metadata = {
   title: 'Politique de confidentialité | maria',
   description:
-    'Comment maria collecte, utilise et protège vos données personnelles. RGPD, durée de conservation, sous-traitants, droits, sécurité.',
+    'Comment maria collecte, utilise et protège vos données personnelles. RGPD, durée de conservation, sous-traitants, cookies, droits.',
   alternates: { canonical: `${SITE_URL}/confidentialite` },
   robots: { index: false, follow: true },
 }
@@ -42,10 +43,6 @@ export default function ConfidentialitePage() {
           </a>
           .
         </p>
-        <p className="text-ink-soft/70">
-          [À COMPLÉTER : DPO / référent données désigné ou non, coordonnées
-          le cas échéant — non obligatoire pour une petite structure.]
-        </p>
       </LegalSection>
 
       <LegalSection title="Données que nous collectons">
@@ -69,7 +66,8 @@ export default function ConfidentialitePage() {
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
               <strong className="text-ink">Navigation</strong> : mesure
-              d’audience (voir politique cookies), uniquement après consentement.
+              d’audience, uniquement après consentement (voir section Cookies
+              plus bas).
             </span>
           </li>
         </ul>
@@ -96,21 +94,21 @@ export default function ConfidentialitePage() {
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
-              <strong className="text-ink">Vercel Inc.</strong> — hébergement
+              <strong className="text-ink">Vercel Inc.</strong> - hébergement
               du site (États-Unis, sous encadrement contractuel européen).
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
-              <strong className="text-ink">Sanity.io</strong> — stockage du
+              <strong className="text-ink">Sanity.io</strong> - stockage du
               contenu éditorial (Union européenne).
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
-              <strong className="text-ink">Resend</strong> — envoi des
+              <strong className="text-ink">Resend</strong> - envoi des
               e-mails transactionnels liés au formulaire de contact (Union
               européenne).
             </span>
@@ -118,7 +116,7 @@ export default function ConfidentialitePage() {
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
-              <strong className="text-ink">Cal.com</strong> — prise de
+              <strong className="text-ink">Cal.com</strong> - prise de
               rendez-vous en ligne (États-Unis, sous accord de traitement
               des données conforme RGPD).
             </span>
@@ -126,14 +124,14 @@ export default function ConfidentialitePage() {
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
-              <strong className="text-ink">Axeptio</strong> — gestion du
+              <strong className="text-ink">Axeptio</strong> - gestion du
               consentement RGPD (Union européenne).
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
-              <strong className="text-ink">Google Analytics 4</strong> —
+              <strong className="text-ink">Google Analytics 4</strong> -
               mesure d’audience, chargée <em>uniquement après votre consentement</em>,
               avec IP anonymisée et signaux publicitaires désactivés
               (États-Unis, sous accord de traitement des données conforme RGPD).
@@ -142,8 +140,7 @@ export default function ConfidentialitePage() {
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
-              <strong className="text-ink">WhatsApp Business / Meta</strong>
-              {' '}— si vous cliquez sur le bouton WhatsApp du site, vous êtes
+              <strong className="text-ink">WhatsApp Business / Meta</strong> - si vous cliquez sur le bouton WhatsApp du site, vous êtes
               redirigé vers les serveurs Meta (États-Unis) et vos échanges
               sont soumis aux conditions de WhatsApp.
             </span>
@@ -151,7 +148,7 @@ export default function ConfidentialitePage() {
         </ul>
         <p>
           Nous ne vendons ni ne louons vos données. Vos données ne sont jamais
-          utilisées pour entraîner des modèles d’IA — voir notre{' '}
+          utilisées pour entraîner des modèles d’IA - voir notre{' '}
           <Link
             href="/charte-ia"
             className="border-b border-success text-ink hover:text-success"
@@ -159,11 +156,6 @@ export default function ConfidentialitePage() {
             Charte de gouvernance IA
           </Link>
           .
-        </p>
-        <p className="text-ink-soft/70">
-          [À COMPLÉTER : précisions sur les transferts hors UE (Vercel,
-          Google, Cal.com, Meta) et garanties applicables (Standard Contractual
-          Clauses, accords adéquation) — à faire valider juridiquement.]
         </p>
       </LegalSection>
 
@@ -173,17 +165,56 @@ export default function ConfidentialitePage() {
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
               <strong className="text-ink">Demandes formulaire / RDV</strong> :
-              [À COMPLÉTER : ex. 3 ans après dernier contact].
+              3 ans à compter du dernier contact (conforme aux recommandations
+              CNIL pour la prospection commerciale).
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span aria-hidden className="mt-2.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-success" />
             <span>
               <strong className="text-ink">Mesure d’audience</strong> :
-              [À COMPLÉTER : ex. 13 mois max].
+              13 mois maximum (durée recommandée par la CNIL pour les cookies
+              analytiques).
             </span>
           </li>
         </ul>
+      </LegalSection>
+
+      <LegalSection title="Cookies">
+        <p>
+          maria a fait le choix de la sobriété :{' '}
+          <strong className="text-ink">aucun cookie publicitaire</strong> ni de
+          traçage commercial. Aucun cookie non essentiel n’est déposé sans
+          votre consentement préalable.
+        </p>
+
+        <LegalSubsection title="Cookies strictement nécessaires">
+          <p>
+            Indispensables au fonctionnement du site, ils ne nécessitent pas de
+            consentement. Concrètement, un cookie est utilisé pour mémoriser
+            votre choix de consentement afin de ne pas vous le redemander à
+            chaque visite.
+          </p>
+        </LegalSubsection>
+
+        <LegalSubsection title="Cookies de mesure d’audience">
+          <p>
+            Soumis à votre consentement, déposés uniquement après acceptation
+            via le widget de consentement. Outil utilisé : Google Analytics 4,
+            avec IP anonymisée, sans Google Signals et sans personnalisation
+            publicitaire. Durée de vie : 13 mois maximum.
+          </p>
+        </LegalSubsection>
+
+        <LegalSubsection title="Gérer votre consentement">
+          <p>
+            Votre consentement est modifiable et retirable à tout moment via le
+            lien « Gérer mes cookies » présent en pied de page, qui réouvre la
+            fenêtre de gestion. Vous pouvez également configurer votre
+            navigateur pour bloquer les cookies ; cela peut affecter certaines
+            fonctionnalités du site.
+          </p>
+        </LegalSubsection>
       </LegalSection>
 
       <LegalSection title="Vos droits">

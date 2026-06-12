@@ -122,13 +122,6 @@ export default function Footer() {
             >
               Confidentialité
             </Link>
-            <span aria-hidden>·</span>
-            <Link
-              href="/cookies"
-              className="text-[#9A9A9A] transition-colors duration-300 ease-out hover:text-paper"
-            >
-              Cookies
-            </Link>
             {/* Lien « Gérer mes cookies » : ne s'affiche que si Axeptio est
                 configuré (NEXT_PUBLIC_AXEPTIO_CLIENT_ID). Sinon noop. */}
             <CookieSettingsLink />

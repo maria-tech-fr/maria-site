@@ -29,7 +29,7 @@ export default function MentionsLegalesPage() {
       <LegalSection title="Éditeur du site">
         <p>Le site maria est édité par :</p>
         <p>
-          <strong className="text-ink">{legalInfo.denomination}</strong> — {legalInfo.formeJuridique}
+          <strong className="text-ink">{legalInfo.denomination}</strong> - {legalInfo.formeJuridique}
           <br />
           Capital social : {legalInfo.capital} €
           <br />

@@ -35,7 +35,7 @@ export type LegalInfo = {
 export const legalInfo: LegalInfo = {
   denomination: 'MARIA TECH',
   formeJuridique: 'SAS',
-  capital: '1 200 €',
+  capital: '1 200',
   siegeSocial: '173 rue de Courcelles, 75017 Paris',
   rcsVille: 'Paris',
   rcsNumero: '105 251 615',
@@ -46,9 +46,8 @@ export const legalInfo: LegalInfo = {
   telephone: '06 37 41 57 98',
   hebergeur: 'Vercel Inc.',
   hebergeurAdresse:
-    '440 N Barranca Avenue #4133, Covina, CA 91723, USA — vercel.com',
+    '440 N Barranca Avenue #4133, Covina, CA 91723, USA, vercel.com',
   derniereMaj: '2026-06-12',
   ressortTribunaux: 'de Paris',
-  proprieteMarque:
-    'maria et le logo associé sont des signes distinctifs de l’éditeur.',
+  proprieteMarque: 'des signes distinctifs de l’éditeur',
 }

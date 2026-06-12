@@ -69,6 +69,14 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   async redirects() {
     return [
+      // Politique cookies fusionnée dans la politique de confidentialité.
+      // Redirige les anciens liens (footer, bandeau Axeptio archivé) vers
+      // la nouvelle section.
+      {
+        source: '/cookies',
+        destination: '/confidentialite',
+        permanent: true,
+      },
       // Formation est passée d'un sous-service (/services/formation) à un service
       // transversal top-level (/formation). Le 308 permanent maintient les
       // anciens partages/backlinks pendant la transition SEO.
