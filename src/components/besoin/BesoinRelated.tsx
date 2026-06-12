@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import GradientBorderHover from '../GradientBorderHover'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 
@@ -29,7 +30,7 @@ export default function BesoinRelated({ surTitre, titre, references }: Props) {
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.025em] text-ink lg:text-[44px]">
+            <h2 className="font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-ink lg:text-[44px]">
               {titre}
             </h2>
           </div>
@@ -40,25 +41,9 @@ export default function BesoinRelated({ surTitre, titre, references }: Props) {
             <Reveal key={r.slug} delay={120 + i * 80} className="h-full">
               <Link
                 href={`/besoins/${r.slug}`}
-                className="group/r relative flex h-full flex-col gap-3 rounded-[12px] border border-paper-edge bg-paper p-7 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-12px_rgba(63,193,99,0.25)]"
+                className="group/grad relative flex h-full flex-col gap-3 rounded-xl border border-paper-edge bg-paper p-7 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-12px_rgba(63,193,99,0.25)]"
               >
-                {/* Bordure dégradée jaune↔vert visible uniquement au hover.
-                    Pattern partagé avec HP Services + catalogue Formation. */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -inset-px rounded-[12px] opacity-0 transition-opacity duration-500 ease-in-out group-hover/r:opacity-100"
-                  style={{
-                    padding: '1px',
-                    background:
-                      'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
-                    backgroundSize: '200% 100%',
-                    animation: `border-drift 32s linear infinite ${-i * 4}s`,
-                    WebkitMask:
-                      'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                    WebkitMaskComposite: 'xor',
-                    maskComposite: 'exclude',
-                  }}
-                />
+                <GradientBorderHover rounded="rounded-xl" index={i} />
                 <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-success">
                   Besoin
                 </p>

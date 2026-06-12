@@ -12,24 +12,17 @@ import Faq from '../../../src/components/Faq'
 import FormationCta from '../../../src/components/formation/FormationCta'
 import FormationServicesLinks from '../../../src/components/formation/FormationServicesLinks'
 import JsonLd from '../../../src/components/JsonLd'
-import { buildFaqSchema } from '../../../src/lib/schema'
-import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
+import { buildFaqSchema, buildServiceSchema } from '../../../src/lib/schema'
+import { resolveSeo } from '../../../src/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getPageFormation()
-  const title = data?.seo?.titre || 'Formation IA pour les équipes en entreprise | maria'
-  const description =
-    data?.seo?.description ||
-    'maria forme vos équipes et vos décideurs à l’IA : usages métier, sécurité des données, gouvernance. Des formations concrètes, ancrées dans votre réalité.'
-  const canonical = `${SITE_URL}/formation`
-  return {
-    title,
-    description,
-    alternates: { canonical },
-    openGraph: { title, description, type: 'website', url: canonical, images: [DEFAULT_OG_IMAGE] },
-  }
+  return resolveSeo(data?.seo, {
+    title: 'Formation IA pour les équipes en entreprise | maria',
+    description:
+      'maria forme vos équipes et vos décideurs à l’IA : usages métier, sécurité des données, gouvernance. Des formations concrètes, ancrées dans votre réalité.',
+    path: '/formation',
+  })
 }
 
 export default async function PageFormation() {
@@ -38,6 +31,16 @@ export default async function PageFormation() {
 
   return (
     <>
+      <JsonLd
+        data={buildServiceSchema({
+          name: 'Formation IA pour les équipes',
+          description:
+            data.hero?.sousTitre ??
+            'Formations IA en entreprise : usages métier, sécurité des données, gouvernance.',
+          url: '/formation',
+          serviceType: 'Formation IA',
+        })}
+      />
       <JsonLd data={buildFaqSchema(data.faq?.questions)} />
 
       {/* 1 — Hero */}

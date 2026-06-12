@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { seoField } from './fields/seo'
 
 /**
  * Page Charte de gouvernance IA — singleton.
@@ -179,16 +180,7 @@ export const pageCharteIA = defineType({
     }),
 
     // -- SEO --
-    defineField({
-      name: 'seo',
-      title: 'SEO',
-      type: 'object',
-      group: 'meta',
-      fields: [
-        defineField({ name: 'titre', title: 'Balise <title>', type: 'string', validation: (r) => r.max(70) }),
-        defineField({ name: 'description', title: 'Meta description', type: 'text', rows: 3, validation: (r) => r.max(180) }),
-      ],
-    }),
+    seoField('meta'),
   ],
   preview: {
     select: { lastUpdated: 'revision.lastUpdated' },

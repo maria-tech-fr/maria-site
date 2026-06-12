@@ -184,7 +184,7 @@ export default function ContactForm({
               <button
                 type="submit"
                 disabled={pending}
-                className="inline-flex items-center gap-2 rounded-[8px] bg-ink px-7 py-3.5 font-medium text-[15px] leading-5 text-paper transition-colors duration-300 ease-out hover:bg-ink-soft disabled:cursor-wait disabled:opacity-60"
+                className="inline-flex items-center gap-2 rounded-lg bg-ink px-7 py-3.5 font-medium text-[15px] leading-5 text-paper transition-colors duration-300 ease-out hover:bg-ink-soft disabled:cursor-wait disabled:opacity-60"
               >
                 {pending ? 'Envoi…' : submitLabel || 'Envoyer'}
                 {!pending && <ArrowRight />}
@@ -243,7 +243,7 @@ function Field({
         aria-describedby={error ? errId : undefined}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        className={`w-full rounded-[8px] border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
+        className={`w-full rounded-lg border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
           error ? 'border-red-400' : 'border-paper-edge focus:border-success'
         }`}
       />
@@ -293,7 +293,7 @@ function FieldTextarea({
         aria-describedby={error ? errId : undefined}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        className={`w-full resize-y rounded-[8px] border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
+        className={`w-full resize-y rounded-lg border bg-paper px-4 py-3.5 text-[16px] leading-6 text-ink placeholder:text-[#C5C5C5] focus:outline-none focus:ring-2 focus:ring-success/30 ${
           error ? 'border-red-400' : 'border-paper-edge focus:border-success'
         }`}
       />

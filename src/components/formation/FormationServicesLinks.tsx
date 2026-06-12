@@ -20,7 +20,7 @@ export default function FormationServicesLinks({ surTitre, titre, cards }: Props
         <Reveal>
           <div className="flex max-w-[42ch] flex-col gap-4">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">{surTitre}</p>
-            <h2 className="font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.025em] text-ink lg:text-[44px]">
+            <h2 className="font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-ink lg:text-[44px]">
               {titre}
             </h2>
           </div>
@@ -31,7 +31,7 @@ export default function FormationServicesLinks({ surTitre, titre, cards }: Props
             <Reveal key={i} delay={120 + i * 80} className="h-full">
               <Link
                 href={`/services/${c.service!.slug}`}
-                className="group/sv flex h-full flex-col gap-3.5 rounded-[8px] border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-ink"
+                className="group/sv flex h-full flex-col gap-3.5 rounded-lg border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-ink"
               >
                 {c.eyebrow && (
                   <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#888]">

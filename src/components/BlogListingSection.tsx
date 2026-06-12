@@ -120,7 +120,7 @@ function Grid({ items }: { items: GridItem[] }) {
 
 function EmptyState({ category }: { category: string | null }) {
   return (
-    <div className="flex flex-col items-center gap-5 rounded-[8px] border border-paper-edge bg-paper-soft px-8 py-20 text-center">
+    <div className="flex flex-col items-center gap-5 rounded-lg border border-paper-edge bg-paper-soft px-8 py-20 text-center">
       <p className="font-display text-[22px] font-semibold leading-7 tracking-[-0.018em] text-ink lg:text-[24px]">
         Aucun article {category ? 'dans cette catégorie ' : ''}pour le moment.
       </p>

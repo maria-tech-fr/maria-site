@@ -331,7 +331,7 @@ export const pageBesoinQuery = defineQuery(`
         introCourte
       }
     },
-    seo{ titre, description }
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)
 
@@ -520,7 +520,7 @@ export const pagePillierQuery = defineQuery(`
       titre,
       questions[]{ question, reponse }
     },
-    seo{ titre, description }
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)
 
@@ -553,7 +553,7 @@ export const pageCharteIAQuery = defineQuery(`
       ctaHref
     },
     revision{ lastUpdated, mention },
-    seo{ titre, description }
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)
 
@@ -623,7 +623,7 @@ export const pageFormationQuery = defineQuery(`
         service->{ titre, "slug": slug.current }
       }
     },
-    seo{ titre, description }
+    seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }
 `)
 

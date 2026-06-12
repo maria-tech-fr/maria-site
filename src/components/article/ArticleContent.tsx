@@ -119,7 +119,7 @@ const components: PortableTextComponents = {
           <img
             src={url}
             alt={value.alt ?? ''}
-            className="w-full rounded-[8px] border border-paper-edge"
+            className="w-full rounded-lg border border-paper-edge"
             loading="lazy"
           />
           {value.legende && (
@@ -140,7 +140,7 @@ const components: PortableTextComponents = {
           <img
             src={url}
             alt={value.image.alt ?? ''}
-            className="w-full rounded-[8px] border border-paper-edge"
+            className="w-full rounded-lg border border-paper-edge"
             loading="lazy"
           />
           {value.legende && (
@@ -297,7 +297,7 @@ const components: PortableTextComponents = {
             : undefined
         return (
           <figure className="my-10">
-            <div className="overflow-hidden rounded-[8px] border border-paper-edge bg-paper-soft aspect-video">
+            <div className="overflow-hidden rounded-lg border border-paper-edge bg-paper-soft aspect-video">
               <video
                 controls
                 preload="metadata"
@@ -322,7 +322,7 @@ const components: PortableTextComponents = {
       if (!embed) return null
       return (
         <figure className="my-10">
-          <div className="overflow-hidden rounded-[8px] border border-paper-edge bg-paper-soft aspect-video">
+          <div className="overflow-hidden rounded-lg border border-paper-edge bg-paper-soft aspect-video">
             <iframe
               src={embed}
               title={value?.legende || 'Vidéo'}
@@ -348,13 +348,13 @@ const components: PortableTextComponents = {
       const href = value?.lienHref || '#'
       return (
         <aside
-          className={`my-10 flex flex-col items-start justify-between gap-4 rounded-[12px] ${bg} px-6 py-4 sm:flex-row sm:items-center`}
+          className={`my-10 flex flex-col items-start justify-between gap-4 rounded-xl ${bg} px-6 py-4 sm:flex-row sm:items-center`}
           style={{ borderLeft: `3px solid ${borderColor}` }}
         >
           <div className="flex items-center gap-3.5">
             <span
               aria-hidden
-              className="flex h-9 w-9 flex-none items-center justify-center rounded-[8px] bg-white/60"
+              className="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-white/60"
             >
               <CtaIcon isYellow={isYellow} />
             </span>

@@ -20,7 +20,7 @@ export default function PillarFaq({ surTitre, titre, questions }: Props) {
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="max-w-[14ch] font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.025em] text-ink lg:text-[52px]">
+            <h2 className="max-w-[14ch] font-display text-[36px] font-semibold leading-[1.05] tracking-tight text-ink lg:text-[52px]">
               {titre}
             </h2>
           </div>

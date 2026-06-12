@@ -33,11 +33,11 @@ export default function BesoinTransformation({ surTitre, titre, avant, apres }: 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
           {/* Aujourd'hui */}
           <Reveal delay={120} className="h-full">
-            <div className="flex h-full flex-col gap-5 rounded-[8px] border border-paper-edge bg-paper p-9 lg:p-11">
+            <div className="flex h-full flex-col gap-5 rounded-lg border border-paper-edge bg-paper p-9 lg:p-11">
               <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#888]">
                 // aujourd’hui
               </p>
-              <h3 className="font-display text-[28px] font-semibold leading-[1.1] tracking-[-0.025em] text-ink">
+              <h3 className="font-display text-[28px] font-semibold leading-[1.1] tracking-tight text-ink">
                 Aujourd’hui
               </h3>
               <ul className="flex flex-col">
@@ -56,11 +56,11 @@ export default function BesoinTransformation({ surTitre, titre, avant, apres }: 
 
           {/* Avec maria */}
           <Reveal delay={180} className="h-full">
-            <div className="flex h-full flex-col gap-5 rounded-[8px] border border-[#C9EAD3] bg-success-tint p-9 lg:p-11">
+            <div className="flex h-full flex-col gap-5 rounded-lg border border-[#C9EAD3] bg-success-tint p-9 lg:p-11">
               <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#2a7a44]">
                 // avec maria
               </p>
-              <h3 className="font-display text-[28px] font-semibold leading-[1.1] tracking-[-0.025em] text-ink">
+              <h3 className="font-display text-[28px] font-semibold leading-[1.1] tracking-tight text-ink">
                 Avec maria
               </h3>
               <ul className="flex flex-col">

@@ -7,27 +7,25 @@ import CharteEngagements from '../../../src/components/charte-ia/CharteEngagemen
 import CharteLignesRouges from '../../../src/components/charte-ia/CharteLignesRouges'
 import CharteDisclaimer from '../../../src/components/charte-ia/CharteDisclaimer'
 import JsonLd from '../../../src/components/JsonLd'
-import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
+import { resolveSeo } from '../../../src/lib/seo'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getPageCharteIA()
-  const title = data?.seo?.titre || 'Charte de gouvernance IA | maria'
-  const description =
-    data?.seo?.description ||
-    'Les engagements publics de maria sur l’usage de l’IA : validation humaine, transparence, propriété des données, lignes rouges. Une charte opposable.'
-  const canonical = `${SITE_URL}/charte-ia`
+  const base = resolveSeo(data?.seo, {
+    title: 'Charte de gouvernance IA | maria',
+    description:
+      'Les engagements publics de maria sur l’usage de l’IA : validation humaine, transparence, propriété des données, lignes rouges. Une charte opposable.',
+    path: '/charte-ia',
+  })
+  // Override : la charte est un document éditorial daté → type 'article'
+  // + modifiedTime issu de revision.lastUpdated.
   return {
-    title,
-    description,
-    alternates: { canonical },
+    ...base,
     openGraph: {
-      title,
-      description,
+      ...base.openGraph,
       type: 'article',
-      url: canonical,
-      images: [DEFAULT_OG_IMAGE],
       ...(data?.revision?.lastUpdated
         ? { modifiedTime: new Date(data.revision.lastUpdated).toISOString() }
         : {}),

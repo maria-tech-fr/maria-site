@@ -85,6 +85,7 @@ export type PageFormationData = {
   seo: {
     titre: string | null
     description: string | null
+    ogImage: { asset: { _id: string; url: string } | null } | null
   } | null
 } | null
 

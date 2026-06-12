@@ -27,7 +27,7 @@ export default function FormationFormats({ surTitre, titre, cards }: Props) {
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((c, i) => (
             <Reveal key={i} delay={120 + i * 60} className="h-full">
-              <article className="group/fmt flex h-full flex-col gap-3 rounded-[8px] border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent">
+              <article className="group/fmt flex h-full flex-col gap-3 rounded-lg border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent">
                 <span
                   className={`mb-5 flex h-11 w-11 items-center justify-center rounded-[10px] border ${
                     i % 2 === 0 ? 'border-[#F1E4BE] bg-accent-tint' : 'border-[#C9EAD3] bg-success-tint'

@@ -57,7 +57,7 @@ export default function PillarArticulation({ surTitre, titre, intro, etapes, tra
                 <span className="font-mono text-[13px] font-medium leading-[1.4] tracking-[0.06em] text-success">
                   {etape.numero}
                 </span>
-                <p className="font-display text-[26px] font-bold leading-none tracking-[-0.025em] text-accent lg:text-[28px]">
+                <p className="font-display text-[26px] font-bold leading-none tracking-tight text-accent lg:text-[28px]">
                   {etape.verbe}
                 </p>
                 <h3 className="font-display text-[17px] font-semibold leading-[1.25] tracking-[-0.015em] text-paper">
@@ -74,7 +74,7 @@ export default function PillarArticulation({ surTitre, titre, intro, etapes, tra
         {/* Bandeau transversal optionnel */}
         {hasTransversal && (
           <Reveal delay={260}>
-            <div className="grid grid-cols-1 items-center gap-6 rounded-[16px] border border-white/[0.06] bg-ink-soft p-10 lg:grid-cols-[auto_1fr_auto] lg:gap-x-16 lg:gap-y-12 lg:p-12">
+            <div className="grid grid-cols-1 items-center gap-6 rounded-2xl border border-white/[0.06] bg-ink-soft p-10 lg:grid-cols-[auto_1fr_auto] lg:gap-x-16 lg:gap-y-12 lg:p-12">
               <div className="flex max-w-[24ch] flex-col gap-3">
                 {transversal!.label && (
                   <span className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">

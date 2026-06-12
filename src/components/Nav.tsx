@@ -219,7 +219,7 @@ export default function Nav({ services, besoins }: NavProps) {
         aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
         aria-expanded={mobileOpen}
         onClick={() => setMobileOpen((v) => !v)}
-        className="flex h-10 w-10 items-center justify-center rounded-[8px] text-ink hover:bg-paper-soft transition-colors duration-300 ease-out lg:hidden"
+        className="flex h-10 w-10 items-center justify-center rounded-lg text-ink hover:bg-paper-soft transition-colors duration-300 ease-out lg:hidden"
       >
         <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden>
           {mobileOpen ? (
@@ -565,7 +565,7 @@ function NavSubmenu({
       id={id}
       role="menu"
       aria-label={ariaLabel}
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-90 ${widthClass} -translate-x-1/2 origin-top rounded-2xl border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
@@ -582,7 +582,7 @@ function NavSubmenu({
             >
               <span
                 aria-hidden
-                className={`flex h-9 w-9 flex-none items-center justify-center rounded-[8px] border ${badgeBorder} ${badgeBg}`}
+                className={`flex h-9 w-9 flex-none items-center justify-center rounded-lg border ${badgeBorder} ${badgeBg}`}
               >
                 {item.picto ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
@@ -624,7 +624,7 @@ function NavSubmenu({
             href="/formation"
             role="menuitem"
             onClick={onItemClick}
-            className="group flex items-center justify-between gap-3 rounded-[8px] px-5 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
+            className="group flex items-center justify-between gap-3 rounded-lg px-5 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
           >
             <span className="flex flex-col gap-0.5">
               <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
@@ -765,7 +765,7 @@ function NavBesoinsMega({
       id={id}
       role="menu"
       aria-label="Sous-menu Besoins par familles"
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-[min(92vw,920px)] -translate-x-1/2 origin-top rounded-[16px] border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-[min(92vw,920px)] -translate-x-1/2 origin-top rounded-2xl border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
@@ -799,7 +799,7 @@ function FamilleColumn({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-1 rounded-[8px] bg-accent-tint px-3.5 py-2.5">
+      <div className="flex flex-col gap-1 rounded-lg bg-accent-tint px-3.5 py-2.5">
         <p className="flex items-center gap-2 font-display text-[13.5px] font-semibold leading-5 tracking-[-0.01em] text-ink">
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
           {group.meta.titre}

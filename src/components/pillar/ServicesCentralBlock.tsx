@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import GradientBorderHover from '../GradientBorderHover'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import type { ServiceMenuItem } from '../../lib/pageService'
@@ -52,24 +53,9 @@ export default function ServicesCentralBlock({ services, surTitre, titre, sousTi
             <Reveal key={s.slug} delay={100 + i * 80} className="h-full">
               <Link
                 href={`/services/${s.slug}`}
-                className="group/sv relative flex h-full flex-col gap-4 rounded-[16px] border border-paper-edge bg-paper p-10 transition-shadow duration-300 ease-out hover:shadow-[0_22px_48px_-22px_rgba(63,193,99,0.30)] lg:p-11"
+                className="group/grad relative flex h-full flex-col gap-4 rounded-2xl border border-paper-edge bg-paper p-10 transition-shadow duration-300 ease-out hover:shadow-[0_22px_48px_-22px_rgba(63,193,99,0.30)] lg:p-11"
               >
-                {/* Bordure dégradée jaune↔vert visible au hover (pattern HP). */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -inset-px rounded-[16px] opacity-0 transition-opacity duration-500 ease-in-out group-hover/sv:opacity-100"
-                  style={{
-                    padding: '1px',
-                    background:
-                      'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
-                    backgroundSize: '200% 100%',
-                    animation: `border-drift 32s linear infinite ${-i * 4}s`,
-                    WebkitMask:
-                      'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                    WebkitMaskComposite: 'xor',
-                    maskComposite: 'exclude',
-                  }}
-                />
+                <GradientBorderHover rounded="rounded-2xl" index={i} />
                 <span className="font-mono text-[36px] font-medium leading-none tracking-[-0.02em] text-success lg:text-[42px]">
                   {String(s.ordreMenu).padStart(2, '0')}
                 </span>
@@ -82,11 +68,11 @@ export default function ServicesCentralBlock({ services, surTitre, titre, sousTi
                   </p>
                 )}
                 {s.audienceTag && (
-                  <span className="inline-flex w-fit items-center rounded-full border border-[#C9EAD3] bg-success-tint px-2.5 py-1 font-mono text-[11px] lowercase tracking-[0.05em] text-success">
+                  <span className="inline-flex w-fit items-center rounded-full border border-[#C9EAD3] bg-success-tint px-2.5 py-1 font-mono text-[11px] lowercase tracking-wider text-success">
                     {s.audienceTag}
                   </span>
                 )}
-                <span className="mt-auto inline-flex w-fit border-b-[1.5px] border-accent pb-0.5 font-medium text-[15px] leading-5 text-ink transition-colors duration-300 ease-out group-hover/sv:border-success group-hover/sv:text-success">
+                <span className="mt-auto inline-flex w-fit border-b-[1.5px] border-accent pb-0.5 font-medium text-[15px] leading-5 text-ink transition-colors duration-300 ease-out group-hover/grad:border-success group-hover/grad:text-success">
                   Découvrir ce service →
                 </span>
               </Link>

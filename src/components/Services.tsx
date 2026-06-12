@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import BlockHeader from './BlockHeader'
+import GradientBorderHover from './GradientBorderHover'
 import Reveal from './Reveal'
 import ArrowRight from './icons/ArrowRight'
 import ServiceIcon from './icons/ServiceIcon'
@@ -43,23 +44,8 @@ function ServiceCardItem({ card, index }: { card: ServiceCard; index: number }) 
     'group inline-flex items-center gap-2 pt-[15px] text-[14px] font-medium leading-[21.7px] text-ink'
 
   return (
-    <article className="group/card relative flex h-full flex-col rounded-[5px] border border-paper-edge bg-paper px-7 pt-8 pb-7 lg:px-8 lg:pt-9 lg:pb-8">
-      {/* Bordure dégradée jaune↔vert visible uniquement au hover. Drift lent en arrière-plan. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-px rounded-[5px] opacity-0 transition-opacity duration-500 ease-in-out group-hover/card:opacity-100"
-        style={{
-          padding: '1px',
-          background:
-            'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
-          backgroundSize: '200% 100%',
-          animation: `border-drift 32s linear infinite ${-index * 4}s`,
-          WebkitMask:
-            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          maskComposite: 'exclude',
-        }}
-      />
+    <article className="group/grad relative flex h-full flex-col rounded-[5px] border border-paper-edge bg-paper px-7 pt-8 pb-7 lg:px-8 lg:pt-9 lg:pb-8">
+      <GradientBorderHover rounded="rounded-[5px]" index={index} />
 
       <ServiceIcon name={card.icone} className="h-[54px] w-[54px]" />
       <h3 className="pt-[21px] font-display text-[22px] font-semibold leading-8 tracking-[-0.02em] text-ink lg:text-[24px] lg:leading-[37.2px]">

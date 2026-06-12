@@ -89,13 +89,13 @@ export default function ThankYouCalcomCta({
               data-cal-namespace={NS}
               data-cal-link={calLink ?? undefined}
               data-cal-config='{"layout":"month_view"}'
-              className="inline-flex items-center gap-2 rounded-[8px] bg-accent px-7 py-3.5 font-medium text-[15px] leading-5 text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft"
+              className="inline-flex items-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-medium text-[15px] leading-5 text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft"
             >
               {ctaLibelle}
               <ArrowRight />
             </button>
           ) : (
-            <span className="inline-flex items-center gap-2 rounded-[8px] bg-paper-edge px-7 py-3.5 font-medium text-[15px] leading-5 text-ink-soft">
+            <span className="inline-flex items-center gap-2 rounded-lg bg-paper-edge px-7 py-3.5 font-medium text-[15px] leading-5 text-ink-soft">
               {ctaLibelle}
             </span>
           )}

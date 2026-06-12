@@ -14,7 +14,7 @@ export default function ArticleTldr({ items }: Props) {
   return (
     <aside
       aria-labelledby="article-tldr-heading"
-      className="mt-10 rounded-[12px] border border-success/30 bg-success-tint px-6 py-6 lg:px-7 lg:py-7"
+      className="mt-10 rounded-xl border border-success/30 bg-success-tint px-6 py-6 lg:px-7 lg:py-7"
     >
       <h2
         id="article-tldr-heading"

@@ -7,23 +7,16 @@ import NeedsCentralBlock from '../../../src/components/pillar/NeedsCentralBlock'
 import FaqJsonLd from '../../../src/components/FaqJsonLd'
 import JsonLd from '../../../src/components/JsonLd'
 import { buildItemListSchema } from '../../../src/lib/schema'
-import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
+import { resolveSeo } from '../../../src/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getPagePillier('besoins')
-  const title = data?.seo?.titre || 'Besoins — Que peut faire l’IA pour votre entreprise | maria'
-  const description =
-    data?.seo?.description ||
-    'Gagner du temps, soulager vos équipes, organiser la connaissance, sécuriser l’IA… maria répond à 12 besoins concrets de l’entreprise. Trouvez le vôtre.'
-  const canonical = `${SITE_URL}/besoins`
-  return {
-    title,
-    description,
-    alternates: { canonical },
-    openGraph: { title, description, type: 'website', url: canonical, images: [DEFAULT_OG_IMAGE] },
-  }
+  return resolveSeo(data?.seo, {
+    title: 'Besoins — Que peut faire l’IA pour votre entreprise | maria',
+    description:
+      'Gagner du temps, soulager vos équipes, organiser la connaissance, sécuriser l’IA… maria répond à 12 besoins concrets de l’entreprise. Trouvez le vôtre.',
+    path: '/besoins',
+  })
 }
 
 export default async function PillarBesoinsPage() {

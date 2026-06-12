@@ -68,8 +68,8 @@ export default function BesoinServiceAssocie({
 
         {showFormation && (
           <Reveal delay={260}>
-            <div className="flex flex-wrap items-center gap-4 rounded-[12px] border border-dashed border-white/18 px-7 py-5">
-              <span aria-hidden className="flex h-8 w-8 flex-none items-center justify-center rounded-[8px] border border-accent/30 bg-accent/10">
+            <div className="flex flex-wrap items-center gap-4 rounded-xl border border-dashed border-white/18 px-7 py-5">
+              <span aria-hidden className="flex h-8 w-8 flex-none items-center justify-center rounded-lg border border-accent/30 bg-accent/10">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FEC23C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M22 10v6" />
                   <path d="M2 10l10-5 10 5-10 5z" />
@@ -103,7 +103,7 @@ function ServiceCardItem({ card }: { card: ServiceCard }) {
   return (
     <Link
       href={href}
-      className="group/svc relative flex h-full flex-col gap-5 overflow-hidden rounded-[8px] border border-white/10 bg-[#2a2a2a] p-10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-success/50 lg:p-12"
+      className="group/svc relative flex h-full flex-col gap-5 overflow-hidden rounded-lg border border-white/10 bg-[#2a2a2a] p-10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-success/50 lg:p-12"
     >
       {/* Halo radial interne */}
       <span

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import GradientBorderHover from '../GradientBorderHover'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import ArrowRight from '../icons/ArrowRight'
@@ -63,7 +64,7 @@ export default function NotFoundExits() {
           </p>
         </Reveal>
         <Reveal delay={100}>
-          <h2 className="mt-5 max-w-[22ch] text-center font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.025em] text-ink lg:text-[44px]">
+          <h2 className="mt-5 max-w-[22ch] text-center font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-ink lg:text-[44px]">
             Reprenons depuis un point connu
           </h2>
         </Reveal>
@@ -72,7 +73,7 @@ export default function NotFoundExits() {
           {CARDS.map((card, i) => (
             <Reveal key={card.href} delay={160 + i * 70}>
               <li className="h-full">
-                <ExitCard data={card} />
+                <ExitCard data={card} index={i} />
               </li>
             </Reveal>
           ))}
@@ -94,30 +95,15 @@ export default function NotFoundExits() {
   )
 }
 
-function ExitCard({ data }: { data: ExitCardData }) {
+function ExitCard({ data, index }: { data: ExitCardData; index: number }) {
   const iconBg = data.tone === 'accent' ? 'bg-accent-tint' : 'bg-success-tint'
   const iconBorder = data.tone === 'accent' ? 'border-[#F1E4BE]' : 'border-[#C9EAD3]'
   return (
     <Link
       href={data.href}
-      className="group relative flex h-full flex-col gap-3.5 rounded-[16px] border border-paper-edge bg-paper p-8 pb-7 transition-shadow duration-300 ease-out hover:shadow-[0_18px_36px_-22px_rgba(63,193,99,0.25)]"
+      className="group group/grad relative flex h-full flex-col gap-3.5 rounded-2xl border border-paper-edge bg-paper p-8 pb-7 transition-shadow duration-300 ease-out hover:shadow-[0_18px_36px_-22px_rgba(63,193,99,0.25)]"
     >
-      {/* Bordure dégradée jaune↔vert visible au hover (pattern HP). */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-px rounded-[16px] opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100"
-        style={{
-          padding: '1px',
-          background:
-            'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
-          backgroundSize: '200% 100%',
-          animation: 'border-drift 32s linear infinite',
-          WebkitMask:
-            'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          maskComposite: 'exclude',
-        }}
-      />
+      <GradientBorderHover rounded="rounded-2xl" index={index} />
       <span
         aria-hidden
         className={`flex h-[42px] w-[42px] items-center justify-center rounded-[11px] border ${iconBg} ${iconBorder}`}

@@ -27,7 +27,7 @@ export default function FormationAudiences({ surTitre, titre, cards }: Props) {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-6">
           {cards.map((c, i) => (
             <Reveal key={i} delay={120 + i * 80} className="h-full">
-              <article className="group/aud flex h-full flex-col gap-4 rounded-[8px] border border-paper-edge bg-paper p-10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_8px_20px_-12px_rgba(254,194,60,0.30)]">
+              <article className="group/aud flex h-full flex-col gap-4 rounded-lg border border-paper-edge bg-paper p-10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_8px_20px_-12px_rgba(254,194,60,0.30)]">
                 <span
                   className={`mb-3 flex h-12 w-12 items-center justify-center rounded-[10px] border ${
                     i % 2 === 0 ? 'border-[#F1E4BE] bg-accent-tint' : 'border-[#C9EAD3] bg-success-tint'

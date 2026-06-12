@@ -41,7 +41,7 @@ export default function ServiceCitation({ data }: { data: ServiceCitationData })
             </span>
 
             <blockquote className="relative max-w-[920px]">
-              <p className="whitespace-pre-line font-display text-[28px] font-medium leading-[34px] tracking-[-0.025em] text-ink lg:text-[60px] lg:leading-[69px]">
+              <p className="whitespace-pre-line font-display text-[28px] font-medium leading-[34px] tracking-tight text-ink lg:text-[60px] lg:leading-[69px]">
                 {renderWithEmphase(data.texte, 'rounded-[6px] bg-accent/12 px-1.5')}
               </p>
             </blockquote>

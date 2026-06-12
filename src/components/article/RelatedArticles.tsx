@@ -14,7 +14,7 @@ export default function RelatedArticles({ articles }: { articles: ArticleCardDat
           <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
             // à lire aussi
           </p>
-          <h2 className="font-display text-[28px] font-semibold leading-9 tracking-[-0.025em] text-ink lg:text-[36px] lg:leading-10">
+          <h2 className="font-display text-[28px] font-semibold leading-9 tracking-tight text-ink lg:text-[36px] lg:leading-10">
             Sur le même sujet
           </h2>
         </div>

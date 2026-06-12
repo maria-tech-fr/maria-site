@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { seoField } from './fields/seo'
 
 /**
  * Doc-type des pages piliers — gabarit mutualisé entre /services et /besoins.
@@ -232,16 +233,7 @@ export const pagePillier = defineType({
     // 2 piliers (services + besoins).
 
     // -- SEO --
-    defineField({
-      name: 'seo',
-      title: 'SEO',
-      type: 'object',
-      group: 'seo',
-      fields: [
-        defineField({ name: 'titre', title: 'Balise <title>', type: 'string', validation: (r) => r.max(80) }),
-        defineField({ name: 'description', title: 'Meta description', type: 'text', rows: 3, validation: (r) => r.max(200) }),
-      ],
-    }),
+    seoField('seo'),
   ],
   preview: {
     select: { slug: 'slug' },

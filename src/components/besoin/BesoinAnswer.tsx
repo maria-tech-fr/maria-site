@@ -47,7 +47,7 @@ export default function BesoinAnswer({ surTitre, titre, sousTitre, leviers }: Pr
           {leviers.map((l, i) => (
             <Reveal key={i} delay={120 + i * 60} className="h-full">
               <article
-                className={`group/lever flex h-full flex-col gap-3 rounded-[8px] border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_8px_20px_-12px_rgba(254,194,60,0.25)]`}
+                className={`group/lever flex h-full flex-col gap-3 rounded-lg border border-paper-edge bg-paper p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-accent hover:shadow-[0_8px_20px_-12px_rgba(254,194,60,0.25)]`}
               >
                 <span
                   className={`mb-3 flex h-11 w-11 items-center justify-center rounded-[10px] border ${

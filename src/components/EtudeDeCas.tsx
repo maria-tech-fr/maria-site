@@ -381,7 +381,7 @@ function CaptureSlot({ capture, aspect }: { capture: Capture | null; aspect: str
   if (!asset) {
     return (
       <div
-        className={`flex w-full items-center justify-center rounded-[8px] border border-dashed border-paper-edge bg-gradient-to-br from-accent-tint via-paper to-success-tint ${aspect}`}
+        className={`flex w-full items-center justify-center rounded-lg border border-dashed border-paper-edge bg-gradient-to-br from-accent-tint via-paper to-success-tint ${aspect}`}
       >
         <p className="font-mono text-[12px] leading-4 tracking-[0.08em] text-ink-soft">
           // capture à uploader
@@ -395,7 +395,7 @@ function CaptureSlot({ capture, aspect }: { capture: Capture | null; aspect: str
     <img
       src={src}
       alt={capture?.legende ?? ''}
-      className={`w-full rounded-[8px] border border-paper-edge object-cover ${aspect}`}
+      className={`w-full rounded-lg border border-paper-edge object-cover ${aspect}`}
     />
   )
 }

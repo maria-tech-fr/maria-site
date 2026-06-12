@@ -23,7 +23,7 @@ export default function ServiceProjetPhare({ data }: { data: ServiceProjetPhareD
               </p>
             )}
             {data.titre && (
-              <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.025em] text-paper lg:text-[60px] lg:leading-[62px]">
+              <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-tight text-paper lg:text-[60px] lg:leading-[62px]">
                 {data.titre}
               </h2>
             )}

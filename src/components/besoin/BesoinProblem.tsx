@@ -46,7 +46,7 @@ export default function BesoinProblem({
 
         {/* Colonne droite : encadré « Vous reconnaissez ? » */}
         <Reveal delay={120}>
-          <aside className="rounded-[12px] border border-paper-edge bg-paper p-9 shadow-[0_12px_32px_-18px_rgba(33,33,33,0.18)] lg:p-10">
+          <aside className="rounded-xl border border-paper-edge bg-paper p-9 shadow-[0_12px_32px_-18px_rgba(33,33,33,0.18)] lg:p-10">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {recogSurTitre}
             </p>

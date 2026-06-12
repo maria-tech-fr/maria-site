@@ -93,7 +93,7 @@ export default function MariaRunner() {
         </div>
 
         {/* Canvas */}
-        <div className="relative overflow-hidden rounded-[8px] border border-paper-edge bg-paper-soft">
+        <div className="relative overflow-hidden rounded-lg border border-paper-edge bg-paper-soft">
           <canvas
             ref={canvasRef}
             width={1920}
@@ -134,7 +134,7 @@ export default function MariaRunner() {
               <button
                 type="button"
                 onClick={onReplay}
-                className="mt-3 inline-flex items-center gap-2 rounded-[8px] bg-accent px-6 py-3 font-medium text-[14px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft"
+                className="mt-3 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 font-medium text-[14px] text-ink transition-colors duration-500 ease-in-out hover:bg-accent-soft"
               >
                 ↻ Rejouer
               </button>

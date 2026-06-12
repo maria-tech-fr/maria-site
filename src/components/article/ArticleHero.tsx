@@ -1,9 +1,13 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import type { Article } from '../../lib/article'
 import { avatarSrc, formatDateFr, formatReadingTime, imageAlt, imageSrc, initiales } from '../../lib/blog'
 import Breadcrumb from '../Breadcrumb'
 
 export default function ArticleHero({ article }: { article: Article }) {
+  // Cover : ~480px max sur desktop (col gauche 423fr / (423+613)fr ≈ 41%
+  // d'un container max 1180px). Sur mobile = pleine largeur. next/image
+  // génère le srcset et choisit la bonne taille via `sizes`.
   const cover = imageSrc(article.coverImage, 900, 1200)
   const coverAlt = imageAlt(article.coverImage, article.titre)
   const avatar = avatarSrc(article.auteur, 64)
@@ -25,15 +29,16 @@ export default function ArticleHero({ article }: { article: Article }) {
         />
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[423fr_613fr] lg:items-stretch lg:gap-16">
-          {/* Image gauche (3:4) */}
-          <div className="overflow-hidden rounded-[8px] aspect-[3/4]">
+          {/* Image gauche (3:4) — LCP critique : priority + sizes responsive */}
+          <div className="relative overflow-hidden rounded-lg aspect-3/4">
             {cover ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
+              <Image
                 src={cover}
                 alt={coverAlt}
-                className="h-full w-full object-cover"
-                fetchPriority="high"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 480px"
+                className="object-cover"
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-[#FFFBEE] to-[#E8FFEE]">
@@ -52,7 +57,7 @@ export default function ArticleHero({ article }: { article: Article }) {
             >
               {`// ${article.categorie.libelle.toLowerCase()}`}
             </Link>
-            <h1 className="font-display text-[36px] font-semibold leading-10 tracking-[-0.025em] text-ink lg:text-[56px] lg:leading-[58.8px]">
+            <h1 className="font-display text-[36px] font-semibold leading-10 tracking-tight text-ink lg:text-[56px] lg:leading-[58.8px]">
               {article.titre}
             </h1>
             {article.sousTitre && (

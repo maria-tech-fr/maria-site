@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import HaloField from './HaloField'
 import Reveal from './Reveal'
@@ -30,15 +31,17 @@ export default function BlogFeaturedArticle({ article }: { article: ArticleCard 
           <Reveal delay={100}>
             <Link
               href={`/blog/${article.slug}`}
-              className="group relative block overflow-hidden rounded-[8px] aspect-[4/5] lg:aspect-auto lg:h-full"
+              className="group relative block overflow-hidden rounded-lg aspect-4/5 lg:aspect-auto lg:h-full"
               aria-label={`Lire l'article : ${article.titre}`}
             >
               {cover ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
+                <Image
                   src={cover}
                   alt={coverAlt}
-                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 540px"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-[#E8FFEE] to-[#FFFBEE]">
@@ -59,7 +62,7 @@ export default function BlogFeaturedArticle({ article }: { article: ArticleCard 
               >
                 {`// ${article.categorie.libelle.toLowerCase()}`}
               </Link>
-              <h2 className="font-display text-[32px] font-semibold leading-[38px] tracking-[-0.025em] text-ink lg:text-[48px] lg:leading-[52.8px]">
+              <h2 className="font-display text-[32px] font-semibold leading-[38px] tracking-tight text-ink lg:text-[48px] lg:leading-[52.8px]">
                 <Link href={`/blog/${article.slug}`} className="transition-opacity hover:opacity-80">
                   {article.titre}
                 </Link>

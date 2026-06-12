@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import GradientBorderHover from '../GradientBorderHover'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import type { PillierIcone, PillierPilier } from '../../lib/pagePillier'
@@ -40,23 +41,8 @@ export default function PillarWhyMaria({ surTitre, titre, piliers, charteLien }:
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {piliers.map((p, i) => (
             <Reveal key={i} delay={80 + i * 50} className="h-full">
-              <article className="group/why relative flex h-full flex-col gap-3 rounded-[16px] border border-paper-edge bg-paper p-9 transition-shadow duration-300 ease-out hover:shadow-[0_18px_40px_-22px_rgba(63,193,99,0.25)]">
-                {/* Bordure dégradée jaune↔vert visible au hover (pattern HP). */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -inset-px rounded-[16px] opacity-0 transition-opacity duration-500 ease-in-out group-hover/why:opacity-100"
-                  style={{
-                    padding: '1px',
-                    background:
-                      'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
-                    backgroundSize: '200% 100%',
-                    animation: `border-drift 32s linear infinite ${-i * 4}s`,
-                    WebkitMask:
-                      'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                    WebkitMaskComposite: 'xor',
-                    maskComposite: 'exclude',
-                  }}
-                />
+              <article className="group/grad relative flex h-full flex-col gap-3 rounded-2xl border border-paper-edge bg-paper p-9 transition-shadow duration-300 ease-out hover:shadow-[0_18px_40px_-22px_rgba(63,193,99,0.25)]">
+                <GradientBorderHover rounded="rounded-2xl" index={i} />
                 <span
                   className={`mb-5 flex h-11 w-11 items-center justify-center rounded-[11px] border ${
                     i % 2 === 0 ? 'border-[#F1E4BE] bg-accent-tint' : 'border-[#C9EAD3] bg-success-tint'

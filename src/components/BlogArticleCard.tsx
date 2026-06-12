@@ -11,7 +11,7 @@ export default function BlogArticleCard({ article }: { article: ArticleCardData 
     <article className="group flex h-full flex-col gap-4 transition-transform duration-300 ease-out hover:-translate-y-0.5">
       <Link
         href={articleHref}
-        className="block overflow-hidden rounded-[8px] aspect-[3/4]"
+        className="block overflow-hidden rounded-lg aspect-3/4"
         aria-label={`Lire l'article : ${article.titre}`}
       >
         {cover ? (

@@ -94,6 +94,35 @@ export function buildItemListSchema(items: ItemListEntry[]) {
 }
 
 /* ============================================================================
+ * Article (pour les pages éditoriales : besoins, notes, etc.)
+ * ========================================================================== */
+
+export type ArticleSchemaInput = {
+  headline: string
+  description?: string | null
+  url: string
+  /** Date ISO. Si omise, on n'émet pas le champ. */
+  dateModified?: string | null
+  /** Section éditoriale (ex. famille du besoin). */
+  articleSection?: string | null
+}
+
+export function buildArticleSchema(input: ArticleSchemaInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: input.headline,
+    url: absUrl(input.url),
+    author: { '@id': ORG_ID },
+    publisher: { '@id': ORG_ID },
+    ...(input.description ? { description: input.description } : {}),
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    ...(input.articleSection ? { articleSection: input.articleSection } : {}),
+    inLanguage: 'fr-FR',
+  }
+}
+
+/* ============================================================================
  * FAQPage
  * ========================================================================== */
 

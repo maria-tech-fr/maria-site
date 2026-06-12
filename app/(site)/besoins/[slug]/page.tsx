@@ -15,10 +15,8 @@ import BesoinServiceAssocie from '../../../../src/components/besoin/BesoinServic
 import Faq from '../../../../src/components/Faq'
 import BesoinRelated from '../../../../src/components/besoin/BesoinRelated'
 import JsonLd from '../../../../src/components/JsonLd'
-import { buildFaqSchema } from '../../../../src/lib/schema'
-import { DEFAULT_OG_IMAGE } from '../../../../src/lib/seo'
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
+import { buildArticleSchema, buildFaqSchema } from '../../../../src/lib/schema'
+import { resolveSeo } from '../../../../src/lib/seo'
 
 export async function generateStaticParams() {
   const slugs = await getPageBesoinSlugs()
@@ -33,23 +31,11 @@ export async function generateMetadata({
   const { slug } = await params
   const data = await getPageBesoinBySlug(slug)
   if (!data) return {}
-
-  const title = data.seo?.titre || `${data.titre} — Besoin | maria`
-  const description = data.seo?.description || data.introCourte || undefined
-  const canonical = `${SITE_URL}/besoins/${data.slug}`
-
-  return {
-    title,
-    description,
-    alternates: { canonical },
-    openGraph: {
-      title,
-      description: description ?? undefined,
-      type: 'website',
-      url: canonical,
-      images: [DEFAULT_OG_IMAGE],
-    },
-  }
+  return resolveSeo(data.seo, {
+    title: `${data.titre} — Besoin | maria`,
+    description: data.introCourte || `${data.titre} — maria, agence IA pour l’interne.`,
+    path: `/besoins/${data.slug}`,
+  })
 }
 
 export default async function PageBesoin({
@@ -66,6 +52,14 @@ export default async function PageBesoin({
   // BreadcrumbList rendu par le composant <Breadcrumb> dans BesoinHero (source unique).
   return (
     <>
+      <JsonLd
+        data={buildArticleSchema({
+          headline: data.titre,
+          description: data.introCourte,
+          url: `/besoins/${data.slug}`,
+          articleSection: famille?.titre,
+        })}
+      />
       <JsonLd data={buildFaqSchema(data.faq?.questions)} />
 
       {renderBlocks(data, famille?.titre)}

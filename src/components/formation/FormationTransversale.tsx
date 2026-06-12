@@ -39,7 +39,7 @@ export default function FormationTransversale({ surTitre, titre, intro, liens }:
               <Link
                 key={i}
                 href={`/services/${l.service!.slug}`}
-                className="group/l grid grid-cols-[auto_1fr_auto] items-center gap-5 rounded-[8px] border border-[#F1E4BE] bg-paper px-6 py-5 transition-all duration-300 ease-out hover:translate-x-1 hover:border-ink"
+                className="group/l grid grid-cols-[auto_1fr_auto] items-center gap-5 rounded-lg border border-[#F1E4BE] bg-paper px-6 py-5 transition-all duration-300 ease-out hover:translate-x-1 hover:border-ink"
               >
                 {l.numero && (
                   <span className="font-mono text-[13px] font-medium tracking-[0.06em] text-success">

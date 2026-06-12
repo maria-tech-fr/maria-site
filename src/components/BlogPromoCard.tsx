@@ -13,7 +13,7 @@ export default function BlogPromoCard({ promo }: { promo: PromoForGrid }) {
   return (
     <aside
       aria-label={promo.titre}
-      className={`flex h-full flex-col justify-between gap-4 rounded-[8px] border ${border} ${bg} p-7`}
+      className={`flex h-full flex-col justify-between gap-4 rounded-lg border ${border} ${bg} p-7`}
     >
       <div className="flex flex-col gap-3">
         <p className={`font-mono text-[11px] leading-4 tracking-[0.08em] ${label}`}>
