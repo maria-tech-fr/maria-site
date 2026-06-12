@@ -34,7 +34,7 @@ export default function PillarHero({
   const secAncre = ctaSecondaireAncre || '#central'
 
   return (
-    <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-45.5 lg:px-30.5 lg:pb-30 lg:pt-50">
+    <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-24 lg:px-30.5 lg:pb-30 lg:pt-50">
       <HaloField
         halos={[
           { color: '#FEC23C', alpha: 0.45, x: '90%', y: '10%', size: 720, blur: 55, duration: 38 },

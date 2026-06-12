@@ -17,7 +17,7 @@ export default function ContactHero({
   breadcrumb,
 }: ContactHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-45.5 lg:px-30.5 lg:pb-22.5 lg:pt-45.5">
+    <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-24 lg:px-30.5 lg:pb-22.5 lg:pt-45.5">
       <HaloField
         halos={[
           { color: '#FEC23C', alpha: 0.38, x: '88%', y: '15%', size: 760, blur: 40, duration: 38 },

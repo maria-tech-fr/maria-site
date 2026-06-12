@@ -95,7 +95,11 @@ export default function PillarArticulation({ surTitre, titre, intro, etapes, tra
               {transversal!.ctaLibelle && transversal!.ctaHref && (
                 <Link
                   href={transversal!.ctaHref}
-                  className="inline-flex items-center gap-2 self-start whitespace-nowrap border-b border-success pb-0.5 font-medium text-[15px] leading-5 text-success transition-colors duration-300 ease-out hover:text-success-soft lg:self-center"
+                  // `w-fit` : sans ça, en grid-cols-1 (mobile) la cellule fait
+                  // toute la largeur de la card et le `border-b` du Link
+                  // s'étend bien au-delà du texte. `w-fit` force le Link à la
+                  // largeur de son contenu.
+                  className="inline-flex w-fit items-center gap-2 self-start whitespace-nowrap border-b border-success pb-0.5 font-medium text-[15px] leading-5 text-success transition-colors duration-300 ease-out hover:text-success-soft lg:self-center"
                 >
                   {transversal!.ctaLibelle} →
                 </Link>

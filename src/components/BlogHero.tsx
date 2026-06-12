@@ -18,7 +18,7 @@ export default function BlogHero({
   breadcrumb,
 }: BlogHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-45.5 lg:px-30.5 lg:pb-22.5 lg:pt-45.5">
+    <section className="relative overflow-hidden bg-ink px-6 pb-22.5 pt-24 lg:px-30.5 lg:pb-22.5 lg:pt-45.5">
       <HaloField
         halos={[
           { color: '#FEC23C', alpha: 0.28, x: '10%', y: '20%', size: 750, blur: 60, duration: 40 },

@@ -25,7 +25,7 @@ export default function FormationHero({
   const primLabel = /[→→]\s*$/.test(primLib) ? primLib : `${primLib} →`
 
   return (
-    <section className="relative overflow-hidden bg-paper px-6 pb-22.5 pt-45.5 lg:px-30.5 lg:pb-30 lg:pt-50">
+    <section className="relative overflow-hidden bg-paper px-6 pb-22.5 pt-24 lg:px-30.5 lg:pb-30 lg:pt-50">
       <HaloField
         halos={[
           { color: '#FEC23C', alpha: 0.55, x: '92%', y: '10%', size: 720, blur: 55, duration: 36 },
