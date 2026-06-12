@@ -265,31 +265,6 @@ function NavLink({
   )
 }
 
-function MobileLink({
-  href,
-  active,
-  onClick,
-  children,
-}: {
-  href: string
-  active: boolean
-  onClick: () => void
-  children: React.ReactNode
-}) {
-  return (
-    <Link
-      href={href}
-      aria-current={active ? 'page' : undefined}
-      onClick={onClick}
-      className={`rounded-[6px] px-4 py-3 text-sm font-work-sans transition-colors duration-300 ease-out hover:bg-paper-soft ${
-        active ? 'text-ink' : 'text-ink-soft'
-      }`}
-    >
-      {children}
-    </Link>
-  )
-}
-
 function DesktopTrigger({
   label,
   active,
@@ -483,24 +458,15 @@ function MobileRootView({
   return (
     <nav className="flex h-full flex-col gap-1.5">
       {hasServices ? (
-        <MobileSectionButton label="Services" onClick={onOpenServices} active={isActive('/services') || isActive('/formation')} />
+        <MobileRootButton label="Services" onClick={onOpenServices} active={isActive('/services') || isActive('/formation')} hasChildren />
       ) : (
-        <MobileLink href="/services" onClick={onClose} active={isActive('/services')}>
-          Services
-        </MobileLink>
+        <MobileRootLink href="/services" onClick={onClose} active={isActive('/services')} label="Services" />
       )}
       {hasBesoins && (
-        <MobileSectionButton label="Besoins" onClick={onOpenBesoins} active={isActive('/besoins')} />
+        <MobileRootButton label="Besoins" onClick={onOpenBesoins} active={isActive('/besoins')} hasChildren />
       )}
-      <MobileLink href="/agence" onClick={onClose} active={isActive('/agence')}>
-        L’agence
-      </MobileLink>
-      <MobileLink href="/blog" onClick={onClose} active={isActive('/blog')}>
-        Journal
-      </MobileLink>
-      <MobileLink href="/charte-ia" onClick={onClose} active={isActive('/charte-ia')}>
-        Charte IA
-      </MobileLink>
+      <MobileRootLink href="/agence" onClick={onClose} active={isActive('/agence')} label="L’agence" />
+      <MobileRootLink href="/blog" onClick={onClose} active={isActive('/blog')} label="Journal" />
       <div className="mt-auto pt-6">
         <Link
           href="/contact"
@@ -523,23 +489,23 @@ function MobileServicesView({
   onClose: () => void
 }) {
   return (
-    <nav className="flex flex-col gap-1.5">
-      <p className="px-3 pb-3 font-mono text-[11px] uppercase tracking-[0.08em] text-success">
+    <nav className="flex flex-col gap-3">
+      <p className="px-3 pb-1 font-mono text-[11px] uppercase tracking-[0.08em] text-success">
         // services
       </p>
-      <MobilePillarLink href="/services" label="Tous les services" onClick={onClose} />
-      <div className="my-2 border-t border-paper-edge" />
-      {services.map((s) => (
-        <MobileItemLink key={s.href} href={s.href} title={s.titre} intro={s.intro} onClick={onClose} />
+      {services.map((s, i) => (
+        <MobileServiceCard
+          key={s.href}
+          href={s.href}
+          title={s.titre}
+          intro={s.intro}
+          picto={s.picto}
+          index={i}
+          onClick={onClose}
+        />
       ))}
-      <div className="my-2 border-t border-dashed border-paper-edge" />
-      <MobileItemLink
-        href="/formation"
-        title="Formation IA pour les équipes"
-        intro="Service transversal — pour ancrer durablement."
-        eyebrow="// transversal"
-        onClick={onClose}
-      />
+      <MobileFormationCard onClick={onClose} />
+      <MobilePillarLink href="/services" label="Tous les services" onClick={onClose} />
     </nav>
   )
 }
@@ -552,15 +518,13 @@ function MobileBesoinsView({
   onClose: () => void
 }) {
   return (
-    <nav className="flex flex-col gap-3">
+    <nav className="flex flex-col gap-4">
       <p className="px-3 pb-1 font-mono text-[11px] uppercase tracking-[0.08em] text-success">
         // besoins
       </p>
-      <MobilePillarLink href="/besoins" label="Tous les besoins" onClick={onClose} />
-      <div className="my-1 border-t border-paper-edge" />
       {grouped.map((g) => (
-        <div key={g.meta.key} className="flex flex-col gap-0.5 pt-1">
-          <p className="flex items-center gap-2 px-3 pb-1 font-display text-[12.5px] font-semibold tracking-[-0.01em] text-ink">
+        <div key={g.meta.key} className="flex flex-col gap-1.5">
+          <p className="flex items-center gap-2 px-3 pb-0.5 font-mono text-[10.5px] uppercase tracking-[0.06em] text-success">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
             {g.meta.titre}
           </p>
@@ -569,39 +533,66 @@ function MobileBesoinsView({
               key={item.slug}
               href={`/besoins/${item.slug}`}
               onClick={onClose}
-              className="rounded-md px-6 py-2.5 text-[14px] font-work-sans text-ink transition-colors duration-200 ease-out hover:bg-paper-soft"
+              className="rounded-lg border border-[#F1E4BE] bg-accent-tint px-4 py-3 font-work-sans text-[14.5px] text-ink transition-colors duration-200 ease-out hover:bg-[#FFF5D0]"
             >
               {item.titre}
             </Link>
           ))}
         </div>
       ))}
+      <MobilePillarLink href="/besoins" label="Tous les besoins" onClick={onClose} />
     </nav>
   )
 }
 
-function MobileSectionButton({
+// ---- Root view atoms (taille / typo uniformes) -----------------------------
+
+const ROOT_ENTRY_CLASS =
+  'flex items-center justify-between rounded-md px-4 py-3.5 text-left font-display text-[18px] font-medium tracking-[-0.015em] text-ink transition-colors duration-200 ease-out hover:bg-paper-soft'
+
+function MobileRootButton({
   label,
   onClick,
   active,
+  hasChildren,
 }: {
   label: string
   onClick: () => void
   active: boolean
+  hasChildren: boolean
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex items-center justify-between rounded-md px-4 py-3.5 text-left font-display text-[18px] font-medium tracking-[-0.015em] transition-colors duration-200 ease-out hover:bg-paper-soft ${
-        active ? 'text-ink' : 'text-ink'
-      }`}
+      aria-current={active ? 'page' : undefined}
+      className={ROOT_ENTRY_CLASS}
     >
       <span>{label}</span>
-      <ChevronRightIcon />
+      {hasChildren && <ChevronRightIcon />}
     </button>
   )
 }
+
+function MobileRootLink({
+  href,
+  onClick,
+  active,
+  label,
+}: {
+  href: string
+  onClick: () => void
+  active: boolean
+  label: string
+}) {
+  return (
+    <Link href={href} onClick={onClick} aria-current={active ? 'page' : undefined} className={ROOT_ENTRY_CLASS}>
+      <span>{label}</span>
+    </Link>
+  )
+}
+
+// ---- Sub-views cards (Services / Formation / lien pilier) ------------------
 
 function MobilePillarLink({
   href,
@@ -616,7 +607,7 @@ function MobilePillarLink({
     <Link
       href={href}
       onClick={onClick}
-      className="group flex items-center justify-between gap-3 rounded-md px-3 py-2.5 transition-colors duration-200 ease-out hover:bg-paper-soft"
+      className="mt-2 flex items-center justify-between gap-3 rounded-md border border-paper-edge px-4 py-3 transition-colors duration-200 ease-out hover:bg-paper-soft"
     >
       <span className="font-display text-[15px] font-semibold tracking-[-0.01em] text-ink">
         {label}
@@ -628,36 +619,60 @@ function MobilePillarLink({
   )
 }
 
-function MobileItemLink({
+function MobileServiceCard({
   href,
   title,
   intro,
-  eyebrow,
+  picto,
+  index,
   onClick,
 }: {
   href: string
   title: string
   intro: string | null
-  eyebrow?: string
+  picto: { url: string } | null
+  index: number
   onClick: () => void
 }) {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className="flex flex-col gap-1 rounded-md px-3 py-3 transition-colors duration-200 ease-out hover:bg-paper-soft"
+      className="flex items-center gap-3 rounded-lg border border-[#F1E4BE] bg-accent-tint px-4 py-3 transition-colors duration-200 ease-out hover:bg-[#FFF5D0]"
     >
-      {eyebrow && (
-        <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
-          {eyebrow}
-        </span>
-      )}
-      <span className="font-display text-[15.5px] font-medium tracking-[-0.01em] text-ink">
-        {title}
+      <span
+        aria-hidden
+        className="flex h-9 w-9 flex-none items-center justify-center rounded-md border border-[rgba(254,194,60,0.35)] bg-paper"
+      >
+        {picto ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={picto.url} alt="" className="h-4.5 w-4.5 object-contain" />
+        ) : (
+          <DefaultPicto tone="accent" index={index} />
+        )}
       </span>
-      {intro && (
-        <span className="text-[13px] leading-snug text-ink-soft">{intro}</span>
-      )}
+      <span className="flex flex-1 flex-col gap-0.5">
+        <span className="font-display text-[15.5px] font-medium tracking-[-0.01em] text-ink">
+          {title}
+        </span>
+        {intro && (
+          <span className="text-[12.5px] leading-snug text-ink-soft">{intro}</span>
+        )}
+      </span>
+    </Link>
+  )
+}
+
+function MobileFormationCard({ onClick }: { onClick: () => void }) {
+  return (
+    <Link
+      href="/formation"
+      onClick={onClick}
+      className="flex items-center justify-between rounded-lg border border-[#C9EAD3] bg-success-tint px-4 py-3 transition-colors duration-200 ease-out hover:bg-[#D8F5E0]"
+    >
+      <span className="font-display text-[15.5px] font-medium tracking-[-0.01em] text-ink">
+        Formation IA pour les équipes
+      </span>
     </Link>
   )
 }
