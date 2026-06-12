@@ -1,5 +1,6 @@
 'use client'
 
+import { getCalApi } from '@calcom/embed-react'
 import { useEffect } from 'react'
 import HaloField from '../HaloField'
 import Reveal from '../Reveal'
@@ -26,40 +27,20 @@ export default function ContactChannels({
   calcomUrl,
   telephoneAffichage,
 }: ContactChannelsProps) {
-  // Initialise Cal.com une fois — différé à l'idle pour sortir
-  // `@calcom/embed-react` du critical path (chunk lazy au lieu d'eager
-  // dans le bundle initial de la page).
+  // Initialise Cal.com une fois — gère les configs par namespace.
+  // (chargement direct ; la version précédente lazy/idle a été retirée
+  // car elle introduisait un délai pendant lequel les clics n'étaient
+  // pas captés par le SDK.)
   useEffect(() => {
     if (!calcomUrl) return
-    let cancelled = false
-    function init() {
-      if (cancelled) return
-      import('@calcom/embed-react').then(({ getCalApi }) => {
-        getCalApi({ namespace: CAL_NAMESPACE }).then((cal) => {
-          if (cancelled) return
-          cal('ui', {
-            theme: 'light',
-            hideEventTypeDetails: false,
-            layout: 'month_view',
-          })
-        })
+    ;(async () => {
+      const cal = await getCalApi({ namespace: CAL_NAMESPACE })
+      cal('ui', {
+        theme: 'light',
+        hideEventTypeDetails: false,
+        layout: 'month_view',
       })
-    }
-    const ric = (window as Window & { requestIdleCallback?: (cb: () => void) => number })
-      .requestIdleCallback
-    if (typeof ric === 'function') {
-      const id = ric(init)
-      return () => {
-        cancelled = true
-        ;(window as Window & { cancelIdleCallback?: (id: number) => void })
-          .cancelIdleCallback?.(id)
-      }
-    }
-    const id = window.setTimeout(init, 1500)
-    return () => {
-      cancelled = true
-      window.clearTimeout(id)
-    }
+    })()
   }, [calcomUrl])
 
   function onCardClick(action: ContactCanalAction, href: string | null) {
