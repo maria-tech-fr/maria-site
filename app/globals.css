@@ -97,6 +97,16 @@ html {
 }
 
 /*
+  Tailwind v4 retire le `cursor: pointer` par défaut sur les `<button>` et
+  `[role="button"]` (préflight). On le restaure ici : c'est la convention
+  attendue partout dans le site (signaler l'interactivité au survol).
+*/
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+/*
   Score flash sur le runner maria : déclenche un flash vert court à chaque
   changement de score, via re-mount du span (key={score}). Aucun setState
   dans useEffect nécessaire.

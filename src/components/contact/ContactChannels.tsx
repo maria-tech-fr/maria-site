@@ -114,12 +114,15 @@ function ChannelCard({
   telephoneAffichage?: string | null
 }) {
   const isDisabled = card.action === 'disabled'
+  // Bordure colorée (signal de catégorie) + texte en `ink` pour rester
+  // parfaitement lisible : `text-accent` ou `text-success` sur fond paper
+  // donnait un contraste insuffisant (« lien qui semble vide »).
   const accentClass =
     card.accent === 'yellow'
-      ? 'text-accent border-accent'
+      ? 'text-ink border-accent'
       : card.accent === 'muted'
       ? 'text-[#999] border-[#CCC]'
-      : 'text-success border-success'
+      : 'text-ink border-success'
 
   const cardClass = isDisabled
     ? 'cursor-not-allowed border-dashed border-[#DCDCDC] bg-[#F9F9F9]'
@@ -182,7 +185,7 @@ function ChannelCard({
             e.preventDefault()
             onClick()
           }}
-          className={`mt-4 inline-flex items-center gap-1 self-start border-b pb-0.5 text-[14px] font-medium leading-5 transition-colors duration-300 ease-out ${accentClass} hover:opacity-80`}
+          className={`mt-4 inline-flex cursor-pointer items-center gap-1 self-start border-b pb-0.5 text-[14px] font-medium leading-5 transition-colors duration-300 ease-out ${accentClass} hover:opacity-80`}
         >
           {card.cta}
           <ArrowRight />
