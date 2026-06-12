@@ -53,8 +53,6 @@ export default function Nav({ services, besoins }: NavProps) {
   }
 
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [mobileServicesExpanded, setMobileServicesExpanded] = useState(false)
-  const [mobileBesoinsExpanded, setMobileBesoinsExpanded] = useState(false)
   // Un seul sous-menu desktop ouvert à la fois (services xor besoins).
   const [desktopOpen, setDesktopOpen] = useState<null | 'services' | 'besoins'>(null)
 
@@ -216,88 +214,30 @@ export default function Nav({ services, besoins }: NavProps) {
       {/* Mobile hamburger */}
       <button
         type="button"
-        aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+        aria-label="Ouvrir le menu"
         aria-expanded={mobileOpen}
-        onClick={() => setMobileOpen((v) => !v)}
+        onClick={() => setMobileOpen(true)}
         className="flex h-10 w-10 items-center justify-center rounded-lg text-ink hover:bg-paper-soft transition-colors duration-300 ease-out lg:hidden"
       >
         <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden>
-          {mobileOpen ? (
-            <path
-              d="M3 3l14 8M3 11l14-8"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          ) : (
-            <path
-              d="M2 2h16M2 7h16M2 12h16"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          )}
+          <path
+            d="M2 2h16M2 7h16M2 12h16"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          />
         </svg>
       </button>
 
-      {/* Mobile dropdown */}
-      {mobileOpen && (
-        <div className="absolute left-0 right-0 top-full mt-3 flex flex-col gap-1 rounded-[10px] border border-ink/6 bg-paper p-3 shadow-lg lg:hidden">
-          {hasServices ? (
-            <MobileExpand
-              label="Services"
-              items={servicesItems}
-              expanded={mobileServicesExpanded}
-              setExpanded={setMobileServicesExpanded}
-              closeAll={() => {
-                setMobileOpen(false)
-                setMobileServicesExpanded(false)
-              }}
-              pillarHref="/services"
-              pillarLabel="Voir tous nos services"
-              transversalLink={{
-                href: '/formation',
-                eyebrow: '// transversal',
-                titre: 'Formation IA pour les équipes',
-              }}
-            />
-          ) : (
-            <MobileLink href="/services" onClick={() => setMobileOpen(false)} active={isActive('/services')}>
-              Services
-            </MobileLink>
-          )}
-
-          {hasBesoins && (
-            <MobileBesoinsExpand
-              grouped={besoinsGrouped}
-              expanded={mobileBesoinsExpanded}
-              setExpanded={setMobileBesoinsExpanded}
-              closeAll={() => {
-                setMobileOpen(false)
-                setMobileBesoinsExpanded(false)
-              }}
-              pillarHref="/besoins"
-              pillarLabel="Voir tous les besoins"
-            />
-          )}
-
-          {/* Entrée « Projets » retirée (mêmes raisons qu'en desktop). */}
-          <MobileLink href="/agence" onClick={() => setMobileOpen(false)} active={isActive('/agence')}>
-            L’agence
-          </MobileLink>
-          <MobileLink href="/blog" onClick={() => setMobileOpen(false)} active={isActive('/blog')}>
-            Journal
-          </MobileLink>
-          <Link
-            href="/contact"
-            aria-current={isActive('/contact') ? 'page' : undefined}
-            className="mt-2 inline-flex items-center justify-center rounded-[5px] bg-accent px-4 py-3 text-sm font-work-sans font-medium text-ink hover:bg-accent-soft transition-colors duration-500 ease-in-out"
-            onClick={() => setMobileOpen(false)}
-          >
-            Parlons de votre projet
-          </Link>
-        </div>
-      )}
+      {/* Mobile menu — overlay plein écran, drill-down par section. Monté
+          en permanence pour animer l'apparition/disparition. */}
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        services={servicesItems}
+        besoinsGrouped={besoinsGrouped}
+        isActive={isActive}
+      />
     </nav>
   )
 }
@@ -412,80 +352,343 @@ function DesktopTrigger({
   )
 }
 
-function MobileExpand({
-  label,
-  items,
-  expanded,
-  setExpanded,
-  closeAll,
-  pillarHref,
-  pillarLabel,
-  transversalLink,
+// ----------------------------------------------------------------------------
+// MobileMenu — overlay plein écran avec drill-down par section
+// ----------------------------------------------------------------------------
+
+type MobileView = 'root' | 'services' | 'besoins'
+
+function MobileMenu({
+  open,
+  onClose,
+  services,
+  besoinsGrouped,
+  isActive,
 }: {
-  label: string
-  items: SubmenuItem[]
-  expanded: boolean
-  setExpanded: (v: boolean | ((p: boolean) => boolean)) => void
-  closeAll: () => void
-  /** Lien vers la page pilier, affiché en tête de section. */
-  pillarHref: string
-  pillarLabel: string
-  /** Lien discret affiché en bas sous un séparateur, pour les services transversaux. */
-  transversalLink?: { href: string; eyebrow: string; titre: string }
+  open: boolean
+  onClose: () => void
+  services: SubmenuItem[]
+  besoinsGrouped: GroupedBesoin[]
+  isActive: (href: string) => boolean
+}) {
+  const [view, setView] = useState<MobileView>('root')
+
+  // Re-positionne sur la vue racine après fermeture (après la transition
+  // d'opacité, sinon on voit le swap pendant qu'on ferme).
+  useEffect(() => {
+    if (open) return
+    const id = setTimeout(() => setView('root'), 220)
+    return () => clearTimeout(id)
+  }, [open])
+
+  // Verrouille le scroll de l'arrière-plan tant que le menu est ouvert.
+  useEffect(() => {
+    if (!open) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [open])
+
+  const hasServices = services.length > 0
+  const hasBesoins = besoinsGrouped.length > 0
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu de navigation"
+      className={`fixed inset-0 z-[80] flex flex-col bg-paper transition-opacity duration-200 ease-out lg:hidden ${
+        open ? 'opacity-100' : 'pointer-events-none opacity-0'
+      }`}
+    >
+      <header className="flex items-center justify-between border-b border-paper-edge px-5 py-4">
+        {view === 'root' ? (
+          <Link href="/" onClick={onClose} aria-label="maria — accueil" className="shrink-0">
+            <Logo className="h-7 w-auto text-ink" />
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setView('root')}
+            className="-ml-2 inline-flex items-center gap-2 rounded-md px-2 py-1 text-ink transition-colors duration-200 ease-out hover:bg-paper-soft"
+            aria-label="Retour au menu principal"
+          >
+            <ChevronLeftIcon />
+            <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-ink-soft">
+              Menu
+            </span>
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onClose}
+          className="flex h-10 w-10 items-center justify-center rounded-md text-ink transition-colors duration-200 ease-out hover:bg-paper-soft"
+          aria-label="Fermer le menu"
+        >
+          <CloseIcon />
+        </button>
+      </header>
+
+      <div className="flex-1 overflow-y-auto px-5 pb-8 pt-4">
+        {view === 'root' && (
+          <MobileRootView
+            hasServices={hasServices}
+            hasBesoins={hasBesoins}
+            isActive={isActive}
+            onOpenServices={() => setView('services')}
+            onOpenBesoins={() => setView('besoins')}
+            onClose={onClose}
+          />
+        )}
+        {view === 'services' && (
+          <MobileServicesView services={services} onClose={onClose} />
+        )}
+        {view === 'besoins' && (
+          <MobileBesoinsView grouped={besoinsGrouped} onClose={onClose} />
+        )}
+      </div>
+    </div>
+  )
+}
+
+function MobileRootView({
+  hasServices,
+  hasBesoins,
+  isActive,
+  onOpenServices,
+  onOpenBesoins,
+  onClose,
+}: {
+  hasServices: boolean
+  hasBesoins: boolean
+  isActive: (href: string) => boolean
+  onOpenServices: () => void
+  onOpenBesoins: () => void
+  onClose: () => void
 }) {
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        className="flex items-center justify-between rounded-[6px] px-4 py-3 text-left text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
-      >
-        <span>{label}</span>
-        <Chevron open={expanded} />
-      </button>
-      {expanded && (
-        <div className="mt-1 flex flex-col gap-1 pl-3">
-          <Link
-            href={pillarHref}
-            onClick={closeAll}
-            className="group flex items-center justify-between gap-3 rounded-[6px] px-4 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
-          >
-            <span className="font-display text-[13px] font-semibold tracking-[-0.01em] text-ink">
-              {pillarLabel}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
-              →
-            </span>
-          </Link>
-          <div className="my-1 mx-4 border-t border-paper-edge" />
-          {items.map((item) => (
+    <nav className="flex h-full flex-col gap-1.5">
+      {hasServices ? (
+        <MobileSectionButton label="Services" onClick={onOpenServices} active={isActive('/services') || isActive('/formation')} />
+      ) : (
+        <MobileLink href="/services" onClick={onClose} active={isActive('/services')}>
+          Services
+        </MobileLink>
+      )}
+      {hasBesoins && (
+        <MobileSectionButton label="Besoins" onClick={onOpenBesoins} active={isActive('/besoins')} />
+      )}
+      <MobileLink href="/agence" onClick={onClose} active={isActive('/agence')}>
+        L’agence
+      </MobileLink>
+      <MobileLink href="/blog" onClick={onClose} active={isActive('/blog')}>
+        Journal
+      </MobileLink>
+      <MobileLink href="/charte-ia" onClick={onClose} active={isActive('/charte-ia')}>
+        Charte IA
+      </MobileLink>
+      <div className="mt-auto pt-6">
+        <Link
+          href="/contact"
+          aria-current={isActive('/contact') ? 'page' : undefined}
+          onClick={onClose}
+          className="inline-flex w-full items-center justify-center rounded-lg bg-accent px-4 py-3.5 text-[15px] font-work-sans font-medium text-ink transition-colors duration-300 ease-out hover:bg-accent-soft"
+        >
+          Parlons de votre projet
+        </Link>
+      </div>
+    </nav>
+  )
+}
+
+function MobileServicesView({
+  services,
+  onClose,
+}: {
+  services: SubmenuItem[]
+  onClose: () => void
+}) {
+  return (
+    <nav className="flex flex-col gap-1.5">
+      <p className="px-3 pb-3 font-mono text-[11px] uppercase tracking-[0.08em] text-success">
+        // services
+      </p>
+      <MobilePillarLink href="/services" label="Tous les services" onClick={onClose} />
+      <div className="my-2 border-t border-paper-edge" />
+      {services.map((s) => (
+        <MobileItemLink key={s.href} href={s.href} title={s.titre} intro={s.intro} onClick={onClose} />
+      ))}
+      <div className="my-2 border-t border-dashed border-paper-edge" />
+      <MobileItemLink
+        href="/formation"
+        title="Formation IA pour les équipes"
+        intro="Service transversal — pour ancrer durablement."
+        eyebrow="// transversal"
+        onClick={onClose}
+      />
+    </nav>
+  )
+}
+
+function MobileBesoinsView({
+  grouped,
+  onClose,
+}: {
+  grouped: GroupedBesoin[]
+  onClose: () => void
+}) {
+  return (
+    <nav className="flex flex-col gap-3">
+      <p className="px-3 pb-1 font-mono text-[11px] uppercase tracking-[0.08em] text-success">
+        // besoins
+      </p>
+      <MobilePillarLink href="/besoins" label="Tous les besoins" onClick={onClose} />
+      <div className="my-1 border-t border-paper-edge" />
+      {grouped.map((g) => (
+        <div key={g.meta.key} className="flex flex-col gap-0.5 pt-1">
+          <p className="flex items-center gap-2 px-3 pb-1 font-display text-[12.5px] font-semibold tracking-[-0.01em] text-ink">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+            {g.meta.titre}
+          </p>
+          {g.items.map((item) => (
             <Link
-              key={item.href}
-              href={item.href}
-              onClick={closeAll}
-              className="rounded-[6px] px-4 py-2.5 text-sm font-work-sans text-ink transition-colors duration-300 ease-out hover:bg-paper-soft"
+              key={item.slug}
+              href={`/besoins/${item.slug}`}
+              onClick={onClose}
+              className="rounded-md px-6 py-2.5 text-[14px] font-work-sans text-ink transition-colors duration-200 ease-out hover:bg-paper-soft"
             >
               {item.titre}
             </Link>
           ))}
-          {transversalLink && (
-            <Link
-              href={transversalLink.href}
-              onClick={closeAll}
-              className="mt-1 flex flex-col gap-0.5 rounded-[6px] border-t border-paper-edge px-4 pb-2.5 pt-3 text-left transition-colors duration-300 ease-out hover:bg-paper-soft"
-            >
-              <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
-                {transversalLink.eyebrow}
-              </span>
-              <span className="font-display text-[14px] font-semibold leading-[18px] tracking-[-0.01em] text-ink">
-                {transversalLink.titre}
-              </span>
-            </Link>
-          )}
         </div>
+      ))}
+    </nav>
+  )
+}
+
+function MobileSectionButton({
+  label,
+  onClick,
+  active,
+}: {
+  label: string
+  onClick: () => void
+  active: boolean
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex items-center justify-between rounded-md px-4 py-3.5 text-left font-display text-[18px] font-medium tracking-[-0.015em] transition-colors duration-200 ease-out hover:bg-paper-soft ${
+        active ? 'text-ink' : 'text-ink'
+      }`}
+    >
+      <span>{label}</span>
+      <ChevronRightIcon />
+    </button>
+  )
+}
+
+function MobilePillarLink({
+  href,
+  label,
+  onClick,
+}: {
+  href: string
+  label: string
+  onClick: () => void
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className="group flex items-center justify-between gap-3 rounded-md px-3 py-2.5 transition-colors duration-200 ease-out hover:bg-paper-soft"
+    >
+      <span className="font-display text-[15px] font-semibold tracking-[-0.01em] text-ink">
+        {label}
+      </span>
+      <span className="font-mono text-[11px] uppercase tracking-[0.06em] text-success">
+        →
+      </span>
+    </Link>
+  )
+}
+
+function MobileItemLink({
+  href,
+  title,
+  intro,
+  eyebrow,
+  onClick,
+}: {
+  href: string
+  title: string
+  intro: string | null
+  eyebrow?: string
+  onClick: () => void
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className="flex flex-col gap-1 rounded-md px-3 py-3 transition-colors duration-200 ease-out hover:bg-paper-soft"
+    >
+      {eyebrow && (
+        <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
+          {eyebrow}
+        </span>
       )}
-    </>
+      <span className="font-display text-[15.5px] font-medium tracking-[-0.01em] text-ink">
+        {title}
+      </span>
+      {intro && (
+        <span className="text-[13px] leading-snug text-ink-soft">{intro}</span>
+      )}
+    </Link>
+  )
+}
+
+function CloseIcon() {
+  // X aux proportions équilibrées (viewBox 24×24 carré, traits égaux).
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function ChevronLeftIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M15 6l-6 6 6 6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden className="text-ink-soft">
+      <path
+        d="M9 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }
 
@@ -827,70 +1030,3 @@ function FamilleColumn({
   )
 }
 
-// ----------------------------------------------------------------------------
-// MobileBesoinsExpand — accordion mobile, familles avec sous-listes
-// ----------------------------------------------------------------------------
-function MobileBesoinsExpand({
-  grouped,
-  expanded,
-  setExpanded,
-  closeAll,
-  pillarHref,
-  pillarLabel,
-}: {
-  grouped: GroupedBesoin[]
-  expanded: boolean
-  setExpanded: (v: boolean | ((p: boolean) => boolean)) => void
-  closeAll: () => void
-  pillarHref: string
-  pillarLabel: string
-}) {
-  return (
-    <>
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        className="flex items-center justify-between rounded-[6px] px-4 py-3 text-left text-sm font-work-sans text-ink-soft transition-colors duration-300 ease-out hover:bg-paper-soft"
-      >
-        <span>Besoins</span>
-        <Chevron open={expanded} />
-      </button>
-      {expanded && (
-        <div className="mt-1 flex flex-col gap-3 pl-3 pb-1">
-          <Link
-            href={pillarHref}
-            onClick={closeAll}
-            className="mx-1 flex items-center justify-between gap-3 rounded-[6px] px-3 py-2.5 transition-colors duration-300 ease-out hover:bg-paper-soft"
-          >
-            <span className="font-display text-[13px] font-semibold tracking-[-0.01em] text-ink">
-              {pillarLabel}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-success">
-              →
-            </span>
-          </Link>
-          <div className="mx-4 border-t border-paper-edge" />
-          {grouped.map((g) => (
-            <div key={g.meta.key} className="flex flex-col gap-1">
-              <p className="flex items-center gap-2 px-4 pt-1 font-display text-[12.5px] font-semibold leading-4 tracking-[-0.01em] text-ink">
-                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
-                {g.meta.titre}
-              </p>
-              {g.items.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/besoins/${item.slug}`}
-                  onClick={closeAll}
-                  className="rounded-[6px] px-6 py-2 text-sm font-work-sans text-ink transition-colors duration-300 ease-out hover:bg-paper-soft"
-                >
-                  {item.titre}
-                </Link>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-    </>
-  )
-}

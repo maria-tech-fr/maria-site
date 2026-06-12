@@ -6,7 +6,10 @@ export default function Reassurance({ items }: { items: ReassuranceItem[] }) {
 
   return (
     <section className="border-y border-white/6 bg-ink-soft px-6 lg:px-30.5">
-      <div className="flex flex-col divide-y divide-white/8 border-y border-white/8 lg:flex-row lg:divide-x lg:divide-y-0 lg:border-x lg:border-y-0">
+      {/* En mobile : pas de `border-y` sur le conteneur — sinon les bordures
+          du conteneur se superposent à celles de la <section> et créent
+          une épaisseur double. Le `divide-y` suffit pour séparer les items. */}
+      <div className="flex flex-col divide-y divide-white/8 lg:flex-row lg:divide-x lg:divide-y-0 lg:border-x">
         {items.map((item, i) => (
           <div key={i} className="flex flex-1 items-center gap-3 px-4 py-4 lg:px-6">
             <ReassuranceIcon name={item.icone} className="h-5.5 w-5.5 shrink-0" />

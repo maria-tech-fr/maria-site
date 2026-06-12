@@ -28,7 +28,12 @@ export default function GradientBorderHover({ rounded, index = 0 }: Props) {
   return (
     <div
       aria-hidden
-      className={`pointer-events-none absolute -inset-px ${rounded} opacity-0 transition-opacity duration-500 ease-in-out group-hover/grad:opacity-100`}
+      // `[@media(hover:none)]:opacity-100` rend la bordure visible par défaut
+      // sur tactile (iOS, Android) : pas de hover possible, donc on affiche
+      // le signal d'interactivité dès le rendu pour ne pas avoir des cards
+      // « plates ». Sur desktop, comportement inchangé : opacity-0 → 100
+      // sur group-hover/grad.
+      className={`pointer-events-none absolute -inset-px ${rounded} opacity-0 transition-opacity duration-500 ease-in-out group-hover/grad:opacity-100 [@media(hover:none)]:opacity-100`}
       style={{
         padding: '1px',
         background:
