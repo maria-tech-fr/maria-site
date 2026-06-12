@@ -463,7 +463,8 @@ export const articleCategoriesQuery = defineQuery(`
   *[_type == "articleCategorie" && defined(slug.current)] | order(libelle asc){
     "slug": slug.current,
     libelle,
-    description
+    description,
+    "articleCount": count(*[_type == "article" && defined(slug.current) && categorie._ref == ^._id])
   }
 `)
 

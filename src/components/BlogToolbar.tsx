@@ -73,14 +73,24 @@ export default function BlogToolbar({
             label="Tous"
             isActive={!activeCategorySlug}
           />
-          {categories.map((cat) => (
-            <CategoryChip
-              key={cat.slug}
-              href={`/blog/categorie/${cat.slug}`}
-              label={cat.libelle}
-              isActive={activeCategorySlug === cat.slug}
-            />
-          ))}
+          {categories
+            // On masque les catégories vides : pas de chip qui mène vers
+            // une listing à 0 article. La catégorie active est gardée même
+            // si vide (cas d'une nav directe vers /blog/categorie/<slug>).
+            .filter(
+              (cat) =>
+                cat.articleCount == null ||
+                cat.articleCount > 0 ||
+                activeCategorySlug === cat.slug,
+            )
+            .map((cat) => (
+              <CategoryChip
+                key={cat.slug}
+                href={`/blog/categorie/${cat.slug}`}
+                label={cat.libelle}
+                isActive={activeCategorySlug === cat.slug}
+              />
+            ))}
         </div>
 
         {/* Recherche au-dessus du tri */}

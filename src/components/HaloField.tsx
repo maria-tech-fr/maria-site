@@ -66,10 +66,12 @@ export default function HaloField({ halos, staticMode = false }: HaloFieldProps)
         const rgb = hexToRgb(h.color)
         const { wx, wy } = budgets[i]
 
-        // Sur mobile, on contraint la taille à 60% de la taille design.
-        // Évite que des halos de 500px débordent un viewport de 375px.
+        // Sur mobile : taille réduite (60% du design max) + blur réduit
+        // (50% min) pour limiter le coût de compositing. iOS Safari peut
+        // throttler agressivement les animations sur des éléments blur >
+        // 35px ; en cappant à ~25px sur mobile on garde l'effet visuel.
         const sizeStyle = `clamp(${Math.round(h.size * 0.6)}px, 110vw, ${h.size}px)`
-        const blurStyle = `clamp(${Math.round(blur * 0.7)}px, 8vw, ${blur}px)`
+        const blurStyle = `clamp(${Math.round(blur * 0.5)}px, 6vw, ${blur}px)`
 
         return (
           <div
@@ -78,7 +80,11 @@ export default function HaloField({ halos, staticMode = false }: HaloFieldProps)
             style={{
               left: h.x,
               top: h.y,
-              transform: 'translate(-50%, -50%)',
+              // translate3d force la création d'une couche compositing GPU
+              // dès le rendu — sans ça, iOS Safari peut décider de ne pas
+              // promouvoir l'élément et figer l'animation après quelques
+              // frames pour économiser de la batterie.
+              transform: 'translate3d(-50%, -50%, 0)',
             }}
           >
             <div
@@ -98,6 +104,9 @@ export default function HaloField({ halos, staticMode = false }: HaloFieldProps)
                       ['--wy' as string]: `${wy}vw`,
                       animation: `halo-wander-${pattern} ${duration}s ease-in-out ${delay}s infinite`,
                       willChange: 'transform',
+                      // Hint navigateur supplémentaire pour ne pas
+                      // détacher la couche pendant l'animation.
+                      backfaceVisibility: 'hidden',
                     }),
               }}
             />

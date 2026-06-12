@@ -99,6 +99,9 @@ export type ArticleCategorie = {
   slug: string
   libelle: string
   description: string
+  /** Nombre d'articles publiés dans cette catégorie. Sert à masquer les
+   *  catégories vides côté toolbar. */
+  articleCount?: number | null
 }
 
 export type PromoBlog = {
