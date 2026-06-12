@@ -1,4 +1,3 @@
-import { headers } from 'next/headers'
 import type { Article, ArticleBodyBlock, FaqItem } from '../../lib/article'
 import { avatarSrc, imageSrc } from '../../lib/blog'
 
@@ -35,8 +34,7 @@ function extractFaqFromBody(body: ArticleBodyBlock[] | null): FaqItem[] {
   return items
 }
 
-export default async function ArticleJsonLd({ article }: { article: Article }) {
-  const nonce = (await headers()).get('x-nonce') ?? undefined
+export default function ArticleJsonLd({ article }: { article: Article }) {
   const url = `${SITE_URL}/blog/${article.slug}`
   const image = imageSrc(article.coverImage, 1600, 900)
   const authorAvatar = avatarSrc(article.auteur, 200)
@@ -107,13 +105,11 @@ export default async function ArticleJsonLd({ article }: { article: Article }) {
     <>
       <script
         type="application/ld+json"
-        nonce={nonce}
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       {faqSchema && (
         <script
           type="application/ld+json"
-          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}

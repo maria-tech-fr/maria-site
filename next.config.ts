@@ -37,11 +37,29 @@ const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
 ]
 
-// Content-Security-Policy : déplacé dans `middleware.ts` car il intègre un
-// nonce cryptographique par requête (cf. middleware.ts). Garder un CSP
-// statique ici en doublon créerait un conflit de headers — la version
-// nonce-based est la seule active.
+// CSP statique posée via les headers Next.js : préserve le rendu SSG/static
+// (aucun middleware par requête). On garde 'unsafe-inline' sur script-src
+// pour autoriser les <script type="application/ld+json"> émis côté serveur ;
+// la surface XSS reste très faible (pas d'input utilisateur réinjecté dans
+// les pages, contenu Sanity validé côté éditeurs).
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  // Tiers activables : Axeptio (consentement) + GA4 (mesure). Chargés
+  // conditionnellement par les composants ConsentBanner/Analytics.
+  "script-src 'self' 'unsafe-inline' https://static.axept.io https://www.googletagmanager.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "img-src 'self' data: blob: https://cdn.sanity.io https://*.google-analytics.com https://*.googletagmanager.com",
+  "font-src 'self' data: https://fonts.gstatic.com",
+  "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://*.google-analytics.com https://*.googletagmanager.com https://*.axept.io",
+  "frame-src 'self' https://cal.com https://*.cal.com https://calendly.com https://*.calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.loom.com",
+  "frame-ancestors 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+  'upgrade-insecure-requests',
+].join('; ')
 
+const cspHeader = { key: 'Content-Security-Policy', value: contentSecurityPolicy }
 const noIndexHeader = { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }
 
 const nextConfig: NextConfig = {
@@ -86,6 +104,10 @@ const nextConfig: NextConfig = {
           ...securityHeaders,
           ...(INDEXING_ALLOWED ? [] : [noIndexHeader]),
         ],
+      },
+      {
+        source: '/((?!machine|api).*)',
+        headers: [cspHeader],
       },
       {
         source: '/machine/:path*',

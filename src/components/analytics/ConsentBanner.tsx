@@ -37,7 +37,7 @@ export interface AxeptioSdk {
   openCookies(): void
 }
 
-export default function ConsentBanner({ nonce }: { nonce?: string }) {
+export default function ConsentBanner() {
   const clientId = process.env.NEXT_PUBLIC_AXEPTIO_CLIENT_ID
   const cookiesVersion = process.env.NEXT_PUBLIC_AXEPTIO_VERSION || 'maria-fr-EU'
 
@@ -45,10 +45,7 @@ export default function ConsentBanner({ nonce }: { nonce?: string }) {
 
   return (
     <>
-      {/* Nonce CSP propagé depuis le layout (Server Component qui lit
-          `headers()`) — sans lui le script inline serait bloqué par notre
-          CSP nonce-based. */}
-      <Script id="axeptio-settings" nonce={nonce} strategy="afterInteractive">
+      <Script id="axeptio-settings" strategy="afterInteractive">
         {`window.axeptioSettings = ${JSON.stringify({ clientId, cookiesVersion })};`}
       </Script>
       <Script
