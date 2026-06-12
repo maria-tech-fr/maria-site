@@ -21,7 +21,6 @@ export type ServiceMenuItem = {
 export type HeroEmphaseTone = 'accent' | 'ink-soft'
 
 export type ServiceHero = {
-  surTitre: string
   titre: string
   titreEmphaseTone: HeroEmphaseTone | null
   description: string

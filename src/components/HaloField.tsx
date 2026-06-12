@@ -107,7 +107,11 @@ export default function HaloField({ halos, staticMode = false }: HaloFieldProps)
                       // rester dans le territoire de chaque halo.
                       ['--wx' as string]: `${wx}vw`,
                       ['--wy' as string]: `${wy}vw`,
-                      animation: `halo-wander-${pattern} ${mobileDuration}s ease-in-out ${delay}s infinite`,
+                      // Sur mobile, la durée est surchargée par une media
+                      // query dans globals.css (utilise --halo-d-mobile).
+                      // Sur desktop, on garde le rythme contemplatif d'origine.
+                      ['--halo-d-mobile' as string]: `${mobileDuration}s`,
+                      animation: `halo-wander-${pattern} ${duration}s ease-in-out ${delay}s infinite`,
                       willChange: 'transform',
                       // Hint navigateur supplémentaire pour ne pas
                       // détacher la couche pendant l'animation.

@@ -95,10 +95,6 @@ export const pageService = defineType({
       group: 'hero',
       options: { collapsible: false },
       fields: [
-        // Champ remplacé par le fil d'Ariane signature côté front. Conservé en
-        // base pour rétro-compat mais masqué dans le Studio (hidden: true) et
-        // validation `required` retirée pour ne plus bloquer la sauvegarde.
-        defineField({ name: 'surTitre', title: 'Sur-titre (obsolète)', description: 'Plus utilisé : remplacé par le fil d’Ariane.', type: 'string', hidden: true, validation: (r) => r.max(80) }),
         defineField({
           name: 'titre',
           title: 'Titre (H1)',

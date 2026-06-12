@@ -252,3 +252,17 @@ body {
   [style*="border-drift"] { animation: none !important; }
   [style*="marquee"] { animation: none !important; }
 }
+
+/*
+  Halos sur mobile : raccourcir la durée d'animation pour rendre le
+  déplacement perceptible sur un petit viewport (sur desktop, le rythme
+  contemplatif de 22-42s est intact). La valeur --halo-d-mobile est posée
+  par halo en inline style depuis HaloField.tsx.
+  Le `!important` est nécessaire car le shorthand `animation` inline pose
+  déjà animation-duration, et l'inline a une priorité supérieure.
+*/
+@media (max-width: 768px) {
+  [style*="--halo-d-mobile"] {
+    animation-duration: var(--halo-d-mobile) !important;
+  }
+}

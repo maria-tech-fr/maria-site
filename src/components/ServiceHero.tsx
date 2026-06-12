@@ -29,13 +29,7 @@ export default function ServiceHero({ data, breadcrumb }: Props) {
       <div className="relative flex flex-col gap-15">
         <Reveal>
           <div className="flex flex-col gap-6">
-            {breadcrumb ? (
-              <Breadcrumb segments={breadcrumb} tone="light" />
-            ) : (
-              <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
-                {data.surTitre}
-              </p>
-            )}
+            {breadcrumb && <Breadcrumb segments={breadcrumb} tone="light" />}
             <h1 className="max-w-260 whitespace-pre-line font-display text-[44px] font-semibold leading-12 tracking-[-0.04em] text-ink lg:text-[80px] lg:leading-[90px]">
               {renderWithEmphase(
                 data.titre,

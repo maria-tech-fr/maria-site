@@ -6,7 +6,6 @@ import {
   CommentIcon,
   DocumentTextIcon,
   EditIcon,
-  FolderIcon,
   HomeIcon,
   RocketIcon,
   StarIcon,
@@ -58,15 +57,10 @@ export const structure: StructureResolver = (S) =>
             .schemaType('agence')
             .documentId('agence'),
         ),
-      S.listItem()
-        .title('Page projets')
-        .icon(FolderIcon)
-        .child(
-          S.editor()
-            .id('projets')
-            .schemaType('projets')
-            .documentId('projets'),
-        ),
+      // Page projets : route /projets dépubliée (return notFound()),
+      // doc Sanity conservé en base pour reprise rapide. Entrée Studio
+      // masquée pour ne pas distraire l'éditeur — réactivable en réintégrant
+      // ce listItem quand la page revient en ligne.
       // Dossier « Services » : regroupe la page pilier /services + les 3 pages
       // services + la page formation (qui est un service transversal singleton).
       S.listItem()

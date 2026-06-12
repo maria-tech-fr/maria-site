@@ -9,8 +9,6 @@ const lienProjection = `{
 
 export const parametresGlobauxQuery = defineQuery(`
   *[_id == "parametresGlobaux"][0]{
-    baseline,
-    navigation[]{ libelle, href },
     contact{
       email,
       telephone,
@@ -18,11 +16,6 @@ export const parametresGlobauxQuery = defineQuery(`
       linkedinUrl,
       adresse{ rue, codePostalVille, pays, mention },
       horaires{ plage, mention, opens, closes }
-    },
-    reseauxSociaux[]{ plateforme, url },
-    footer{
-      mentionLegales,
-      liensLegaux[]{ libelle, href }
     }
   }
 `)
@@ -626,7 +619,6 @@ export const pageServiceQuery = defineQuery(`
     titre,
     "slug": slug.current,
     hero{
-      surTitre,
       titre,
       titreEmphaseTone,
       description,
