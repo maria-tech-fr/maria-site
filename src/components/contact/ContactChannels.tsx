@@ -213,7 +213,7 @@ function scrollToId(id: string) {
 }
 
 function CanalIcon({ action, disabled }: { action: ContactCanalAction; disabled: boolean }) {
-  const color = disabled ? '#999' : action === 'calcom' ? '#FEC23C' : '#212121'
+  const color = disabled ? '#999' : '#212121'
   const paths: Record<ContactCanalAction, React.ReactNode> = {
     form: (
       <g>
@@ -229,7 +229,7 @@ function CanalIcon({ action, disabled }: { action: ContactCanalAction; disabled:
     calcom: (
       <g>
         <rect x="3.5" y="5" width="17" height="15" rx="1.5" />
-        <path d="M3.5 9.5h17M7.5 3.5v4M16.5 3.5v4M8 13l2 2 4-4" />
+        <path d="M3.5 9.5h17M7.5 3.5v4M16.5 3.5v4" />
       </g>
     ),
     link: (
