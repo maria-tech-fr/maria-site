@@ -79,7 +79,7 @@ export default function Footer() {
                 Réserver un échange
                 <ArrowRight size="md" />
               </Link>
-              <p className="font-mono text-[11px] leading-4.25 tracking-[0.08em] text-[#AAAAAA]">
+              <p className="text-center font-mono text-[11px] leading-4.25 tracking-[0.08em] text-[#AAAAAA]">
                 RÉPONSE SOUS 24 H · DEVIS GRATUIT · SANS ENGAGEMENT
               </p>
             </div>

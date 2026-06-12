@@ -133,27 +133,6 @@ export const pageCharteIA = defineType({
       ],
     }),
 
-    // -- CTA --
-    defineField({
-      name: 'cta',
-      title: 'Bloc 7 — CTA final',
-      type: 'object',
-      group: 'contenu',
-      fields: [
-        defineField({ name: 'surTitre', title: 'Sur-titre', type: 'string', initialValue: '// engagement réciproque' }),
-        defineField({
-          name: 'titre',
-          title: 'Titre (H2)',
-          description: 'Encadrer un fragment avec **...** pour le rendre en jaune.',
-          type: 'text',
-          rows: 2,
-        }),
-        defineField({ name: 'sousTitre', title: 'Sous-titre', type: 'text', rows: 2 }),
-        defineField({ name: 'ctaLibelle', title: 'CTA libellé', type: 'string', initialValue: 'Parler à maria' }),
-        defineField({ name: 'ctaHref', title: 'CTA destination', type: 'string', initialValue: '/contact' }),
-      ],
-    }),
-
     // -- RÉVISION (Bloc 6) --
     defineField({
       name: 'revision',

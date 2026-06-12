@@ -545,13 +545,6 @@ export const pageCharteIAQuery = defineQuery(`
       titre,
       paragraphes
     },
-    cta{
-      surTitre,
-      titre,
-      sousTitre,
-      ctaLibelle,
-      ctaHref
-    },
     revision{ lastUpdated, mention },
     seo{ titre, description, ogImage{ asset->{ _id, url } } }
   }

@@ -19,7 +19,7 @@ export default function BlogFeaturedArticle({ article }: { article: ArticleCard 
         ]}
       />
 
-      <div className="relative flex flex-col gap-14">
+      <div className="relative flex flex-col gap-7 lg:gap-10">
         <Reveal>
           <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
             // à la une
@@ -72,18 +72,21 @@ export default function BlogFeaturedArticle({ article }: { article: ArticleCard 
                   {article.intro}
                 </p>
               )}
-              <div className="flex items-center gap-3 pt-4">
+              {/* Méta auteur compactée sur mobile : font 10.5px + gap-2
+                  + avatar 7×7 → laisse place au nom + date + temps de
+                  lecture sur une seule ligne en iPhone 13 standard. */}
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-4 lg:gap-x-3">
                 {avatar ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src={avatar}
                     alt={article.auteur.nom}
-                    className="h-8 w-8 flex-none rounded-full border border-paper-edge object-cover"
+                    className="h-7 w-7 flex-none rounded-full border border-paper-edge object-cover lg:h-8 lg:w-8"
                   />
                 ) : (
                   <span
                     aria-hidden
-                    className="flex h-8 w-8 flex-none items-center justify-center rounded-full font-display text-[13px] font-bold text-ink"
+                    className="flex h-7 w-7 flex-none items-center justify-center rounded-full font-display text-[12px] font-bold text-ink lg:h-8 lg:w-8 lg:text-[13px]"
                     style={{
                       background:
                         'linear-gradient(135deg, rgba(254, 194, 60, 1) 0%, rgba(63, 193, 99, 1) 100%)',
@@ -93,15 +96,15 @@ export default function BlogFeaturedArticle({ article }: { article: ArticleCard 
                     {initiales(article.auteur.nom)}
                   </span>
                 )}
-                <span className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
+                <span className="font-mono text-[10.5px] leading-4 tracking-[0.04em] text-[#666] lg:text-[12px]">
                   {article.auteur.nom}
                 </span>
                 <span aria-hidden className="text-[#666]">·</span>
-                <span className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
+                <span className="font-mono text-[10.5px] leading-4 tracking-[0.04em] text-[#666] lg:text-[12px]">
                   {formatDateFr(article.publishedAt)}
                 </span>
                 <span aria-hidden className="text-[#666]">·</span>
-                <span className="font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
+                <span className="font-mono text-[10.5px] leading-4 tracking-[0.04em] text-[#666] lg:text-[12px]">
                   {formatReadingTime(article.readingTime)}
                 </span>
               </div>

@@ -35,13 +35,6 @@ export type PageCharteIAData = {
     titre: string | null
     paragraphes: string[] | null
   } | null
-  cta: {
-    surTitre: string | null
-    titre: string | null
-    sousTitre: string | null
-    ctaLibelle: string | null
-    ctaHref: string | null
-  } | null
   revision: {
     lastUpdated: string | null
     mention: string | null
