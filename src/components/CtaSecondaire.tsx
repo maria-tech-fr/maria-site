@@ -22,8 +22,10 @@ export default function CtaSecondaire({
   const externe = lienExterne(lien)
 
   // .cta-link déclenche le hover du soulignement défini en globals.css.
+  // Pas de `self-start` : ça écraserait le `items-center` du parent flex
+  // (cf. Hero qui aligne CTA principal et secondaire sur l'axe vertical).
   const wrapperClass = withArrow
-    ? `cta-link inline-flex items-center gap-2 self-start text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
+    ? `cta-link inline-flex items-center gap-2 text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
     : `cta-link inline-flex items-center text-[15px] font-medium leading-[23.25px] ${TONE_CLASS[tone]}`
 
   const content = (
