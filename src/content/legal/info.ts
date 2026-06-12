@@ -33,22 +33,22 @@ export type LegalInfo = {
 }
 
 export const legalInfo: LegalInfo = {
-  denomination: '[À COMPLÉTER : dénomination sociale]',
-  formeJuridique: '[À COMPLÉTER : SAS / SASU / SARL / …]',
-  capital: '[À COMPLÉTER]',
-  siegeSocial: '[À COMPLÉTER : adresse complète]',
-  rcsVille: '[À COMPLÉTER : ville d’immatriculation]',
-  rcsNumero: '[À COMPLÉTER : n° RCS]',
-  siret: '[À COMPLÉTER : 14 chiffres]',
-  tva: '[À COMPLÉTER : FR + 11 chiffres]',
-  directeurPublication: '[À COMPLÉTER : nom du directeur de la publication]',
-  emailLegal: '[À COMPLÉTER : contact légal — ex. legal@maria.tech]',
-  telephone: '[À COMPLÉTER : numéro de contact]',
+  denomination: 'MARIA TECH',
+  formeJuridique: 'SAS',
+  capital: '1 200 €',
+  siegeSocial: '173 rue de Courcelles, 75017 Paris',
+  rcsVille: 'Paris',
+  rcsNumero: '105 251 615',
+  siret: '105 251 615 00016',
+  tva: 'FR69105251615',
+  directeurPublication: 'Mathieu HERNANDEZ',
+  emailLegal: 'contact@maria.tech',
+  telephone: '06 37 41 57 98',
   hebergeur: 'Vercel Inc.',
   hebergeurAdresse:
     '440 N Barranca Avenue #4133, Covina, CA 91723, USA — vercel.com',
-  derniereMaj: '[À COMPLÉTER : date AAAA-MM-JJ]',
-  ressortTribunaux: '[À COMPLÉTER : ressort des tribunaux compétents]',
+  derniereMaj: '2026-06-12',
+  ressortTribunaux: 'de Paris',
   proprieteMarque:
-    '[À COMPLÉTER : marque déposée INPI ou signes distinctifs de l’éditeur]',
+    'maria et le logo associé sont des signes distinctifs de l’éditeur.',
 }
