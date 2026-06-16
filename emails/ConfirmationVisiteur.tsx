@@ -24,11 +24,11 @@ import {
  *   - {{telephone_brut}}           → idem sans + ni espaces, ex « 33159353403 » (le href ajoute « + »)
  *   - {{numero_whatsapp_sans_plus}}→ numéro WhatsApp Mathieu, ex « 33637415798 »
  *
- * Le logo est servi depuis l'URL Vercel preview tant que maria.tech n'est pas
- * en prod ; à basculer quand le DNS sera coupé sur la prod.
+ * Le logo est servi en absolu depuis la prod maria.tech (les clients email ne
+ * résolvent pas les chemins relatifs).
  */
 
-const LOGO_URL = 'https://maria-site-smoky.vercel.app/logo-email.png'
+const LOGO_URL = 'https://maria.tech/logo-email.png'
 
 type Props = {
   prenom: string

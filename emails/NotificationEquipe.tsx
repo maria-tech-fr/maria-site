@@ -29,7 +29,7 @@ import {
  * pour répondre directement depuis Gmail sans copier-coller.
  */
 
-const LOGO_URL = 'https://maria-site-smoky.vercel.app/logo-email.png'
+const LOGO_URL = 'https://maria.tech/logo-email.png'
 
 type Props = {
   prenom: string
