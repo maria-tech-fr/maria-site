@@ -30,7 +30,7 @@ export default function BesoinRelated({ surTitre, titre, references }: Props) {
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-ink lg:text-[44px]">
+            <h2 className="lg:max-w-[75%] font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-ink lg:text-[44px]">
               {titre}
             </h2>
           </div>

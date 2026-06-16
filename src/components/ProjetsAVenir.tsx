@@ -16,6 +16,7 @@ export default function ProjetsAVenir({ data }: { data: ProjetsAVenirData }) {
         <Reveal>
           <div className="flex max-w-200 flex-col gap-4.5">
             <BlockHeader
+              titreClass="lg:max-w-[75%]"
               surTitre={data.surTitre}
               titre={data.titre}
               sousTitre={data.description}

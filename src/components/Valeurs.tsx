@@ -22,7 +22,7 @@ export default function Valeurs({ data }: { data: ValeursData }) {
               surTitre={data.surTitre}
               titre={data.titre}
               surTitreClass="text-success-soft"
-              titreClass="text-paper"
+              titreClass="lg:max-w-[75%] text-paper"
             />
           </div>
         </Reveal>
