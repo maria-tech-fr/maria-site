@@ -9,15 +9,11 @@ import { legalInfo } from '../../../src/content/legal/info'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
-// Volontairement noindex : la page reste atteignable via les liens (footer,
-// formulaire contact) - pas d'enjeu SEO à l'indexer. À revoir si la page
-// devient un actif éditorial autonome.
 export const metadata: Metadata = {
   title: 'Politique de confidentialité | maria',
   description:
     'Comment maria collecte, utilise et protège vos données personnelles. RGPD, durée de conservation, sous-traitants, cookies, droits.',
   alternates: { canonical: `${SITE_URL}/confidentialite` },
-  robots: { index: false, follow: true },
 }
 
 export default function ConfidentialitePage() {

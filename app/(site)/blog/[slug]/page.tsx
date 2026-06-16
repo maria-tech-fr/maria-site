@@ -18,6 +18,7 @@ import {
 } from '../../../../src/lib/article'
 import { buildToc, computeReadingTime } from '../../../../src/lib/articleHelpers'
 import { imageSrc } from '../../../../src/lib/blog'
+import { DEFAULT_OG_IMAGE } from '../../../../src/lib/seo'
 
 
 type Params = { params: Promise<{ slug: string }> }
@@ -37,13 +38,16 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   // Cascade OG article :
   //   1. champ ogImage spécifique au CMS si présent
   //   2. image de couverture (coverImage)
-  //   3. image OG générique du site (héritée du layout racine via
-  //      `metadataBase`) — on retourne `undefined` pour laisser
-  //      Next.js cascader.
-  const ogImageSrc =
+  //   3. image OG générique du site (DEFAULT_OG_IMAGE)
+  // Important : Next.js NE merge PAS les sous-champs d'`openGraph` avec le
+  // layout parent. Si on définit `openGraph` ici sans `images`, le fallback
+  // du layout racine n'est PAS hérité. Donc on injecte toujours une image.
+  const articleOgImage =
     imageSrc(article.seo?.ogImage ?? null, 1200, 630) ||
-    imageSrc(article.coverImage, 1200, 630) ||
-    undefined
+    imageSrc(article.coverImage, 1200, 630)
+  const ogImages = articleOgImage
+    ? [{ url: articleOgImage, width: 1200, height: 630 }]
+    : [DEFAULT_OG_IMAGE]
 
   return {
     title,
@@ -57,13 +61,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt || article.publishedAt,
       authors: [article.auteur.nom],
-      ...(ogImageSrc ? { images: [ogImageSrc] } : {}),
+      images: ogImages,
     },
     twitter: {
       card: 'summary_large_image',
       title: article.titre,
       description,
-      ...(ogImageSrc ? { images: [ogImageSrc] } : {}),
+      images: ogImages,
     },
   }
 }
