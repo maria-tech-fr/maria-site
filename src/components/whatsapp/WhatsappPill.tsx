@@ -3,16 +3,17 @@
   Clic = ré-ouverture de la carte. Toujours visible une fois affichée
   (jusqu'à l'ouverture de la carte par le user ou changement de page).
 
-  Le badge « 1 » pulse en vert pour suggérer une notification fraîche sans
-  être agressive.
+  Le badge « 1 » n'apparaît qu'en heures ouvrées (on est en ligne) — c'est
+  un signal de présence honnête. Hors ligne, on évite le faux signal.
 */
 
 type Props = {
   visible: boolean
+  isOffice: boolean
   onOpen: () => void
 }
 
-export default function WhatsappPill({ visible, onOpen }: Props) {
+export default function WhatsappPill({ visible, isOffice, onOpen }: Props) {
   return (
     <button
       type="button"
@@ -22,13 +23,20 @@ export default function WhatsappPill({ visible, onOpen }: Props) {
         visible ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-3 scale-[0.96] opacity-0'
       } max-sm:bottom-3 max-sm:right-3`}
     >
-      {/* Avatar — plus de badge « 1 » : la pill seule suffit comme appel
-          à l'action, on évite le faux signal de notification. */}
+      {/* Avatar — badge « 1 » uniquement quand on est en ligne (isOffice). */}
       <span
         aria-hidden
         className="relative flex h-9 w-9 flex-none items-center justify-center rounded-full bg-accent font-mono text-[15px] font-medium tracking-[-0.04em] text-ink shadow-[0_4px_10px_-4px_rgba(254,194,60,0.5)]"
       >
         m
+        {isOffice && (
+          <span
+            aria-hidden
+            className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full border-2 border-paper bg-success px-1 font-sans text-[10px] font-semibold leading-none text-paper"
+          >
+            1
+          </span>
+        )}
       </span>
 
       {/* Label deux lignes */}

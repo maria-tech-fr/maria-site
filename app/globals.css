@@ -214,20 +214,28 @@ body {
 }
 
 /*
-  Widget WhatsApp — animations de présence (dot vert pulsant dans le header
-  de la carte, badge "1" pulsing sur la pill fermée). Désactivés sous
-  prefers-reduced-motion pour respecter le confort des utilisateurs.
+  Widget WhatsApp — animations de présence. Deux variantes :
+   - .wa-ping-dot          → vert success (#3FC163), état « on est là »
+   - .wa-ping-dot-offline  → accent jaune (#FEC23C), état « hors ligne »
+  Désactivées sous prefers-reduced-motion.
 */
 @keyframes wa-ping-dot {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(63, 193, 99, 0.20); }
+  50%      { box-shadow: 0 0 0 7px rgba(63, 193, 99, 0.06); }
+}
+@keyframes wa-ping-dot-offline {
   0%, 100% { box-shadow: 0 0 0 4px rgba(254, 194, 60, 0.20); }
   50%      { box-shadow: 0 0 0 7px rgba(254, 194, 60, 0.06); }
 }
 .wa-ping-dot {
   animation: wa-ping-dot 2s ease-in-out infinite;
 }
+.wa-ping-dot-offline {
+  animation: wa-ping-dot-offline 2s ease-in-out infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .wa-ping-dot { animation: none; }
+  .wa-ping-dot, .wa-ping-dot-offline { animation: none; }
 }
 
 /*

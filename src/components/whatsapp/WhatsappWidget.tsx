@@ -107,6 +107,7 @@ export default function WhatsappWidget() {
       />
       <WhatsappPill
         visible={state === 'pill'}
+        isOffice={isOffice}
         onOpen={() => setState('card')}
       />
     </>
