@@ -19,7 +19,7 @@ export default function Engagements({ data }: { data: EngagementsData }) {
               surTitre={data.surTitre}
               titre={data.titre}
               surTitreClass="text-success-soft"
-              titreClass="lg:max-w-[75%] text-paper"
+              titreClass="text-paper"
             />
           </div>
         </Reveal>

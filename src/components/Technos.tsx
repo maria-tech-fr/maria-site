@@ -9,7 +9,6 @@ export default function Technos({ data }: { data: TechnosData }) {
         <Reveal>
           <div className="flex flex-col gap-4.5">
             <BlockHeader
-              titreClass="lg:max-w-[75%]"
               surTitre={data.surTitre}
               titre={data.titre}
               sousTitre={data.sousTitre}

@@ -7,7 +7,7 @@ export default function PourquoiMaria({ data }: { data: PourquoiMariaData }) {
     <section className="bg-paper-soft px-6 py-16 lg:px-30.5 lg:py-22.5">
       <Reveal>
         <div className="mx-auto flex max-w-225 flex-col items-center gap-4.5 text-center">
-          <BlockHeader titreClass="lg:max-w-[75%]" surTitre={data.surTitre} titre={data.titre} />
+          <BlockHeader surTitre={data.surTitre} titre={data.titre} />
         </div>
       </Reveal>
 

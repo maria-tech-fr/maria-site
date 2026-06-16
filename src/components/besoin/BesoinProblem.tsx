@@ -32,7 +32,7 @@ export default function BesoinProblem({
           <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
             {surTitre}
           </p>
-          <h2 className="lg:max-w-[75%] font-display text-[36px] font-semibold leading-[1.1] tracking-[-0.028em] text-ink lg:text-[48px] lg:leading-[1.1]">
+          <h2 className="font-display text-[36px] font-semibold leading-[1.1] tracking-[-0.028em] text-ink lg:text-[48px] lg:leading-[1.1]">
             {titre.replace(/\*\*/g, '')}
           </h2>
           <div className="flex flex-col gap-5">

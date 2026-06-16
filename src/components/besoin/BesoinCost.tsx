@@ -29,7 +29,7 @@ export default function BesoinCost({ surTitre, titre, items }: Props) {
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="lg:max-w-[75%] font-display text-[36px] font-semibold leading-[1.08] tracking-[-0.03em] text-paper lg:text-[52px]">
+            <h2 className="font-display text-[36px] font-semibold leading-[1.08] tracking-[-0.03em] text-paper lg:text-[52px]">
               {titre}
             </h2>
           </div>

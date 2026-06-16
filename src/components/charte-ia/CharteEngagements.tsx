@@ -17,7 +17,7 @@ export default function CharteEngagements({ surTitre, titre, sousTitre, items }:
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {surTitre}
             </p>
-            <h2 className="lg:max-w-[75%] font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[60px] lg:leading-[1.04]">
+            <h2 className="font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[60px] lg:leading-[1.04]">
               {titre}
             </h2>
             {sousTitre && (

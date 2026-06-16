@@ -20,7 +20,7 @@ export default function SavoirFaire({ data }: { data: SavoirFaireData }) {
               titre={data.titre}
               sousTitre={data.description}
               surTitreClass="text-success-soft"
-              titreClass="lg:max-w-[75%] text-paper"
+              titreClass="text-paper"
               sousTitreClass="text-[#BFBFBF]"
             />
           </div>

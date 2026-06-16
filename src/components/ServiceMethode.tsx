@@ -21,7 +21,7 @@ export default function ServiceMethode({ data }: { data: ServiceMethodeData }) {
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">
               {data.surTitre}
             </p>
-            <h2 className="lg:max-w-[75%] whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-paper lg:text-[60px] lg:leading-[62px]">
+            <h2 className="whitespace-pre-line font-display text-[36px] font-semibold leading-10 tracking-[-0.032em] text-paper lg:text-[60px] lg:leading-[62px]">
               {data.titre}
             </h2>
             {data.sousTitre && (

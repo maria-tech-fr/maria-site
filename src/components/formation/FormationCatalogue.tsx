@@ -28,7 +28,7 @@ export default function FormationCatalogue({ surTitre, titre, sousTitre, famille
         <Reveal>
           <div className="flex max-w-[820px] flex-col gap-5">
             <p className="font-mono text-[12px] leading-[19.2px] tracking-[0.06em] text-success">{surTitre}</p>
-            <h2 className="lg:max-w-[75%] font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
+            <h2 className="font-display text-[36px] font-semibold leading-[1.05] tracking-[-0.03em] text-ink lg:text-[52px]">
               {titre}
             </h2>
             {sousTitre && (

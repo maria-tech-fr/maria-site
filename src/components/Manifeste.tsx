@@ -43,7 +43,7 @@ export default function Manifeste({ data }: { data: ManifesteData }) {
       <div className="relative flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-20">
         <Reveal className="w-full lg:w-[450px] lg:shrink-0">
           <div className="flex flex-col gap-5">
-            <BlockHeader titreClass="lg:max-w-[75%]" surTitre={data.surTitre} titre={data.titre} />
+            <BlockHeader surTitre={data.surTitre} titre={data.titre} />
           </div>
         </Reveal>
 
