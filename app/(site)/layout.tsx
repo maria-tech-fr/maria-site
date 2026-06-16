@@ -9,7 +9,7 @@ import OrganizationJsonLd from '../../src/components/OrganizationJsonLd'
 // (carte + pill + sessionStorage) est sorti du critical path.
 import WhatsappWidgetLazy from '../../src/components/whatsapp/WhatsappWidgetLazy'
 import ConsentBanner from '../../src/components/analytics/ConsentBanner'
-import Analytics from '../../src/components/analytics/Analytics'
+import GtmLoader from '../../src/components/analytics/GtmLoader'
 import { getContactPage } from '../../src/lib/contact'
 import { getBesoinsMenu } from '../../src/lib/pageBesoin'
 import { getServicesMenu } from '../../src/lib/pageService'
@@ -103,6 +103,17 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       className={`${workSans.variable} ${syne.variable} ${dmMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
+        {/* Google Consent Mode v2 — defaults `denied` posés AVANT tout autre
+            script (GTM, GA, etc.). Axeptio met ensuite à jour les flags via
+            `gtag('consent','update', …)` après la décision utilisateur,
+            intégration native côté Axeptio. Inline pour garantir l'ordre
+            d'exécution synchrone pendant le parsing du body. */}
+        <script
+          id="consent-mode-defaults"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'denied','ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','wait_for_update':500});`,
+          }}
+        />
         <OrganizationJsonLd />
         <style dangerouslySetInnerHTML={{ __html: HALO_KEYFRAMES }} />
         <div className="fixed inset-x-0 top-0 z-50 px-4 py-3 sm:px-6 lg:px-30.5 lg:py-6">
@@ -111,11 +122,14 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         <main className="flex-1">{children}</main>
         <Footer calcomUrl={calcomUrl} />
         <WhatsappWidgetLazy />
-        {/* Consentement (Axeptio) + analytics (GA4) : composants noop tant
-            que les env vars `NEXT_PUBLIC_AXEPTIO_CLIENT_ID` /
-            `NEXT_PUBLIC_GA_ID` ne sont pas posées dans Vercel. Prêts-à-câbler. */}
+        {/* Consentement (Axeptio) + Google Tag Manager. ConsentBanner est
+            no-op si `NEXT_PUBLIC_AXEPTIO_CLIENT_ID` est absente. GtmLoader
+            n'injecte GTM qu'après la 1re décision dans Axeptio (accepter
+            ou refuser) ; il est no-op si `NEXT_PUBLIC_GTM_ID` est absente.
+            GA4 et autres tags marketing sont configurés dans GTM, pas
+            directement côté site. */}
         <ConsentBanner />
-        <Analytics />
+        <GtmLoader gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
       </body>
     </html>
   )

@@ -36,7 +36,7 @@ export default function WhatsappPill({ visible, onOpen }: Props) {
         <span className="font-display text-[13.5px] font-semibold tracking-[-0.01em] text-ink">
           maria
         </span>
-        <span className="font-mono text-[10.5px] normal-case tracking-[0.06em] text-accent">
+        <span className="font-mono text-[10.5px] normal-case tracking-[0.06em] text-success">
           une question ?
         </span>
       </span>
