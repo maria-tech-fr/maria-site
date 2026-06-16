@@ -267,7 +267,7 @@ const card = {
 } as const
 
 const headerSection = {
-  padding: '40px 40px 24px 40px',
+  padding: '40px 40px 40px 40px',
 } as const
 
 const introSection = {
