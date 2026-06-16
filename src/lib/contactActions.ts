@@ -54,13 +54,11 @@ async function sendEmailsIfConfigured(payload: {
 
   try {
     const resend = new Resend(apiKey)
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://maria.tech'
 
     const htmlVisiteur = await render(
       ConfirmationVisiteurEmail({
         prenom: payload.prenom,
         message: payload.message,
-        siteUrl,
       }),
     )
     const htmlEquipe = await render(

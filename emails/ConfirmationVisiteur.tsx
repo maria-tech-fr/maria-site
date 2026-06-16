@@ -1,5 +1,6 @@
 import {
   Body,
+  Column,
   Container,
   Head,
   Heading,
@@ -8,47 +9,56 @@ import {
   Img,
   Link,
   Preview,
+  Row,
   Section,
   Text,
 } from '@react-email/components'
 
 /**
- * Email de confirmation envoyé au visiteur après soumission du formulaire de contact.
+ * Email de confirmation visiteur — fidèle au HTML maquetté.
  *
- * Styles en CSS-in-JS inline (pas de classes Tailwind) : Gmail Web / Mobile et Outlook
- * ne supportent pas systématiquement les media queries, les variables CSS, ni les
- * classes utilitaires. L'inline-style produit par @react-email/render est ce que ces
- * clients gèrent le mieux.
+ * Variables injectées :
+ *   - {{prenom}}                   → `prenom`
+ *   - {{message}}                  → `message`
+ *   - {{telephone}}                → numéro maria au format affiché, ex « +33 1 59 35 34 03 »
+ *   - {{telephone_brut}}           → idem sans + ni espaces, ex « 33159353403 » (le href ajoute « + »)
+ *   - {{numero_whatsapp_sans_plus}}→ numéro WhatsApp Mathieu, ex « 33637415798 »
+ *
+ * Le logo est servi depuis l'URL Vercel preview tant que maria.tech n'est pas
+ * en prod ; à basculer quand le DNS sera coupé sur la prod.
  */
+
+const LOGO_URL = 'https://maria-site-smoky.vercel.app/logo-email.png'
 
 type Props = {
   prenom: string
   message: string
-  siteUrl?: string
+  telephone?: string
+  telephoneBrut?: string
+  numeroWhatsappSansPlus?: string
 }
-
-// Coordonnées maria — figées ici parce que c'est de la copy email, pas de la
-// donnée variable.
-const MARIA_TEL_DISPLAY = '+33 1 59 35 34 03'
-const MARIA_TEL_RAW = '+33159353403'
-const WHATSAPP_NUMBER = '33637415798'
 
 export default function ConfirmationVisiteurEmail({
   prenom,
   message,
-  siteUrl = 'https://maria.tech',
+  telephone = '+33 1 59 35 34 03',
+  telephoneBrut = '33159353403',
+  numeroWhatsappSansPlus = '33637415798',
 }: Props) {
   return (
     <Html lang="fr">
-      <Head />
+      <Head>
+        <title>Votre message est bien arrivé chez maria</title>
+      </Head>
       <Preview>
-        On a bien reçu votre message — on revient vers vous sous 24 h ouvrées.
+        On vous répond personnellement sous 24h. Pas un bot, pas un formulaire.
       </Preview>
       <Body style={body}>
-        <Container style={container}>
+        <Container style={card}>
+          {/* En-tête avec logo */}
           <Section style={headerSection}>
             <Img
-              src={`${siteUrl}/logo-email.png`}
+              src={LOGO_URL}
               alt="maria"
               width="120"
               height="44"
@@ -56,56 +66,150 @@ export default function ConfirmationVisiteurEmail({
             />
           </Section>
 
-          <Section style={contentSection}>
+          {/* Salutation + intro */}
+          <Section style={introSection}>
             <Heading as="h1" style={h1}>
               Bonjour {prenom},
             </Heading>
-            <Text style={lead}>
-              Votre message est bien arrivé chez nous. On revient vers vous sous{' '}
-              <strong>24 h ouvrées</strong> (hors week-end).
-            </Text>
-
-            <Text style={label}>Votre message</Text>
-            <Section style={quote}>
-              <Text style={quoteText}>{message}</Text>
-            </Section>
-
-            <Hr style={hr} />
-
-            <Text style={label}>En attendant</Text>
             <Text style={paragraph}>
-              Si votre demande est urgente, vous pouvez nous joindre directement :
+              Votre message est bien arrivé. Quelqu&apos;un de l&apos;équipe le
+              lira personnellement et vous répondra <strong>sous 24h ouvrées</strong>.
             </Text>
-            <Text style={contactLine}>
-              <Link href={`tel:${MARIA_TEL_RAW}`} style={link}>
-                {MARIA_TEL_DISPLAY}
+            <Text style={paragraphLast}>
+              Pas un mail automatique pour vous dire qu&apos;on a tout lu, pas un
+              formulaire qui rebondit. Une vraie réponse, par un humain.
+            </Text>
+          </Section>
+
+          <Section style={hrWrap}>
+            <Hr style={hr} />
+          </Section>
+
+          {/* Récap du message */}
+          <Section style={blockSection}>
+            <Text style={labelMono}>// votre message</Text>
+            <Section style={messageQuote}>
+              <Text style={messageQuoteText}>{message}</Text>
+            </Section>
+          </Section>
+
+          <Section style={hrWrap}>
+            <Hr style={hr} />
+          </Section>
+
+          {/* Ce qui se passe maintenant */}
+          <Section style={blockSection}>
+            <Text style={labelMono}>// ce qui se passe maintenant</Text>
+
+            <Etape
+              numero="01 |"
+              titre="On vous lit"
+              texte="Aujourd'hui ou demain matin au plus tard. On comprend votre contexte avant de répondre."
+            />
+            <Etape
+              numero="02 |"
+              titre="On vous répond"
+              texte="Sous 24h ouvrées (lundi au vendredi). Si votre demande est claire, on propose un créneau pour échanger. Si elle l'est moins, on vous pose les bonnes questions."
+            />
+            <Etape
+              numero="03 |"
+              titre="On échange"
+              texte="30 minutes par téléphone ou en visio. Pour comprendre votre besoin, donner un premier avis, et voir si on est faits pour travailler ensemble. Sans engagement, sans frais."
+              last
+            />
+          </Section>
+
+          <Section style={hrWrap}>
+            <Hr style={hr} />
+          </Section>
+
+          {/* Lectures suggérées */}
+          <Section style={blockSection}>
+            <Text style={labelMono}>// en attendant</Text>
+            <Text style={paragraphSmall}>
+              Quelques lectures qui vous seront peut-être utiles :
+            </Text>
+
+            <Text style={lectureItem}>
+              →{' '}
+              <Link href="https://maria.tech/charte-ia" style={lectureLink}>
+                Notre charte de gouvernance IA
               </Link>
-              <span style={separator}> · </span>
+              <br />
+              <span style={lectureSub}>
+                Ce qu&apos;on s&apos;engage à faire (et à ne jamais faire) sur
+                chaque projet.
+              </span>
+            </Text>
+
+            <Text style={lectureItemLast}>
+              →{' '}
+              <Link href="https://maria.tech/blog" style={lectureLink}>
+                Le journal
+              </Link>
+              <br />
+              <span style={lectureSub}>
+                Nos points de vue sur l&apos;IA en entreprise. Sans jargon, sans
+                hype.
+              </span>
+            </Text>
+          </Section>
+
+          <Section style={hrWrap}>
+            <Hr style={hr} />
+          </Section>
+
+          {/* Si urgent */}
+          <Section style={blockSection}>
+            <Text style={labelMono}>// si c&apos;est vraiment urgent</Text>
+            <Text style={paragraphSmall}>
+              Vous pouvez nous joindre directement :
+            </Text>
+            <Text style={urgentLine}>
+              <strong>Par téléphone</strong> :{' '}
+              <Link href={`tel:+${telephoneBrut}`} style={urgentLink}>
+                {telephone}
+              </Link>{' '}
+              <span style={urgentMeta}>(du lundi au vendredi, 9h-19h)</span>
+            </Text>
+            <Text style={urgentLine}>
+              <strong>Par WhatsApp</strong> :{' '}
               <Link
-                href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                style={link}
+                href={`https://wa.me/${numeroWhatsappSansPlus}`}
+                style={urgentLinkUnderline}
               >
-                WhatsApp
+                Ouvrir une conversation
               </Link>
+            </Text>
+            <Text style={urgentItalic}>
+              Sinon, on revient vers vous sous 24h, sans faute.
             </Text>
           </Section>
 
-          <Section style={signatureSection}>
-            <Text style={paragraph}>À très vite,</Text>
-            <Text style={signature}>L&apos;équipe maria</Text>
+          {/* Pied — fond noir */}
+          <Section style={footerDark}>
+            <Text style={footerSignature}>L&apos;équipe maria</Text>
+            <Text style={footerSlogan}>
+              L&apos;IA utile, à l&apos;intérieur de votre entreprise.
+            </Text>
           </Section>
+        </Container>
 
-          <Hr style={hrFooter} />
-
-          <Section style={footerSection}>
-            <Text style={footnote}>
-              MARIA TECH — Agence IA appliquée
-              <br />
-              173 rue de Courcelles, 75017 Paris
-              <br />
-              <Link href={siteUrl} style={footerLink}>
+        {/* Mention RGPD — discrète, hors de la carte */}
+        <Container style={rgpdContainer}>
+          <Section>
+            <Text style={rgpdText}>
+              Cet email vous a été envoyé suite à votre demande de contact sur{' '}
+              <Link href="https://maria.tech" style={rgpdLink}>
                 maria.tech
               </Link>
+              . Conformément au RGPD, vos données sont uniquement utilisées pour
+              répondre à votre demande. Vous pouvez à tout moment demander leur
+              suppression à{' '}
+              <Link href="mailto:contact@maria.tech" style={rgpdLink}>
+                contact@maria.tech
+              </Link>
+              .
             </Text>
           </Section>
         </Container>
@@ -114,136 +218,256 @@ export default function ConfirmationVisiteurEmail({
   )
 }
 
+function Etape({
+  numero,
+  titre,
+  texte,
+  last = false,
+}: {
+  numero: string
+  titre: string
+  texte: string
+  last?: boolean
+}) {
+  return (
+    <Row style={last ? etapeRowLast : etapeRow}>
+      <Column style={etapeNumeroCol} valign="top">
+        <Text style={etapeNumero}>{numero}</Text>
+      </Column>
+      <Column valign="top">
+        <Text style={etapeTitre}>{titre}</Text>
+        <Text style={etapeTexte}>{texte}</Text>
+      </Column>
+    </Row>
+  )
+}
+
 /* ----------------------------- styles ----------------------------- */
 
+const FONT_SANS =
+  '"Work Sans", Arial, sans-serif'
+const FONT_MONO =
+  '"DM Mono", "Courier New", monospace'
+
 const body = {
-  backgroundColor: '#F7F7F5',
-  fontFamily:
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   margin: 0,
-  padding: '32px 16px',
+  padding: '40px 20px',
+  backgroundColor: '#F9F9F9',
+  fontFamily: FONT_SANS,
+  color: '#212121',
+  lineHeight: '1.55',
 } as const
 
-const container = {
-  backgroundColor: '#FFFFFF',
+const card = {
   maxWidth: '600px',
   margin: '0 auto',
-  padding: '0',
+  backgroundColor: '#FFFFFF',
   borderRadius: '8px',
   overflow: 'hidden',
-  border: '1px solid #EEEEEE',
 } as const
 
 const headerSection = {
-  padding: '32px 32px 24px 32px',
-  borderBottom: '1px solid #F0F0EF',
+  padding: '40px 40px 24px 40px',
 } as const
 
-const contentSection = {
-  padding: '32px 32px 24px 32px',
+const introSection = {
+  padding: '0 40px 24px 40px',
 } as const
 
-const signatureSection = {
-  padding: '0 32px 32px 32px',
+const blockSection = {
+  padding: '24px 40px',
 } as const
 
-const footerSection = {
-  padding: '20px 32px 28px 32px',
-} as const
-
-const h1 = {
-  color: '#212121',
-  fontSize: '24px',
-  fontWeight: 600,
-  lineHeight: '1.25',
-  margin: '0 0 16px 0',
-  letterSpacing: '-0.02em',
-} as const
-
-const lead = {
-  color: '#5A5A58',
-  fontSize: '16px',
-  lineHeight: '1.55',
-  margin: '0 0 28px 0',
-} as const
-
-const label = {
-  color: '#8A8A86',
-  fontSize: '11px',
-  fontFamily: 'ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace',
-  letterSpacing: '0.06em',
-  textTransform: 'uppercase' as const,
-  margin: '0 0 12px 0',
-} as const
-
-const paragraph = {
-  color: '#3F3F3D',
-  fontSize: '15px',
-  lineHeight: '1.6',
-  margin: '0 0 12px 0',
-} as const
-
-const contactLine = {
-  color: '#3F3F3D',
-  fontSize: '15px',
-  lineHeight: '1.6',
-  margin: '0 0 12px 0',
-} as const
-
-const separator = {
-  color: '#C8C8C5',
-  padding: '0 4px',
-} as const
-
-const quote = {
-  backgroundColor: '#FAFAF8',
-  borderLeft: '3px solid #3FC163',
-  padding: '16px 20px',
-  margin: '0 0 24px 0',
-  borderRadius: '0 4px 4px 0',
-} as const
-
-const quoteText = {
-  color: '#3F3F3D',
-  fontSize: '15px',
-  lineHeight: '1.6',
-  margin: '0',
-  whiteSpace: 'pre-line' as const,
+const hrWrap = {
+  padding: '0 40px',
 } as const
 
 const hr = {
-  borderTop: '1px solid #F0F0EF',
-  borderBottom: 'none',
-  margin: '24px 0',
+  border: 0,
+  borderTop: '1px solid #EEEEEE',
+  margin: 0,
 } as const
 
-const hrFooter = {
-  borderTop: '1px solid #F0F0EF',
-  borderBottom: 'none',
-  margin: '0',
-} as const
-
-const signature = {
+const h1 = {
+  margin: '0 0 16px 0',
+  fontSize: '22px',
+  fontWeight: 600,
   color: '#212121',
+  lineHeight: '1.3',
+  fontFamily: FONT_SANS,
+} as const
+
+const paragraph = {
+  margin: '0 0 16px 0',
+  fontSize: '16px',
+  color: '#383838',
+  lineHeight: '1.6',
+  fontFamily: FONT_SANS,
+} as const
+
+const paragraphLast = {
+  ...paragraph,
+  margin: 0,
+} as const
+
+const paragraphSmall = {
+  margin: '0 0 16px 0',
+  fontSize: '15px',
+  color: '#383838',
+  fontFamily: FONT_SANS,
+} as const
+
+const labelMono = {
+  margin: '0 0 12px 0',
+  fontFamily: FONT_MONO,
+  fontSize: '11px',
+  color: '#3FC163',
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase' as const,
+} as const
+
+const messageQuote = {
+  margin: 0,
+  padding: '16px 20px',
+  backgroundColor: '#F9F9F9',
+  borderLeft: '3px solid #FEC23C',
+} as const
+
+const messageQuoteText = {
+  margin: 0,
+  fontSize: '15px',
+  color: '#383838',
+  lineHeight: '1.6',
+  fontStyle: 'italic' as const,
+  whiteSpace: 'pre-wrap' as const,
+  fontFamily: FONT_SANS,
+} as const
+
+const etapeRow = {
+  marginBottom: '16px',
+} as const
+
+const etapeRowLast = {
+  marginBottom: 0,
+} as const
+
+const etapeNumeroCol = {
+  width: '64px',
+  paddingRight: '12px',
+} as const
+
+const etapeNumero = {
+  margin: 0,
+  fontFamily: FONT_MONO,
+  fontSize: '14px',
+  color: '#FEC23C',
+  fontWeight: 600,
+} as const
+
+const etapeTitre = {
+  margin: '0 0 4px 0',
   fontSize: '15px',
   fontWeight: 600,
-  margin: '0',
+  color: '#212121',
+  fontFamily: FONT_SANS,
 } as const
 
-const link = {
-  color: '#3FC163',
+const etapeTexte = {
+  margin: 0,
+  fontSize: '14px',
+  color: '#383838',
+  lineHeight: '1.55',
+  fontFamily: FONT_SANS,
+} as const
+
+const lectureItem = {
+  margin: '0 0 10px 0',
+  fontSize: '15px',
+  color: '#383838',
+  fontFamily: FONT_SANS,
+} as const
+
+const lectureItemLast = {
+  ...lectureItem,
+  margin: 0,
+} as const
+
+const lectureLink = {
+  color: '#212121',
+  fontWeight: 600,
   textDecoration: 'underline',
 } as const
 
-const footerLink = {
-  color: '#8A8A86',
+const lectureSub = {
+  fontSize: '14px',
+  color: '#666666',
+} as const
+
+const urgentLine = {
+  margin: '0 0 8px 0',
+  fontSize: '14px',
+  color: '#383838',
+  fontFamily: FONT_SANS,
+} as const
+
+const urgentLink = {
+  color: '#212121',
+  textDecoration: 'none',
+} as const
+
+const urgentLinkUnderline = {
+  color: '#212121',
   textDecoration: 'underline',
 } as const
 
-const footnote = {
-  color: '#8A8A86',
+const urgentMeta = {
+  color: '#666666',
+} as const
+
+const urgentItalic = {
+  margin: '12px 0 0 0',
+  fontSize: '13px',
+  color: '#666666',
+  fontStyle: 'italic' as const,
+  fontFamily: FONT_SANS,
+} as const
+
+const footerDark = {
+  padding: '32px 40px 40px 40px',
+  backgroundColor: '#212121',
+  color: '#FFFFFF',
+} as const
+
+const footerSignature = {
+  margin: '0 0 6px 0',
+  fontSize: '15px',
+  fontWeight: 600,
+  color: '#FFFFFF',
+  fontFamily: FONT_SANS,
+} as const
+
+const footerSlogan = {
+  margin: 0,
+  fontSize: '13px',
+  color: '#9A9A9A',
+  fontStyle: 'italic' as const,
+  fontFamily: FONT_SANS,
+} as const
+
+const rgpdContainer = {
+  maxWidth: '600px',
+  margin: '0 auto',
+} as const
+
+const rgpdText = {
+  margin: 0,
+  padding: '20px 40px',
   fontSize: '12px',
-  lineHeight: '1.6',
-  margin: '0',
-  textAlign: 'center' as const,
+  color: '#999999',
+  lineHeight: '1.5',
+  fontFamily: FONT_SANS,
+} as const
+
+const rgpdLink = {
+  color: '#999999',
 } as const
