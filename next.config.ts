@@ -47,12 +47,19 @@ const contentSecurityPolicy = [
   // Tiers activables : Axeptio (consentement) + GA4 (mesure) + Cal.com
   // (popin RDV via @calcom/embed-react, charge app.cal.com/embed/embed.js).
   "script-src 'self' 'unsafe-inline' https://static.axept.io https://www.googletagmanager.com https://app.cal.com",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "img-src 'self' data: blob: https://cdn.sanity.io https://*.google-analytics.com https://*.googletagmanager.com https://*.cal.com",
-  "font-src 'self' data: https://fonts.gstatic.com",
+  // style-src : Axeptio peut charger des feuilles de style externes (thèmes
+  // personnalisés) — on whitelist *.axept.io en plus des inline styles.
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.axept.io",
+  // img-src : Axeptio sert ses logos, pictos et previews de partenaires
+  // depuis static.axept.io et d'autres sous-domaines.
+  "img-src 'self' data: blob: https://cdn.sanity.io https://*.google-analytics.com https://*.googletagmanager.com https://*.cal.com https://*.axept.io https://static.axept.io",
+  // font-src : Axeptio charge ses webfonts depuis static.axept.io / *.axept.io.
+  "font-src 'self' data: https://fonts.gstatic.com https://static.axept.io https://*.axept.io",
   // connect-src : Cal.com expose son API depuis app.cal.com (XHR/fetch).
   "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://*.google-analytics.com https://*.googletagmanager.com https://*.axept.io https://app.cal.com https://*.cal.com",
-  "frame-src 'self' https://cal.com https://*.cal.com https://calendly.com https://*.calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.loom.com",
+  // frame-src : Axeptio peut afficher des iframes (preview cookies, doc
+  // partenaires) hébergées sur *.axept.io.
+  "frame-src 'self' https://cal.com https://*.cal.com https://calendly.com https://*.calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.loom.com https://*.axept.io",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",
