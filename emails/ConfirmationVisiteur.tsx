@@ -323,7 +323,6 @@ const labelMono = {
   fontSize: '11px',
   color: '#3FC163',
   letterSpacing: '0.08em',
-  textTransform: 'uppercase' as const,
 } as const
 
 const messageQuote = {
