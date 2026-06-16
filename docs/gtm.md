@@ -11,7 +11,7 @@ directement côté site.
 |---|---|
 | **Inline script** dans `<body>` du layout | Pose les defaults Google Consent Mode v2 (`analytics_storage`, `ad_storage`, `ad_user_data`, `ad_personalization` → `denied`) avant tout autre script |
 | **Axeptio** (composant `ConsentBanner`) | Bandeau de consentement RGPD. Gère **nativement** la mise à jour de Google Consent Mode v2 après le choix utilisateur (`gtag('consent','update', …)`) |
-| **GTM** (composant `GtmLoader`) | Écoute le premier `cookies:complete` d'Axeptio, **puis seulement** injecte le script `gtm.js` du container. GTM voit alors l'état de consentement à jour et déclenche (ou non) chaque tag selon sa configuration consent |
+| **GTM** (composant `GtmLoader`) | Injecte `gtm.js` dès que le SDK Axeptio est prêt. GTM démarre avec les defaults Consent Mode `denied` et ne déclenche AUCUN tag tant qu'Axeptio n'a pas mis les flags en `granted`. C'est l'approche officielle Google Consent Mode v2 + Axeptio |
 
 ## Variables d'environnement
 
@@ -47,17 +47,34 @@ Le flux concret au chargement de page :
 1. **Avant tout script** (parsing HTML) → l'inline script du layout
    appelle `gtag('consent','default',{…})` avec tous les flags à `denied`
 2. **Page interactive** → Axeptio SDK se charge (afterInteractive)
-3. **Utilisateur fait son choix** dans le bandeau Axeptio
-4. **Axeptio appelle `gtag('consent','update',{…})`** avec les flags
+3. **SDK Axeptio prêt** → GtmLoader détecte (via la queue `_axcb`)
+   et injecte immédiatement `gtm.js`. GTM démarre avec les flags
+   Consent Mode tous en `denied` : il ne déclenche AUCUN tag
+   tracking et ne pose AUCUN cookie tiers
+4. **Utilisateur fait son choix** dans le bandeau Axeptio
+5. **Axeptio appelle `gtag('consent','update',{…})`** avec les flags
    accordés (intégration native Consent Mode v2)
-5. **GtmLoader** détecte l'événement `cookies:complete` et injecte
-   `gtm.js` (une seule fois)
-6. **GTM évalue** ses tags : ceux dont les Consent Checks correspondent
-   aux flags accordés se déclenchent ; les autres restent muets
+6. **GTM ré-évalue** ses tags : ceux dont les Consent Checks
+   correspondent aux flags accordés se déclenchent (GA4 si
+   `analytics_storage='granted'`, pixels marketing si
+   `ad_storage='granted'`, etc.)
 
-→ Tant que l'utilisateur n'a pas tranché, **aucune requête vers
-`www.googletagmanager.com` n'est faite**, et donc aucun cookie tiers
-n'est posé.
+→ Aucune requête `/collect` (GA4) ni dépôt de cookies tracking
+(`_ga`, `_gid`, `_gcl_au`, etc.) tant que l'utilisateur n'a pas
+explicitement accepté la catégorie analytique/marketing
+correspondante.
+
+→ **Pourquoi pas écouter `cookies:complete`** : cet événement
+Axeptio peut ne pas firer dans tous les contextes (recharge avec
+choix mémorisé, navigateurs strict-privacy, certaines versions du
+SDK). Charger GTM dès `_axcb` est l'approche recommandée par
+Axeptio et garantit que GTM est en place quand Axeptio met à jour
+le Consent Mode.
+
+→ **Fallback** : si Axeptio ne se charge pas du tout (CDN bloqué,
+env var absente, extension navigateur), GTM est chargé après 5 s
+par sécurité. Les defaults Consent Mode restent `denied`, donc
+aucun tag tracking ne fire pour autant.
 
 📎 Doc Google Consent Mode v2 :
 https://developers.google.com/tag-platform/security/concepts/consent-mode
@@ -84,20 +101,25 @@ En navigation privée sur `https://maria.tech` :
 ### Refuser tout
 
 1. Bandeau Axeptio apparaît → cliquer « Tout refuser »
-2. **DevTools → Network** : aucune requête vers `googletagmanager.com`,
-   `google-analytics.com`, `analytics.google.com`
+2. **DevTools → Network** :
+   - Requête vers `https://www.googletagmanager.com/gtm.js?id=GTM-XXX`
+     présente (GTM est chargé dès qu'Axeptio est prêt — comportement
+     normal sous Consent Mode v2)
+   - **AUCUNE** requête vers `google-analytics.com/g/collect`,
+     `analytics.google.com/g/collect` ou un endpoint marketing
 3. **DevTools → Application → Cookies** : aucun cookie commençant par
-   `_ga`, `_gid`, `_gcl_au`, `_fbp` ou autre identifiant marketing
+   `_ga`, `_gid`, `_gcl_au`, `_fbp` ou autre identifiant marketing.
+   GTM en mode denied ne pose pas de cookies tracking.
 
 ### Accepter tout
 
 1. Bandeau Axeptio → cliquer « Tout accepter »
-2. **DevTools → Network** : une requête vers
-   `https://www.googletagmanager.com/gtm.js?id=GTM-XXXXXXXX` apparaît
-3. Puis (si GA4 configuré dans GTM) : une requête vers
-   `https://www.google-analytics.com/g/collect?…` ou
-   `https://analytics.google.com/g/collect?…`
-4. **DevTools → Application → Cookies** : les cookies `_ga`, `_ga_XXX`
+2. **DevTools → Network** :
+   - GTM déjà chargé (même requête `gtm.js` que dans le cas refus)
+   - **Nouvelle** requête vers `google-analytics.com/g/collect?…` ou
+     `analytics.google.com/g/collect?…` après la mise à jour Consent
+     Mode
+3. **DevTools → Application → Cookies** : les cookies `_ga`, `_ga_XXX`
    apparaissent (durée 13 mois max)
 
 ### Modifier son choix a posteriori
