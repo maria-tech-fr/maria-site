@@ -3,6 +3,22 @@ import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import type { ContactInfos } from '../../lib/contact'
 
+/*
+  Convertit un numéro de téléphone affiché en français (« 01 59 35 34 03 »)
+  au format E.164 international pour le `href` du lien `tel:` — ex.
+  +33159353403. Marche pour les numéros déjà internationaux (« +33… »,
+  « 33… ») qu'on renvoie tels quels après nettoyage des espaces.
+  Indispensable pour que le clic mobile fonctionne quand l'utilisateur
+  est en roaming, ou pour les apps qui dialent en international par
+  défaut (FaceTime, Skype, etc.).
+*/
+function toE164(phone: string): string {
+  const digits = phone.replace(/\D/g, '')
+  if (digits.startsWith('33')) return `+${digits}`
+  if (digits.startsWith('0') && digits.length === 10) return `+33${digits.slice(1)}`
+  return `+${digits}`
+}
+
 type ContactInfoProps = {
   surTitre: string
   titre: string
@@ -42,7 +58,7 @@ export default function ContactInfo({ surTitre, titre, infos }: ContactInfoProps
                 surTitre="// téléphone"
                 titre={
                   <a
-                    href={`tel:${infos.telephone.replace(/\s/g, '')}`}
+                    href={`tel:${toE164(infos.telephone)}`}
                     className="hover:text-success transition-colors"
                   >
                     {infos.telephone}
