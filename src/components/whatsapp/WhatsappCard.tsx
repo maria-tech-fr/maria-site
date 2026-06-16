@@ -40,13 +40,14 @@ export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Pr
           : 'pointer-events-none translate-y-5 scale-[0.96] opacity-0'
       } max-sm:bottom-3 max-sm:right-3 max-sm:left-auto`}
     >
-      {/* Header — sur-titre DM Mono avec dot vert pulsant */}
+      {/* Header — sur-titre DM Mono avec dot jaune pulsant (signal de
+          présence, on évite le vert qui rappelle WhatsApp officiel). */}
       <div className="mb-2.5 flex items-center gap-2.5 border-b border-paper-edge px-1 pb-2.5">
         <span className="flex flex-1 items-center gap-2 font-mono text-[10.5px] uppercase leading-4 tracking-[0.08em] text-ink-soft/80">
           <span
             aria-hidden
-            className="wa-ping-dot inline-block h-1.5 w-1.5 flex-none rounded-full bg-success"
-            style={{ boxShadow: '0 0 0 4px rgba(63,193,99,0.18)' }}
+            className="wa-ping-dot inline-block h-1.5 w-1.5 flex-none rounded-full bg-accent"
+            style={{ boxShadow: '0 0 0 4px rgba(254,194,60,0.20)' }}
           />
           {status.label}
         </span>
@@ -61,7 +62,7 @@ export default function WhatsappCard({ visible, isOffice, onReply, onLater }: Pr
           m
           <span
             aria-hidden
-            className="absolute -bottom-px -right-px h-3 w-3 rounded-full border-[2.5px] border-paper bg-success"
+            className="absolute -bottom-px -right-px h-3 w-3 rounded-full border-[2.5px] border-paper bg-accent"
           />
         </span>
 

@@ -22,18 +22,13 @@ export default function WhatsappPill({ visible, onOpen }: Props) {
         visible ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-3 scale-[0.96] opacity-0'
       } max-sm:bottom-3 max-sm:right-3`}
     >
-      {/* Avatar + badge pulsing */}
+      {/* Avatar — plus de badge « 1 » : la pill seule suffit comme appel
+          à l'action, on évite le faux signal de notification. */}
       <span
         aria-hidden
         className="relative flex h-9 w-9 flex-none items-center justify-center rounded-full bg-accent font-mono text-[15px] font-medium tracking-[-0.04em] text-ink shadow-[0_4px_10px_-4px_rgba(254,194,60,0.5)]"
       >
         m
-        <span
-          aria-hidden
-          className="wa-mini-ping absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full border-2 border-paper bg-success px-1.5 font-mono text-[10.5px] font-medium leading-none text-paper"
-        >
-          1
-        </span>
       </span>
 
       {/* Label deux lignes */}
@@ -41,7 +36,7 @@ export default function WhatsappPill({ visible, onOpen }: Props) {
         <span className="font-display text-[13.5px] font-semibold tracking-[-0.01em] text-ink">
           maria
         </span>
-        <span className="font-mono text-[10.5px] normal-case tracking-[0.06em] text-success">
+        <span className="font-mono text-[10.5px] normal-case tracking-[0.06em] text-accent">
           une question ?
         </span>
       </span>

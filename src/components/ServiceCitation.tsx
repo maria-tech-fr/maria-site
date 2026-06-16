@@ -1,6 +1,5 @@
 import Reveal from './Reveal'
 import type { ServiceCitation as ServiceCitationData } from '../lib/pageService'
-import { renderWithEmphase } from '../lib/emphase'
 
 export default function ServiceCitation({ data }: { data: ServiceCitationData }) {
   return (
@@ -42,7 +41,10 @@ export default function ServiceCitation({ data }: { data: ServiceCitationData })
 
             <blockquote className="relative max-w-[920px]">
               <p className="whitespace-pre-line font-display text-[28px] font-medium leading-[34px] tracking-tight text-ink lg:text-[60px] lg:leading-[69px]">
-                {renderWithEmphase(data.texte, 'rounded-[6px] bg-accent/12 px-1.5')}
+                {/* Plus de highlight de mot : on strippe les markers `**…**`
+                    pour afficher la citation en clair, sans soulignement
+                    jaune. */}
+                {data.texte.replace(/\*\*/g, '')}
               </p>
             </blockquote>
           </div>

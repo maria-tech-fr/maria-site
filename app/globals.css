@@ -219,25 +219,15 @@ body {
   prefers-reduced-motion pour respecter le confort des utilisateurs.
 */
 @keyframes wa-ping-dot {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(63, 193, 99, 0.18); }
-  50%      { box-shadow: 0 0 0 7px rgba(63, 193, 99, 0.06); }
+  0%, 100% { box-shadow: 0 0 0 4px rgba(254, 194, 60, 0.20); }
+  50%      { box-shadow: 0 0 0 7px rgba(254, 194, 60, 0.06); }
 }
 .wa-ping-dot {
   animation: wa-ping-dot 2s ease-in-out infinite;
 }
 
-@keyframes wa-mini-ping {
-  0%   { box-shadow: 0 0 0 0   rgba(63, 193, 99, 0.45); }
-  70%  { box-shadow: 0 0 0 10px rgba(63, 193, 99, 0);    }
-  100% { box-shadow: 0 0 0 0   rgba(63, 193, 99, 0);    }
-}
-.wa-mini-ping {
-  animation: wa-mini-ping 2s ease-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .wa-ping-dot,
-  .wa-mini-ping { animation: none; }
+  .wa-ping-dot { animation: none; }
 }
 
 /*
