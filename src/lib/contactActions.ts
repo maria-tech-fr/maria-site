@@ -38,6 +38,30 @@ async function sendWithRetry<T>(fn: () => Promise<T>, retries = 1): Promise<T> {
   }
 }
 
+/**
+ * Formate un ISO en « 16 juin 2026 à 09h47 » (Europe/Paris).
+ * Intl en fr-FR avec dateStyle:long + timeStyle:short produit
+ * « 16 juin 2026 à 09:47 » — on remplace les « : » de l'heure par « h ».
+ */
+function formatDateHeureFr(iso: string): string {
+  const d = new Date(iso)
+  const formatted = new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+    timeZone: 'Europe/Paris',
+  }).format(d)
+  return formatted.replace(/(\d{1,2}):(\d{2})/, '$1h$2')
+}
+
+/**
+ * Téléphone visiteur → version sans `+` ni espaces pour le href tel:.
+ * Accepte tous les formats d'entrée (« +33 6 12 34 56 78 », « 0612345678 »,
+ * etc.) et garde uniquement les chiffres.
+ */
+function toTelBrut(raw: string): string {
+  return raw.replace(/\D/g, '')
+}
+
 async function sendEmailsIfConfigured(payload: {
   nom: string
   prenom: string
@@ -45,8 +69,6 @@ async function sendEmailsIfConfigured(payload: {
   telephone: string
   message: string
   submittedAt: string
-  referer?: string
-  userAgent?: string
 }): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
   const to = process.env.CONTACT_EMAIL_TO
@@ -54,6 +76,10 @@ async function sendEmailsIfConfigured(payload: {
 
   try {
     const resend = new Resend(apiKey)
+
+    const telephone = payload.telephone || undefined
+    const telephoneBrut = telephone ? toTelBrut(telephone) || undefined : undefined
+    const dateHeure = formatDateHeureFr(payload.submittedAt)
 
     const htmlVisiteur = await render(
       ConfirmationVisiteurEmail({
@@ -66,11 +92,10 @@ async function sendEmailsIfConfigured(payload: {
         prenom: payload.prenom,
         nom: payload.nom,
         email: payload.email,
-        telephone: payload.telephone || undefined,
+        telephone,
+        telephoneBrut,
         message: payload.message,
-        submittedAt: payload.submittedAt,
-        referer: payload.referer,
-        userAgent: payload.userAgent,
+        dateHeure,
       }),
     )
 
@@ -81,7 +106,7 @@ async function sendEmailsIfConfigured(payload: {
         from: FROM_EQUIPE,
         to,
         replyTo: payload.email,
-        subject: `Nouveau message du formulaire — ${payload.prenom} ${payload.nom}`,
+        subject: `Nouveau message — ${payload.prenom} ${payload.nom}`,
         html: htmlEquipe,
       }),
     )
@@ -205,8 +230,6 @@ export async function submitContact(_prev: ContactSubmitState, formData: FormDat
     telephone: parsed.data.telephone || '',
     message: parsed.data.message,
     submittedAt,
-    referer,
-    userAgent,
   })
 
   redirect('/contact/merci')

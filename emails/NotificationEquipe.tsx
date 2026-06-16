@@ -5,6 +5,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
   Section,
@@ -13,22 +14,32 @@ import {
 
 /**
  * Email de notification interne envoyé à l'équipe maria à chaque soumission
- * du formulaire de contact. Optimisé pour la lecture rapide en boîte de
- * réception : badge en haut, identité du visiteur, récap des champs, métadonnées
- * en bas. Le Reply-To est branché côté contactActions.ts sur l'email du visiteur
- * pour permettre une réponse directe depuis Gmail.
+ * du formulaire de contact. Optimisé scan rapide en boîte de réception :
+ * identité du visiteur en tête, message en blockquote, bloc action en pied.
+ *
+ * Variables injectées :
+ *   - {{prenom}}, {{nom}}      → identité visiteur
+ *   - {{email}}                → email visiteur (mailto)
+ *   - {{telephone}}            → optionnel, format affiché du visiteur
+ *   - {{telephone_brut}}       → optionnel, sans espaces ni `+` pour le href tel:
+ *   - {{message}}              → conserver les sauts de ligne (white-space:pre-wrap)
+ *   - {{date_heure}}           → déjà formaté en français, ex « 16 juin 2026 à 09h47 »
+ *
+ * Le Reply-To est branché côté contactActions.ts sur l'email du visiteur
+ * pour répondre directement depuis Gmail sans copier-coller.
  */
+
+const LOGO_URL = 'https://maria-site-smoky.vercel.app/logo-email.png'
 
 type Props = {
   prenom: string
   nom: string
   email: string
   telephone?: string
+  telephoneBrut?: string
   message: string
-  /** ISO 8601 — formaté côté composant en français / Europe/Paris. */
-  submittedAt: string
-  referer?: string
-  userAgent?: string
+  /** Déjà formaté, ex « 16 juin 2026 à 09h47 ». */
+  dateHeure: string
 }
 
 export default function NotificationEquipeEmail({
@@ -36,71 +47,84 @@ export default function NotificationEquipeEmail({
   nom,
   email,
   telephone,
+  telephoneBrut,
   message,
-  submittedAt,
-  referer,
-  userAgent,
+  dateHeure,
 }: Props) {
-  const dateAffichee = new Intl.DateTimeFormat('fr-FR', {
-    dateStyle: 'full',
-    timeStyle: 'short',
-    timeZone: 'Europe/Paris',
-  }).format(new Date(submittedAt))
+  const hasTel = Boolean(telephone && telephoneBrut)
 
   return (
     <Html lang="fr">
-      <Head />
-      <Preview>{`Nouveau message de ${prenom} ${nom} via le formulaire de contact`}</Preview>
+      <Head>
+        <title>Nouveau message du formulaire</title>
+      </Head>
+      <Preview>{`Reçu le ${dateHeure} · à traiter sous 24h`}</Preview>
       <Body style={body}>
-        <Container style={container}>
+        <Container style={card}>
+          {/* En-tête avec logo (réduit, 80px — c'est interne, sobre) */}
           <Section style={headerSection}>
-            <Text style={badge}>FORMULAIRE — NOUVEAU MESSAGE</Text>
+            <Img
+              src={LOGO_URL}
+              alt="maria"
+              width="80"
+              height="29"
+              style={{ display: 'block', border: 0 }}
+            />
+          </Section>
+
+          {/* Bloc 1 — Identification du contact */}
+          <Section style={blockContact}>
+            <Text style={labelMono}>// nouveau contact</Text>
+
             <Heading as="h1" style={h1}>
               {prenom} {nom}
             </Heading>
-          </Section>
 
-          <Section style={contentSection}>
-            <Row
-              label="Email"
-              value={
-                <Link href={`mailto:${email}`} style={link}>
-                  {email}
-                </Link>
-              }
-            />
-            {telephone && (
-              <Row
-                label="Téléphone"
-                value={
+            <Text style={contactInfo}>
+              <Link href={`mailto:${email}`} style={contactLink}>
+                {email}
+              </Link>
+              {hasTel && (
+                <>
+                  <br />
                   <Link
-                    href={`tel:${telephone.replace(/\s/g, '')}`}
-                    style={link}
+                    href={`tel:${telephoneBrut}`}
+                    style={contactLink}
                   >
                     {telephone}
                   </Link>
-                }
-              />
-            )}
+                </>
+              )}
+            </Text>
 
-            <Hr style={hr} />
-
-            <Text style={fieldLabel}>Message</Text>
-            <Section style={messageBox}>
-              <Text style={messageText}>{message}</Text>
-            </Section>
-
-            <Hr style={hr} />
-
-            <Row label="Reçu le" value={dateAffichee} />
-            {referer && <Row label="Source" value={referer} />}
-            {userAgent && <Row label="User-Agent" value={userAgent} />}
+            <Text style={receivedAt}>Reçu le {dateHeure}</Text>
           </Section>
 
-          <Section style={footerSection}>
-            <Text style={footnote}>
-              Pour répondre, utilisez « Répondre » : Reply-To pointe sur
-              l&apos;email du visiteur.
+          <Section style={hrWrap}>
+            <Hr style={hr} />
+          </Section>
+
+          {/* Bloc 2 — Le message */}
+          <Section style={blockSection}>
+            <Text style={labelMono}>// son message</Text>
+            <Section style={messageQuote}>
+              <Text style={messageQuoteText}>{message}</Text>
+            </Section>
+          </Section>
+
+          <Section style={hrWrap}>
+            <Hr style={hr} />
+          </Section>
+
+          {/* Bloc 3 — Action */}
+          <Section style={blockAction}>
+            <Text style={labelMono}>// à traiter</Text>
+            <Text style={actionMain}>
+              Réponse attendue sous 24h ouvrées (hors week-end).
+            </Text>
+            <Text style={actionItalic}>
+              Pour répondre, utiliser le bouton «&nbsp;Répondre&nbsp;» de Gmail :
+              le destinataire sera directement le visiteur (Reply-To configuré).
             </Text>
           </Section>
         </Container>
@@ -109,128 +133,120 @@ export default function NotificationEquipeEmail({
   )
 }
 
-function Row({
-  label,
-  value,
-}: {
-  label: string
-  value: React.ReactNode
-}) {
-  return (
-    <Section style={row}>
-      <Text style={fieldLabel}>{label}</Text>
-      <Text style={fieldValue}>{value}</Text>
-    </Section>
-  )
-}
-
 /* ----------------------------- styles ----------------------------- */
 
+const FONT_SANS = '"Work Sans", Arial, sans-serif'
+const FONT_MONO = '"DM Mono", "Courier New", monospace'
+
 const body = {
-  backgroundColor: '#F7F7F5',
-  fontFamily:
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   margin: 0,
-  padding: '32px 16px',
+  padding: '32px 20px',
+  backgroundColor: '#F9F9F9',
+  fontFamily: FONT_SANS,
+  color: '#212121',
+  lineHeight: '1.55',
 } as const
 
-const container = {
-  backgroundColor: '#FFFFFF',
+const card = {
   maxWidth: '600px',
   margin: '0 auto',
-  padding: '0',
+  backgroundColor: '#FFFFFF',
   borderRadius: '8px',
   overflow: 'hidden',
-  border: '1px solid #EEEEEE',
 } as const
 
 const headerSection = {
-  padding: '28px 32px 24px 32px',
-  borderBottom: '1px solid #F0F0EF',
-  backgroundColor: '#FAFAF8',
+  padding: '24px 32px 16px 32px',
 } as const
 
-const contentSection = {
-  padding: '24px 32px 28px 32px',
+const blockContact = {
+  padding: '16px 32px 24px 32px',
 } as const
 
-const footerSection = {
-  padding: '0 32px 24px 32px',
+const blockSection = {
+  padding: '24px 32px',
 } as const
 
-const badge = {
-  display: 'inline-block',
-  backgroundColor: '#FEC23C',
-  color: '#212121',
-  fontSize: '10px',
-  fontFamily: 'ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace',
-  fontWeight: 600,
-  letterSpacing: '0.08em',
-  padding: '5px 9px',
-  borderRadius: '3px',
-  margin: '0 0 12px 0',
+const blockAction = {
+  padding: '24px 32px 32px 32px',
 } as const
 
-const h1 = {
-  color: '#212121',
-  fontSize: '22px',
-  fontWeight: 600,
-  lineHeight: '1.25',
-  margin: '0',
-  letterSpacing: '-0.02em',
-} as const
-
-const row = {
-  margin: '0 0 14px 0',
-} as const
-
-const fieldLabel = {
-  color: '#8A8A86',
-  fontSize: '11px',
-  fontFamily: 'ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace',
-  letterSpacing: '0.06em',
-  textTransform: 'uppercase' as const,
-  margin: '0 0 4px 0',
-} as const
-
-const fieldValue = {
-  color: '#212121',
-  fontSize: '15px',
-  lineHeight: '1.5',
-  margin: '0',
-} as const
-
-const messageBox = {
-  backgroundColor: '#FAFAF8',
-  borderLeft: '3px solid #3FC163',
-  padding: '16px 20px',
-  margin: '8px 0 0 0',
-  borderRadius: '0 4px 4px 0',
-} as const
-
-const messageText = {
-  color: '#3F3F3D',
-  fontSize: '15px',
-  lineHeight: '1.6',
-  margin: '0',
-  whiteSpace: 'pre-line' as const,
+const hrWrap = {
+  padding: '0 32px',
 } as const
 
 const hr = {
-  borderTop: '1px solid #F0F0EF',
-  borderBottom: 'none',
-  margin: '20px 0',
+  border: 0,
+  borderTop: '1px solid #EEEEEE',
+  margin: 0,
 } as const
 
-const link = {
+const labelMono = {
+  margin: '0 0 12px 0',
+  fontFamily: FONT_MONO,
+  fontSize: '11px',
   color: '#3FC163',
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase' as const,
+} as const
+
+const h1 = {
+  margin: '0 0 12px 0',
+  fontSize: '20px',
+  fontWeight: 600,
+  color: '#212121',
+  lineHeight: '1.3',
+  fontFamily: FONT_SANS,
+} as const
+
+const contactInfo = {
+  margin: 0,
+  fontFamily: FONT_MONO,
+  fontSize: '13px',
+  color: '#383838',
+  lineHeight: '1.7',
+} as const
+
+const contactLink = {
+  color: '#212121',
   textDecoration: 'underline',
 } as const
 
-const footnote = {
-  color: '#8A8A86',
+const receivedAt = {
+  margin: '12px 0 0 0',
   fontSize: '12px',
-  lineHeight: '1.5',
-  margin: '0',
+  color: '#666666',
+  fontFamily: FONT_SANS,
+} as const
+
+const messageQuote = {
+  margin: 0,
+  padding: '16px 20px',
+  backgroundColor: '#F9F9F9',
+  borderLeft: '3px solid #FEC23C',
+} as const
+
+const messageQuoteText = {
+  margin: 0,
+  fontSize: '15px',
+  color: '#383838',
+  lineHeight: '1.6',
   fontStyle: 'italic' as const,
+  whiteSpace: 'pre-wrap' as const,
+  fontFamily: FONT_SANS,
+} as const
+
+const actionMain = {
+  margin: '0 0 8px 0',
+  fontSize: '14px',
+  color: '#383838',
+  fontFamily: FONT_SANS,
+} as const
+
+const actionItalic = {
+  margin: 0,
+  fontSize: '13px',
+  color: '#666666',
+  fontStyle: 'italic' as const,
+  fontFamily: FONT_SANS,
 } as const
