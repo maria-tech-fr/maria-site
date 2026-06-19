@@ -184,6 +184,9 @@ export default function Nav({ services, besoins }: NavProps) {
             onToggle={() =>
               setDesktopOpen((cur) => (cur === 'besoins' ? null : 'besoins'))
             }
+            // Le mega-menu Besoins s'aligne sur le bord droit de la <nav>
+            // (qui a relative), pas sur le bouton — sinon il déborde à droite.
+            relativeWrapper={false}
           >
             <NavBesoinsMega
               id={besoinsSubmenuId}
@@ -276,6 +279,7 @@ function DesktopTrigger({
   onFocus,
   onBlurOut,
   onToggle,
+  relativeWrapper = true,
   children,
 }: {
   label: string
@@ -291,12 +295,19 @@ function DesktopTrigger({
    *  tactile, où il n'y a pas de hover réel ; sur desktop c'est un complément
    *  qui permet de fermer manuellement le sous-menu déjà ouvert). */
   onToggle: () => void
+  /**
+   * Si false, le wrapper n'a pas `position: relative` — le children absolument
+   * positionné cherchera alors son ancrage plus haut (typiquement sur `<nav>`).
+   * Utile pour les mega-menus qu'on veut aligner sur la nav entière plutôt que
+   * sur le bouton qui les déclenche.
+   */
+  relativeWrapper?: boolean
   children: React.ReactNode
 }) {
   return (
     <div
       ref={wrapperRef}
-      className="relative"
+      className={relativeWrapper ? 'relative' : ''}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onFocus={onFocus}
@@ -995,7 +1006,7 @@ function NavBesoinsMega({
       id={id}
       role="menu"
       aria-label="Sous-menu Besoins par familles"
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute left-1/2 top-full z-40 mt-7 w-[min(92vw,920px)] -translate-x-1/2 origin-top rounded-2xl border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute right-0 top-full z-40 mt-5 w-[min(92vw,920px)] origin-top-right rounded-2xl border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
