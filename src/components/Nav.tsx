@@ -1006,7 +1006,10 @@ function NavBesoinsMega({
       id={id}
       role="menu"
       aria-label="Sous-menu Besoins par familles"
-      className={`pointer-events-${visible ? 'auto' : 'none'} absolute right-0 top-full z-40 mt-5 w-[min(92vw,920px)] origin-top-right rounded-2xl border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
+      // -right-[7px] compense le padding-right (6 px) + la border-right (1 px)
+      // de la <nav>, pour que le bord droit visible du menu affleure exactement
+      // le bord droit visible de la barre de navigation.
+      className={`pointer-events-${visible ? 'auto' : 'none'} absolute -right-[7px] top-full z-40 mt-5 w-[min(92vw,920px)] origin-top-right rounded-2xl border border-ink/6 bg-paper p-2 shadow-[0_4px_10px_-4px_rgba(33,33,33,0.08),0_20px_50px_-16px_rgba(33,33,33,0.22)] transition-all duration-200 ease-out ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
       }`}
     >
