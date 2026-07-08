@@ -18,7 +18,7 @@ import type { PromoForGrid } from '../../../src/lib/blog'
 const PAGE_SIZE = 13
 
 export const metadata: Metadata = {
-  title: 'Journal — Nos points de vue sur l’IA en entreprise',
+  title: 'Journal | Nos points de vue sur l’IA en entreprise',
   description:
     "Stratégie, méthode, gouvernance, retours d'expérience. Ce que nous pensons, ce que nous apprenons, ce que nous partageons.",
   alternates: {

@@ -123,7 +123,7 @@ const ARTICLE = {
   sousTitre:
     'Six usages IA font vraiment gagner du temps à vos commerciaux. La méthode qui marche : un seul cas d’usage prioritaire, un pilote court, mesurer avant de généraliser.',
   intro:
-    'Vos commerciaux passent environ deux tiers de leur temps sur des tâches qui ne relèvent pas de la vente. L’IA peut en récupérer une partie — mais tous les usages ne se valent pas, et la discipline du cadrage décide de tout.',
+    'Vos commerciaux passent environ deux tiers de leur temps sur des tâches qui ne relèvent pas de la vente. L’IA peut en récupérer une partie, mais tous les usages ne se valent pas, et la discipline du cadrage décide de tout.',
   publishedAt: '2026-07-08T09:00:00.000Z',
   readingTime: 12,
   featured: false,
@@ -148,7 +148,7 @@ const ARTICLE = {
       'Ce constat, chaque directeur commercial le connaît intuitivement. Ce qui est plus rare, c’est de le mesurer dans son propre contexte. Sur une équipe de huit commerciaux qui perdent chacun quatre heures par semaine sur de la saisie CRM répétitive, ce sont plus de trente heures hebdomadaires de temps commercial dilué. Sur un cycle de vente moyen, ce sont plusieurs opportunités qui ne seront jamais qualifiées, plusieurs propositions qui ne partiront pas, plusieurs relances qui ne seront jamais faites.',
     ),
     blockquote(
-      'Le temps perdu par vos commerciaux ne se lit pas dans les rendez-vous — il se lit dans tout ce qui devrait les entourer.',
+      'Le temps perdu par vos commerciaux ne se lit pas dans les rendez-vous, il se lit dans tout ce qui devrait les entourer.',
     ),
     paragraph(
       'L’IA promet de récupérer une partie de ce temps. Mais entre la promesse marketing et la réalité opérationnelle, il y a plusieurs mois de cadrage, quelques ratés à éviter, et une hygiène projet stricte. Cet article explique par où commencer, quels usages produisent vraiment des résultats, et comment ne pas se disperser.',
@@ -172,14 +172,14 @@ const ARTICLE = {
     ),
     definition(
       'Agent IA commercial sur mesure',
-      'Système IA conçu spécifiquement pour un besoin commercial d’une entreprise, connecté à ses outils (CRM, téléphonie, catalogue) et à ses règles métier. Se distingue d’un copilot embarqué dans un CRM standard : le périmètre est défini équipe par équipe, et l’agent agit — il ne se contente pas de suggérer.',
+      'Système IA conçu spécifiquement pour un besoin commercial d’une entreprise, connecté à ses outils (CRM, téléphonie, catalogue) et à ses règles métier. Se distingue d’un copilot embarqué dans un CRM standard : le périmètre est défini équipe par équipe, et l’agent agit (il ne se contente pas de suggérer).',
     ),
     paragraph(
       'La confusion classique consiste à mélanger ces trois familles dans un même projet. Une entreprise qui veut « faire de l’IA pour ses commerciaux » doit décider en amont laquelle des trois elle attaque en premier. Sans cet arbitrage, les projets s’empilent et personne ne mesure ce qui marche.',
     ),
     warning(
       'Point de vigilance',
-      'Lancer en parallèle une adoption d’IA générative, un copilot CRM et un agent sur mesure sature l’équipe et empêche tout apprentissage. C’est la première cause d’enlisement à six mois — bien avant le choix de tel ou tel outil.',
+      'Lancer en parallèle une adoption d’IA générative, un copilot CRM et un agent sur mesure sature l’équipe et empêche tout apprentissage. C’est la première cause d’enlisement à six mois, bien avant le choix de tel ou tel outil.',
     ),
 
     h2('Les 6 usages IA qui font vraiment gagner du temps aux commerciaux'),
@@ -237,10 +237,9 @@ const ARTICLE = {
 
     h2('Combien de temps peut-on vraiment gagner ? Les vraies fourchettes'),
     paragraph(
-      'Tableau récapitulatif — les ordres de grandeur observés sur les projets que nous accompagnons. À prendre comme des fourchettes de référence, pas comme des engagements de résultat.',
+      'Tableau récapitulatif : les ordres de grandeur observés sur les projets que nous accompagnons. À prendre comme des fourchettes de référence, pas comme des engagements de résultat.',
     ),
     tableau({
-      legende: 'Ordres de grandeur observés par usage IA commercial',
       enTetes: ['Usage', 'Gain hebdo par commercial', 'Effort d’installation', 'Temps avant premiers résultats'],
       lignes: [
         ['Saisie CRM automatique', '2 à 4 h', 'Moyen', '4 à 8 semaines'],
@@ -264,28 +263,28 @@ const ARTICLE = {
       'Sur les projets IA commerciaux que nous accompagnons, une méthode s’est stabilisée. Elle tient en quatre étapes, qui prennent au total entre huit et seize semaines selon la taille de l’équipe.',
     ),
 
-    h3('Étape 1 — Mesurer où va vraiment le temps de vos commerciaux (2 semaines)'),
+    h3('Étape 1 : Mesurer où va vraiment le temps de vos commerciaux (2 semaines)'),
     paragraph(
       'Avant de choisir un usage IA, il faut savoir ce qu’on veut récupérer. Concrètement : un sondage anonyme des commerciaux sur leurs irritants quotidiens, un tracking rapide du temps passé sur cinq activités clés pendant deux semaines, un entretien avec deux ou trois managers pour croiser leur perception avec les remontées terrain. Le résultat de cette étape est une cartographie précise : combien d’heures perdues, sur quoi, avec quel impact business. Sans cette mesure, tout le reste devient de la conviction.',
     ),
 
-    h3('Étape 2 — Choisir un seul cas d’usage prioritaire (1 semaine)'),
+    h3('Étape 2 : Choisir un seul cas d’usage prioritaire (1 semaine)'),
     paragraph(
       'C’est l’étape la plus difficile. La tentation est toujours de vouloir attaquer plusieurs sujets en parallèle. Résister à cette tentation est ce qui distingue les projets qui produisent des résultats de ceux qui s’enlisent. Le bon cas d’usage prioritaire est celui qui coche trois cases : gain de temps mesurable, effort d’installation compatible avec vos ressources, adhésion probable des commerciaux. Un usage qui gagnerait beaucoup de temps mais que les commerciaux vont contourner ne sert à rien.',
     ),
 
-    h3('Étape 3 — Lancer un pilote sur 8 semaines'),
+    h3('Étape 3 : Lancer un pilote sur 8 semaines'),
     paragraph(
       'Le pilote couvre deux à quatre commerciaux volontaires, sur le cas d’usage choisi, avec un outil sélectionné en amont. L’objectif du pilote n’est pas de prouver que « l’IA marche ». C’est de valider que ce cas d’usage précis, dans votre contexte précis, avec vos commerciaux précis, produit un gain mesurable. Les indicateurs à suivre pendant le pilote : temps gagné réel (mesuré, pas déclaré), qualité des données produites, taux d’adoption par les commerciaux du pilote, retour terrain qualitatif.',
     ),
 
-    h3('Étape 4 — Généraliser ou pivoter (4 semaines)'),
+    h3('Étape 4 : Généraliser ou pivoter (4 semaines)'),
     paragraph(
       'À l’issue du pilote, trois scénarios sont possibles. Le pilote a produit les gains attendus : on généralise à toute l’équipe avec un plan d’accompagnement. Le pilote a produit des résultats partiels : on ajuste et on refait un pilote sur quatre semaines. Le pilote a échoué : on comprend pourquoi (mauvais cadrage, mauvais outil, mauvais moment) et on pivote vers un autre cas d’usage.',
     ),
     quoteAttribuee({
       texte:
-        'Le vrai signal d’un projet IA commercial mature, ce n’est pas la vitesse d’exécution — c’est la capacité à pivoter sans se justifier.',
+        'Le vrai signal d’un projet IA commercial mature, ce n’est pas la vitesse d’exécution, c’est la capacité à pivoter sans se justifier.',
       auteur: 'Matthieu SEILLER',
       role: 'Directeur stratégique, maria',
     }),
@@ -300,7 +299,7 @@ const ARTICLE = {
 
     h2('Les 3 pièges qui font échouer les projets IA commerciaux'),
     paragraph(
-      'Sur la majorité des projets IA commerciaux qui s’enlisent — et ils sont nombreux —, on retrouve toujours les mêmes trois pièges. Prévenus, ils sont largement évitables.',
+      'Sur la majorité des projets IA commerciaux qui s’enlisent (et ils sont nombreux), on retrouve toujours les mêmes trois pièges. Prévenus, ils sont largement évitables.',
     ),
     ...numberedList([
       '**Lancer plusieurs chantiers en parallèle.** Sur les six usages présentés, la tentation est d’en attaquer trois ou quatre en même temps pour « aller vite ». Résultat : aucun ne va au bout, l’équipe est saturée, les données CRM se dégradent, et six mois plus tard le projet est abandonné. Un seul usage à la fois, jusqu’à résultat démontré.',
@@ -309,8 +308,8 @@ const ARTICLE = {
     ]),
     avisMaria({
       texte:
-        'La mode pousse à empiler les outils IA commerciaux — copilot dans le CRM, IA générative pour les emails, agent sur les relances. Notre conviction est inverse. Un seul cas d’usage cadré et mesuré vaut mieux que quatre chantiers parallèles qui s’enlisent. Le vrai gain de temps commercial ne vient pas de l’accumulation d’outils, il vient de la discipline du cadrage.',
-      signature: '— Matthieu SEILLER',
+        'La mode pousse à empiler les outils IA commerciaux : copilot dans le CRM, IA générative pour les emails, agent sur les relances. Notre conviction est inverse. Un seul cas d’usage cadré et mesuré vaut mieux que quatre chantiers parallèles qui s’enlisent. Le vrai gain de temps commercial ne vient pas de l’accumulation d’outils, il vient de la discipline du cadrage.',
+      signature: 'Matthieu SEILLER',
     }),
 
     h2('Quel budget et quels délais prévoir ?'),
