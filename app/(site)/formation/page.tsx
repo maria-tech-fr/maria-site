@@ -12,7 +12,11 @@ import Faq from '../../../src/components/Faq'
 import FormationCta from '../../../src/components/formation/FormationCta'
 import FormationServicesLinks from '../../../src/components/formation/FormationServicesLinks'
 import JsonLd from '../../../src/components/JsonLd'
-import { buildFaqSchema, buildServiceSchema } from '../../../src/lib/schema'
+import {
+  buildCourseSchema,
+  buildFaqSchema,
+  buildServiceSchema,
+} from '../../../src/lib/schema'
 import { resolveSeo } from '../../../src/lib/seo'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,6 +43,15 @@ export default async function PageFormation() {
             'Formations IA en entreprise : usages métier, sécurité des données, gouvernance.',
           url: '/formation',
           serviceType: 'Formation IA',
+        })}
+      />
+      <JsonLd
+        data={buildCourseSchema({
+          name: 'Formation IA pour les équipes',
+          description:
+            data.hero?.sousTitre ??
+            'Formations IA en entreprise : usages métier, sécurité des données, gouvernance.',
+          url: '/formation',
         })}
       />
       <JsonLd data={buildFaqSchema(data.faq?.questions)} />

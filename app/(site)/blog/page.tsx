@@ -3,6 +3,8 @@ import BlogFeaturedArticle from '../../../src/components/BlogFeaturedArticle'
 import BlogHero from '../../../src/components/BlogHero'
 import BlogListingSection from '../../../src/components/BlogListingSection'
 import BlogToolbar from '../../../src/components/BlogToolbar'
+import JsonLd from '../../../src/components/JsonLd'
+import { buildBlogSchema } from '../../../src/lib/schema'
 import { DEFAULT_OG_IMAGE } from '../../../src/lib/seo'
 import {
   getArticleCategories,
@@ -80,8 +82,31 @@ export default async function BlogPage({ searchParams }: PageProps) {
     variant: p.variant,
   }))
 
+  // Articles récents à inline dans le schema Blog (source unique pour la
+  // SERP + les IA génératives). On combine le featured éventuel avec la
+  // 1re page du listing pour donner à Google/AI Overviews un signal
+  // « voici ce qui est actuellement mis en avant sur ce blog ».
+  const schemaPosts = [
+    ...(featured ? [featured] : []),
+    ...articles,
+  ].map((a) => ({
+    slug: a.slug,
+    titre: a.titre,
+    publishedAt: a.publishedAt,
+    auteurNom: a.auteur?.nom ?? null,
+  }))
+
   return (
     <>
+      <JsonLd
+        data={buildBlogSchema({
+          name: 'Journal maria',
+          description:
+            "Stratégie, méthode, gouvernance, retours d'expérience. Nos points de vue sur l'IA en entreprise.",
+          url: '/blog',
+          posts: schemaPosts,
+        })}
+      />
       <BlogHero
         titre={'Nos points de vue sur\nl’IA **en entreprise**'}
         description="Stratégie, méthode, gouvernance, retours d'expérience. Ce que nous pensons, ce que nous apprenons, ce que nous partageons."

@@ -153,6 +153,7 @@ const components: PortableTextComponents = {
     },
     callout: ({ value }) => (
       <aside
+        data-speakable="callout"
         className="my-10 rounded-[10px] border border-[rgba(63,193,99,0.35)] bg-[#E8FFEE] px-7 py-6"
       >
         <p className="pb-2 font-mono text-[11px] uppercase tracking-[0.08em] text-success">

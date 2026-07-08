@@ -13,6 +13,7 @@ export default function ArticleTldr({ items }: Props) {
   if (!items || items.length === 0) return null
   return (
     <aside
+      id="article-tldr"
       aria-labelledby="article-tldr-heading"
       className="mt-10 rounded-xl border border-success/30 bg-success-tint px-6 py-6 lg:px-7 lg:py-7"
     >

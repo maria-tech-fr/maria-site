@@ -67,6 +67,14 @@ export default function ArticleJsonLd({ article }: { article: Article }) {
       '@id': url,
     },
     articleSection: article.categorie.libelle,
+    // Speakable : cible les blocs les plus autoportants (TL;DR + callouts
+    // « À retenir »). Signal pour Google Assistant / assistants vocaux et
+    // pour certains crawlers IA génératifs, sans saisie éditoriale
+    // supplémentaire — les sélecteurs pointent des ancres statiques du DOM.
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['#article-tldr', '[data-speakable="callout"]'],
+    },
   }
 
   // BreadcrumbList n'est PLUS émis ici : ArticleHero rend le composant

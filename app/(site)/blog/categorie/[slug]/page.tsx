@@ -11,6 +11,8 @@ import {
   type ArticleSort,
 } from '../../../../../src/lib/article'
 import type { PromoForGrid } from '../../../../../src/lib/blog'
+import JsonLd from '../../../../../src/components/JsonLd'
+import { buildCollectionPageSchema } from '../../../../../src/lib/schema'
 import { DEFAULT_OG_IMAGE } from '../../../../../src/lib/seo'
 
 const PAGE_SIZE = 13
@@ -85,6 +87,17 @@ export default async function BlogCategoriePage({ params, searchParams }: Params
 
   return (
     <>
+      <JsonLd
+        data={buildCollectionPageSchema({
+          name: `${categorie.libelle} — Articles maria`,
+          description: categorie.description,
+          url: `/blog/categorie/${slug}`,
+          items: articles.map((a) => ({
+            name: a.titre,
+            url: `/blog/${a.slug}`,
+          })),
+        })}
+      />
       <BlogHero
         surTitre={`// ${categorie.libelle.toLowerCase()}`}
         titre={`**${categorie.libelle}**\nNos articles`}

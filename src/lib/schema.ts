@@ -150,3 +150,120 @@ export function buildFaqSchema(questions: FaqEntry[] | null | undefined) {
     })),
   }
 }
+
+/* ============================================================================
+ * Course (pour /formation)
+ *
+ * Signale à Google, Bing et aux IA génératives que maria propose un service
+ * éducatif. Sans `hasCourseInstance` détaillé pour l'instant : le catalogue
+ * précis (durée, format, session) est piloté au cas par cas — on émet un
+ * Course « générique » qui documente le programme sans surpromettre.
+ * ========================================================================== */
+
+export type CourseSchemaInput = {
+  name: string
+  description?: string | null
+  url: string
+  /** Ex. "employee", "manager", "executive". Défaut : "employee". */
+  educationalRole?: string
+}
+
+export function buildCourseSchema(input: CourseSchemaInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: input.name,
+    url: absUrl(input.url),
+    provider: { '@id': ORG_ID },
+    inLanguage: 'fr-FR',
+    educationalLevel: 'Professional',
+    audience: {
+      '@type': 'EducationalAudience',
+      educationalRole: input.educationalRole ?? 'employee',
+    },
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Blended',
+      inLanguage: 'fr-FR',
+    },
+    ...(input.description ? { description: input.description } : {}),
+  }
+}
+
+/* ============================================================================
+ * Blog (pour /blog listing)
+ *
+ * Décrit la page « Journal » comme un Blog schema.org, et liste les articles
+ * récents en BlogPosting inline avec le minimum de propriétés (headline, url,
+ * datePublished, author). Signal fort pour la SERP « articles récents ».
+ * ========================================================================== */
+
+export type BlogPostEntry = {
+  slug: string
+  titre: string
+  publishedAt: string
+  auteurNom?: string | null
+}
+
+export type BlogSchemaInput = {
+  name: string
+  description?: string | null
+  url: string
+  posts: BlogPostEntry[]
+}
+
+export function buildBlogSchema(input: BlogSchemaInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: input.name,
+    url: absUrl(input.url),
+    publisher: { '@id': ORG_ID },
+    inLanguage: 'fr-FR',
+    ...(input.description ? { description: input.description } : {}),
+    blogPost: input.posts.map((p) => ({
+      '@type': 'BlogPosting',
+      headline: p.titre,
+      url: absUrl(`/blog/${p.slug}`),
+      datePublished: p.publishedAt,
+      ...(p.auteurNom
+        ? { author: { '@type': 'Person', name: p.auteurNom } }
+        : {}),
+    })),
+  }
+}
+
+/* ============================================================================
+ * CollectionPage (pour /blog/categorie/[slug])
+ *
+ * Décrit une page de catégorie comme une collection d'articles. mainEntity
+ * = ItemList des articles de la catégorie, dans l'ordre affiché.
+ * ========================================================================== */
+
+export type CollectionPageSchemaInput = {
+  name: string
+  description?: string | null
+  url: string
+  items: ItemListEntry[]
+}
+
+export function buildCollectionPageSchema(input: CollectionPageSchemaInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: input.name,
+    url: absUrl(input.url),
+    inLanguage: 'fr-FR',
+    isPartOf: { '@id': ORG_ID },
+    ...(input.description ? { description: input.description } : {}),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: input.items.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: absUrl(item.url),
+        name: item.name,
+      })),
+    },
+  }
+}
