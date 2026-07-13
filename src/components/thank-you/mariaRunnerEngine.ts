@@ -1059,10 +1059,29 @@ export function initRunner(
     }
   }
 
+  // Fixed timestep 60 Hz : le calcul physique est verrouillé à la vitesse
+  // d'origine du portage, indépendamment du refresh rate de l'écran (60, 120,
+  // 144 Hz…). Sur ProMotion / écrans gaming, sans ce verrou le jeu tournait
+  // 2× à 2,4× plus vite que prévu et devenait quasi injouable. Le rendu reste
+  // à la fréquence native pour rester fluide ; seul `update()` est fixé.
+  const FRAME_MS = 1000 / 60
+  const MAX_STEPS_PER_FRAME = 3 // garde-fou anti « spiral of death » si l'onglet a été mis en pause
+  let accumulator = 0
+
   function loop(t: number) {
     if (!lastTime) lastTime = t
+    const dt = t - lastTime
     lastTime = t
-    if (started && alive) update()
+    if (started && alive) {
+      accumulator += dt
+      let steps = 0
+      while (accumulator >= FRAME_MS && steps < MAX_STEPS_PER_FRAME) {
+        update()
+        accumulator -= FRAME_MS
+        steps++
+      }
+      if (accumulator > FRAME_MS * MAX_STEPS_PER_FRAME) accumulator = 0
+    }
     render()
     rafId = requestAnimationFrame(loop)
   }
