@@ -44,12 +44,6 @@ export default function BlogArticleCard({ article }: { article: ArticleCardData 
             className="inline align-baseline bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-no-repeat bg-[position:0_88%] transition-[background-size] duration-300 ease-out group-hover:bg-[length:100%_1px]"
           >
             {article.titre}
-            <span
-              aria-hidden
-              className="ml-1 inline-block align-baseline opacity-0 transition-all duration-300 ease-out group-hover:translate-x-0.5 group-hover:opacity-100"
-            >
-              →
-            </span>
           </Link>
         </h3>
         <div className="flex flex-wrap items-center gap-x-2 pt-1 font-mono text-[12px] leading-4 tracking-[0.04em] text-[#666]">
