@@ -311,6 +311,14 @@ const ARTICLE = {
         'La mode pousse à empiler les outils IA commerciaux : copilot dans le CRM, IA générative pour les emails, agent sur les relances. Notre conviction est inverse. Un seul cas d’usage cadré et mesuré vaut mieux que quatre chantiers parallèles qui s’enlisent. Le vrai gain de temps commercial ne vient pas de l’accumulation d’outils, il vient de la discipline du cadrage.',
       signature: 'Matthieu SEILLER',
     }),
+    inArticleCta({
+      titre: 'Approfondir : quels cas d’usage marchent, lesquels déraillent',
+      description:
+        'Le pendant analytique de cet article : 4 cas de réussite, 4 configurations qui se retournent contre vous, et les 5 questions à se poser avant de déployer.',
+      lienLibelle: 'Lire l’analyse complète →',
+      lienHref: '/blog/ia-processus-commerciaux-quand-ca-marche',
+      variant: 'green',
+    }),
 
     h2('Quel budget et quels délais prévoir ?'),
     paragraph(
