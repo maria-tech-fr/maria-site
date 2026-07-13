@@ -88,15 +88,6 @@ export default function ContactForm({
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <Field
-                id={nomId}
-                name="nom"
-                label="nom"
-                required
-                error={errors?.nom}
-                placeholder="Dupont"
-                defaultValue={values?.nom}
-              />
-              <Field
                 id={prenomId}
                 name="prenom"
                 label="prénom"
@@ -104,6 +95,15 @@ export default function ContactForm({
                 error={errors?.prenom}
                 placeholder="Claire"
                 defaultValue={values?.prenom}
+              />
+              <Field
+                id={nomId}
+                name="nom"
+                label="nom"
+                required
+                error={errors?.nom}
+                placeholder="Dupont"
+                defaultValue={values?.nom}
               />
             </div>
 
