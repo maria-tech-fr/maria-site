@@ -178,18 +178,19 @@ const components: PortableTextComponents = {
     ),
     avisMaria: ({ value }) => (
       // Encart « Ce qu'on en pense chez maria » — bordure dégradée jaune↔vert
-      // (même pattern d'animation que les ServiceCards de la home au hover,
-      // ici toujours visible). Signature « — l'équipe maria » personnalisable.
+      // qui défile en continu. Padding en pixel entier (2px) pour un rendu
+      // symétrique sur tous les côtés (1.5px provoquait un arrondi subpixel
+      // inconsistant selon les côtés sur écran non-Retina).
       <aside className="group/avis relative my-10 rounded-[10px] bg-paper px-7 py-6">
         <div
           aria-hidden
           className="pointer-events-none absolute -inset-px rounded-[10px]"
           style={{
-            padding: '1.5px',
+            padding: '2px',
             background:
               'linear-gradient(120deg, #FEC23C 0%, #3FC163 50%, #FEC23C 100%)',
             backgroundSize: '200% 100%',
-            animation: 'border-drift 28s linear infinite',
+            animation: 'border-drift 18s linear infinite',
             WebkitMask:
               'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
             WebkitMaskComposite: 'xor',
