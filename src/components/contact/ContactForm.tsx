@@ -6,6 +6,7 @@ import HaloField from '../HaloField'
 import Reveal from '../Reveal'
 import { submitContact } from '../../lib/contactActions'
 import type { ContactSubmitState } from '../../lib/contactSchema'
+import TurnstileWidget from './TurnstileWidget'
 
 type ContactFormProps = {
   surTitre: string
@@ -176,6 +177,12 @@ export default function ContactForm({
                 {state.message}
               </p>
             )}
+
+            {/* Captcha Cloudflare Turnstile — mode invisible, no-op si la
+                site key n'est pas configurée en env. Le widget injecte
+                automatiquement un <input name="cf-turnstile-response"> dans
+                ce <form> ; le token est validé côté serveur. */}
+            <TurnstileWidget />
 
             <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
               <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#999]">

@@ -27,6 +27,59 @@ const FROM_VISITEUR = 'maria <contact@maria.tech>'
 const FROM_EQUIPE = 'maria — formulaire <contact@maria.tech>'
 const REPLY_TO_VISITEUR = 'contact@maria.tech'
 
+/* ============================================================================
+ * Vérification captcha Cloudflare Turnstile
+ *
+ * Le widget en mode invisible côté navigateur injecte un input
+ * `cf-turnstile-response` dans le form ; on le valide ici via siteverify
+ * avant tout traitement. Si `TURNSTILE_SECRET_KEY` est manquante :
+ *   - en dev, on skip (permet de tester sans configurer)
+ *   - en prod, on refuse (config incorrecte, mieux vaut échec explicite)
+ * En cas de panne Cloudflare, on fail-closed (refus) : mieux qu'un bot qui
+ * passerait pendant un incident.
+ * ============================================================================ */
+
+async function verifyTurnstile(
+  token: string,
+  ip: string,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  const secret = process.env.TURNSTILE_SECRET_KEY
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('[contactActions] TURNSTILE_SECRET_KEY manquant en prod')
+      return { ok: false, message: 'Configuration serveur incorrecte. Merci de réessayer plus tard.' }
+    }
+    return { ok: true }
+  }
+  if (!token) {
+    return {
+      ok: false,
+      message: 'Vérification anti-bot non aboutie. Merci de rafraîchir la page et de réessayer.',
+    }
+  }
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body: new URLSearchParams({ secret, response: token, remoteip: ip }),
+    })
+    const data = (await res.json()) as { success?: boolean; 'error-codes'?: string[] }
+    if (!data.success) {
+      console.warn('[contactActions] Turnstile refusé:', data['error-codes'])
+      return {
+        ok: false,
+        message: 'Vérification anti-bot échouée. Merci de rafraîchir la page et de réessayer.',
+      }
+    }
+    return { ok: true }
+  } catch (err) {
+    console.error('[contactActions] Turnstile siteverify failed:', err)
+    return {
+      ok: false,
+      message: 'Vérification anti-bot temporairement indisponible. Merci de réessayer.',
+    }
+  }
+}
+
 async function sendWithRetry<T>(fn: () => Promise<T>, retries = 1): Promise<T> {
   try {
     return await fn()
@@ -175,12 +228,27 @@ export async function submitContact(_prev: ContactSubmitState, formData: FormDat
     redirect('/contact/merci')
   }
 
-  // Rate limit par IP (hashée pour ne pas stocker en clair).
+  // IP visiteur — utilisée par Turnstile (contexte remote-IP pour l'analyse
+  // de risque Cloudflare) puis hashée pour le rate-limit (stockage éphémère).
   const hdrs = await headers()
   const ip =
     hdrs.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     hdrs.get('x-real-ip') ||
     'unknown'
+
+  // Captcha Cloudflare Turnstile — vérification anti-bot avant tout traitement
+  // coûteux (Sanity, Resend). Le token vient du widget invisible côté navigateur.
+  const turnstileToken = String(formData.get('cf-turnstile-response') ?? '')
+  const turnstileCheck = await verifyTurnstile(turnstileToken, ip)
+  if (!turnstileCheck.ok) {
+    return {
+      status: 'error',
+      message: turnstileCheck.message,
+      values,
+    }
+  }
+
+  // Rate limit par IP (hashée pour ne pas stocker en clair).
   const ipHash = createHash('sha256').update(ip).digest('hex').slice(0, 16)
 
   const rateLimit = await checkContactRateLimit(ipHash)
