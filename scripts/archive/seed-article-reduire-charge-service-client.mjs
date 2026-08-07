@@ -313,7 +313,7 @@ const ARTICLE = {
 
     h3('Palier 3 : Agent sur mesure (15 000 à 60 000 € de développement + exploitation)'),
     paragraph(
-      'Développement dédié, intégration profonde avec vos systèmes (CRM, base produit, ERP, système de ticketing), hébergement au choix (Europe, on-premise), maîtrise complète du comportement. C’est le palier que nous recommandons quand le service client est un enjeu stratégique et que les motifs à automatiser sont spécifiques au métier.',
+      'Développement dédié, intégration profonde avec vos systèmes (CRM, base produit, ERP, système de ticketing), hébergement au choix (Europe, on-premise), maîtrise complète du comportement. C’est le palier que nous recommandons quand le service client est un enjeu stratégique et que les motifs à automatiser sont spécifiques au métier — c’est l’objet de notre offre [outils IA internes sur mesure](/services/outils-IA-internes-sur-mesure).',
     ),
     paragraph(
       '**Ce qu’on obtient** : maîtrise complète, souveraineté, capacité à évoluer sans dépendance à un éditeur, intégration profonde avec l’existant.',
@@ -368,7 +368,7 @@ const ARTICLE = {
       '**Condition 2 : Une supervision humaine active, pas de « roue libre ».** L’agent IA n’est pas un remplacement du service client. C’est un premier niveau qui absorbe les demandes récurrentes, en dessous d’une supervision qui vérifie ce qui est produit. Concrètement : une personne dédiée qui relit un échantillon des conversations chaque jour, ajuste les règles selon les retours, prend la main quand l’agent bute.',
     ),
     paragraph(
-      '**Condition 3 : Un périmètre borné, communiqué explicitement.** Le client doit savoir qu’il parle à une IA et qu’il peut demander un humain à tout moment. Le périmètre couvert doit être clair (l’agent traite les commandes, les retours et l’accès compte, il transfère le reste). Cette transparence n’est pas seulement une exigence RGPD. C’est ce qui préserve la confiance sur la durée, en cohérence avec le constat de l’Observatoire Ipsos BVA 2025 : les Français restent attachés à la présence humaine.',
+      '**Condition 3 : Un périmètre borné, communiqué explicitement.** Le client doit savoir qu’il parle à une IA et qu’il peut demander un humain à tout moment. Le périmètre couvert doit être clair (l’agent traite les commandes, les retours et l’accès compte, il transfère le reste). Cette transparence n’est pas seulement une exigence RGPD (enjeu de conformité que nous cadrons systématiquement en amont, [voir notre besoin dédié](/besoins/conformite-rgpd-ia)) : c’est aussi ce qui préserve la confiance sur la durée, en cohérence avec le constat de l’Observatoire Ipsos BVA 2025, les Français restent attachés à la présence humaine.',
     ),
     quoteAttribuee({
       texte:
@@ -397,7 +397,7 @@ const ARTICLE = {
       'À l’issue de ces 4 semaines, vous avez soit décidé de démarrer, soit compris ce qu’il vous manque encore pour démarrer proprement. Dans les deux cas, vous n’aurez pas perdu de temps.',
     ),
     paragraph(
-      'Dans la même famille « productivité par l’IA », voir aussi nos analyses sur [comment faire gagner du temps aux commerciaux](/blog/ia-commerciaux-gagner-temps) et sur [les usages IA commerciaux qui marchent vraiment ou qui déraillent](/blog/ia-processus-commerciaux-quand-ca-marche).',
+      'Dans la même famille « Productivité opérationnelle », voir aussi [IA pour les commerciaux : comment gagner du temps sans dégrader vos ventes](/blog/ia-commerciaux-gagner-temps) et [IA dans vos processus commerciaux : quand ça marche, quand ça déraille](/blog/ia-processus-commerciaux-quand-ca-marche).',
     ),
 
     h2('En résumé'),
