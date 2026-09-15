@@ -362,7 +362,7 @@ const ARTICLE = {
       'Sur les projets qui échouent, les mêmes causes reviennent. Trois conditions doivent être réunies dès le départ pour éviter les impasses.',
     ),
     paragraph(
-      '**Condition 1 : Une documentation à jour, structurée, validée.** Un agent IA n’invente pas ses réponses (ou alors mal). Il s’appuie sur ce que vous lui donnez à lire. Si votre documentation actuelle est dispersée entre plusieurs outils, contradictoire par endroits, ou obsolète depuis dix-huit mois, aucun agent IA ne pourra bien fonctionner. La préparation documentaire est le prérequis, pas une option (voir [notre guide dédié à la préparation d’une base de connaissance pour agent IA](/blog/base-de-connaissance-agent-ia-service-client)).',
+      '**Condition 1 : Une documentation à jour, structurée, validée.** Un agent IA n’invente pas ses réponses (ou alors mal). Il s’appuie sur ce que vous lui donnez à lire. Si votre documentation actuelle est dispersée entre plusieurs outils, contradictoire par endroits, ou obsolète depuis dix-huit mois, aucun agent IA ne pourra bien fonctionner. La préparation documentaire est le prérequis, pas une option (voir [notre guide dédié à la structuration des données pour un agent IA](/blog/donnees-agent-ia-service-client)).',
     ),
     paragraph(
       '**Condition 2 : Une supervision humaine active, pas de « roue libre ».** L’agent IA n’est pas un remplacement du service client. C’est un premier niveau qui absorbe les demandes récurrentes, en dessous d’une supervision qui vérifie ce qui est produit. Concrètement : une personne dédiée qui relit un échantillon des conversations chaque jour, ajuste les règles selon les retours, prend la main quand l’agent bute.',

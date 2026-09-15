@@ -99,8 +99,8 @@ const inArticleCta = ({ titre, description, lienLibelle, lienHref, variant = 'ye
 const ARTICLE = {
   _id: 'article-base-connaissance-agent-ia-service-client',
   _type: 'article',
-  slug: { _type: 'slug', current: 'base-de-connaissance-agent-ia-service-client' },
-  titre: 'Base de connaissance pour agent IA de service client : comment structurer votre documentation pour qu’elle marche',
+  slug: { _type: 'slug', current: 'donnees-agent-ia-service-client' },
+  titre: 'Comment structurer ses données pour créer un agent IA de service client ?',
   sousTitre:
     'La qualité de votre base de connaissance conditionne 80 % du succès d’un agent IA. Voici ce qu’il faut savoir avant d’écrire la première ligne de code.',
   intro:
@@ -308,7 +308,7 @@ const ARTICLE = {
       'À l’issue de ce mois, vous n’avez pas encore d’agent IA en production. Mais vous avez posé les fondations qui feront la différence entre un projet réussi et un projet raté. Sur les cas que nous accompagnons, les entreprises qui prennent le temps de ce préalable arrivent à un pilote en production 2 à 3 mois plus tard, avec une performance qui tient. Celles qui sautent cette étape lancent plus vite mais rejouent souvent tout après un premier échec.',
     ),
     paragraph(
-      'Pour la vue d’ensemble d’un projet d’agent IA service client (méthode, budget, délais, pièges), voir [Réduire la charge de votre service client avec un agent IA](/blog/reduire-charge-service-client-agent-ia).',
+      'Pour la vue d’ensemble d’un projet d’agent IA service client (méthode, budget, délais, pièges), voir [Réduire la charge de votre service client avec un agent IA](/blog/reduire-charge-service-client-agent-ia). Pour prendre du recul sur l’enjeu plus large du sujet, voir aussi [Knowledge management et IA : pourquoi vous devez organiser votre savoir avant de déployer un agent](/blog/knowledge-management-ia-organiser-savoir-avant-agent).',
     ),
 
     h2('En résumé'),
