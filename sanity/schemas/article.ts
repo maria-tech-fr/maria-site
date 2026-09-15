@@ -146,7 +146,18 @@ export const article = defineType({
                 type: 'object',
                 title: 'Lien',
                 fields: [
-                  defineField({ name: 'href', type: 'url', title: 'URL', validation: (r) => r.required() }),
+                  defineField({
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    description:
+                      'URL absolue (https://…, mailto:…, tel:…) ou chemin interne (/blog/…, /besoins/…).',
+                    validation: (r) =>
+                      r.required().uri({
+                        allowRelative: true,
+                        scheme: ['http', 'https', 'mailto', 'tel'],
+                      }),
+                  }),
                   defineField({ name: 'blank', type: 'boolean', title: 'Ouvrir dans un nouvel onglet', initialValue: false }),
                 ],
               },
