@@ -320,7 +320,7 @@ const ARTICLE = {
       'À l’issue de ce mois initial, vous aurez posé les fondations. Vous n’avez pas encore d’agent IA. Mais vous avez rendu tout projet IA possible, avec des résultats prévisibles.',
     ),
     paragraph(
-      'Pour l’application concrète de ces principes à un cas d’usage précis (agent IA de service client), voir [Comment structurer ses données pour créer un agent IA de service client ?](/blog/donnees-agent-ia-service-client).',
+      'Pour l’application concrète de ces principes à un cas d’usage précis (agent IA de service client), voir [Comment structurer ses données pour créer un agent IA de service client ?](/blog/donnees-agent-ia-service-client). Une fois le savoir structuré et l’agent en production, reste la vraie question : celle de l’adoption par les équipes, développée dans [Agent IA interne : pourquoi vos équipes ne l’utiliseront pas (et comment les faire changer d’avis)](/blog/agent-ia-interne-adoption-equipes).',
     ),
 
     h2('En résumé'),
