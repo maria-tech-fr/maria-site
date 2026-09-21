@@ -101,6 +101,15 @@ export const article = defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'archived',
+      title: 'Archiver cet article',
+      description:
+        'Cocher pour retirer l’article du site (listing /blog, URL directe, sitemap, articles suggérés). Le document reste conservé dans Sanity et accessible via l’onglet « Articles archivés » — décocher restaure l’article sans perte de contenu.',
+      type: 'boolean',
+      group: 'meta',
+      initialValue: false,
+    }),
+    defineField({
       name: 'coverImage',
       title: 'Image de couverture',
       description: 'Optionnelle. Si non renseignée, un placeholder gradient maria est affiché.',

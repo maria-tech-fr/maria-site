@@ -347,9 +347,16 @@ const articleCardProjection = `{
   auteur->{ nom, role, avatar{ asset->{ _id, url } } }
 }`
 
+// Filtre commun à toutes les requêtes publiques : exclut les articles archivés
+// (case « Archiver cet article » cochée dans Studio). `archived != true` accepte
+// aussi les documents sans le champ (comportement rétrocompatible avec les
+// articles créés avant l'introduction de ce champ).
+const NOT_ARCHIVED = 'archived != true'
+
 export const articlesListingRecentQuery = defineQuery(`
   *[_type == "article"
     && defined(slug.current)
+    && ${NOT_ARCHIVED}
     && ($category == null || categorie->slug.current == $category)
     && ($search == null || $search == "" || (
       titre match $searchPattern || intro match $searchPattern
@@ -361,6 +368,7 @@ export const articlesListingRecentQuery = defineQuery(`
 export const articlesListingOldestQuery = defineQuery(`
   *[_type == "article"
     && defined(slug.current)
+    && ${NOT_ARCHIVED}
     && ($category == null || categorie->slug.current == $category)
     && ($search == null || $search == "" || (
       titre match $searchPattern || intro match $searchPattern
@@ -372,6 +380,7 @@ export const articlesListingOldestQuery = defineQuery(`
 export const articlesListingCountQuery = defineQuery(`
   count(*[_type == "article"
     && defined(slug.current)
+    && ${NOT_ARCHIVED}
     && ($category == null || categorie->slug.current == $category)
     && ($search == null || $search == "" || (
       titre match $searchPattern || intro match $searchPattern
@@ -381,18 +390,18 @@ export const articlesListingCountQuery = defineQuery(`
 `)
 
 export const featuredArticleQuery = defineQuery(`
-  *[_type == "article" && defined(slug.current) && featured == true]
+  *[_type == "article" && defined(slug.current) && ${NOT_ARCHIVED} && featured == true]
     | order(publishedAt desc) [0] ${articleCardProjection}
 `)
 
 // Fallback : si aucun article n'est featured, on prend le plus récent.
 export const latestArticleQuery = defineQuery(`
-  *[_type == "article" && defined(slug.current)]
+  *[_type == "article" && defined(slug.current) && ${NOT_ARCHIVED}]
     | order(publishedAt desc) [0] ${articleCardProjection}
 `)
 
 export const articleBySlugQuery = defineQuery(`
-  *[_type == "article" && slug.current == $slug][0]{
+  *[_type == "article" && slug.current == $slug && ${NOT_ARCHIVED}][0]{
     "slug": slug.current,
     titre,
     sousTitre,
@@ -434,6 +443,7 @@ export const articleBySlugQuery = defineQuery(`
 export const relatedArticlesQuery = defineQuery(`
   *[_type == "article"
     && defined(slug.current)
+    && ${NOT_ARCHIVED}
     && slug.current != $slug
     && categorie->slug.current == $category
   ] | order(publishedAt desc) [0...3] ${articleCardProjection}
@@ -443,13 +453,14 @@ export const relatedArticlesQuery = defineQuery(`
 export const fallbackRelatedQuery = defineQuery(`
   *[_type == "article"
     && defined(slug.current)
+    && ${NOT_ARCHIVED}
     && slug.current != $slug
     && !(slug.current in $excludeSlugs)
   ] | order(publishedAt desc) [0...$limit] ${articleCardProjection}
 `)
 
 export const articleSlugsQuery = defineQuery(`
-  *[_type == "article" && defined(slug.current)][]{ "slug": slug.current }
+  *[_type == "article" && defined(slug.current) && ${NOT_ARCHIVED}][]{ "slug": slug.current }
 `)
 
 export const articleCategoriesQuery = defineQuery(`

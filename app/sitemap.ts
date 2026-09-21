@@ -83,7 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articleDates = await client.fetch<
     Array<{ slug: string; updatedAt: string }>
   >(
-    `*[_type == "article" && defined(slug.current)]{ "slug": slug.current, "updatedAt": coalesce(updatedAt, _updatedAt) }`,
+    `*[_type == "article" && defined(slug.current) && archived != true]{ "slug": slug.current, "updatedAt": coalesce(updatedAt, _updatedAt) }`,
     {},
     { next: { revalidate: 60, tags: ['article'] } },
   )

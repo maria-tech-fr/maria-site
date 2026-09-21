@@ -1,5 +1,6 @@
 import type { StructureResolver } from 'sanity/structure'
 import {
+  ArchiveIcon,
   BulbOutlineIcon,
   ClipboardIcon,
   CogIcon,
@@ -143,7 +144,22 @@ export const structure: StructureResolver = (S) =>
               S.listItem()
                 .title('Articles')
                 .icon(DocumentTextIcon)
-                .child(S.documentTypeList('article').title('Articles')),
+                .child(
+                  S.documentTypeList('article')
+                    .title('Articles')
+                    // Onglet par défaut : uniquement les articles actifs (non
+                    // archivés). Le champ `archived` étant optionnel, on inclut
+                    // aussi les documents où il vaut null ou undefined.
+                    .filter('_type == "article" && (archived != true || !defined(archived))'),
+                ),
+              S.listItem()
+                .title('Articles archivés')
+                .icon(ArchiveIcon)
+                .child(
+                  S.documentTypeList('article')
+                    .title('Articles archivés')
+                    .filter('_type == "article" && archived == true'),
+                ),
               S.listItem()
                 .title('Catégories')
                 .icon(TagIcon)
