@@ -3,13 +3,23 @@
 import Script from 'next/script'
 
 /**
- * Widget Cloudflare Turnstile (captcha invisible).
+ * Widget Cloudflare Turnstile (captcha, mode `managed`).
  *
- * En mode `invisible`, aucun visuel n'est affiché au visiteur — Cloudflare
- * vérifie en arrière-plan (fingerprint navigateur + heuristiques) et injecte
- * un `<input name="cf-turnstile-response" value="TOKEN">` dans le formulaire
- * parent dès qu'il a un verdict. Ce token est ensuite validé côté serveur
- * dans `contactActions.ts` via l'endpoint siteverify.
+ * Mode `managed` (défaut Cloudflare) : Turnstile décide au cas par cas entre
+ * un défi invisible (99 % du trafic humain, aucun affichage) et un défi visuel
+ * léger (case « Je suis humain » à cocher) pour le trafic jugé suspect. C'est
+ * le meilleur compromis UX / sécurité — les vrais visiteurs ne voient
+ * quasi jamais rien, les bots un peu sophistiqués sont bloqués beaucoup plus
+ * efficacement que par le mode `invisible` (qui laissait passer un certain
+ * volume de spam).
+ *
+ * Historique : on avait démarré en `invisible` en juillet 2026. Bascule en
+ * `managed` fin septembre 2026 après une hausse du spam reçu via le
+ * formulaire.
+ *
+ * Le widget injecte un `<input name="cf-turnstile-response" value="TOKEN">`
+ * dans le formulaire parent, validé côté serveur dans `contactActions.ts` via
+ * l'endpoint siteverify.
  *
  * Si `NEXT_PUBLIC_TURNSTILE_SITE_KEY` n'est pas définie (dev local sans
  * configuration), le widget est no-op — le form fonctionne mais le captcha
@@ -37,7 +47,7 @@ export default function TurnstileWidget() {
       <div
         className="cf-turnstile"
         data-sitekey={siteKey}
-        data-size="invisible"
+        data-theme="light"
       />
     </>
   )
