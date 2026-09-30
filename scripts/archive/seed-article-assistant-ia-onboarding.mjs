@@ -10,8 +10,11 @@
  *  - Vers /blog/knowledge-management-ia-organiser-savoir-avant-agent dans la
  *    Condition 1 (documentation d'accueil = prérequis, sujet traité en amont
  *    par l'article KM).
- *  - Le lien retour est à ajouter côté seed KM dans un chantier séparé si
- *    besoin (l'article KM restera pertinent tel quel).
+ *  - Vers /blog/onboarding-ia-ce-que-le-manager-gagne dans la Condition 3
+ *    (articulation avec l'accompagnement humain = angle posture manager traité
+ *    dans l'article Matthieu SEILLER). Ajouté dans un second passage, lors
+ *    de la publication de l'article manager.
+ *  - Pas de lien retour côté seed KM (l'article KM se tient seul).
  *
  * Sources cliquables (option B mixte) :
  *  - DARES 1er trim. 2026 : URL directe vers les données officielles → LIEN.
@@ -322,7 +325,7 @@ const ARTICLE = {
       '**Condition 2 : Un périmètre borné explicitement.** L’assistant traite les questions procédurales, logistiques et organisationnelles. Il transfère systématiquement les questions sensibles, relationnelles ou managériales à l’humain. Cette frontière doit être claire pour le nouveau (il sait ce qu’il peut demander et ce qui relève de son manager) et pour l’assistant (règles de bascule paramétrées).',
     ),
     paragraph(
-      '**Condition 3 : Une articulation claire avec l’accompagnement humain.** L’assistant IA ne supprime pas les rituels d’onboarding humains, il les recentre sur ce qui compte : accueil du premier jour, présentation de l’équipe, cadrage de mission avec le manager, entretiens à 30, 60, 90 jours. Ces moments doivent être maintenus, voire renforcés, en profitant du temps libéré par l’assistant.',
+      '**Condition 3 : Une articulation claire avec l’accompagnement humain.** L’assistant IA ne supprime pas les rituels d’onboarding humains, il les recentre sur ce qui compte : accueil du premier jour, présentation de l’équipe, cadrage de mission avec le manager, entretiens à 30, 60, 90 jours. Ces moments doivent être maintenus, voire renforcés, en profitant du temps libéré par l’assistant, c’est précisément l’angle traité dans notre article [Onboarding IA : ce que le manager gagne (et ce qu’il ne doit pas perdre)](/blog/onboarding-ia-ce-que-le-manager-gagne).',
     ),
     quoteAttribuee({
       texte:
