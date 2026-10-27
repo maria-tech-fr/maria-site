@@ -7,10 +7,16 @@
  * Catégorie : Stratégie IA — `articleCategorie-strategie-ia`.
  * Featured : false.
  *
- * Cross-link vers /blog/knowledge-management-ia-organiser-savoir-avant-agent
- * dans la section « Ce que change l'IA sur ce sujet » (le KM structuré en
- * amont est le pendant systémique du dispositif de capitalisation anti-perte
- * de savoir). Pas de lien retour côté KM (ce dernier reste autoportant).
+ * Cross-links :
+ *  - Vers /blog/knowledge-management-ia-organiser-savoir-avant-agent dans la
+ *    section « Ce que change l'IA sur ce sujet » (le KM structuré en amont
+ *    est le pendant systémique du dispositif de capitalisation anti-perte de
+ *    savoir). Pas de lien retour côté KM (ce dernier reste autoportant).
+ *  - Vers /blog/depart-salaries-methode-ia-capitaliser-savoir dans la section
+ *    « Par où commencer avant le prochain départ » (paire SEILLER/HERNANDEZ
+ *    publiée le même jour : enjeu stratégique ↔ méthode opérationnelle).
+ *    Ajouté dans un second passage, lors de la publication de l'article
+ *    HERNANDEZ.
  *
  * Sources cliquables (option B mixte) :
  *  - DARES : URL directe des données officielles → LIEN sur la première
@@ -293,6 +299,9 @@ const ARTICLE = {
     ),
     paragraph(
       'À l’issue de ces quatre semaines, vous aurez posé les fondations. Vous n’avez pas encore de dispositif complet. Mais vous aurez cessé d’attendre le prochain départ en espérant que ce soit moins douloureux que les précédents.',
+    ),
+    paragraph(
+      'Pour la méthode complète de mise en œuvre (4 étapes, 7 outils IA utiles, 3 paliers de budget, conditions de réussite), voir notre article [Départ de salariés : la méthode IA pour capitaliser le savoir au fil de l’eau](/blog/depart-salaries-methode-ia-capitaliser-savoir).',
     ),
 
     h2('En résumé'),
