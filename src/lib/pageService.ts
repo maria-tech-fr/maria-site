@@ -99,6 +99,9 @@ export type ServiceCitation = {
   texte: string
   auteur: string
   auteurTag: string | null
+  auteurAvatar: {
+    asset: { _id: string; url: string } | null
+  } | null
 }
 
 export type SectionRapport = {

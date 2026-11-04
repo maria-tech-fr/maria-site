@@ -1,7 +1,15 @@
 import Reveal from './Reveal'
 import type { ServiceCitation as ServiceCitationData } from '../lib/pageService'
+import { urlFor } from '../../sanity/lib/image'
 
 export default function ServiceCitation({ data }: { data: ServiceCitationData }) {
+  // Photo du cofondateur (résolue par nom dans la query GROQ) — fallback sur
+  // le carré gradient jaune → vert si l'auteur n'a pas d'avatar en base.
+  const avatarAsset = data.auteurAvatar?.asset
+  const avatarSrc = avatarAsset
+    ? urlFor(avatarAsset).width(96).height(96).fit('crop').auto('format').url()
+    : null
+
   return (
     <section className="relative overflow-hidden bg-[#FFFBEE] px-6 py-22 lg:px-30.5 lg:py-30">
       {/* Halos décoratifs : jaune top-right + vert bottom-left. */}
@@ -50,16 +58,25 @@ export default function ServiceCitation({ data }: { data: ServiceCitationData })
           </div>
 
           <div className="flex items-center gap-4">
-            <span
-              aria-hidden
-              className="flex-none rounded-3xl"
-              style={{
-                width: 48,
-                height: 48,
-                background:
-                  'linear-gradient(135deg, rgba(254, 194, 60, 1) 0%, rgba(63, 193, 99, 1) 100%)',
-              }}
-            />
+            {avatarSrc ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={avatarSrc}
+                alt={data.auteur}
+                className="h-12 w-12 flex-none rounded-3xl border border-black/5 object-cover"
+              />
+            ) : (
+              <span
+                aria-hidden
+                className="flex-none rounded-3xl"
+                style={{
+                  width: 48,
+                  height: 48,
+                  background:
+                    'linear-gradient(135deg, rgba(254, 194, 60, 1) 0%, rgba(63, 193, 99, 1) 100%)',
+                }}
+              />
+            )}
             <div className="flex flex-col gap-0.5">
               <span className="font-display text-[16px] font-semibold leading-6 tracking-[-0.01em] text-ink">
                 {data.auteur}

@@ -674,7 +674,10 @@ export const pageServiceQuery = defineQuery(`
       surTitre,
       texte,
       auteur,
-      auteurTag
+      auteurTag,
+      // Photo du cofondateur résolue par le nom (string libre côté citation,
+      // comparé insensible à la casse avec le doc auteur qui porte l avatar).
+      "auteurAvatar": *[_type == "auteur" && lower(nom) == lower(^.auteur)][0].avatar{ asset->{ _id, url } }
     },
     livrableRapport{
       surTitre,
