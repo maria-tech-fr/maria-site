@@ -7,9 +7,16 @@
  * Catégorie : Outils internes — `articleCategorie-outils-internes`.
  * Featured : false.
  *
- * Pas de cross-link éditorial : article autoportant (le seul article voisin
- * sur le thème données `/blog/donnees-agent-ia-service-client` traite les
- * données pour un agent IA, angle trop éloigné du pilotage dirigeants).
+ * Cross-link vers /blog/excel-vs-tableau-bord-ia-basculer-sans-casser dans
+ * la section « Par où commencer » (paire HERNANDEZ/SEILLER méthode ↔
+ * stratégie sur le pilotage Excel ↔ IA). Ajouté dans un second passage, lors
+ * de la publication de l'article SEILLER. Le seul autre article voisin sur
+ * les données (`/blog/donnees-agent-ia-service-client`) traite les données
+ * pour un agent IA, angle trop éloigné du pilotage dirigeants : pas de lien.
+ *
+ * Lien éditorial vers /besoins/vision-claire-donnees-metier ajouté dans le
+ * dernier paragraphe du « Par où commencer » (demande utilisateur : lien
+ * dans le corps en plus du CTA sidebar).
  *
  * Sources cliquables :
  *  - France Num 2025 (DGE / Crédoc) : URL directe baromètre → LIEN sur la
@@ -211,7 +218,7 @@ const ARTICLE = {
       titre: 'Cadrer votre tableau de bord dynamique',
       description:
         '30 minutes pour poser les bons indicateurs, estimer le budget réel et prioriser la connexion de vos sources critiques.',
-      lienLibelle: 'Voir comment maria cadre ce type de projet →',
+      lienLibelle: 'En savoir plus →',
       lienHref: '/besoins/vision-claire-donnees-metier',
       variant: 'yellow',
     }),
@@ -240,6 +247,9 @@ const ARTICLE = {
     ),
     paragraph(
       'À l’issue de ce mois, vous saurez si l’automatisation vaut l’investissement pour votre contexte, et sur quel périmètre démarrer.',
+    ),
+    paragraph(
+      'Pour l’angle complémentaire sur la cohabitation Excel / tableau de bord IA et la conduite du changement avec vos contrôleurs de gestion, voir notre article [Tableaux Excel vs tableau de bord IA : comment basculer sans tout casser](/blog/excel-vs-tableau-bord-ia-basculer-sans-casser). Pour une vue d’ensemble, voir aussi la page [Avoir une vision claire sur mes données métier](/besoins/vision-claire-donnees-metier).',
     ),
 
     h2('En résumé'),
