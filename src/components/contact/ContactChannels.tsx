@@ -19,6 +19,21 @@ type ContactChannelsProps = {
 
 const CAL_NAMESPACE = 'maria-contact'
 
+/*
+  Convertit un numéro affiché en français (« 01 59 35 34 03 ») au format
+  E.164 international pour `href="tel:…"` — ex. +33159353403. Nécessaire pour
+  que le clic mobile fonctionne en roaming ou dans les apps qui dialent en
+  international par défaut (FaceTime, Skype…).
+  Duplication mineure avec le helper homonyme dans `ContactInfo.tsx`
+  (seuls deux call sites, pas de factorisation justifiée).
+*/
+function toE164(phone: string): string {
+  const digits = phone.replace(/\D/g, '')
+  if (digits.startsWith('33')) return `+${digits}`
+  if (digits.startsWith('0') && digits.length === 10) return `+33${digits.slice(1)}`
+  return `+${digits}`
+}
+
 export default function ContactChannels({
   surTitre,
   titre,
@@ -138,7 +153,10 @@ function ChannelCard({
         }
       : undefined
 
-  const labelTel = telephoneAffichage && card.action === 'infos' ? ` — ${telephoneAffichage}` : ''
+  // Pour la carte « infos » (appel direct), on veut un lien tel: cliquable
+  // avec le numéro comme label — pas le CTA Sanity « Voir le numéro » qui
+  // ne faisait que scroller vers le pavé « infos pratiques ».
+  const telCard = card.action === 'infos' && telephoneAffichage ? telephoneAffichage : null
 
   return (
     <article
@@ -168,7 +186,6 @@ function ChannelCard({
           }`}
         >
           {card.description}
-          {labelTel}
         </p>
       </div>
       {isDisabled ? (
@@ -176,6 +193,14 @@ function ChannelCard({
           {card.cta}
           <ArrowRight />
         </span>
+      ) : telCard ? (
+        <a
+          href={`tel:${toE164(telCard)}`}
+          className={`mt-4 inline-flex cursor-pointer items-center gap-1 self-start border-b pb-0.5 text-[14px] font-medium leading-5 transition-colors duration-300 ease-out ${accentClass} hover:opacity-80`}
+        >
+          {telCard}
+          <ArrowRight />
+        </a>
       ) : (
         <button
           type="button"
